@@ -23,7 +23,4 @@ npm install
 echo "🛠️ Building the application..."
 npm run build
 
-echo "📂 Copy all build files to root directory..."
-cp -r $DIR/build/* $DIR/
-
 echo "Deployment completed successfully. 🎉🎉🎉"
