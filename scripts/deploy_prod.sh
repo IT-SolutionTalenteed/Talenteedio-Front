@@ -1,9 +1,11 @@
 #!/bin/bash
 
-DIR="$(pwd)"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 
 nvm use v18.17
 
+# Start deployment
 echo "🚀 Starting deployment..."
 
 echo "🔄 Fetching latest changes from origin..."
