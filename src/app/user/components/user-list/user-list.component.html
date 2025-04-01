@@ -1,0 +1,39 @@
+<div class="table-container">
+    <table appOverflowTooltip>
+        <thead>
+            <tr>
+                <!-- <th
+                    app-sortable-column="lastName"
+                    (sort)="onSort($event)"
+                    [sortDirections]="sortDirections"
+                    [initialDirection]="sortDirection.asc"
+                >
+                    Nom
+                </th> -->
+                <!-- <th app-sortable-column="firstName" (sort)="onSort($event)" [sortDirections]="sortDirections">Prénom(s)</th> -->
+                <th app-sortable-column="email" (sort)="onSort($event)" [sortDirections]="sortDirections">Email</th>
+                <th app-sortable-column="role.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Rôle</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr *ngFor="let user of users" [class.selected]="user.id === currentUser?.id">
+                <td>{{ user.email }}</td>
+                <td>{{ user.role?.name }}</td>
+                <td class="actions">
+                    <img (click)="view.emit(user); currentUser = user" src="/assets/images/ico-details.svg" title="Voir détail" />
+                    <img
+                        (click)="editEnabled && edit.emit(user); currentUser = user"
+                        [src]="editEnabled ? '/assets/images/ico-edit.svg' : '/assets/images/ico-edit-disabled.svg'"
+                        title="Modifier"
+                    />
+                    <img
+                        (click)="deleteEnabled && delete.emit(user)"
+                        [src]="deleteEnabled ? '/assets/images/ico-delete.svg' : '/assets/images/ico-delete-disabled.svg'"
+                        title="Supprimer"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

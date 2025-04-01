@@ -1,0 +1,64 @@
+<div class="wrapper">
+  <div class="paginator">
+    <ul>
+      <ng-container *ngIf="totalItems">
+        <li class="btn left-left-arrow" (click)="nbPage > 0 && setPage(1)">
+          <!-- <span><img src="/assets/images/pagination/left-left-arrow.svg" alt="left-left-arrow" /></span> -->
+          <span>‹‹</span>
+        </li>
+        <li class="btn left-arrow" (click)="page > 1 && setPage(page - 1)">
+          <!-- <span><img src="/assets/images/pagination/left-arrow.svg" alt="left-arrow" /></span> -->
+          <span>‹</span>
+        </li>
+        <li class="btn" (click)="morePagesBackward()" *ngIf="start > 1">...</li>
+        <li
+          class="btn"
+          (click)="setPage(p)"
+          *ngFor="let p of pages"
+          [class.current]="page === p"
+        >
+          <span>{{ p }}</span>
+        </li>
+        <li class="btn" (click)="morePagesForward()" *ngIf="nbPage > end">
+          ...
+        </li>
+        <li
+          class="btn right-arrow"
+          (click)="page < nbPage && setPage(page + 1)"
+        >
+          <!-- <span
+            ><img
+              src="/assets/images/pagination/right-arrow.svg"
+              alt="right-arrow"
+          /></span> -->
+          <span>›</span>
+        </li>
+        <li
+          class="btn right-right-arrow"
+          (click)="nbPage > 0 && setPage(nbPage)"
+        >
+          <!-- <span
+            ><img
+              src="/assets/images/pagination/right-right-arrow.svg"
+              alt="right-right-arrow"
+          /></span> -->
+          <span>››</span>
+        </li>
+      </ng-container>
+    </ul>
+    <div class="page-size">
+      <label>Display </label>
+      <app-input-number
+        [min]="pageSizeOptions[0]"
+        [max]="max"
+        [value]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (increment)="onIncrementPageSize($event)"
+        (decrement)="onDecrementPageSize($event)"
+      >
+      </app-input-number>
+
+      <label for="pagesize">Page</label>
+    </div>
+  </div>
+</div>

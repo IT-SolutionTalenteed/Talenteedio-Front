@@ -1,0 +1,30 @@
+<div class="blog-item-container">
+  <div class="image-box">
+    <img
+      alt="Article image"
+      [src]="article?.image?.fileUrl ?? '/assets/img/hr_voice.jpg'"
+    />
+    <div class="premium-icon" *ngIf="article.isPremium">
+      <fa-icon class="icon" [icon]="premiumIcon"></fa-icon>
+      <div class="premium-label">Premium</div>
+    </div>
+  </div>
+  <div class="info-box">
+    <div class="start-date">{{ article.createdAt | date : "dd/MM/yyyy" }}</div>
+    <div class="title">
+      {{ article.title }}
+    </div>
+    <div class="content">
+      {{
+        (article.isPremium ? article.publicContent : article.content)
+          | htmlParser
+      }}
+    </div>
+    <div class="read-more">
+      Read more
+      <div class="icon">
+        <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="container">
+  <app-loader [isLoading]="loading$ | async" style="width: 100%; height: 100%">
+    <app-sign-in
+      (signIn)="onLogIn($event)"
+      [loginErrorMessage]="emailErrorMessage$ | async"
+      [emailError]="emailError$ | async"
+    ></app-sign-in>
+  </app-loader>
+</div>

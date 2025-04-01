@@ -1,0 +1,66 @@
+@import "colors";
+@import "buttons";
+
+.did-you-know-item-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  max-width: 1310px;
+  margin: 0 auto;
+  gap: 30px;
+  background-color: #f0f5f7;
+  padding: 43px;
+  margin-bottom: 100px;
+  border-radius: 20px;
+  border: solid $secondary 1px;
+
+  h2 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    color: $black;
+  }
+
+  .text-content {
+    flex: 1;
+
+    .content {
+      flex: 1;
+      padding: 10px 0px;
+      font-weight: 300;
+      color: $text-color;
+      font-size: 16px;
+      &::ng-deep a {
+        color: $primary !important;
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+
+  .action {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button {
+    @extend %button;
+    padding: 20px 30px;
+    font-family: "Regular", sans-serif;
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .action {
+      &, a, button {
+        width: 100%
+      };
+    }
+  }
+}

@@ -1,0 +1,85 @@
+@import 'colors.scss';
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .paginator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+
+            .left-arrow, .left-left-arrow {
+                padding: 0;
+            }
+
+            .right-arrow, .right-right-arrow {
+                padding: 0;
+            }
+
+            li {
+                position: relative;
+                margin: 0 5px;
+                font-size: 14px;
+                color: $text-color;
+                line-height: 45px;
+                min-width: 45px;
+                font-weight: 400;
+                text-align: center;
+                border-radius: 50%;
+                cursor: pointer;
+                user-select: none;
+            }
+            .btn {
+                &:hover {
+                    background-color: $primary;
+                }
+
+                img {
+                    vertical-align: bottom;
+                }
+            }
+            .current {
+                color: white;
+                background-color: $primary;
+            }
+            select {
+                outline: none;
+                border: none;
+                border-bottom: 1px solid $text-color;
+            }
+            label {
+                width: 100px;
+                padding-left: 15px;
+            }
+        }
+
+        .page-size {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin: 0 5px 0 10px;
+        }
+
+        .page-size label {
+            padding: 0 10px;
+            font-size: 14px;
+            color: $text-color;
+        }
+    }
+}

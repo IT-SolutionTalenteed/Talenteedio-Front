@@ -1,0 +1,39 @@
+@import "colors.scss";
+.testimonial-block {
+  position: relative;
+  max-width: 500px;
+  height: 100%;
+  margin: auto;
+  background: $primary;
+  padding: 50px;
+  border-radius: 20px;
+  .inner-box {
+    width: 100%;
+    .thumb {
+      position: relative;
+      display: inline-block;
+      height: 120px;
+      width: 120px;
+      border-radius: 50%;
+      background: $white;
+      border: 1px solid $border;
+      // box-shadow: 0px 6px 15px $sub-title-color; */
+      left: 50%;
+      transform: translate(-50%, -100%);
+      img {
+        display: block;
+        width: 100%;
+        border: 10px solid $white;
+        border-radius: 50%;
+        height: 100%;
+        -o-object-fit: contain;
+        object-fit: contain;
+        -webkit-transform-style: preserve-3d;
+      }
+    }
+    .center {
+      text-align: center;
+      color: $white;
+    }
+  }
+}

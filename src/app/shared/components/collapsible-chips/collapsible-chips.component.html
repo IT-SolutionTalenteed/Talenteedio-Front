@@ -1,0 +1,17 @@
+<div>
+    <app-chips
+        [label]="filterCategoryLabels[chips.name]"
+        [count]="totalItems"
+        (toogle)="onToogleExpand($event)"
+        (delete)="onDelete()"
+    >
+    </app-chips>
+    <div class="space"></div>
+    <app-list-box
+        [hidden]="!expanded"
+        [items]="chips.items"
+        [labels]="filterItemLabels[chips.name]"
+        (select)="onSelect($event)"
+    ></app-list-box>
+    <div class="space"></div>
+</div>

@@ -1,0 +1,17 @@
+<div class="new-article container-center">
+  <div class="header">
+    <h1 class="title">Recent News Articles</h1>
+    <div class="links">
+      <span>Fresh job related news content posted each day.</span>
+    </div>
+  </div>
+  <div class="container-new-article">
+    <!-- <ng-container  *ngFor="let job of jobs" >
+            <app-job-item [job]="job"></app-job-item>
+        </ng-container> -->
+    <app-card-article
+      *ngFor="let article of articles"
+      [article]="article"
+    ></app-card-article>
+  </div>
+</div>

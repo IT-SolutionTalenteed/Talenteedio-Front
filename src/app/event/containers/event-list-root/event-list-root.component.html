@@ -1,0 +1,27 @@
+<div class="event-container">
+  <div class="banner-container"></div>
+  <div class="header">
+    <h1 class="title">All <span>Events</span></h1>
+  </div>
+  <div class="filtered-list">
+    <div class="filter">
+      <app-event-list-box-filter
+        (saveFilter)="onSaveFilter($event)"
+      ></app-event-list-box-filter>
+    </div>
+    <div class="list">
+      <div class="list-container">
+        <app-loader [isLoading]="eventsLoading$ | async">
+          <app-event-list [events]="events$ | async"></app-event-list>
+        </app-loader>
+      </div>
+      <div class="pagination">
+        <app-pagination
+          [totalItems]="totalItems$ | async"
+          [initialValue]="eventCriteria?.page"
+          (paginate)="onPaginate($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

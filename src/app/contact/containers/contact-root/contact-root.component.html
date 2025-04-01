@@ -1,0 +1,33 @@
+<div class="contact-container">
+  <div style="width: 100%">
+    <iframe
+      scrolling="no"
+      marginheight="0"
+      marginwidth="0"
+      src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=10A,%20rue%20du%20Puits,%20L-2355%20Luxembourg%20+(Solution%20Talenteed)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+      width="100%"
+      height="600"
+      frameborder="0"
+    ></iframe>
+  </div>
+  <div class="container-section">
+    <div class="auto-container">
+      <div class="upper-box">
+        <app-contact-upper-box
+          [location]="location$ | async"
+        ></app-contact-upper-box>
+      </div>
+      <div class="contact-form">
+        <app-loader
+          [isLoading]="sendMailLoading$ | async"
+          style="width: 100%; height: 100%"
+        >
+          <app-contact-form
+            (send)="onSendMail($event)"
+            [emailSent]="emailSent$ | async"
+          ></app-contact-form>
+        </app-loader>
+      </div>
+    </div>
+  </div>
+</div>

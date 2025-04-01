@@ -1,0 +1,76 @@
+@import "colors.scss";
+::ng-deep {
+    .owl-stage {
+        display: flex;
+
+        .owl-item {
+            margin-inline: auto;
+        }
+    }
+
+    .owl-dot {
+      span {
+        transition: all 300ms ease !important;
+        height: 8px !important;
+      }
+      &.active span {
+        width: 20px !important;
+        background: #202124 !important;
+      }
+    }
+    .section {
+      padding: 40px 20px;
+      min-height: 550px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .text a {
+        color: $primary;
+      }
+    }
+
+    .btn-browse {
+      display: flex;
+      width: 100%;
+
+      a {
+        display: inline-block;
+        margin-left: auto;
+
+        button {
+          color: #ffffff;
+          cursor: pointer;
+          background-color: #ec4c28;
+          text-align: center;
+          font-size: 15px;
+          text-align: center;
+          line-height: 20px;
+          border-radius: 8px;
+          font-weight: 400;
+          padding: 12px 35px;
+          border: none;
+          text-transform: capitalize;
+          margin-top: 20px;
+        }
+      }
+
+    }
+}
+
+.title {
+  margin: 46px 0;
+  text-align: center;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: $black;
+  span {
+    color: $secondary;
+  }
+
+  @media screen and (max-width: 767px) {
+    font-size: 30px;
+  }
+}

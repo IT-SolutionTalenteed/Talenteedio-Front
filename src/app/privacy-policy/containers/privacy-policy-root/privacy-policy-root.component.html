@@ -1,0 +1,11 @@
+<div class="terms-container">
+  <div class="header">
+    <h1 class="title">Privacy Policy</h1>
+    <div class="links">
+      <a routerLink="/home">Home</a><span> / Privacy Policy</span>
+    </div>
+  </div>
+  <app-loader [isLoading]="loading$ | async">
+    <app-privacy-policy [privacy]="privacy$ | async"></app-privacy-policy>
+  </app-loader>
+</div>

@@ -1,0 +1,19 @@
+<div
+  class="featured-job section"
+  [ngStyle]="{ 'background-image': 'url(' + image + ')' }"
+>
+  <div class="container">
+    <app-loader class="container-our-customer" [isLoading]="jobsLoading">
+      <div *ngIf="ssrtype">
+        <owl-carousel-o [options]="carouselOptions">
+          <ng-container *ngFor="let job of jobs; let i = index">
+            <ng-template carouselSlide [id]="'i'">
+              <app-job-item [job]="job"></app-job-item>
+              <div class="custom-dots-container"></div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+    </app-loader>
+  </div>
+</div>

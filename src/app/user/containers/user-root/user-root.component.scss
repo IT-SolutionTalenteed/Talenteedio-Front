@@ -1,0 +1,6 @@
+@import 'master-detail.scss';
+
+.container {
+    @extend %master-detail;
+    grid-template-columns: 1% 60% 1% 37% 1%;
+}

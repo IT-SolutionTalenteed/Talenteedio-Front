@@ -1,0 +1,20 @@
+<div class="company-container">
+  <div class="top-company container-center">
+    <div class="header">
+      <h1 class="title">Top Company Registered</h1>
+      <div class="links">
+        <span
+          >Some of the companies we've helped recruit excellent applicants over
+          the years..</span
+        >
+      </div>
+    </div>
+    <div class="container-top-company">
+      <app-card-company
+        style="background-color: white"
+        *ngFor="let company of companies"
+        [company]="company"
+      ></app-card-company>
+    </div>
+  </div>
+</div>

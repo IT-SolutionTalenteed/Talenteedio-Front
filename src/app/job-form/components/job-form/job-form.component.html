@@ -1,0 +1,182 @@
+<div class="container">
+  <div class="header" *ngIf="job">
+    <div class="job-box">
+      <div class="content">
+        <div class="company-logo">
+          <img
+            src="{{ job?.featuredImage?.fileUrl || 'assets/img/favicon.png' }}"
+            alt="Job image"
+          />
+        </div>
+        <div class="job-detail">
+          <div class="job-title">
+            <h4>{{ job.title }}</h4>
+          </div>
+          <ul class="job-info">
+            <li>
+              <fa-icon class="icon" [icon]="fabriefcase"></fa-icon
+              >{{ job.status }}
+            </li>
+            <li>
+              <fa-icon class="icon" [icon]="faMapMarker"></fa-icon
+              >{{ job?.location?.name || "-" }}
+            </li>
+            <li>
+              <fa-icon class="icon" [icon]="faClock"></fa-icon
+              >{{ job.updatedAt | date : "dd/MM/yy" }}
+            </li>
+            <li>
+              <fa-icon class="icon" [icon]="faMoney"></fa-icon
+              >{{ job.salaryMin }} € - {{ job.salaryMax }} € /
+              {{ job.salaryType }}
+            </li>
+          </ul>
+          <ul class="job-chips">
+            <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>
+            <li class="privacy" *ngIf="job.isFeatured">Featured</li>
+            <li class="required" *ngIf="job.isUrgent">Urgent</li>
+            <li class="referable" *ngIf="!!user?.referral && job.isSharable">
+              Referable
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="job-expired" *ngIf="isExperatedJob">Job expired!</div>
+      <div class="job-expired" *ngIf="!isExperatedJob && !user">
+        <button class="primary" (click)="login.emit()">Login to apply</button>
+      </div>
+      <div
+        class="job-expired"
+        *ngIf="
+          !isExperatedJob &&
+          user?.talent &&
+          !job.hasApplied &&
+          !!user.isVerified
+        "
+      >
+        <button class="primary" (click)="onApply()">Apply</button>
+      </div>
+      <div
+        class="job-expired"
+        *ngIf="
+          !isExperatedJob && user?.talent && !job.hasApplied && !user.isVerified
+        "
+      >
+        Please validate your account and send signed consent to apply
+      </div>
+      <div
+        class="job-expired"
+        *ngIf="!isExperatedJob && user?.referral && !user.isVerified"
+      >
+        Please validate your account to refer
+      </div>
+      <div
+        class="job-expired already-applayed"
+        *ngIf="!isExperatedJob && user?.talent && job.hasApplied"
+      >
+        Already applied
+      </div>
+      <div
+        class="job-expired"
+        *ngIf="
+          !isExperatedJob &&
+          user?.referral &&
+          user.isVerified &&
+          job?.isSharable
+        "
+      >
+        <button class="primary" (click)="refer.emit()">Refer</button>
+      </div>
+    </div>
+  </div>
+  <div class="detail" *ngIf="job">
+    <div class="detail-content" [innerHtml]="content"></div>
+    <div class="detail-info">
+      <h4>Job viewer</h4>
+      <div class="info-item">
+        <div class="info-icon">
+          <fa-icon class="icon" [icon]="faCalendar"></fa-icon>
+        </div>
+        <div class="info-right">
+          <div class="info-label">Last update:</div>
+          <div class="info-value">
+            {{ job.updatedAt | date : "dd / MM / yyy" }}
+          </div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <fa-icon class="icon" [icon]="faHourglass"></fa-icon>
+        </div>
+        <div class="info-right">
+          <div class="info-label">Expiration date:</div>
+          <div class="info-value">
+            {{ job.expirationDate | date : "dd / MM / yyy" }}
+          </div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <fa-icon class="icon" [icon]="faMapMarker"></fa-icon>
+        </div>
+        <div class="info-right">
+          <div class="info-label">Location:</div>
+          <div class="info-value">
+            {{ job?.location?.name || "-" }}
+          </div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <fa-icon class="icon" [icon]="faClock"></fa-icon>
+        </div>
+        <div class="info-right">
+          <div class="info-label">Hours:</div>
+          <div class="info-value">
+            {{ job.hours }} /
+            {{ job.hourType }}
+          </div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <fa-icon class="icon" [icon]="faMoney"></fa-icon>
+        </div>
+        <div class="info-right">
+          <div class="info-label">Salary:</div>
+          <div class="info-value">
+            {{ job.salaryMin }} € - {{ job.salaryMax }} € / {{ job.salaryType }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="social-media-content">
+  <hr />
+  <div class="social-media">
+    <div class="share-this-post">Share this job</div>
+    <div class="button-container">
+      <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
+        ><button class="facebook">
+          <fa-icon [icon]="fbIcon"></fa-icon> Facebook
+        </button></a
+      >
+    </div>
+    <div class="button-container">
+      <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
+        ><button class="twitter">
+          <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
+        </button></a
+      >
+    </div>
+    <div class="button-container">
+      <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
+        ><button class="linkedin">
+          <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
+        </button></a
+      >
+    </div>
+  </div>
+  <hr />
+</div>

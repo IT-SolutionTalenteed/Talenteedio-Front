@@ -1,0 +1,26 @@
+<footer [style.backgroundColor]="'white'">
+  <div class="footer-bottom">
+    <div class="bottom-container">
+      <div class="terms">
+        <a [routerLink]="termsAndConditionsRoute">Terms and conditions</a>
+        <a [routerLink]="privacyPolicyRoute">Confidentiality</a>
+      </div>
+      <div class="copiright">
+        <div>
+          @ 2023
+          <a href="https://solutiontalenteed.com/" style="margin-left: 7px">
+            Solution Talenteed</a
+          >
+          . All right reserved.
+        </div>
+      </div>
+      <div class="links">
+        <div *ngFor="let link of footerLinks">
+          <a [href]="link.link" target="_blank">
+            <fa-icon [icon]="link.icon"></fa-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,27 @@
+<div class="blog-container">
+  <div class="banner-container"></div>
+  <div class="header">
+    <h1 class="title">All <span>News</span></h1>
+  </div>
+  <div class="filtered-list">
+    <div class="filter">
+      <app-blog-list-box-filter
+        (saveFilter)="onSaveFilter($event)"
+      ></app-blog-list-box-filter>
+    </div>
+    <div class="list">
+      <div class="list-container">
+        <app-loader [isLoading]="articlesLoading$ | async">
+          <app-blog-list [articles]="articles$ | async"></app-blog-list>
+        </app-loader>
+      </div>
+      <div class="pagination">
+        <app-pagination
+          [totalItems]="totalItems$ | async"
+          [initialValue]="articleCriteria?.page"
+          (paginate)="onPaginate($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

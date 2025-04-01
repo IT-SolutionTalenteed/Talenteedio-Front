@@ -1,0 +1,149 @@
+@import "colors.scss";
+@import "texts.scss";
+@import "form.scss";
+
+.container {
+  padding: 30px;
+  background-color: $background;
+  width: 100%;
+  border-radius: 8px;
+  form {
+    @extend %generic-form;
+    max-width: 100%;
+    .label {
+      @extend %box-title;
+    }
+    .control {
+      position: relative;
+      input {
+        background-color: $white !important;
+        border: 1px solid $border;
+        padding-left: 54px;
+      }
+      input:focus {
+        box-shadow: none;
+        border-color: $primary;
+      }
+      .icon {
+        z-index: 1001;
+        position: absolute;
+        left: 20px;
+        top: 26px;
+        margin-top: -15px;
+        font-size: 16px;
+        line-height: 30px;
+        color: $text-color;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          margin-right: 20px;
+          margin-bottom: 10px;
+          display: flex;
+          input[type="radio"] {
+            display: none;
+          }
+          input[type="radio"] + label::before {
+            cursor: pointer;
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid $border;
+            background-color: $white;
+            top: 4px;
+          }
+          .checked-icon {
+            display: none;
+          }
+          input[type="radio"]:checked + label + .checked-icon {
+            display: inline-block;
+            position: absolute;
+            left: 3px;
+            color: $white;
+            width: 16px;
+            height: 16px;
+            margin-top: 4px;
+          }
+          input[type="radio"]:checked + label::before {
+            background-color: $primary;
+            border-color: $primary;
+          }
+          label {
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 0;
+            font-size: 15px;
+            line-height: 20px;
+            color: $text-color;
+          }
+        }
+      }
+    }
+    .control ::ng-deep {
+      .ng-select.ng-select-focused > .ng-select-container {
+        border: 1px solid $primary !important;
+        box-shadow: none !important;
+      }
+      .ng-select.ng-select-focused:not(.ng-select-opened)
+        > .ng-select-container {
+        border-color: $primary !important;
+        box-shadow: none;
+      }
+
+      .ng-select .ng-select-container {
+        background: $white;
+        border: 1px solid $border !important;
+      }
+      .ng-select.ng-select-opened > .ng-select-container {
+        background: $white;
+      }
+      .ng-select .ng-select-container .ng-value-container {
+        padding-left: 54px;
+      }
+      .ng-select.ng-select-single
+        .ng-select-container
+        .ng-value-container
+        .ng-input {
+        padding-left: 54px;
+      }
+
+      .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+        padding: 15px 20px 15px 54px;
+      }
+      .ng-select.ng-select-multiple
+        .ng-select-container
+        .ng-value-container
+        .ng-placeholder {
+        top: auto;
+        padding-bottom: auto;
+        padding-left: auto;
+      }
+      .ng-select.ng-select-multiple
+        .ng-select-container
+        .ng-value-container
+        .ng-value {
+        background-color: rgba(25, 103, 210, 0.15);
+        color: $primary;
+      }
+      .ng-select.ng-select-multiple
+        .ng-select-container
+        .ng-value-container
+        .ng-value
+        .ng-value-icon:hover {
+        background-color: transparent;
+      }
+    }
+
+    button {
+      width: 100%;
+      min-width: 0px !important;
+    }
+  }
+}

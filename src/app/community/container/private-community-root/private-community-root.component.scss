@@ -1,0 +1,124 @@
+@import "buttons.scss";
+@import "colors.scss";
+@import "breakpoints.scss";
+
+.banner-container {
+  background-image: url("/assets/img/diversity-home.jpg");
+  background-size: cover;
+  background-position-y: -50px;
+  width: 100%;
+  height: 476px;
+  margin: 0;
+  padding: 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .banner-card {
+    width: 40%;
+    max-width: 534px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 2rem;
+    .button {
+      display: flex;
+      justify-content: right;
+    }
+    button {
+      @extend %button;
+      padding: 15px 30px;
+      font-family: "Regular", sans-serif;
+      font-size: 16px;
+    }
+    p {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: $extra-large-devices-breakpoint) {
+    height: 618px;
+    background-position: center;
+    padding: 20px;
+    // background-position-y: 0px;
+    .banner-card {
+      width: 100%;
+      //   display: none;
+    }
+  }
+}
+
+.community-content {
+  display: flex;
+  row-gap: 67px;
+  width: 100%;
+  max-width: 1310px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  .no-gap {
+    column-gap: 0 !important;
+  }
+  .community-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    column-gap: 50px;
+    row-gap: 67px;
+    padding: 20px;
+    .community-rubric {
+      flex: 1;
+    }
+    .title {
+      margin-top: 46px;
+      margin-bottom: 0px;
+      text-align: center;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: $black;
+      span {
+        color: $secondary;
+      }
+
+      @media screen and (max-width: 767px) {
+        font-size: 30px;
+      }
+    }
+
+    .advisor-rubric {
+      flex: 1;
+    }
+
+    .text-blocs {
+      display: flex;
+      gap: 50px;
+
+      .blocs {
+        flex: 1;
+        padding: 25px;
+        border: solid $secondary 1px;
+        border-radius: 20px;
+        background-color: $generic-form-background;
+      }
+
+      @media screen and (max-width: 767px) {
+        flex-wrap: wrap;
+
+        .blocs {
+          flex: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: $medium-devices-breakpoint) {
+  .community-row {
+    flex-direction: row !important;
+  }
+}

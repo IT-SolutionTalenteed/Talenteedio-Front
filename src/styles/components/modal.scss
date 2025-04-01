@@ -1,0 +1,65 @@
+@import 'colors.scss';
+@import 'buttons.scss';
+@import 'font.scss';
+
+// COMMON:
+.modal {
+    opacity: 0; /* Fade in/out animation. */
+    transition: opacity 0.2s ease-in;
+    background-color: #0000008c !important;
+    z-index: 9999 !important;
+}
+
+.modal-dialog {
+    position: relative;
+}
+
+.modal-header .close {
+    display: none;
+}
+
+// POP-UP MODAL:
+
+// Shapes:
+$border-radius: 9px;
+$popup-width: 540px;
+$popup-height: auto;
+$popup-header-height: 95px;
+$popup-body-height: 130px;
+$popup-footer-height: 80px;
+
+// Classes:
+.popup-modal {
+    .modal-content {
+        background-color: #fff;
+        width: $popup-width;
+        height: $popup-height !important;
+        border-radius: $border-radius !important;
+        padding:  20px;
+    }
+    .modal-header {
+      display: none;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        align-items: center;
+        min-height: $popup-body-height;
+        height: auto;
+        font-family: 'Light';
+        font-size: 15px;
+        color: $text-color;
+
+
+        p {
+            margin: 5px 0;
+            line-height: 20px;
+        }
+    }
+    .modal-footer {
+        display: none;
+    }
+}

@@ -1,0 +1,206 @@
+@import "colors.scss";
+@import "texts.scss";
+@import "buttons.scss";
+@import "sizes.scss";
+@import "selects.scss";
+@import "checkboxes.scss";
+
+%focused-control {
+  box-shadow: 0 0 0 0.2rem $generic-form-border-focus;
+  outline: none;
+}
+
+%invalid-control {
+  box-shadow: 0 0 0 0.2rem $generic-form-error-border;
+  background-color: $generic-form-error-background !important;
+}
+
+%disabled-control {
+  border-color: $generic-form-border-disabled;
+  background-color: $generic-form-background-disabled;
+}
+
+%input-shape {
+  height: $generic-form-height;
+  width: 100%;
+  border: solid 1px $generic-form-control-border;
+  border-radius: $border-radius;
+  min-width: 10px;
+  font-size: 1rem;
+  &::placeholder {
+    font-size: 15px;
+    color: $generic-form-placeholder-color;
+  }
+}
+
+%generic-print-error {
+  justify-content: end;
+  color: $generic-form-error-border;
+  text-align: end;
+}
+
+%generic-input {
+  grid-area: input;
+  z-index: 2;
+  @extend %input-shape, %default-form-text;
+  padding: $input-padding-top-bottom $input-padding-left-right;
+  background-color: $generic-form-background !important;
+  color: $text-color;
+
+  &:focus,
+  &.ng-invalid:focus {
+    @extend %focused-control;
+  }
+
+  &:disabled {
+    @extend %disabled-control;
+  }
+
+  &.ng-invalid.ng-dirty {
+    @extend %invalid-control;
+  }
+
+  &[type="date"] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &::-webkit-clear-button {
+      display: none;
+    }
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+    &::-webkit-calendar-picker-indicator {
+      color: black;
+    }
+    &::-webkit-calendar-picker-indicator:hover {
+      background-color: $white;
+    }
+    &::-webkit-calendar-picker-indicator {
+      margin: 0;
+    }
+  }
+}
+
+%generic-textarea {
+  grid-area: input;
+  @extend %generic-input;
+  height: $generic-textarea-form-height;
+  resize: none;
+  overflow-y: scroll;
+
+  &:focus,
+  &.ng-invalid:focus {
+    @extend %focused-control;
+  }
+
+  &:disabled {
+    @extend %disabled-control;
+  }
+
+  &.ng-invalid.ng-dirty {
+    @extend %invalid-control;
+  }
+}
+%generic-label {
+  margin-bottom: 10px;
+  color: $black;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+%generic-controls {
+  @extend %custom-select;
+
+  ::ng-deep
+    .ng-invalid.ng-dirty.ng-select.ng-select-focused
+    > .ng-select-container {
+    box-shadow: 0 0 0 0.2rem $generic-form-error-border !important;
+    border: none !important;
+  }
+  ng-select {
+    grid-area: input;
+    text-transform: capitalize;
+    &.ng-invalid.ng-dirty {
+      ::ng-deep .ng-input {
+        @extend %invalid-control;
+      }
+    }
+
+    &:focus,
+    &.ng-invalid:focus {
+      ::ng-deep .ng-input {
+        @extend %focused-control;
+      }
+    }
+  }
+
+  label {
+    @extend %generic-label;
+  }
+
+  input,
+  select {
+    @extend %generic-input;
+  }
+
+  textarea {
+    @extend %generic-textarea;
+  }
+
+  .error-text,
+  app-validation-error {
+    @extend %generic-print-error, %error-form-text;
+    grid-area: error;
+  }
+}
+
+%generic-form {
+  width: 100%;
+  .control {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "label ."
+      "input input"
+      "error error";
+    margin-bottom: 10px;
+    @extend %generic-controls;
+
+    &.textarea {
+      grid-template-rows: auto auto;
+    }
+
+    &.password,
+    &.confirm-password {
+      position: relative;
+      img {
+        position: absolute;
+        right: 15px;
+        bottom: 37px;
+        width: 20px;
+        height: 20px;
+        z-index: 3;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .checkbox-control {
+    display: flex;
+    gap: $gap;
+    margin-bottom: 10px;
+    label {
+      @extend %generic-label;
+    }
+  }
+
+  button {
+    @extend %button;
+  }
+}

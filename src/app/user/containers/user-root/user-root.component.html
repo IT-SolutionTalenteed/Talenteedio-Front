@@ -1,0 +1,48 @@
+<div class="container" >
+    <header>Gestion des utilisateurs</header>
+    <div class="search-bar">
+        <app-search-bar (search)="onSearch($event)" [initialValue]="userCriteria?.search"></app-search-bar>
+    </div>
+    <div class="list">
+        <app-loader [isLoading]="usersLoading$ | async">
+            <app-user-list
+                [users]="users$ | async"
+                [currentUser]="currentUser$ | async"
+                [editEnabled]="userEditEnabled$ | async"
+                [deleteEnabled]="userDeleteEnabled$ | async"
+                (sort)="onSort($event)"
+                (view)="onViewDetail($event)"
+                (edit)="onEdit($event)"
+                (delete)="onDelete($event)"
+            ></app-user-list>
+        </app-loader>
+    </div>
+    <footer>
+        <button class="btn-new primary"  (click)="onCreate()">+</button>
+        <app-pagination
+            [totalItems]="totalItems$ | async"
+            [initialValue]="userCriteria.page"
+            (paginate)="onPaginate($event)"
+        ></app-pagination>
+    </footer>
+    <div class="detail">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<modal #successfullSavingModal class="popup-modal success">
+    <ng-template #modalHeader> Succès </ng-template>
+    <ng-template #modalBody> Utilisateur enregistré avec succès! </ng-template>
+    <ng-template #modalFooter>
+        <button class="primary" (click)="successfullSavingModal.close()">OK</button>
+    </ng-template>
+</modal>
+
+<modal #deletionConfirmModal class="popup-modal delete">
+    <ng-template #modalHeader> Confirmation </ng-template>
+    <ng-template #modalBody> Voulez-vous vraiment supprimer cet utilisateur? </ng-template>
+    <ng-template #modalFooter>
+        <button class="primary" (click)="deletionConfirmModal.close(); onConfirmDeletion()">OUI</button>
+        <button class="secondary" (click)="deletionConfirmModal.close()">NON</button>
+    </ng-template>
+</modal>

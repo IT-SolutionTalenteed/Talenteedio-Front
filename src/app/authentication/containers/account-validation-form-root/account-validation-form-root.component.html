@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="loading" *ngIf="loading">
+    <div class="sub-title"><strong>Waiting for account activation</strong></div>
+    <app-loader
+      [isLoading]="loading$ | async"
+      style="width: 100%; height: 100%"
+    >
+      <div class="account-validation-loading"></div>
+    </app-loader>
+  </div>
+
+  <app-account-validation-error
+    style="width: 100%; height: 100%"
+    *ngIf="!loading && !loaded"
+  ></app-account-validation-error>
+</div>
+
+<modal
+  #successfullSavingModal
+  class="popup-modal success custom"
+  [closeOnOutsideClick]="false"
+>
+  <ng-template #modalBody>
+    <div class="modal-activation-content" *ngIf="user?.referral">
+      <div class="modal-title">
+        <div class="icon">
+          <fa-icon style="color: #4fb556" [icon]="checkIcon"></fa-icon>
+        </div>
+        Account validated.
+      </div>
+      <p class="modal-text">You can now refer a job.</p>
+    </div>
+    <div class="modal-activation-content" *ngIf="user?.talent">
+      <div class="modal-title">
+        <div class="icon">
+          <fa-icon style="color: #4fb556" [icon]="checkIcon"></fa-icon>
+        </div>
+        Account validated.
+      </div>
+      <p class="modal-text">You can now apply for jobs.</p>
+    </div>
+    <button
+      class="modal-button primary"
+      (click)="onCloseSuccessfullSavingModal()"
+    >
+      OK
+    </button>
+  </ng-template>
+</modal>

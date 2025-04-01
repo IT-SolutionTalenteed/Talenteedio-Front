@@ -1,0 +1,17 @@
+@import "colors.scss";
+
+.content {
+  max-width: 860px;
+  min-height: 100%;
+  padding: 0px 15px;
+  margin: 0 auto;
+  width: 100%;
+  &::ng-deep a {
+    color: $primary !important;
+    text-decoration: underline !important;
+  }
+  hr {
+    margin: 45px 0;
+    border: #ecedf2 solid 1px;
+  }
+}

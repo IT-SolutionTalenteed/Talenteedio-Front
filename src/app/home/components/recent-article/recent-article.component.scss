@@ -1,0 +1,55 @@
+@import "colors.scss";
+@import "texts.scss";
+@import "form.scss";
+@import "breakpoints.scss";
+.main-container {
+  padding: 30px 200px;
+  background-image: url("/assets/img/diversity-home.jpg");
+  background-size: cover;
+  background-position: top;
+  display: flex;
+
+  .filter-job {
+    background-color: rgba(255, 255, 255, 0.705);
+    padding: 43px;
+    border-radius: 25px;
+    max-width: 534px;
+    width: 100%;
+    color: $black;
+    margin-left: auto;
+
+    .text-title {
+      margin: 0;
+
+      .text_accent {
+        color: #eb5432;
+      }
+
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+  }
+  .content-text {
+    font-size: 16px;
+    &::ng-deep a {
+      color: $primary !important;
+      text-decoration: underline !important;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main-container {
+    padding: 20px;
+
+    .filter-job {
+      padding: 20px;
+
+      .text-title {
+        // color: #fff;
+        font-size: 26px;
+      }
+    }
+  }
+}

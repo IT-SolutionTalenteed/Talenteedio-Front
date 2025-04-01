@@ -1,0 +1,50 @@
+<div
+  class="banner-container section"
+  [ngStyle]="{ 'background-image': 'url(' + image + ')' }"
+>
+  <div class="bloc-container">
+    <div class="bloc">
+      <h2>Find <span class="accent">Jobs</span></h2>
+      <div class="bloc-text">
+        Your <span class="accent">gateway</span> to endless possibilities and
+        exciting <span class="accent">career</span> opportunities
+      </div>
+      <a [routerLink]="['/job']">
+        <button class="primary">Browse jobs</button>
+      </a>
+    </div>
+
+    <div class="bloc">
+      <h2>HR <span class="accent">Voice</span></h2>
+      <div class="bloc-text">
+        Your <span class="accent">connected</span> local company and ultimate
+        <span class="accent">resources</span>
+      </div>
+      <a [routerLink]="['/voice']">
+        <button class="primary">Last news</button>
+      </a>
+    </div>
+
+    <div class="bloc">
+      <h2>HR <span class="accent">Initiative</span></h2>
+      <div class="bloc-text">
+        Your <span class="accent">initiative </span> to fostering a more
+        <span class="accent">inclusive</span> work environment
+      </div>
+      <a [routerLink]="['/initiative']">
+        <button class="primary">Last news</button>
+      </a>
+    </div>
+
+    <div class="bloc">
+      <h2>HR <span class="accent">Society</span></h2>
+      <div class="bloc-text">
+        Your <span class="accent">community</span> to thrive in the world of
+        human resources.
+      </div>
+      <a [routerLink]="['/community']">
+        <button class="primary">Be part of us</button>
+      </a>
+    </div>
+  </div>
+</div>

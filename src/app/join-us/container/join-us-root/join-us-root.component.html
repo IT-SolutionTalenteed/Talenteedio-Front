@@ -1,0 +1,9 @@
+<div class="banner-container"></div>
+<div class="join-us">
+  <h1 class="title">Become <span>HR Society</span> member</h1>
+  <app-loader
+    [isLoading]="sendEmailLoading$ | async"
+    style="width: 100%; height: 100%"
+    ><app-join-us-from (send)="handleSend($event)"></app-join-us-from
+  ></app-loader>
+</div>

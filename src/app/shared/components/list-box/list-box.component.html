@@ -1,0 +1,12 @@
+<div [formGroup]="form" *ngIf="form" class="container">
+    <input formControlName="search" class="search" type="text" placeholder="Filtrer" />
+    <ul data-simplebar formArrayName="items">
+        <li *ngFor="let item of filter(getFormArray('items').controls); let j = index" [formGroupName]="j">
+            <input type="checkbox" formControlName="selected" id="{{ id + j }}" />
+            <label class="name" for="{{ id + j }}">{{
+                (labels && labels[item.get('name').value]) || item.get('name').value
+            }}</label>
+            <label class="count" *ngIf="item.get('count').value">({{ item.get('count').value }})</label>
+        </li>
+    </ul>
+</div>

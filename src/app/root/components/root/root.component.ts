@@ -1,0 +1,149 @@
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { Store, select } from '@ngrx/store';
+import { map, pipe } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { getAccessToken } from './../../../authentication/store/selectors/authentication.selectors';
+
+import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
+
+import { Title } from '@angular/platform-browser';
+import { go } from 'src/app/routeur/store/actions/router.actions';
+import { AppRouterState } from 'src/app/routeur/store/reducers/router.reducers';
+import {
+  getIsAuthenticationRoute,
+  getIsBackOfficeRoute,
+  getTitle,
+  getUrl,
+} from 'src/app/routeur/store/selectors/router.selectors';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { Ad } from 'src/app/shared/models/ad.interface';
+import { Contact } from 'src/app/shared/models/contact.interface';
+import { User } from 'src/app/shared/models/user.interface';
+import {
+  closeBecomeMemberModal,
+  loadAd,
+  loadLocation,
+  loadLocations,
+} from 'src/app/shared/store/actions/shared.actions';
+import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
+import {
+  getAd,
+  getIsBecomeMemberModalOpen,
+  getLocation,
+} from 'src/app/shared/store/selectors/shared.selectors';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
+import { SubSink } from 'subsink';
+import { NAVAR_MENUS } from '../../constants/navbar-menu.constants';
+import { SIDE_NAV_MENU } from '../../constants/side-nav-menu.constants';
+import { Menu } from '../../types/menu.interface';
+import { filterHeaderMenusDependingOnUserRight } from '../../utils/menu-filter.utils';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.scss'],
+})
+export class RootComponent implements OnInit, OnDestroy {
+  headerMenu$: Observable<Menu[]>;
+  user$: Observable<User>;
+  currentUrl$: Observable<string>;
+  sideMenus$: Observable<Menu[]>;
+  location$: Observable<Contact | null>;
+  ad$: Observable<Ad | null>;
+  isBackOfficeRoute = false;
+  isHomeRoute$: Observable<boolean>;
+  isAuthenticationRoute = false;
+  accessToken: string;
+  navbarMenus = NAVAR_MENUS;
+  @ViewChild('becomeMemberModal', { static: true })
+  becomeMemberModal: ModalComponent;
+  userPlus = faUserPlus;
+
+  private subs = new SubSink();
+
+  // eslint-disable-next-line max-params
+  constructor(
+    private authenticationStore: Store<AuthenticationState>,
+    private routerStore: Store<AppRouterState>,
+    private sharedStore: Store<SharedState>,
+    private titleService: Title
+  ) {}
+
+  ngOnInit() {
+    this.initTitle();
+    this.initAuthentication();
+    this.initSideMenu();
+    this.initUrlUtils();
+    this.initData();
+    this.initToken();
+    this.subscribeModals();
+    this.location$ = this.sharedStore.pipe(select(getLocation));
+    this.ad$ = this.sharedStore.pipe(select(getAd));
+  }
+  initToken() {
+    this.subs.sink = this.authenticationStore
+      .pipe(select(getAccessToken))
+      .subscribe((token) => {
+        this.accessToken = token;
+      });
+  }
+  initTitle() {
+    this.routerStore.pipe(select(getTitle)).subscribe((title) => {
+      this.titleService.setTitle(`${title} | Talenteed`);
+    });
+  }
+
+  initAuthentication() {
+    this.user$ = this.authenticationStore.pipe(select(getLoggedUser));
+  }
+
+  initSideMenu() {
+    this.sideMenus$ = this.authenticationStore.pipe(
+      select(getLoggedUser),
+      map((user: User) =>
+        filterHeaderMenusDependingOnUserRight(SIDE_NAV_MENU, user)
+      )
+    );
+  }
+
+  initUrlUtils() {
+    this.currentUrl$ = this.routerStore.select(pipe(getUrl));
+    this.subs.sink = this.authenticationStore
+      .pipe(select(getIsBackOfficeRoute))
+      .subscribe((isBackOfficeRoute) => {
+        this.isBackOfficeRoute = isBackOfficeRoute;
+      });
+    this.subs.sink = this.authenticationStore
+      .pipe(select(getIsAuthenticationRoute))
+      .subscribe((isAuthenticationRoute) => {
+        this.isAuthenticationRoute = isAuthenticationRoute;
+      });
+  }
+
+  initData() {
+    this.sharedStore.dispatch(loadLocation());
+    this.sharedStore.dispatch(loadLocations());
+    this.sharedStore.dispatch(loadAd());
+  }
+
+  onBecomeMember() {
+    this.becomeMemberModal.close();
+    this.routerStore.dispatch(go({ path: ['/become-member'] }));
+  }
+  private subscribeModals() {
+    subscribeModal(
+      this.sharedStore,
+      getIsBecomeMemberModalOpen,
+      true,
+      this.becomeMemberModal
+    );
+    this.becomeMemberModal.closing.subscribe(() =>
+      this.sharedStore.dispatch(closeBecomeMemberModal())
+    );
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
+}

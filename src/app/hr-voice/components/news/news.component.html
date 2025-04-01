@@ -1,0 +1,15 @@
+<div class="bloc" *ngIf="news?.length > 0">
+  <div class="title">
+    <h2>News</h2>
+  </div>
+  <div class="news-container">
+    <app-new-item
+      style="width: 100%"
+      *ngFor="let new of news"
+      [news]="new"
+    ></app-new-item>
+    <a class="see-all" [routerLink]="'/blog'">
+      <Button class="secondary">See all the news</Button>
+    </a>
+  </div>
+</div>

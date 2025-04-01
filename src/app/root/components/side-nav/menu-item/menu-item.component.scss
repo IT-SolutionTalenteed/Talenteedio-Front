@@ -1,0 +1,134 @@
+@import 'colors.scss';
+
+:host {
+    display: contents;
+}
+
+* {
+    color: #fff;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.menu__item a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.submenu__item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.menu__item a,
+.submenu__item {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.menu__item > a {
+    padding-left: 40px;
+}
+
+.menu__item span {
+    padding-left: 10px;
+}
+
+.menu__item .submenu {
+    display: none;
+}
+
+.menu__item--active .submenu {
+    display: block;
+}
+
+.menu__item--navigated, .menu__item:hover {
+    a {
+        background: #5f2d78;
+        transition: background-color 0.25s;
+    }
+}
+
+.submenu__item {
+    padding-left: 82px;
+    transition: background-color 0.25s, color 0.3s;
+}
+
+.submenu__item:hover:not(.submenu__item--title) {
+    // background: $sidenav-sub-menu-active-background;
+    color: #fff !important;
+}
+
+.submenu__item--title {
+    display: none;
+}
+
+.menu__item--hover {
+    position: relative;
+    z-index: 5;
+}
+
+.menu__item--hover li {
+    color: #6d6c6c;
+}
+
+.menu__item--hover .submenu {
+    position: absolute;
+    top: 0;
+    left: 288px;
+    display: block;
+    background: #fff;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15);
+}
+
+.menu__item--hover .submenu__item {
+    padding: 0 25px;
+    white-space: nowrap;
+}
+
+.submenu__item--active {
+    padding-left: 75px;
+    // border-left: 7px solid $sidenav-selected-green;
+    // background: $sidenav-sub-menu-active-background;
+}
+
+.menu__item--hover .submenu__item--active {
+    color: #fff;
+    padding-left: 18px;
+}
+
+@media screen and (max-width: 1280px) {
+    .menu__item--hover .submenu {
+        left: 60px;
+    }
+
+    .menu__item--hover .submenu__item--title {
+        display: block;
+        line-height: 60px;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .menu__item a {
+        padding: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu__item span {
+        display: none;
+    }
+
+    .submenu__item--title {
+        display: block;
+    }
+}

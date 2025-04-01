@@ -1,0 +1,14 @@
+<div class="quantity">
+  <input
+    name="pagesize"
+    type="number"
+    [min]="min"
+    [max]="max"
+    [(ngModel)]="value"
+    readonly
+  />
+  <div class="quantity-nav">
+    <div class="quantity-button quantity-up" (click)="onIncrement()">❮</div>
+    <div class="quantity-button quantity-down" (click)="onDecrement()">❯</div>
+  </div>
+</div>

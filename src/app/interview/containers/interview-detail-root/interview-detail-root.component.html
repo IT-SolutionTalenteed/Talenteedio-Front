@@ -1,0 +1,7 @@
+<div class="interview-detail-root-container">
+  <app-loader [isLoading]="interviewLoading$ | async" style="width: 100%">
+    <app-interview-detail
+      [interview]="interview$ | async"
+    ></app-interview-detail>
+  </app-loader>
+</div>

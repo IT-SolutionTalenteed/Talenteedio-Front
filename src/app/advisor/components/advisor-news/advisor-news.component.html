@@ -1,0 +1,33 @@
+<div class="blog-item-container">
+  <h2>News</h2>
+  <div class="info-box" *ngIf="news; else noNews">
+    <div class="title">
+      <a [routerLink]="'/blog/detail/' + news.slug">
+        {{ news.title }}
+        <fa-icon
+          *ngIf="news.isPremium"
+          class="icon"
+          [icon]="premiumIcon"
+        ></fa-icon>
+      </a>
+    </div>
+    <div class="content">
+      {{ (news.isPremium ? news.publicContent : news.content) | htmlParser }}
+    </div>
+    <a [routerLink]="'/blog/detail/' + news.slug" class="read-more">
+      Read more
+      <div class="icon">
+        <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+      </div>
+    </a>
+  </div>
+  <a class="see-all" [routerLink]="'/blog'">
+    <Button class="secondary">See all the news</Button>
+  </a>
+</div>
+
+<ng-template #noNews>
+  <div class="info-box">
+    <div class="content">No news</div>
+  </div>
+</ng-template>

@@ -1,0 +1,21 @@
+@import 'forms.scss';
+@import 'buttons.scss';
+@import 'details.scss';
+
+.container {
+    @extend %detail-layout;
+    form {
+        @extend %generic-form;
+        max-width: 100%;
+    }
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+}

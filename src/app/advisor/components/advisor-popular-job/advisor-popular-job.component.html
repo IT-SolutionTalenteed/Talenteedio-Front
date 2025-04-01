@@ -1,0 +1,56 @@
+<div class="job-item-container">
+  <h2>Popular job</h2>
+  <div class="job-box">
+    <div class="content" *ngIf="popularJob; else noJob">
+      <div class="company-logo">
+        <img
+          src="{{
+            popularJob?.featuredImage?.fileUrl || 'assets/img/favicon.png'
+          }}"
+          alt="Jon image"
+        />
+      </div>
+      <div class="job-detail">
+        <div class="job-title">
+          <a [routerLink]="'/job/detail/' + popularJob.slug">{{
+            popularJob.title
+          }}</a>
+        </div>
+        <ul class="job-info">
+          <li>
+            <fa-icon class="icon" [icon]="fabriefcase"></fa-icon
+            >{{ popularJob?.category?.name || "-" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faMapMarker"></fa-icon
+            >{{ popularJob?.location?.name || "-" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faClock"></fa-icon
+            >{{ popularJob.updatedAt | date : "dd/MM/yy" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faMoney"></fa-icon
+            >{{ popularJob.salaryMin }} € - {{ popularJob.salaryMax }} €
+          </li>
+        </ul>
+        <ul class="job-chips">
+          <li *ngIf="popularJob.jobType" class="time">
+            {{ popularJob.jobType.name }}
+          </li>
+          <li class="privacy" *ngIf="popularJob.isFeatured">Featured</li>
+          <li class="required" *ngIf="popularJob.isUrgent">Urgent</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <a class="see-all" [routerLink]="'/job'">
+    <Button class="secondary">See all the jobs</Button>
+  </a>
+</div>
+
+<ng-template #noJob>
+  <div class="info-box">
+    <div class="no-data">No popular job</div>
+  </div>
+</ng-template>

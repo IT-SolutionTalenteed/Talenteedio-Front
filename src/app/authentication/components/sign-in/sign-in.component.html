@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="form-container">
+    <div class="sub-title">
+      <strong>Sign In</strong>
+    </div>
+    <form [formGroup]="form" (submit)="onSubmit(form)">
+      <div class="form-content">
+        <div class="control">
+          <label>Email</label>
+          <input
+            id="email"
+            appScrollOnFocus
+            formControlName="email"
+            placeholder="Enter your mail address"
+            type="text"
+            #first
+          />
+
+          <app-validation-error
+            [control]="form.controls['email']"
+          ></app-validation-error>
+        </div>
+
+        <div for="password" class="password-label">
+          <div class="label">Password</div>
+          <a
+            class="forgot-password"
+            routerLink="/authentication/reinit-password"
+            >Forgot your password ?</a
+          >
+        </div>
+        <div class="control password">
+          <input
+            #password
+            id="password"
+            class="with-icon"
+            appScrollOnFocus
+            formControlName="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+          <img
+            src="{{
+              !passwordEl
+                ? '/assets/img/hide.png'
+                : passwordEl.nativeElement.type === 'password'
+                ? '/assets/img/hide.png'
+                : '/assets/img/show.png'
+            }}"
+            alt="show password"
+            (click)="showPassword()"
+          />
+
+          <app-validation-error
+            [control]="form.controls['password']"
+          ></app-validation-error>
+        </div>
+        <div style="margin-bottom: 20px" *ngIf="isWindowLoaded">
+          <ngx-recaptcha2
+            #captchaElem
+            [siteKey]="siteKey"
+            (reset)="handleReset()"
+            (expire)="handleExpire()"
+            (load)="handleLoad()"
+            (success)="handleSuccess($event)"
+            [useGlobalDomain]="false"
+            [size]="size"
+            [hl]="lang"
+            [theme]="theme"
+            [type]="type"
+            formControlName="recaptcha"
+          >
+          </ngx-recaptcha2>
+        </div>
+        <div class="checkbox-control">
+          <input type="checkbox" formControlName="rememberMe" />
+          <div class="label">Remember me</div>
+        </div>
+
+        <div class="error-content" *ngIf="loginErrorMessage">
+          <div class="text-wrapper">
+            <small>
+              {{ loginErrorMessage }}
+            </small>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="primary"
+          [disabled]="!form.value.recaptcha"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
+
+    <div class="signup-label">
+      New to Talenteed ?
+      <a routerLink="/authentication/sign-up">Sign up</a>
+    </div>
+  </div>
+</div>

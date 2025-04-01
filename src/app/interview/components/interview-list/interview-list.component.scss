@@ -1,0 +1,19 @@
+@import "breakpoints.scss";
+.interview-list-container {
+  display: flex;
+  width: 100% !important;
+  flex-direction: row;
+  width: 100%;
+  gap: 2%;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  .interview-list-item {
+    width: 100%;
+  }
+}
+
+@media (max-width: $medium-devices-breakpoint) {
+  .interview-list-item {
+    width: 100% !important;
+  }
+}

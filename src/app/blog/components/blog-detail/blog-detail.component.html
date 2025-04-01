@@ -1,0 +1,85 @@
+<div class="blog-detail-container">
+  <div class="header" *ngIf="article">
+    <div class="title-section">
+      <h1 class="title">
+        {{ article.title }}
+      </h1>
+    </div>
+
+    <div class="creation-info">
+      <div class="icon">
+        <fa-icon [icon]="icon"></fa-icon>
+      </div>
+      {{ article.company?.user.name || article.admin?.user.name }}
+      <span>{{ article.createdAt | date : "dd/MM/yyyy" }}</span>
+    </div>
+    <div class="premium-icon" *ngIf="article.isPremium">
+      <fa-icon class="icon" [icon]="premiumIcon"></fa-icon>
+      <div class="premium-label">Premium</div>
+    </div>
+  </div>
+  <div class="banner" *ngIf="article?.image?.fileUrl">
+    <img [src]="article.image.fileUrl" alt="banner" />
+  </div>
+  <div class="content detail-content" *ngIf="content">
+    <ng-container *ngIf="!article.isPremium">
+      <div class="content-text" [innerHTML]="publicContent"></div>
+      <div class="content-text" [innerHTML]="content"></div>
+    </ng-container>
+    <ng-container *ngIf="article.isPremium">
+      <ng-container
+        *ngIf="
+          content && (isHrFirstClub$ | async);
+          then privateContent;
+          else readMore
+        "
+      ></ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #privateContent>
+    <div class="content">
+      <div class="content-text" [innerHTML]="publicContent"></div>
+      <div class="content-text" [innerHTML]="content"></div>
+    </div>
+  </ng-template>
+  <ng-template #readMore>
+    <div class="content">
+      <div class="content-text" [innerHTML]="publicContent"></div>
+      <div class="read-more" (click)="onReadMore()">
+        Read more
+        <div class="icon">
+          <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div class="content">
+    <hr />
+    <div class="social-media">
+      <div class="share-this-post">Share this post</div>
+      <div class="button-container">
+        <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
+          ><button class="facebook">
+            <fa-icon [icon]="fbIcon"></fa-icon> Facebook
+          </button></a
+        >
+      </div>
+      <div class="button-container">
+        <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
+          ><button class="twitter">
+            <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
+          </button></a
+        >
+      </div>
+      <div class="button-container">
+        <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
+          ><button class="linkedin">
+            <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
+          </button></a
+        >
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

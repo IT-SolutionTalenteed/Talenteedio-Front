@@ -1,0 +1,16 @@
+<div class="container">
+    <ng-container *ngIf="updateStatus">
+        <ng-container *ngIf="updateStatus.updating">
+            <img class="updating" src="/assets/images/ico-updating.png" alt="Sauvegarde en cours" />
+            <div class="text">Sauvegarde en cours ...</div>
+        </ng-container>
+        <ng-container *ngIf="!updateStatus.updating && updateStatus.updated">
+            <img src="/assets/images/ico-update-success.png" alt="Sauvegardé avec succèss" />
+            <div class="text">Sauvegardé avec succèss</div>
+        </ng-container>
+        <ng-container *ngIf="!updateStatus.updating && !updateStatus.updated">
+            <img src="/assets/images/ico-update-fail.png" alt="Impossible de sauvegarder" />
+            <div class="text">Impossible de sauvegarder</div>
+        </ng-container>
+    </ng-container>
+</div>

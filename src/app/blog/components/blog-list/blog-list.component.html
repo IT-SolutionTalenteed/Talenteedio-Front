@@ -1,0 +1,9 @@
+<div class="blog-list-container">
+  <a
+    *ngFor="let article of articles"
+    class="blog-list-item"
+    [routerLink]="'/blog/detail/' + article.slug"
+  >
+    <app-blog-item [article]="article"></app-blog-item>
+  </a>
+</div>

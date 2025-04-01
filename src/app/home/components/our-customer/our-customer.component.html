@@ -1,0 +1,18 @@
+<div class="our-customer container-center">
+  <div class="header">
+    <h1 class="title">Testimonials From Our Customers</h1>
+    <div class="links">
+      <span>La mise en relation est avant tout une histoire de valeurs</span>
+    </div>
+  </div>
+  <div class="container-job-item" *ngIf="ssrtype">
+    <owl-carousel-o [options]="carouselOptions">
+      <ng-container *ngFor="let testimonial of testimonials; let i = index">
+        <ng-template carouselSlide [id]="'i'">
+          <app-card-customer [testimonial]="testimonial"></app-card-customer>
+          <div class="custom-dots-container"></div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>

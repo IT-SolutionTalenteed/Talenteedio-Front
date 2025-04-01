@@ -1,0 +1,9 @@
+<div class="interview-list-container">
+  <a
+    *ngFor="let interview of interviews"
+    class="interview-list-item"
+    [routerLink]="'/interview/detail/' + interview.slug"
+  >
+    <app-interview-item [replay]="interview"></app-interview-item>
+  </a>
+</div>

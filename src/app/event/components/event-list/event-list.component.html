@@ -1,0 +1,9 @@
+<div class="event-list-container">
+  <a
+    *ngFor="let event of events"
+    class="event-list-item"
+    [routerLink]="'/event/detail/' + event.slug"
+  >
+    <app-event-item [event]="event"></app-event-item>
+  </a>
+</div>

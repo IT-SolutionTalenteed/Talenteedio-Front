@@ -1,0 +1,14 @@
+<a class="blog-item-container" [routerLink]="'/blog/detail/' + article.slug">
+  <div class="image-box">
+    <img
+      alt="Article image"
+      [src]="article?.image?.fileUrl ?? '/assets/img/hr_voice.jpg'"
+    />
+  </div>
+  <div class="info-box">
+    <div class="start-date">{{ article.createdAt | date : "dd/MM/yyyy" }}</div>
+    <div class="title">
+      {{ article.title }}
+    </div>
+  </div>
+</a>

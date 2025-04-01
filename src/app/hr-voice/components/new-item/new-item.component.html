@@ -1,0 +1,21 @@
+<div class="info-box">
+  <div class="title">
+    <a [routerLink]="'/blog/detail/' + news.slug">
+      {{ news.title }}
+      <fa-icon
+        *ngIf="news.isPremium"
+        class="icon"
+        [icon]="premiumIcon"
+      ></fa-icon>
+    </a>
+  </div>
+  <div class="content">
+    {{ (news.isPremium ? news.publicContent : news.content) | htmlParser }}
+  </div>
+  <a [routerLink]="'/blog/detail/' + news.slug" class="read-more">
+    Read more
+    <div class="icon">
+      <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+    </div>
+  </a>
+</div>

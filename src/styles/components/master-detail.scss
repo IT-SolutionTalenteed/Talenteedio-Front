@@ -1,0 +1,58 @@
+// Never modify the below generic styles !!! :
+
+// MASTER DETAIL:
+
+@import 'buttons.scss';
+@import 'texts.scss';
+
+%master-detail {
+    background-color: #ffffff;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1% 47% 1% 50% 1%;
+    grid-template-rows: 2% 7% 7% minmax(0, 1fr) 7% 2%;
+    grid-template-areas:
+        '.      .          .        .            .'
+        '.      header     header   header       .'
+        '.      search-bar .        detail       .'
+        '.      list       .        detail       .'
+        '.      footer     .        detail       .'
+        '.      .          .        .            .';
+    transition: all 0.2s; // Animation works only with firefox
+    &.detail-hidden {
+        grid-template-columns: 1% 98% 0% 0% 1%;
+    }
+
+    header {
+        grid-area: header;
+        @extend %feature-title;
+    }
+
+    .search-bar {
+        grid-area: search-bar;
+    }
+
+    .list {
+        grid-area: list;
+    }
+
+    footer {
+        grid-area: footer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        button {
+            @extend %button;
+        }
+    }
+
+    .detail {
+        grid-area: detail;
+        background: #f8f8f8;
+        &.no-border {
+            border: 0px !important;
+        }
+    }
+}

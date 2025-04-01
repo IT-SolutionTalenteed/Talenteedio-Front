@@ -1,0 +1,29 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+.our-customer {
+  padding: 50px 15px;
+  width: 100%;
+  max-width: 1310px;
+  margin: 0 auto;
+  .header {
+    width: 100%;
+    padding: 50px 0 40px 0;
+    text-align: center;
+    .title {
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 41px;
+      text-align: center;
+      color: $black;
+      margin: 0 0 10px;
+    }
+    .links {
+      font-size: 14px;
+      line-height: 22px;
+      color: $text-color;
+    }
+  }
+  .container-job-item {
+    margin-top: 5%;
+  }
+}

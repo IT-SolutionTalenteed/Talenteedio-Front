@@ -1,0 +1,13 @@
+<nav>
+    <div *ngFor="let menu of menus; let i = index" class="item">
+        <div class="link-container">
+            <a [routerLink]="menu.routerLink">
+                <img [src]="currentUrl.includes(menu.parentRouterLink) ? menu.iconActive : menu.icon" />
+                <h3 [class.active]="currentUrl.includes(menu.parentRouterLink)">
+                    {{ menu.title }}
+                </h3>
+            </a>
+            <div class="triangle" [style.background-color]="currentUrl.includes(menu.parentRouterLink) ? menu.color : 'initial'"></div>
+        </div>
+    </div>
+</nav>

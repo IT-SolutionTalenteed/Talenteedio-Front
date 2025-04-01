@@ -1,0 +1,5 @@
+<div class="blog-detail-root-container">
+  <app-loader [isLoading]="articleLoading$ | async">
+    <app-blog-detail [article]="article$ | async"></app-blog-detail>
+  </app-loader>
+</div>

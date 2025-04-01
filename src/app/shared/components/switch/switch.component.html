@@ -1,0 +1,12 @@
+<div class="container">
+    <label class="switch">
+        <input type="checkbox" [checked]="value" (click)="switch()" #checkbox />
+        <span class="slider round" [class.disabled]="disabled"></span>
+    </label>
+    <ng-container *ngIf="showLabel">
+        <p *ngIf="value; else f">Actif</p>
+        <ng-template #f>
+            <p>Inactif</p>
+        </ng-template>
+    </ng-container>
+</div>

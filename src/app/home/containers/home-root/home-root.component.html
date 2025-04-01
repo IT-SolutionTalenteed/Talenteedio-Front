@@ -1,0 +1,28 @@
+<app-loader
+  class="container-our-customer"
+  [isLoading]="partnersLoading$ | async"
+>
+  <app-banner [homeSetting]="homeSetting$ | async" />
+  <h1 class="title">
+    Your <span>gateway</span> to endless possibilities and exciting
+    <span>career</span>
+    opportunities!
+  </h1>
+  <app-featured-job
+    [jobs]="jobs$ | async"
+    [jobsLoading]="jobsLoading$ | async"
+    [homeSettingLoading]="homeSettingLoading$ | async"
+    [homeSetting]="homeSetting$ | async"
+  />
+  <h1 class="title">
+    Your <span>connected</span> local company and ultimate
+    <span>resources</span>
+  </h1>
+  <app-hr-media
+    [homeSettingLoading]="homeSettingLoading$ | async"
+    [homeSetting]="homeSetting$ | async"
+    [articles]="articles$ | async"
+    [interview]="interview$ | async"
+  ></app-hr-media>
+  <app-partners [partners]="partners$ | async"></app-partners>
+</app-loader>

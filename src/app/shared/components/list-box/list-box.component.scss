@@ -1,0 +1,49 @@
+// @import 'checkboxes.scss';
+@import 'colors.scss';
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    // border: 1px solid $list-box-border;
+    width: 100%;
+    max-height: 265px;
+    font-size: 1rem !important;
+    // color: $list-box-text;
+    .search {
+        width: 95%;
+        height: 28px;
+        margin-top: 15px;
+        padding-left: 10px;
+        border-radius: 3px;
+        // border: 1px solid $list-box-search-border;
+    }
+    // ::placeholder {
+    //     color: $list-box-search-placeholder-text;
+    // }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 6px;
+        width: 95%;
+        max-height: 200px;
+        li {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            height: 40px;
+            .name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-left: 8px;
+                margin-right: 8px;
+                max-width: 187px;
+            }
+            .count {
+                margin-right: 12px;
+            }
+        }
+    }
+}

@@ -1,0 +1,147 @@
+@import "form";
+@import "colors";
+@import "texts";
+
+.job-form-root {
+  min-height: 50vh;
+}
+
+.modal-title {
+  text-align: center;
+  h4 {
+    @extend %title;
+    margin: 0 0 1.33rem 0;
+  }
+  .icon {
+    h4 {
+      margin: 0;
+    }
+  }
+}
+
+.modal-p {
+  text-align: center;
+  margin: 10px 0px !important;
+}
+
+form {
+  @extend %generic-form;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+
+  .error-content {
+    @extend %error-form-text;
+    font-size: 1rem;
+    min-height: 19px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-content {
+    width: 100%;
+    padding-bottom: 10px;
+    label {
+      @extend %generic-label;
+    }
+
+    .control {
+      position: relative;
+      margin-top: 7px;
+      .icon {
+        z-index: 1001;
+        position: absolute;
+        left: 20px;
+        top: 26px;
+        margin-top: -15px;
+        font-size: 16px;
+        line-height: 30px;
+        color: $text-color;
+      }
+      ng-select {
+        text-transform: none;
+        text-overflow: clip;
+      }
+    }
+  }
+
+  .control ::ng-deep {
+    .ng-placeholder {
+      white-space: normal !important;
+      z-index: 1 !important;
+    }
+    .ng-select.ng-select-focused > .ng-select-container {
+      border: 1px solid $primary !important;
+      box-shadow: none !important;
+    }
+    .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+      border-color: $primary !important;
+      box-shadow: none;
+    }
+
+    .ng-select .ng-select-container {
+      background: $white;
+      border: 1px solid $border !important;
+    }
+    .ng-select.ng-select-opened > .ng-select-container {
+      background: $white;
+    }
+
+    .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+      padding: 15px 20px 15px 54px;
+    }
+    .ng-select.ng-select-multiple
+      .ng-select-container
+      .ng-value-container
+      .ng-placeholder {
+      top: auto;
+      padding-bottom: auto;
+      padding-left: auto;
+    }
+    .ng-select.ng-select-multiple
+      .ng-select-container
+      .ng-value-container
+      .ng-value {
+      background-color: rgba(25, 103, 210, 0.15);
+      color: $primary;
+    }
+    .ng-select.ng-select-multiple
+      .ng-select-container
+      .ng-value-container
+      .ng-value
+      .ng-value-icon:hover {
+      background-color: transparent;
+    }
+  }
+
+  button {
+    width: fit-content;
+  }
+}
+
+::ng-deep {
+  angular-intl-phone {
+    grid-area: input;
+    z-index: 4;
+    background-color: $generic-form-background !important;
+    color: $text-color;
+    border-radius: $border-radius;
+    &.ng-invalid.ng-dirty.ng-touched {
+      input {
+        @extend %invalid-control;
+      }
+    }
+    .iti {
+      width: 100% !important;
+      border-radius: $border-radius;
+      input {
+        @extend %generic-input;
+        width: 100%;
+      }
+    }
+  }
+}

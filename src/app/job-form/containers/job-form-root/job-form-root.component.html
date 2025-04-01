@@ -1,0 +1,152 @@
+<div class="job-form-root">
+  <app-loader [isLoading]="jobLoading$ | async">
+    <app-job-form
+      [job]="job$ | async"
+      [user]="user$ | async"
+      (apply)="onApply()"
+      (refer)="onRefer()"
+      (login)="onLogin()"
+    ></app-job-form>
+  </app-loader>
+</div>
+
+<modal #applyJobModal class="popup-modal success custom">
+  <ng-template #modalBody>
+    <app-loader
+      [isLoading]="applyForJobLoading$ | async"
+      style="width: 65%"
+      [width]="80"
+      [height]="80"
+    >
+      >
+      <div class="modal-title">
+        <div class="icon">
+          <h4>
+            <fa-icon
+              [icon]="clipBoardIcon"
+              style="color: rgb(25 103 210 / 68%)"
+            ></fa-icon>
+          </h4>
+        </div>
+        <h4>Apply for {{ (job$ | async)?.title }}</h4>
+      </div>
+      <p class="modal-p">You can select a CV or a LM to apply for the job</p>
+      <form *ngIf="form" [formGroup]="form" (submit)="onApplyForJob(form)">
+        <!-- <form> -->
+        <div class="form-content">
+          <label for="cvId"><strong>CV *</strong></label>
+          <div class="control">
+            <ng-select
+              formControlName="cvId"
+              [items]="CVs || []"
+              bindLabel="title"
+              bindValue="id"
+              placeholder="Choose a CV"
+              required
+            >
+            </ng-select>
+            <app-validation-error
+              [control]="form.controls['cvId']"
+            ></app-validation-error>
+          </div>
+          <label for="lmId"><strong>LM</strong></label>
+          <div class="control">
+            <ng-select
+              formControlName="lmId"
+              [items]="LMs || []"
+              bindLabel="title"
+              bindValue="id"
+              placeholder="Choose a cover letter"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="error-content" *ngIf="applyForJobError$ | async">
+          <div class="text-wrapper">
+            {{ applyForJobError$ | async }}
+          </div>
+        </div>
+        <button class="primary" type="submit">Apply</button>
+      </form>
+    </app-loader>
+  </ng-template>
+  <!-- <ng-template #modalFooter>
+  </ng-template> -->
+</modal>
+
+<modal #referJobModal class="popup-modal success custom">
+  <ng-template #modalBody>
+    <app-loader
+      [isLoading]="referJobLoading$ | async"
+      style="width: 65%"
+      [width]="80"
+      [height]="80"
+    >
+      <div class="modal-title">
+        <div class="icon">
+          <h4>
+            <fa-icon
+              [icon]="faUserPlus"
+              style="color: rgb(25 103 210 / 68%)"
+            ></fa-icon>
+          </h4>
+        </div>
+        <h4>Refer a talent</h4>
+      </div>
+      <form
+        *ngIf="referForm"
+        [formGroup]="referForm"
+        (submit)="onReferJob(referForm)"
+      >
+        <!-- <form> -->
+        <div class="form-content">
+          <label for="talentEmail"><strong>Talent email *</strong></label>
+          <div class="control">
+            <input
+              id="talentEmail"
+              appScrollOnFocus
+              formControlName="talentEmail"
+              type="email"
+              placeholder="Enter talent email"
+              #first
+            />
+            <app-validation-error
+              [control]="referForm.controls['talentEmail']"
+            ></app-validation-error>
+          </div>
+          <label for="talentFullName"><strong>Talent Fullname *</strong></label>
+          <div class="control">
+            <input
+              id="talentFullName"
+              appScrollOnFocus
+              formControlName="talentFullName"
+              type="text"
+              placeholder="Enter talent fullname"
+            />
+            <app-validation-error
+              [control]="referForm.controls['talentFullName']"
+            ></app-validation-error>
+          </div>
+          <label for="talentNumber"><strong>Talent phone</strong></label>
+          <div class="control">
+            <angular-intl-phone
+              formControlName="talentNumber"
+              [config]="config"
+            />
+            <app-validation-error
+              [control]="referForm.controls['talentNumber']"
+            ></app-validation-error>
+          </div>
+        </div>
+        <div class="error-content" *ngIf="referJobError$ | async">
+          <div class="text-wrapper">
+            {{ referJobError$ | async }}
+          </div>
+        </div>
+        <button class="primary" type="submit">Refer</button>
+      </form>
+    </app-loader>
+  </ng-template>
+  <!-- <ng-template #modalFooter>
+  </ng-template> -->
+</modal>

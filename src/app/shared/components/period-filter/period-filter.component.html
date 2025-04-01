@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="header">
+        <img src="assets/images/ico-period.svg" />
+        <h4>PERIODE</h4>
+    </div>
+    <div class="content">
+        <form [formGroup]="form">
+            <div class="wrapper">
+                <div class="control">
+                    <label for="">{{ fromLabel }}</label>
+                    <input formControlName="beginDate" name="beginDate" type="date" [required]="!clearable" />
+                </div>
+                <div class="control">
+                    <label for="">{{ toLabel }}</label>
+                    <input formControlName="endDate" name="endDate" type="date" [required]="!clearable" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

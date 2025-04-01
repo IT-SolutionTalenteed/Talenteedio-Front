@@ -1,0 +1,24 @@
+<div class="owl-item">
+  <div class="company-block">
+    <div class="inner-box">
+      <figure class="image">
+        <img
+          class="lazy loaded"
+          alt=""
+          [src]="company?.logo?.fileUrl ?? '/assets/img/favicon.png'"
+          data-was-processed="true"
+        />
+      </figure>
+      <h4 class="name">{{ company.company_name }}</h4>
+      <ul *ngIf="company?.contact?.address">
+        <li>
+          <fa-icon class="icon" [icon]="faMapMarker"></fa-icon>
+          {{ company.contact.address.line }}
+        </li>
+      </ul>
+      <!-- <div class="btn-container">
+        <button class="theme-btn btn-style-three">2 Open Position</button>
+      </div> -->
+    </div>
+  </div>
+</div>

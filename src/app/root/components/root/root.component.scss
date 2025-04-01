@@ -1,0 +1,123 @@
+@import "sizes.scss";
+@import "breakpoints.scss";
+@import "box-shadow.scss";
+@import "colors.scss";
+@import "texts.scss";
+@import "buttons.scss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 100px;
+  background: #ffffff;
+  box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
+  border-bottom: 1px solid $border;
+  left: 0;
+  top: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 81px);
+  flex: 1;
+  background-color: $white;
+}
+
+main {
+  flex: 1;
+  //   padding: 40px 30px 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  .main-content {
+    flex: 1;
+  }
+}
+
+/* Media queries for responsive layout */
+@media (max-width: $small-devices-breakpoint) {
+  main {
+    margin-left: 0;
+    // padding: 20px;
+  }
+}
+
+.preparation,
+.logistic-receipt,
+.logistic-summary-receipt,
+.placement {
+  display: none;
+}
+
+@media print {
+  .preparation,
+  .logistic-receipt,
+  .logistic-summary-receipt,
+  .placement {
+    display: block;
+    width: 10.2cm;
+  }
+  .container {
+    display: none;
+  }
+}
+
+/* Adjust side-nav styles to position it at the left of the main content */
+.side-nav {
+  @extend %box-shadow;
+  width: 100%;
+  height: calc(100vh - 81px);
+  position: fixed;
+  padding: 40px 30px 0;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+  z-index: 9999;
+
+  &.is-active {
+    transform: translateX(0);
+  }
+
+  // Mobile-first media queries
+  @media (min-width: $small-devices-breakpoint) {
+    width: 200px;
+  }
+
+  @media (min-width: $medium-devices-breakpoint) {
+    width: 250px;
+  }
+
+  @media (min-width: $large-devices-breakpoint) {
+    width: 280px;
+    transform: none;
+    position: relative;
+  }
+
+  @media (min-width: $extra-large-devices-breakpoint) {
+    width: 298px;
+  }
+}
+
+.modal-text {
+  @extend %paragraph;
+  text-align: center;
+  margin-bottom: 20px !important;
+}
+.modal-button {
+  @extend %button;
+  height: 44px;
+  padding: 0;
+}
+.modal-title {
+  @extend %title;
+  margin-block: auto;
+  text-align: center;
+}

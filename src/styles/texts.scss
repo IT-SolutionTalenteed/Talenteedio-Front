@@ -1,0 +1,83 @@
+@import "./colors.scss";
+@import "./breakpoints.scss";
+
+%box-title {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: $black;
+  margin: 0 0 16px;
+}
+
+%title {
+  color: $title-color;
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 41px;
+  @media screen and (max-width: $medium-devices-breakpoint) {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.3em;
+  }
+}
+%form-title {
+  font-size: 18px;
+  line-height: 30px;
+  color: $generic-form-title;
+  font-weight: 500;
+  margin-right: 30px;
+  padding: 7px 0;
+}
+
+%sub-title {
+  color: $sub-title-color;
+  font-size: 14px;
+  font-weight: 600px;
+  text-transform: capitalize;
+  padding-bottom: 30px;
+  line-height: 28px;
+}
+%paragraph {
+  color: $text-color;
+  font-size: 15px;
+}
+
+%default-form-text {
+  font-size: 15px;
+  color: $text-color;
+  background-color: $white;
+}
+
+%error-form-text {
+  @extend %default-form-text;
+  color: $warning;
+  font-size: 11px;
+}
+
+%link {
+  color: $text-non-active-color;
+  font-size: 1rem;
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  &:hover {
+    font-size: 1.1rem;
+    color: $white;
+  }
+  &.active {
+    color: $white;
+    font-size: 1.12rem;
+  }
+  &.active:after {
+    content: "";
+    width: 25px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: $secondary;
+  }
+}

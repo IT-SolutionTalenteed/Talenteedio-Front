@@ -1,0 +1,29 @@
+<div class="interview-list">
+  <div class="banner-container"></div>
+  <div class="header">
+    <h1 class="title">All <span>Interviews</span></h1>
+  </div>
+  <div class="interview-list_filtered-list">
+    <div class="list">
+      <div class="list-container">
+        <app-loader [isLoading]="interviewsLoading$ | async">
+          <app-interview-list
+            [interviews]="interviews$ | async"
+          ></app-interview-list>
+        </app-loader>
+      </div>
+      <div class="pagination">
+        <app-pagination
+          [totalItems]="totalItems$ | async"
+          [initialValue]="interviewCriteria?.page"
+          (paginate)="onPaginate($event)"
+        ></app-pagination>
+      </div>
+    </div>
+    <div class="filter-box">
+      <app-interview-list-filter-box
+        (saveFilter)="onSaveFilter($event)"
+      ></app-interview-list-filter-box>
+    </div>
+  </div>
+</div>

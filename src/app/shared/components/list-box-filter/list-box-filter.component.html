@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="title">
+        <img src="assets/images/ico-filtre.png" />
+        <h4>FILTRE</h4>
+    </div>
+    <label>Ajouter filtre</label>
+    <div class="custom-select">
+        <ng-select
+            [items]="innactiveFilters"
+            (change)="addFilter($event)"
+            [(ngModel)]="ngSelectModel"
+            [searchable]="false"
+            [dropdownPosition]="'bottom'"
+        >
+            <ng-template ng-option-tmp let-item="item"> {{ filterCategoryLabels[item] }} </ng-template>
+            <ng-template ng-label-tmp let-item="item"> </ng-template>
+        </ng-select>
+    </div>
+    <app-collapsible-chips
+        *ngFor="let item of chips"
+        [chips]="item"
+        [filterCategoryLabels]="filterCategoryLabels"
+        [filterItemLabels]="filterItemLabels"
+        [totalItems]="totalItems"
+        (delete)="onDelete(item.name)"
+        (select)="onSelect(item.name, $event)"
+    ></app-collapsible-chips>
+</div>

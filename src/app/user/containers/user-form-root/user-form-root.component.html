@@ -1,0 +1,15 @@
+<div class="container">
+    <app-loader [isLoading]="formIsLoading$ | async">
+        <app-user-form
+            *ngIf="user$ | async as user"
+            [user]="user$ | async"
+            [roles]="roles$ | async"
+            [isEditing]="isEditing$ | async"
+            (edit)="onEdit($event)"
+            (save)="onSave($event)"
+            (cancel)="onCancelEdit(user)"
+            (close)="onClose()"
+        >
+        </app-user-form>
+    </app-loader>
+</div>

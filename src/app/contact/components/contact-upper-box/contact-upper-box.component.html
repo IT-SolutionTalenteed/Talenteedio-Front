@@ -1,0 +1,33 @@
+<div class="upper-box-container">
+  <div class="inner-box">
+    <span class="icon"
+      ><img src="/assets/img/icon-address-80.png" alt="Address"
+    /></span>
+    <h4>Address</h4>
+    <p>
+      {{ locationValue?.address?.line || "-" }},
+      {{ locationValue?.address?.city || "-" }}
+    </p>
+  </div>
+  <div class="inner-box">
+    <span class="icon"
+      ><img src="/assets/img/icon-email-80.png" alt="Email"
+    /></span>
+    <h4>Email</h4>
+    <a *ngIf="locationValue?.email" href="mailto:{{ locationValue?.email }}">
+      <p>{{ locationValue?.email }}</p></a
+    >
+  </div>
+  <div class="inner-box">
+    <span class="icon"
+      ><img src="/assets/img/icon-phone-80.png" alt="Phone"
+    /></span>
+    <h4>Phone</h4>
+    <a
+      *ngIf="locationValue?.phoneNumber"
+      href="tel:{{ locationValue?.phoneNumber }}"
+    >
+      <p>{{ locationValue?.phoneNumber }}</p></a
+    >
+  </div>
+</div>

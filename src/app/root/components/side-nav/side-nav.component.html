@@ -1,0 +1,24 @@
+<nav>
+  <ul>
+    <ng-container *ngFor="let menu of menus; let i = index">
+      <li
+        class="label"
+        [routerLink]="[menu.routerLink]"
+        routerLinkActive="active"
+        #rla="routerLinkActive"
+      >
+        <div class="logo">
+          <fa-icon
+            [icon]="menu.icon"
+            [style.color]="rla.isActive ? menu.colorActive : menu.color"
+          ></fa-icon>
+        </div>
+        <div class="link">
+          <a routerLinkActive="active" [routerLink]="[menu.routerLink]">{{
+            menu.title
+          }}</a>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

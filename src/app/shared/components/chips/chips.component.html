@@ -1,0 +1,6 @@
+<div (click)="onToogleExpanded()" [class.expanded]="expanded" class="chips">
+    <div (click)="onDelete($event)">x</div>
+    <div *ngIf="count !== null && count !== undefined">{{ label }}&nbsp;({{ count }})</div>
+    <div *ngIf="count === null || count === undefined">{{ label }}</div>
+    <div>❮</div>
+</div>

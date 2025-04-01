@@ -1,0 +1,60 @@
+<div class="container">
+    <header>
+        <div class="form-title">Création utilisateur</div>
+        <svg (click)="close.emit()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+            <path
+                d="M9,7.5l5.83-5.91a.48.48,0,0,0,0-.69L14.11.15a.46.46,0,0,0-.68,0l-5.93,6L1.57.15a.46.46,0,0,0-.68,0L.15.9a.48.48,0,0,0,0,.69L6,7.5.15,13.41a.48.48,0,0,0,0,.69l.74.75a.46.46,0,0,0,.68,0l5.93-6,5.93,6a.46.46,0,0,0,.68,0l.74-.75a.48.48,0,0,0,0-.69Z"
+            ></path>
+        </svg>
+    </header>
+    <main data-simplebar>
+        <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+            <div class="control">
+                <label for="lastName">Nom*</label>
+                <input formControlName="lastName" id="lastName" type="text" #first />
+                <app-validation-error [control]="form.controls['lastName']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label for="firstName">Prénom(s)*</label>
+                <input formControlName="firstName" id="firstName" type="text" />
+                <app-validation-error [control]="form.controls['firstName']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label for="email">Email*</label>
+                <input formControlName="email" id="email" type="text" />
+                <app-validation-error
+                    [control]="form.controls['email']"
+                    [customErrorLabels]="{ duplicateEntry: 'Cet email existe déjà.' }"
+                ></app-validation-error>
+            </div>
+            <div class="control">
+                <label for="password">Mot de passe*</label>
+                <input formControlName="password" id="password" type="password" />
+                <app-validation-error [control]="form.controls['password']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label for="confirmPassword">Confirmation mot de passe*</label>
+                <input formControlName="confirmPassword" id="confirmPassword" type="password" />
+                <app-validation-error [control]="form.controls['confirmPassword']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label for="role">Rôle*</label>
+                <ng-select
+                    [dropdownPosition]="'bottom'"
+                    [items]="roles"
+                    [searchable]="false"
+                    bindLabel="name"
+                    formControlName="role"
+                ></ng-select>
+                <app-validation-error [control]="form.controls['role']"></app-validation-error>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <div class="buttons">
+            <button class="primary" *ngIf="!form.enabled" (click)="edit.emit(form.value)" [disabled]="!editEnabled">MODIFIER</button>
+            <button class="primary" *ngIf="form.enabled" (click)="onSubmit(form)">ENREGISTRER</button>
+            <button class="secondary" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
+        </div>
+    </footer>
+</div>

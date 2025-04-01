@@ -1,0 +1,22 @@
+<div class="main-container section">
+  <div
+    class="filter-job"
+    data-wow-delay="500ms"
+    style="
+      visibility: visible;
+      animation-delay: 500ms;
+      animation-name: fadeInUp;
+    "
+  >
+    <div class="title-box">
+      <app-loader [isLoading]="homeSettingLoading">
+        <div class="content-text" [innerHTML]="content"></div>
+      </app-loader>
+      <div class="btn-browse">
+        <a [routerLink]="'/initiative'">
+          <button>Go initiative</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="job-box">
+    <div class="content">
+      <div class="company-logo">
+        <img
+          src="{{ job?.featuredImage?.fileUrl || 'assets/img/favicon.png' }}"
+          alt="Jon image"
+        />
+      </div>
+      <div class="job-detail">
+        <div class="job-title">
+          <a>{{ job.title }}</a>
+        </div>
+        <ul class="job-info">
+          <li>
+            <fa-icon class="icon" [icon]="fabriefcase"></fa-icon
+            >{{ job?.category?.name || "-" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faMapMarker"></fa-icon
+            >{{ job?.location?.name || "-" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faClock"></fa-icon
+            >{{ job.updatedAt | date : "dd/MM/yy" }}
+          </li>
+          <li>
+            <fa-icon class="icon" [icon]="faMoney"></fa-icon
+            >{{ job.salaryMin }} € - {{ job.salaryMax }} €
+          </li>
+        </ul>
+        <ul class="job-chips">
+          <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>
+          <li class="featured" *ngIf="job.isFeatured">Featured</li>
+          <li class="urgent" *ngIf="job.isUrgent">Urgent</li>
+          <li class="referable" *ngIf="isReferral && job.isSharable">
+            Referable
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

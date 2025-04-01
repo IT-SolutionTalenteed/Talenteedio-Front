@@ -1,0 +1,263 @@
+@import "colors.scss";
+@import "texts.scss";
+@import "buttons.scss";
+@import "breakpoints.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50vh;
+  .header {
+    background-color: $background;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .job-box {
+      flex-direction: column;
+      display: flex;
+      padding: 80px 15px 70px 15px;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1310px;
+      gap: 20px;
+      .content {
+        position: relative;
+
+        padding-left: 120px;
+        min-height: 51px;
+        .company-logo {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100px;
+          overflow: hidden;
+          img {
+            // border-radius: 50%;
+            height: 100%;
+            width: 100%;
+            -o-object-fit: contain;
+            object-fit: contain;
+          }
+        }
+        .job-detail {
+          position: relative;
+          .job-title {
+            position: relative;
+            top: -3px;
+            margin: 0;
+            margin-bottom: 10px;
+            h4 {
+              font-weight: 500;
+              font-size: 26px;
+              line-height: 1.3em;
+              color: #202124;
+              margin: 0;
+            }
+          }
+          ul.job-info {
+            display: flex;
+            margin: 0;
+            margin-bottom: 10px;
+            padding: 0;
+            flex-wrap: wrap;
+            li {
+              position: relative;
+              font-size: 14px;
+              line-height: 22px;
+              color: $text-color;
+              font-weight: 400;
+              padding-left: 25px;
+              margin-bottom: 5px;
+              margin-right: 20px;
+              .icon {
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-size: 18px;
+                line-height: 22px;
+                color: $text-color;
+              }
+            }
+          }
+          ul.job-chips {
+            display: flex;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+            li {
+              position: relative;
+              font-size: 13px;
+              line-height: 15px;
+              margin-right: 15px;
+              padding: 5px 20px;
+              border-radius: 50px;
+              margin-bottom: 10px;
+            }
+            li.time {
+              background: rgba(25, 103, 210, 0.15);
+              color: $primary;
+            }
+            li.privacy {
+              background: rgba(52, 168, 83, 0.15);
+              color: #34a853;
+            }
+            li.required {
+              background: rgba(249, 171, 0, 0.15);
+              color: $secondary;
+            }
+            li.referable {
+              background: rgba(127, 127, 255, 0.15);
+              color: #333;
+            }
+          }
+        }
+      }
+      .job-expired {
+        font-size: 20px;
+        font-weight: 500;
+        color: $third;
+        button {
+          @extend %button;
+        }
+      }
+      .already-applayed {
+        color: $success;
+      }
+    }
+  }
+  .detail {
+    display: flex;
+    max-width: 1310px;
+    width: 100%;
+    gap: 20px;
+    padding: 50px 15px;
+    justify-content: center;
+    flex-direction: column;
+    * {
+      line-height: 24px;
+    }
+    .detail-content {
+      font-family: "Nunito-Regular", sans-serif;
+      width: 100%;
+      color: $text-color;
+    }
+    .detail-info {
+      width: 100%;
+      height: fit-content;
+      padding: 30px;
+      background-color: $background;
+      border-radius: 8px;
+      h4 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24px;
+        color: $black;
+        margin-bottom: 30px;
+      }
+      .info-item {
+        position: relative;
+        padding-left: 50px;
+        margin-bottom: 30px;
+        .info-icon {
+          padding: 3px;
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-size: 25px;
+          color: $primary;
+          fa-icon {
+            height: 30px;
+            width: 30px;
+          }
+        }
+        .info-right {
+          position: relative;
+          margin: 0px;
+          display: flex;
+          flex-direction: column;
+          .info-label {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 22px;
+            color: $black;
+          }
+          .info-value {
+            font-size: 15px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.social-media-content {
+  max-width: 860px;
+  padding: 0px 15px;
+  margin: 0 auto;
+  width: 100%;
+  &::ng-deep a {
+    color: $primary !important;
+    text-decoration: underline !important;
+  }
+  .social-media {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $gap;
+    .button-container {
+      a {
+        text-decoration: none !important;
+      }
+    }
+    .share-this-post {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    button {
+      @extend %button;
+      min-width: fit-content;
+      display: flex;
+      gap: $gap;
+      align-items: center;
+      padding: 18px 20px 15px 20px;
+    }
+  }
+  hr {
+    margin: 45px 0;
+    border: #ecedf2 solid 1px;
+  }
+}
+
+a:hover {
+  cursor: pointer;
+  color: $primary;
+}
+
+ul {
+  list-style: none;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: $small-devices-breakpoint) {
+  .header {
+    .job-box {
+      flex-direction: row !important;
+    }
+  }
+  .detail {
+    flex-direction: row !important;
+
+    gap: 4% !important;
+    .detail-content {
+      width: 68% !important;
+    }
+    .detail-info {
+      width: 28% !important;
+    }
+  }
+}

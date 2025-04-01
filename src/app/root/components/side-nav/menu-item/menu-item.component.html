@@ -1,0 +1,24 @@
+<li
+  class="menu__item"
+  [class.menu__item--active]="active"
+  routerLinkActive="menu__item--navigated"
+  #menuItem
+>
+  <a (click)="!isSmallScreen && toggle.emit()" [routerLink]="menu.routerLink">
+    <img [src]="menu.icon" />
+    <span>{{ menu.title | uppercase }}</span>
+  </a>
+  <ul class="submenu" #submenu>
+    <li class="submenu__item submenu__item--title">
+      {{ menu.title | titlecase }}
+    </li>
+    <li
+      class="submenu__item"
+      *ngFor="let submenu of menu.children"
+      [routerLink]="[submenu.routerLink]"
+      routerLinkActive="submenu__item--active"
+    >
+      {{ submenu.title | titlecase }}
+    </li>
+  </ul>
+</li>

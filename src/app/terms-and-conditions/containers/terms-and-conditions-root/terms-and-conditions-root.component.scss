@@ -1,0 +1,27 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+.terms-container {
+  width: 100%;
+  .header {
+    width: 100%;
+    padding: 50px 0 40px 0;
+    text-align: center;
+    background-color: $background;
+    .title {
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 41px;
+      text-align: center;
+      color: $black;
+      margin: 0 0 10px;
+    }
+    .links {
+      font-size: 15px;
+      margin: 5px -15px 10px;
+    }
+    a:hover {
+      opacity: 0.9;
+      color: #1370b5;
+    }
+  }
+}

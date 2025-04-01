@@ -1,0 +1,18 @@
+<ng-container
+  *ngIf="isComunityPrivate$ | async; then comunityPrivate; else comunityPublic"
+>
+</ng-container>
+
+<ng-template #comunityPublic>
+  <app-public-community-root
+    [homeSettingLoading]="homeSettingLoading$ | async"
+    [homeSetting]="homeSetting$ | async"
+  ></app-public-community-root>
+</ng-template>
+
+<ng-template #comunityPrivate>
+  <app-private-community-root
+    [homeSettingLoading]="homeSettingLoading$ | async"
+    [homeSetting]="homeSetting$ | async"
+  ></app-private-community-root>
+</ng-template>

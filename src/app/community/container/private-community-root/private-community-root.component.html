@@ -1,0 +1,61 @@
+<div class="banner-container">
+  <div class="banner-card" *ngIf="content">
+    <app-loader [isLoading]="homeSettingLoading">
+      <div class="content-text" [innerHTML]="content"></div>
+    </app-loader>
+    <div class="button">
+      <a [routerLink]="'/initiative'">
+        <button class="secondary">Go initiative</button>
+      </a>
+    </div>
+  </div>
+</div>
+<app-loader [isLoading]="dataLoading$ | async" [heightAuto]="true">
+  <div class="community-content">
+    <div class="community-row">
+      <h1 class="title">HR <span>Society</span></h1>
+    </div>
+
+    <div class="community-row">
+      <div class="text-blocs">
+        <div class="blocs">
+          HR Society is a an alternative HR relationship management platform
+          designed to help you to emphaze your position. <br /><br />
+          It's built for HR who need to go an extra mile with advanced lead
+          tracking, detailed analytics, and collaborative communication tools.
+        </div>
+        <div class="blocs">
+          HR Society is a global HR task force committed to enhance the HR
+          function to face the challenges within Luxembourg companies. <br />
+          Create a professional environment where each collaborator is valued,
+          supported and encouraged to reach his/her full potential, contributing
+          to prosperous and sustainable organizations.
+        </div>
+      </div>
+    </div>
+
+    <div class="community-row">
+      <a
+        class="advisor-rubric"
+        *ngFor="let new of news$ | async"
+        [routerLink]="'/blog/detail/' + new.slug"
+      >
+        <app-blog-item [article]="new"></app-blog-item>
+      </a>
+    </div>
+    <div class="community-row">
+      <div class="community-rubric">
+        <app-community-events
+          [eventsInput]="events$ | async"
+        ></app-community-events>
+      </div>
+      <div class="community-rubric">
+        <app-community-agenda
+          [eventsDates]="eventsDates$ | async"
+          (selectDate)="onSelectDate($event)"
+        ></app-community-agenda>
+      </div>
+    </div>
+  </div>
+  <app-community-partner></app-community-partner>
+</app-loader>

@@ -1,0 +1,34 @@
+<div
+  class="container"
+  [ngClass]="{ 'full-width-container': fullWidth, 'height-auto': heightAuto }"
+>
+  <div
+    class="spinner"
+    [class.spinner--hide]="!isLoading"
+    [ngClass]="{ 'spinner--column-display': true }"
+  >
+    <h4 *ngIf="message">{{ message }}...</h4>
+
+    <div
+      [style.width.px]="spinnerWidth"
+      [style.height.px]="spinnerHeight"
+      class="lds-default"
+    >
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</div>

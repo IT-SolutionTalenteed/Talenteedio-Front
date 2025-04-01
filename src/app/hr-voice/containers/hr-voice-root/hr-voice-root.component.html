@@ -1,0 +1,22 @@
+<div>
+  <div class="banner-container"></div>
+  <app-loader [isLoading]="dataLoading$ | async">
+    <div class="hr-voice-content">
+      <div class="hr-voice-row">
+        <div class="hr-voice-title">
+          <h1 class="title">The <span>HR Voice</span> Interview with an HR</h1>
+          <h4>Every Saturday at 10am every 15 days</h4>
+        </div>
+      </div>
+
+      <div class="hr-voice-row">
+        <app-interview [interview]="interview$ | async"></app-interview>
+      </div>
+
+      <div class="hr-voice-row bloc">
+        <app-replay [replay]="replay$ | async"></app-replay>
+        <app-news [news]="news$ | async"></app-news>
+      </div>
+    </div>
+  </app-loader>
+</div>

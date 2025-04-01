@@ -1,0 +1,217 @@
+<div class="container">
+  <div class="form-container">
+    <div class="sub-title">
+      <strong>Sign Up</strong>
+    </div>
+    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+      <div class="form-content">
+        <div class="control">
+          <div for="firstname" class="label">First name*</div>
+          <input
+            #first
+            formControlName="firstname"
+            id="firstname"
+            type="firstname"
+            placeholder="Enter your first name"
+          />
+          <app-validation-error
+            [control]="form.controls['firstname']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="lastname" class="label">Last name*</div>
+          <input
+            formControlName="lastname"
+            id="lastname"
+            type="lastname"
+            placeholder="Enter your last name"
+          />
+          <app-validation-error
+            [control]="form.controls['lastname']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="email" class="label">Email*</div>
+          <input
+            formControlName="email"
+            id="email"
+            type="email"
+            placeholder="Enter your e-mail adress"
+          />
+          <app-validation-error
+            [control]="form.controls['email']"
+            [customErrorLabels]="{
+              duplicateEntry: 'Email already registered'
+            }"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="phone" class="label">Phone*</div>
+          <angular-intl-phone formControlName="phone" [config]="config" />
+          <app-validation-error
+            [control]="form.controls['phone']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="role" class="label">Role*</div>
+          <ng-select
+            formControlName="role"
+            [items]="roles"
+            bindLabel="name"
+            bindValue="name"
+            placeholder="Select a role"
+          >
+          </ng-select>
+          <app-validation-error
+            [control]="form.controls['role']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent">
+          <div for="values" class="label">Values*</div>
+          <ng-select
+            formControlName="values"
+            [items]="values"
+            bindLabel="title"
+            bindValue="id"
+            placeholder="Select values"
+            [multiple]="true"
+          >
+          </ng-select>
+          <app-validation-error
+            [control]="form.controls['values']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent">
+          <div for="cv" class="label">Cv*</div>
+          <div
+            class="input"
+            [ngClass]="{
+              'ng-invalid': form.controls['cv'].invalid,
+              'ng-dirty': form.controls['cv'].dirty,
+              'ng-touched': form.controls['cv'].touched
+            }"
+          >
+            <label for="cv" class="file-upload-button"> Choose File </label>
+            <span class="file-upload-text">{{
+              form.controls["cv"].value ?? "No file chosen"
+            }}</span>
+            <input
+              type="file"
+              id="cv"
+              formControlName="cv"
+              (change)="onCvChange($event)"
+            />
+          </div>
+
+          <app-validation-error
+            [control]="form.controls['cv']"
+            [customErrorLabels]="{
+              extensionError: 'Must be a pdf'
+            }"
+          ></app-validation-error>
+        </div>
+
+        <div class="control password">
+          <div for="password" class="label">Password*</div>
+          <input
+            #password
+            formControlName="password"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+          />
+          <img
+            src="{{
+              !passwordEl
+                ? '/assets/img/hide.png'
+                : passwordEl.nativeElement.type === 'password'
+                ? '/assets/img/hide.png'
+                : '/assets/img/show.png'
+            }}"
+            alt="show password"
+            (click)="showPassword('password')"
+          />
+          <app-validation-error
+            [control]="form.controls['password']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control confirm-password">
+          <div for="confirmationPassword" class="label">Confirm password*</div>
+          <input
+            #confirmationPassword
+            formControlName="confirmationPassword"
+            id="confirmationPassword"
+            type="password"
+            placeholder="Confirm your password"
+          />
+          <img
+            src="{{
+              !passwordEl
+                ? '/assets/img/hide.png'
+                : passwordEl.nativeElement.type === 'password'
+                ? '/assets/img/hide.png'
+                : '/assets/img/show.png'
+            }}"
+            alt="show password"
+            (click)="showPassword('confirmationPassword')"
+          />
+          <app-validation-error
+            [control]="form.controls['confirmationPassword']"
+            [customErrorLabels]="{
+              mustMatch: 'Password does not match'
+            }"
+          ></app-validation-error>
+        </div>
+        <div style="margin-bottom: 20px" *ngIf="isWindowLoaded">
+          <ngx-recaptcha2
+            #captchaElem
+            [siteKey]="siteKey"
+            (reset)="handleReset()"
+            (expire)="handleExpire()"
+            (load)="handleLoad()"
+            (success)="handleSuccess($event)"
+            [useGlobalDomain]="false"
+            [size]="size"
+            [hl]="lang"
+            [theme]="theme"
+            [type]="type"
+            formControlName="recaptcha"
+          >
+          </ngx-recaptcha2>
+        </div>
+        <div
+          class="checkbox-control"
+          *ngIf="form.value?.role === roleNameTalent"
+        >
+          <input type="checkbox" formControlName="consent" />
+          <div class="label">
+            I acknowledge having read
+            <a [href]="consentLink" target="_blank">the consent</a> and agree to
+            sign it electronically with my name.
+          </div>
+        </div>
+        <div class="footer">
+          <div class="button-wrapper">
+            <button
+              class="primary"
+              [disabled]="
+                !form.value.recaptcha ||
+                (form.value?.role === roleNameTalent && !form.value.consent)
+              "
+            >
+              REGISTER
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="signup-label">
+      Already have an account ?
+      <a routerLink="/authentication/sign-in">Sign in</a>
+    </div>
+  </div>
+</div>

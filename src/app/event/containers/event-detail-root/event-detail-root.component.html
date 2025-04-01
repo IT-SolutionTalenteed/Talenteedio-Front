@@ -1,0 +1,5 @@
+<div class="event-detail-root-container">
+  <app-loader [isLoading]="eventLoading$ | async">
+    <app-event-detail [event]="event$ | async"></app-event-detail>
+  </app-loader>
+</div>

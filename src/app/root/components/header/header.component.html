@@ -1,0 +1,173 @@
+<div class="container">
+  <!-- Main box -->
+  <div class="main-box">
+    <!--Nav Outer -->
+    <div class="nav-outer">
+      <div class="logo-box">
+        <div class="logo">
+          <a routerLink="/home">
+            <img
+              [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
+              alt="Talenteed.io"
+            />
+            <span class="slogan">The alternative media for HR</span>
+          </a>
+        </div>
+      </div>
+
+      <nav class="main-menu" *ngIf="currentUrl !== '/home'">
+        <ul class="navigation" id="navbar">
+          <li *ngFor="let menu of navbarMenus">
+            <a
+              [routerLink]="menu.routerLink"
+              [class.active]="currentUrl.includes(menu.routerLink)"
+              >{{ menu.title }}</a
+            >
+          </li>
+          <!-- <li><a routerLink="/job" [class.active]="currentUrl.includes(menu.parentRouterLink)">Jobs</a></li>
+          <li><a routerLink="/blog" [class.active]="currentUrl.includes(menu.parentRouterLink)">Blog</a></li>
+          <li><a routerLink="/contact" [class.active]="currentUrl.includes(menu.parentRouterLink)">Contact</a></li> -->
+        </ul>
+      </nav>
+      <!-- Main Menu End-->
+    </div>
+
+    <a
+      class="ad-banner"
+      *ngIf="ad && currentUrl === '/home'"
+      [href]="ad.link"
+      target="_blank"
+    >
+      <img [src]="ad.image?.fileUrl" />
+    </a>
+
+    <div class="outer-box">
+      <!-- Login/Register -->
+      <div class="login-item" (click)="toggleUserDropdown()">
+        <a class="is_login" id="dropdownMenuUser">
+          <div class="icon">
+            <fa-icon [icon]="icon" class="grey-icon"></fa-icon>
+          </div>
+          <span *ngIf="!user" class="full-name">Hello !</span>
+          <span *ngIf="user" class="full-name">
+            {{
+              user.lastname
+                ? user.lastname
+                : user.firstname
+                ? user.firstname
+                : user.email
+            }}</span
+          >
+          <i class="fa fa-angle-down"></i>
+        </a>
+        <ul
+          class="dropdown-menu text-left"
+          aria-labelledby="dropdownMenuUser"
+          [ngClass]="{ show: showUserDropdown }"
+        >
+          <li class="menu-hr" *ngFor="let menu of menusCopy; let i = index">
+            <a *ngIf="menu.title === 'Dashboard'" [href]="backOfficeRoute">{{
+              menu.title
+            }}</a>
+            <a
+              *ngIf="menu.title !== 'Dashboard'"
+              [routerLink]="[menu.routerLink]"
+              >{{ menu.title }}</a
+            >
+          </li>
+          <li *ngIf="user" class="menu-hr">
+            <a (click)="logout()">Logout</a>
+          </li>
+          <li *ngIf="!user" class="menu-hr">
+            <a
+              [routerLink]="['/authentication/sign-in']"
+              [queryParams]="{ redirect: currentUrl }"
+              >Login</a
+            >
+          </li>
+        </ul>
+        <form id="logout-form" style="display: none">
+          <input
+            type="hidden"
+            name="_token"
+            value="CyxybjJ0ve91Us2G2w0eMS4JYK20ZfPuXUdQTAUa"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <div class="logo">
+      <a routerLink="/home">
+        <img
+          [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
+          alt="Talenteed.io"
+        />
+      </a>
+    </div>
+    <nav class="menu-items" [ngClass]="{ active: isShowingMobileNav }">
+      <div class="menu-title"><span>Menu</span></div>
+      <ul class="navigation" id="navbar">
+        <li *ngFor="let menu of navbarMenus" (click)="onToggleNavbar()">
+          <a
+            [routerLink]="menu.routerLink"
+            [class.active]="currentUrl.includes(menu.routerLink)"
+            >{{ menu.title }}</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-outer">
+      <div class="outer-box">
+        <div class="login-box" (click)="toggleUserDropdown()">
+          <a class="is_login" id="dropdownMenuUser">
+            <div class="icon">
+              <fa-icon [icon]="icon" class="grey-icon"></fa-icon>
+            </div>
+          </a>
+          <ul
+            class="dropdown-menu text-left"
+            aria-labelledby="dropdownMenuUser"
+            [ngClass]="{ show: showUserDropdown }"
+          >
+            <li class="menu-hr" *ngFor="let menu of menusCopy; let i = index">
+              <a [href]="backOfficeRoute">{{ menu.title }}</a>
+              <a
+                *ngIf="menu.title !== 'Dashboard'"
+                [routerLink]="[menu.routerLink]"
+                >{{ menu.title }}</a
+              >
+            </li>
+            <li *ngIf="user" class="menu-hr">
+              <a (click)="logout()">Logout</a>
+            </li>
+            <li *ngIf="!user" class="menu-hr">
+              <a
+                [routerLink]="['/authentication/sign-in']"
+                [queryParams]="{ redirect: currentUrl }"
+                >Login</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <button
+          class="mobile-nav-toggler"
+          [ngClass]="{ active: isShowingMobileNav }"
+          (click)="onToggleNavbar()"
+        >
+          <div class="container-lignes">
+            <div class="ligne"></div>
+            <div class="ligne"></div>
+            <div class="ligne"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+</div>

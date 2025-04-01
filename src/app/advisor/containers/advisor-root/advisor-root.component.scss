@@ -1,0 +1,69 @@
+@import "colors";
+@import "breakpoints";
+
+.banner-container {
+  background-image: url("/assets/img/advisor-banner.jpg");
+  background-size: cover;
+  background-position-y: -50px;
+  width: 100%;
+  height: 476px;
+  margin: 0;
+  padding: 0 200px;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    height: 200px;
+    background-position-y: 0px;
+  }
+}
+
+.advisor-content {
+  display: flex;
+  row-gap: 67px;
+  width: 100%;
+  max-width: 1310px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  .no-gap {
+    column-gap: 0 !important;
+  }
+  .advisor-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    column-gap: 50px;
+    row-gap: 67px;
+    .advisor-rubric {
+      flex: 1;
+    }
+    .title {
+      margin-top: 46px;
+      margin-bottom: 0px;
+      text-align: center;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: $black;
+      span {
+        color: $secondary;
+      }
+
+      @media screen and (max-width: 767px) {
+        font-size: 30px;
+      }
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: $medium-devices-breakpoint) {
+  .advisor-row {
+    flex-direction: row !important;
+  }
+}

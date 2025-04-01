@@ -1,0 +1,108 @@
+<div class="form-container">
+  <div class="title">
+    <strong>General settings</strong>
+  </div>
+  <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+    <div class="form-content">
+      <div class="box-shadow site-information">
+        <div class="sub-title">Site information</div>
+        <div class="control">
+          <div for="siteTitle" class="label">Site title*</div>
+          <input
+            #first
+            formControlName="siteTitle"
+            id="siteTitle"
+            type="text"
+            placeholder="Enter site title"
+          />
+          <app-validation-error
+            [control]="form.controls['siteTitle']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="siteDescription" class="label">Site description*</div>
+          <!-- <input
+            formControlName="siteDescription"
+            id="siteDescription"
+            type="textarea"
+            placeholder="Enter site description"
+          /> -->
+          <textarea
+            placeholder="Enter site description"
+            formControlName="siteDescription"
+          ></textarea>
+          <app-validation-error
+            [control]="form.controls['siteDescription']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="favicon" class="label">Favicon*</div>
+          <input
+            formControlName="favicon"
+            id="favicon"
+            type="text"
+            placeholder="Enter favicon"
+          />
+          <app-validation-error
+            [control]="form.controls['favicon']"
+          ></app-validation-error>
+        </div>
+      </div>
+      <div class="box-shadow language">
+        <div class="sub-title">Language</div>
+        <div class="control">
+          <div for="language" class="label">Language*</div>
+          <ng-select
+            formControlName="language"
+            [items]="languages"
+            bindLabel="id"
+            placeholder="Select a language"
+          >
+          </ng-select>
+          <app-validation-error
+            [control]="form.controls['language']"
+          ></app-validation-error>
+        </div>
+      </div>
+      <div class="box-shadow contact-information">
+        <div class="sub-title">Contact information</div>
+        <div class="control">
+          <div for="email" class="label">Email*</div>
+          <input
+            formControlName="email"
+            id="email"
+            type="email"
+            placeholder="Enter e-mail adress"
+          />
+          <app-validation-error
+            [control]="form.controls['email']"
+            [customErrorLabels]="{
+              duplicateEntry: 'Email already registered'
+            }"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="address" class="label">Address*</div>
+          <input
+            formControlName="address"
+            id="address"
+            type="text"
+            placeholder="Enter your e-mail adress"
+          />
+          <app-validation-error
+            [control]="form.controls['email']"
+            [customErrorLabels]="{
+              duplicateEntry: 'Email already registered'
+            }"
+          ></app-validation-error>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="button-wrapper">
+          <button class="primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

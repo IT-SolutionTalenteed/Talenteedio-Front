@@ -1,0 +1,28 @@
+<div class="container">
+  <!-- <div class="filter-input">
+    <h4 class="label">Search by Keywords</h4>
+    <input type="text" placeholder="Job title..." />
+  </div> -->
+
+  <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+    <!-- <form> -->
+    <div class="form-content">
+      <div for="search" class="label">Search by Keywords</div>
+      <div class="control">
+        <input
+          formControlName="search"
+          id="search"
+          type="text"
+          placeholder="Key words..."
+        />
+        <fa-icon class="icon" [icon]="faSearch"></fa-icon>
+      </div>
+
+      <div class="footer">
+        <div class="button-wrapper">
+          <button class="primary">Find item</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

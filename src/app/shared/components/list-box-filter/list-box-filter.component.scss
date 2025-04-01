@@ -1,0 +1,43 @@
+// @import 'selects.scss';
+@import 'colors.scss';
+// @import 'fonts.scss';
+
+.container {
+    width: 100%;
+    padding-right: 5%;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // font-family: $regular;
+    height: 60px;
+
+    img {
+        margin: 0 5px 0 0;
+    }
+
+    h4 {
+        margin: 0;
+        font-weight: unset;
+    }
+}
+
+label {
+    // color: $list-box-filter-label-text;
+    font-size: 1.05rem;
+    // font-family: $regular;
+}
+
+.custom-select {
+    // @extend %custom-select;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+    &::ng-deep {
+        * {
+            font-size: 1rem;
+        }
+    }
+}

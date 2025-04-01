@@ -1,0 +1,19 @@
+// breakpoints use min-width
+$extra-small-devices-breakpoint: 414px;
+$small-devices-breakpoint: 576px;
+$medium-devices-breakpoint: 768px;
+$large-devices-breakpoint: 992px;
+$extra-large-devices-breakpoint: 1200px;
+
+// https://devfacts.com/media-queries-breakpoints-2022/
+// Small devices (landscape phones, 576px and up)
+// @media (min-width: $small-devices-breakpoint) { ... }
+
+// Medium devices (tablets, 768px and up)
+// @media (min-width: $medium-devices-breakpoint) { ... }
+
+// Large devices (desktops, 992px and up)
+// @media (min-width: $large-devices-breakpoint) { ... }
+
+// Extra large devices (large desktops, 1200px and up)
+// @media (min-width: $extra-large-devices-breakpoint) { ... }

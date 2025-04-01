@@ -1,0 +1,241 @@
+@import "buttons.scss";
+@import "colors.scss";
+@import "breakpoints.scss";
+
+.content {
+  .community-content {
+    display: block;
+    max-width: 1310px;
+    margin: 0 auto;
+  }
+}
+
+span {
+  &.secondary {
+    color: $secondary;
+  }
+}
+
+.banner-container {
+  background-image: url("/assets/img/diversity-home.jpg");
+  background-size: cover;
+  background-position-y: -50px;
+  width: 100%;
+  height: 476px;
+  margin: 0;
+  padding: 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .banner-card {
+    width: 40%;
+    max-width: 534px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 2rem;
+    .button {
+      display: flex;
+      justify-content: right;
+    }
+    button {
+      @extend %button;
+      padding: 15px 30px;
+      font-family: "Regular", sans-serif;
+      font-size: 16px;
+    }
+    p {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: $extra-large-devices-breakpoint) {
+    height: 618px;
+    background-position: center;
+    padding: 20px;
+    // background-position-y: 0px;
+    .banner-card {
+      width: 100%;
+      //   display: none;
+    }
+  }
+}
+
+.community-row {
+  &_foot {
+    padding: 50px 130px;
+    @media screen and (max-width: $small-devices-breakpoint) {
+      padding-inline: initial;
+    }
+  }
+}
+
+.title {
+  margin-top: 46px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: $black;
+
+  @media screen and (max-width: 767px) {
+    font-size: 30px;
+  }
+}
+
+.head {
+  text-align: center;
+  padding-inline: 100px;
+  color: $text-color;
+
+  &_action {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 50px;
+    row-gap: 20px;
+
+    a {
+      button {
+        width: 100%;
+        @extend %button;
+        padding: 15px 20px;
+        font-family: "Regular", sans-serif;
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $small-devices-breakpoint) {
+    padding-inline: 30px;
+
+    &_action {
+      a {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+
+  margin-block: 40px;
+
+  @media screen and (max-width: $large-devices-breakpoint) {
+    justify-content: center;
+  }
+
+  .community-card {
+    width: 300px;
+    text-align: center;
+    padding: 25px;
+    border: solid $secondary 1px;
+    border-radius: 20px;
+    background-color: $generic-form-background;
+    h3 {
+      margin-top: 0;
+    }
+  }
+}
+
+.member {
+  &_title {
+    p {
+      color: $text-color;
+    }
+
+    @media screen and (max-width: $small-devices-breakpoint) {
+      padding-inline: 20px;
+      text-align: center;
+    }
+  }
+  .opportunities-goals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    position: relative;
+
+    .line {
+      position: absolute;
+      height: calc(100% - 62px);
+      width: 2px;
+      background: $secondary;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .opportunities {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      column-gap: 30px;
+      row-gap: 30px;
+
+      &_card {
+        flex: 1;
+        display: flex;
+        align-items: center;
+
+        &::after {
+          content: '';
+          flex: 1;
+          height: 2px;
+          background: $secondary;
+        }
+
+        h4 {
+          flex: 1;
+          text-align: center;
+          padding: 20px;
+          border: solid $secondary 1px;
+          border-radius: 20px;
+          background-color: $generic-form-background;
+          margin: 0;
+        }
+      }
+    }
+
+    .goals {
+      flex: 1;
+      margin: auto;
+
+      .opportunities {
+        &_card {
+          h4 {
+            order: 1;
+          }
+        }
+      }
+    }
+  }
+  .subscription {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    p {
+      margin: 0;
+      color: $text-color;
+    }
+    button {
+      @extend %button;
+      padding: 15px 30px;
+      font-family: "Regular", sans-serif;
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: $small-devices-breakpoint) {
+      justify-content: center;
+      row-gap: 25px;
+    }
+  }
+}

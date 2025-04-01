@@ -1,0 +1,92 @@
+// @import 'fonts.scss';
+@import 'colors.scss';
+
+// Fonts:
+// $thFontFamily: $regular;
+// $tdFontFamily: $medium;
+$header-height: 70px;
+$td-height: 62px;
+
+%table {
+    font-size: 12px;
+    border-spacing: 0px;
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    position: relative;
+    border-bottom: none;
+
+    thead {
+        display: block;
+    }
+
+    thead th {
+        // font-family: $thFontFamily;
+        color: $primary;
+        height: $header-height;
+        background-color: $background;
+    }
+
+    tbody {
+        display: block;
+        width: 100%;
+        height: calc(100% - $header-height);
+        position: absolute;
+        border-top: none;
+        border-bottom: none;
+        tr {
+            border-bottom: 1px solid $border;
+        }
+
+        td {
+            // font-family: $tdFontFamily;
+            color: $text-color;
+            font-size: 15px;
+            font-weight: 400;
+            img {
+                cursor: pointer;
+            }
+        }
+    }
+
+    thead th{
+        font-size: 16px;
+        line-height: 30px;
+    }
+    tbody td {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    tr {
+        display: table;
+        width: 100%;
+    }
+
+    td {
+        height: $td-height;
+        vertical-align: middle;
+    }
+
+    td,
+    th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+        padding: 20px 30px;
+    }
+
+    .selected td:first-child {
+        border-left: solid $primary-selected 4px;
+        padding-left: 11px;
+    }
+
+    .actions {
+        img {
+            padding-right: 0.7rem;
+            width: auto;
+            height: 15px;
+        }
+    }
+}

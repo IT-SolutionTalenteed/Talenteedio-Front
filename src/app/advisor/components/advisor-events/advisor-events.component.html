@@ -1,0 +1,25 @@
+<div class="event-item-container">
+  <h2>Events</h2>
+  <div class="info-box" *ngIf="events.length < 1">
+    <div class="content">No events</div>
+  </div>
+  <div *ngFor="let event of events" class="info-box">
+    <div class="title">
+      <a [routerLink]="'/event/detail/' + event.slug">
+        {{ event.title }}
+      </a>
+    </div>
+    <div class="content">
+      {{ event.content | htmlParser }}
+    </div>
+    <a [routerLink]="'/event/detail/' + event.slug" class="read-more">
+      Read more
+      <div class="icon">
+        <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+      </div>
+    </a>
+  </div>
+  <a class="see-all" [routerLink]="'/event'">
+    <Button class="secondary">See all the events</Button>
+  </a>
+</div>

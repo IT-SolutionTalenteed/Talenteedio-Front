@@ -1,0 +1,43 @@
+<div class="event-detail-container">
+  <div class="header" *ngIf="event">
+    <h1 class="title">{{ event.title }}</h1>
+    <div class="creation-info">
+      <div class="icon">
+        <fa-icon [icon]="icon"></fa-icon>
+      </div>
+      {{ event.admin?.user.name }}
+      <span>{{ event.date | date : "dd/MM/yyyy" }}</span>
+    </div>
+  </div>
+  <div class="content detail-content" *ngIf="content">
+    <div class="content-text" [innerHTML]="content"></div>
+  </div>
+  <div class="content">
+    <hr />
+    <div class="social-media">
+      <div class="share-this-post">Share this post</div>
+      <div class="button-container">
+        <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
+          ><button class="facebook">
+            <fa-icon [icon]="fbIcon"></fa-icon> Facebook
+          </button></a
+        >
+      </div>
+      <div class="button-container">
+        <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
+          ><button class="twitter">
+            <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
+          </button></a
+        >
+      </div>
+      <div class="button-container">
+        <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
+          ><button class="linkedin">
+            <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
+          </button></a
+        >
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

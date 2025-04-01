@@ -1,0 +1,34 @@
+<div class="banner-container"></div>
+<app-loader [isLoading]="dataLoading$ | async" [heightAuto]="true">
+  <div class="advisor-content">
+    <div class="advisor-row">
+      <h1 class="title">
+        <div>Equity <span>Diversity</span> Inclusion</div>
+        <span>#EDI</span>
+      </h1>
+    </div>
+    <div class="advisor-row">
+      <div class="advisor-rubric">
+        <app-advisor-news [news]="news$ | async"></app-advisor-news>
+      </div>
+      <div class="advisor-rubric">
+        <app-advisor-popular-job
+          [popularJob]="popularJob$ | async"
+        ></app-advisor-popular-job>
+      </div>
+    </div>
+    <div class="advisor-row">
+      <div class="advisor-rubric">
+        <app-advisor-events
+          [eventsInput]="events$ | async"
+        ></app-advisor-events>
+      </div>
+      <div class="advisor-rubric">
+        <app-advisor-agenda
+          [eventsDates]="eventsDates$ | async"
+          (selectDate)="onSelectDate($event)"
+        ></app-advisor-agenda>
+      </div>
+    </div>
+  </div>
+</app-loader>

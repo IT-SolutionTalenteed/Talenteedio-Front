@@ -1,0 +1,75 @@
+@import "breakpoints";
+@import "colors";
+
+.interview-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+  column-gap: 50px;
+  margin: 60px 0px;
+
+  @media screen and (max-width: 1350px) {
+    padding: 0 20px;
+  }
+
+  .video {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    iframe {
+      width: 100%;
+      max-width: 655px;
+      min-height: 350px;
+      height: 100%;
+    }
+  }
+
+  .info {
+    flex: 1;
+    width: 100%;
+
+    .h2 {
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      margin: 0;
+      color: $black;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    .content {
+      font-size: 16px;
+      color: $text-color;
+      line-height: normal;
+      font-weight: 400;
+      margin: 10px 0px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 3; /* Limiter à 2 lignes */
+      text-overflow: ellipsis;
+      -webkit-box-decoration-break: clone; /* Pour prendre en charge les balises HTML */
+      box-decoration-break: clone; /* Pour prendre en charge les balises HTML */
+    }
+    ul {
+      margin: 10 0px;
+      li {
+        font-size: 16px;
+        color: $text-color;
+      }
+    }
+  }
+}
+
+@media (min-width: $medium-devices-breakpoint) {
+  .interview-container {
+    flex-direction: row !important;
+  }
+}

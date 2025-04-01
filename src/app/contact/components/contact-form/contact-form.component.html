@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="form-container">
+    <div class="sub-title">
+      <strong>Leave A Message</strong>
+    </div>
+    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+      <div class="form-content">
+        <div class="double-control">
+          <div class="control">
+            <div for="name" class="label">Your name*</div>
+            <input
+              #first
+              formControlName="name"
+              id="name"
+              type="text"
+              placeholder="Your name"
+            />
+            <app-validation-error
+              [control]="form.controls['name']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="email" class="label">Your email*</div>
+            <input
+              formControlName="email"
+              id="email"
+              type="email"
+              placeholder="Your email"
+            />
+            <app-validation-error
+              [control]="form.controls['email']"
+            ></app-validation-error>
+          </div>
+        </div>
+        <div class="control">
+          <div for="subject" class="label">Subject*</div>
+          <input
+            formControlName="subject"
+            id="subject"
+            type="subject"
+            placeholder="Subject"
+          />
+          <app-validation-error
+            [control]="form.controls['subject']"
+          ></app-validation-error>
+        </div>
+        <div class="control">
+          <div for="message" class="label">Your message*</div>
+          <textarea
+            formControlName="message"
+            name="message"
+            id="message"
+            placeholder="Write your message..."
+          ></textarea>
+          <!-- <input
+            formControlName="message"
+            id="message"
+            type="textarea"
+            placeholder="Write your message..."
+          /> -->
+          <app-validation-error
+            [control]="form.controls['message']"
+          ></app-validation-error>
+        </div>
+        <div style="margin-bottom: 20px" *ngIf="isWindowLoaded">
+          <ngx-recaptcha2
+            #captchaElem
+            [siteKey]="siteKey"
+            (reset)="handleReset()"
+            (expire)="handleExpire()"
+            (load)="handleLoad()"
+            (success)="handleSuccess($event)"
+            [useGlobalDomain]="false"
+            [size]="size"
+            [hl]="lang"
+            [theme]="theme"
+            [type]="type"
+            formControlName="recaptcha"
+          >
+          </ngx-recaptcha2>
+        </div>
+        <div class="footer">
+          <div class="button-wrapper">
+            <button class="primary" [disabled]="!form.value.recaptcha">
+              SEND MESSAGE
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

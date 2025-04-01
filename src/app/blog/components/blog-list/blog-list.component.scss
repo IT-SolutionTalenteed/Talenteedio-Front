@@ -1,0 +1,18 @@
+@import "breakpoints.scss";
+.blog-list-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 2%;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  .blog-list-item {
+    width: 100%;
+  }
+}
+
+@media (min-width: $medium-devices-breakpoint) {
+  .blog-list-item {
+    width: 48% !important;
+  }
+}

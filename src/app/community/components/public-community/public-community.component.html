@@ -1,0 +1,73 @@
+<div class="banner-container">
+  <div class="banner-card" *ngIf="content">
+    <div class="content-text" [innerHTML]="content"></div>
+    <div class="button">
+      <a [routerLink]="'/initiative'">
+        <button class="secondary">Go initiative</button>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div class="community-content">
+    <div class="community-row">
+      <h1 class="title">
+        Educate <span class="secondary">Serve</span> Listen
+        <span class="secondary">Grow</span>
+      </h1>
+    </div>
+    <div class="head">
+      <p>
+        Built on the fundamental princliples of balance, integration, growth,
+        and vision, represents much more than just a professional community. It
+        embodies a true community where each mamer plays a crucial role in
+        collective success.
+      </p>
+    </div>
+    <div class="community-row_foot">
+      <div class="member">
+        <div class="member_title">
+          <h2>Why become a <span class="secondary">member ?</span></h2>
+          <p>
+            As member of community, you will have access to a multitude of
+            resources and opportunities :
+          </p>
+        </div>
+        <div class="opportunities-goals">
+          <div class="opportunities">
+            <div class="opportunities_card">
+              <h4>HR mentoring</h4>
+            </div>
+            <div class="opportunities_card">
+              <h4>Exchange on HR topics</h4>
+            </div>
+            <div class="opportunities_card">
+              <h4>Digital trainings</h4>
+            </div>
+            <div class="opportunities_card">
+              <h4>HR events</h4>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="goals">
+            <div class="opportunities_card">
+              <h4>Promoting operational excellence</h4>
+            </div>
+          </div>
+        </div>
+        <div class="subscription">
+          <div class="subscription_price">
+            <h2>Annual <span class="secondary">subscription</span> of ...</h2>
+            <p>€600 for companies with 300 employees or fewer</p>
+            <p>€900 for companies with more than 300 employees</p>
+          </div>
+          <div class="subscription_action">
+            <a [routerLink]="'/become-member'">
+              <button class="primary">Become member</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

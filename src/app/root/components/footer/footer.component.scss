@@ -1,0 +1,146 @@
+@import "colors";
+@import "texts";
+@import "breakpoints";
+
+.sub-title {
+  position: relative;
+  font-size: 18px;
+  line-height: 28px;
+  color: $sub-title-color;
+  font-weight: 500;
+  padding-bottom: 15px;
+}
+footer {
+  height: 80px;
+  width: 100%;
+  background-color: $background;
+  padding: 13px 15px;
+
+  .auto-container {
+    max-width: 1310px;
+    margin: 0 auto;
+    a:not(:first-child) {
+      position: relative;
+      transition: all 300ms ease;
+      display: block;
+      &:before {
+        position: absolute;
+        width: 0px;
+        height: 2px;
+        background-color: $primary; /* Use background-color instead of color for the line */
+        left: 0;
+        top: 10px;
+        content: ""; /* Add content property for pseudo-element */
+        transition: all 300ms ease;
+      }
+      &:hover {
+        &:before {
+          width: 15px;
+        }
+        p {
+          margin-left: 20px;
+          color: $primary !important;
+        }
+      }
+    }
+    .widgets-section {
+      padding-top: 100px;
+      padding-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      .about-widget {
+        width: 100%;
+        margin-bottom: 50px;
+        .logo {
+          margin-bottom: 25px;
+        }
+        P {
+          @extend %paragraph;
+        }
+      }
+      .info-widget {
+        width: 100%;
+        display: flex;
+        gap: 5%;
+        .info {
+          width: 100%;
+          P {
+            @extend %paragraph;
+          }
+        }
+      }
+    }
+  }
+  .footer-bottom {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+
+    .bottom-container {
+      max-width: 1310px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+
+      .copiright, .terms {
+        @extend %paragraph;
+
+        a:hover {
+          text-decoration: underline;
+          color: $sub-title-color;
+        }
+      }
+
+      .terms {
+        display: flex;
+        gap: 10px;
+      }
+
+      .links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        gap: 40px;
+        .ng-fa-icon {
+          transition: color 100ms ease;
+          color: $text-color;
+
+          &:hover {
+            color: #bc91e8;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: $medium-devices-breakpoint) {
+  .auto-container {
+    padding: 0px 15px;
+    .widgets-section {
+      flex-direction: row !important;
+      .about-widget {
+        width: 30% !important;
+      }
+      .info-widget {
+        width: 70% !important;
+        .info {
+          width: 24% !important;
+        }
+      }
+    }
+  }
+  .footer-bottom {
+    .bottom-container {
+      padding: 0px 15px;
+      flex-direction: row !important;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

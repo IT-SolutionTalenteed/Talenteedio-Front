@@ -1,0 +1,44 @@
+@import "breakpoints";
+@import "colors";
+@import "buttons";
+
+.bloc {
+  width: 100%;
+  background: rgba(25, 103, 210, 0.15);
+  padding: 38px;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 20px;
+  h2 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    color: $black;
+  }
+}
+.news-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  column-gap: 50px;
+  row-gap: 50px;
+  justify-content: flex-start;
+}
+.see-all {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  button {
+    @extend %button;
+    min-width: 239px;
+    height: 52px;
+  }
+}

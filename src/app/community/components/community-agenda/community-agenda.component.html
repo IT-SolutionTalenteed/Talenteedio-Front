@@ -1,0 +1,10 @@
+<div class="agenda-item-container">
+  <h2>Agenda</h2>
+  <mat-calendar
+    (selectedChange)="onSelectChange($event)"
+    [dateClass]="isSelected"
+    [minDate]="minDate"
+    #calendar
+  >
+  </mat-calendar>
+</div>

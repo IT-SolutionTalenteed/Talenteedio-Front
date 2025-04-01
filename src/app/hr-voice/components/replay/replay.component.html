@@ -1,0 +1,20 @@
+<div class="bloc" *ngIf="replay?.length > 0">
+  <div class="title">
+    <h2>Replay</h2>
+  </div>
+  <div class="replay-container">
+    <a
+      *ngFor="let interview of replay"
+      style="width: 100%"
+      [routerLink]="'/interview/detail/' + interview.slug"
+    >
+      <app-replay-item
+        style="width: 100%"
+        [replay]="interview"
+      ></app-replay-item>
+    </a>
+    <a class="see-all" [routerLink]="'/interview'">
+      <Button class="secondary">See all interviews</Button>
+    </a>
+  </div>
+</div>

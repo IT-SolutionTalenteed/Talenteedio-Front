@@ -1,0 +1,92 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+.interview-list {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  .banner-container {
+    background-image: url("/assets/img/interview-banner.jpg");
+    background-size: cover;
+    background-position-y: -100px;
+    width: 100%;
+    height: 476px;
+    margin: 0;
+    padding: 0 200px;
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 767px) {
+      height: 200px;
+      background-position-y: 0px;
+    }
+  }
+  .header {
+    width: 100%;
+    padding: 40px 0 0 0;
+    text-align: center;
+    .title {
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 41px;
+      text-align: center;
+      color: $black;
+      margin: 0 0 10px;
+
+      span {
+        color: $secondary;
+      }
+
+      @media screen and (max-width: 767px) {
+        font-size: 30px;
+      }
+    }
+    .links {
+      font-size: 15px;
+      margin: 5px -15px 10px;
+    }
+    a:hover {
+      opacity: 0.9;
+      color: #1370b5;
+    }
+  }
+
+  &_filtered-list {
+    display: flex;
+    max-width: 1310px;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 50px 15px 100px;
+    height: 100%;
+    width: 100%;
+
+    .list {
+      //   display: flex;
+      gap: 5%;
+      width: 68%;
+      display: flex;
+      flex-direction: column;
+      .list-container {
+        flex: 1;
+      }
+    }
+
+    .filter-box {
+      width: 28%;
+    }
+  }
+}
+
+@media (max-width: $medium-devices-breakpoint) {
+  .interview-list {
+    &_filtered-list {
+      flex-direction: column !important;
+      gap: 40px !important;
+      .filter-box {
+        width: 100% !important;
+      }
+      .list {
+        width: 100% !important;
+      }
+    }
+  }
+}

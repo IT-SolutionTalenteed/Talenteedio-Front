@@ -1,0 +1,83 @@
+@import "texts";
+@import "colors";
+@import "buttons";
+.event-item-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(25, 103, 210, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 38px;
+  border-radius: 20px;
+  // &:hover {
+  //   box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
+  // }
+  h2 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    color: $black;
+  }
+  .info-box {
+    flex: 1;
+    width: 100%;
+    padding: 20px 0px 16px;
+    .title {
+      font-size: 18px;
+      color: $sub-title-color;
+      font-weight: 500;
+      margin-bottom: 10px;
+      &:hover {
+        color: $primary;
+      }
+    }
+    .content {
+      font-size: 15px;
+      color: $text-color;
+      line-height: 24px;
+      font-weight: 400;
+      margin: 0;
+      margin-bottom: 1rem !important;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 2; /* Limiter à 2 lignes */
+      text-overflow: ellipsis;
+      -webkit-box-decoration-break: clone; /* Pour prendre en charge les balises HTML */
+      box-decoration-break: clone; /* Pour prendre en charge les balises HTML */
+    }
+
+    .read-more {
+      display: flex;
+      font-size: 16px;
+      line-height: 28px;
+      color: $primary;
+      align-items: center;
+      gap: 10px;
+      transition: all 300ms ease;
+      cursor: pointer;
+      .icon {
+        font-size: 10px;
+      }
+      &:hover {
+        .icon {
+          margin-left: 20px !important;
+          opacity: 0 !important;
+        }
+      }
+    }
+  }
+  .see-all {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    button {
+      @extend %button;
+      min-width: 239px;
+      height: 52px;
+    }
+  }
+}

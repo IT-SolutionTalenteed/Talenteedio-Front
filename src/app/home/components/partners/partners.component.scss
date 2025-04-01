@@ -1,0 +1,33 @@
+@import "breakpoints";
+@import "colors";
+
+.title {
+  display: flex;
+  margin-bottom: 45px;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    color: $black;
+  }
+}
+
+.partner-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 45px;
+  justify-content: center;
+  margin: 20px 0;
+
+  a {
+    img {
+      height: 120px;
+      object-fit: contain;
+    }
+  }
+}

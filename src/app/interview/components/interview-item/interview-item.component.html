@@ -1,0 +1,14 @@
+<div class="replay-item-container">
+  <div class="replay-image">
+    <img src="/assets/img/hr-voice.png" alt="hr-voice-icon" />
+  </div>
+  <div class="replay-item-detail">
+    <div class="title">
+      <img src="/assets/img/hr-voice-volume.svg" alt="volume" />
+      {{ replay.title }}
+    </div>
+    <div class="content">
+      {{ replay.content | htmlParser }}
+    </div>
+  </div>
+</div>

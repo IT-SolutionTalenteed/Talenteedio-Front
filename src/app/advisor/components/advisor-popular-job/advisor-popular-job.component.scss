@@ -1,0 +1,128 @@
+@import "texts";
+@import "colors";
+@import "buttons";
+.job-item-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 47px 18px 47px;
+  // &:hover {
+  //   box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
+  // }
+  h2 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    color: $black;
+  }
+  .job-box {
+    flex: 1;
+    padding: 20px 0px 16px;
+    background-color: $white;
+    .no-data {
+      color: #696969;
+    }
+    .content {
+      position: relative;
+      padding-left: 68px;
+      min-height: 51px;
+      .company-logo {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        img {
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          -o-object-fit: contain;
+          object-fit: contain;
+        }
+      }
+      .job-detail {
+        position: relative;
+        .job-title {
+          @extend %box-title;
+        }
+        ul.job-info {
+          display: flex;
+          margin: 0;
+          margin-bottom: 10px;
+          padding: 0;
+          flex-wrap: wrap;
+          li {
+            position: relative;
+            font-size: 14px;
+            line-height: 22px;
+            color: $text-color;
+            font-weight: 400;
+            padding-left: 25px;
+            margin-bottom: 5px;
+            margin-right: 20px;
+            .icon {
+              position: absolute;
+              left: 0;
+              top: 0;
+              font-size: 18px;
+              line-height: 22px;
+              color: $text-color;
+            }
+          }
+        }
+        ul.job-chips {
+          display: flex;
+          padding: 0;
+          margin: 0;
+          flex-wrap: wrap;
+          li {
+            position: relative;
+            font-size: 13px;
+            line-height: 15px;
+            margin-right: 15px;
+            padding: 5px 20px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+          }
+          li.time {
+            background: rgba(25, 103, 210, 0.15);
+            color: $primary;
+          }
+          li.privacy {
+            background: rgba(52, 168, 83, 0.15);
+            color: $success;
+          }
+          li.required {
+            background: rgba(249, 171, 0, 0.15);
+            color: $secondary;
+          }
+        }
+      }
+    }
+  }
+
+  .see-all {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    button {
+      @extend %button;
+      min-width: 239px;
+      height: 52px;
+    }
+  }
+}
+
+a:hover {
+  cursor: pointer;
+  color: $primary;
+}
+
+ul {
+  list-style: none;
+}

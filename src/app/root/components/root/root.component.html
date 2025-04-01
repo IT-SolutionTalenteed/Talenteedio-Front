@@ -1,0 +1,46 @@
+<!-- <app-loader [isLoading]="verifying$ | async"> -->
+<div class="container">
+  <header>
+    <app-header
+      [menus]="sideMenus$ | async"
+      [user]="user$ | async"
+      [currentUrl]="currentUrl$ | async"
+      [navbarMenus]="navbarMenus"
+      [ad]="ad$ | async"
+    ></app-header>
+  </header>
+  <div class="main-container">
+    <aside class="side-nav" *ngIf="isBackOfficeRoute">
+      <app-side-nav [menus]="sideMenus$ | async"></app-side-nav>
+    </aside>
+    <main>
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer *ngIf="!isAuthenticationRoute"></app-footer>
+    </main>
+  </div>
+  <!-- <app-support-banner></app-support-banner> -->
+</div>
+<!-- </app-loader> -->
+
+<modal
+  #becomeMemberModal
+  class="popup-modal success custom"
+  [closeOnOutsideClick]="true"
+>
+  <ng-template #modalBody>
+    <div class="modal-activation-content">
+      <div class="modal-title">
+        <div class="icon">
+          <fa-icon style="color: #4fb556" [icon]="userPlus"></fa-icon>
+        </div>
+        Join us.
+      </div>
+      <p class="modal-text">To access event details, you can join us.</p>
+    </div>
+    <button class="modal-button primary" (click)="onBecomeMember()">
+      Become member
+    </button>
+  </ng-template>
+</modal>

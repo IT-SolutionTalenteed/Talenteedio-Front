@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="left">
+        <ng-content></ng-content>
+    </div>
+    <div class="right">
+        <svg viewBox="0 0 10 6" *ngIf="(hover && lastSortDirection === 'asc') || sortDirection === 'asc'">
+            <polygon points="0 6, 5 0, 10 6" class="triangle" />
+        </svg>
+        <svg viewBox="0 0 10 6" *ngIf="(hover && lastSortDirection === 'desc') || sortDirection === 'desc'">
+            <polygon points="0 0, 5 6, 10 0" class="triangle" />
+        </svg>
+    </div>
+</div>

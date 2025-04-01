@@ -1,0 +1,11 @@
+<div class="container">
+  <app-loader [isLoading]="loading$ | async">
+    <app-setting-form
+      *ngIf="setting$ | async as setting"
+      [setting]="setting$ | async"
+      [error]="saveSettingError$ | async"
+      (save)="onSave($event)"
+    >
+    </app-setting-form>
+  </app-loader>
+</div>

@@ -1,0 +1,185 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="form" (submit)="onSubmit(form)">
+      <div class="form-content">
+        <div class="form-left">
+          <div class="sub-title">
+            <strong>Who is the referent ?</strong>
+          </div>
+          <div class="control">
+            <div for="firstName" class="label">First Name*</div>
+            <input
+              #first
+              formControlName="firstName"
+              id="firstName"
+              type="text"
+              placeholder="First Name"
+            />
+            <app-validation-error
+              [control]="form.controls['firstName']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="lastName" class="label">Last Name*</div>
+            <input
+              #first
+              formControlName="lastName"
+              id="lastName"
+              type="text"
+              placeholder="Last Name"
+            />
+            <app-validation-error
+              [control]="form.controls['lastName']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="professionalEmail" class="label">Professional email*</div>
+            <input
+              #first
+              formControlName="professionalEmail"
+              id="professionalEmail"
+              type="text"
+              placeholder="Professional email"
+            />
+            <app-validation-error
+              [control]="form.controls['professionalEmail']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="role" class="label">Function*</div>
+            <input
+              #first
+              formControlName="role"
+              id="role"
+              type="text"
+              placeholder="Ex: Product Manager"
+            />
+            <app-validation-error
+              [control]="form.controls['role']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="phoneNumber" class="label">Phone number*</div>
+            <angular-intl-phone formControlName="phone" [config]="config" />
+            <app-validation-error
+              [control]="form.controls['phone']"
+            ></app-validation-error>
+          </div>
+          <div style="margin-bottom: 20px" *ngIf="isWindowLoaded">
+            <ngx-recaptcha2
+              #captchaElem
+              [siteKey]="siteKey"
+              (reset)="handleReset()"
+              (expire)="handleExpire()"
+              (load)="handleLoad()"
+              (success)="handleSuccess($event)"
+              [useGlobalDomain]="false"
+              [size]="size"
+              [hl]="lang"
+              [theme]="theme"
+              [type]="type"
+              formControlName="recaptcha"
+            >
+            </ngx-recaptcha2>
+          </div>
+        </div>
+        <div class="form-right">
+          <div class="sub-title">
+            <strong>What is your Company ?</strong>
+          </div>
+          <div class="control">
+            <div for="socialReason" class="label">Social reason*</div>
+            <input
+              #first
+              formControlName="socialReason"
+              id="socialReason"
+              type="text"
+              placeholder="Social reason"
+            />
+            <app-validation-error
+              [control]="form.controls['socialReason']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="address" class="label">Address*</div>
+            <input
+              #first
+              formControlName="address"
+              id="address"
+              type="text"
+              placeholder="Adresse"
+            />
+            <app-validation-error
+              [control]="form.controls['address']"
+            ></app-validation-error>
+          </div>
+          <div class="sub-title">
+            <strong>Why do you want to become a member?</strong>
+          </div>
+          <div class="control">
+            <div for="motivation" class="label">
+              Motivation to become a member*
+            </div>
+            <textarea
+              formControlName="motivation"
+              name="motivation"
+              id="motivation"
+              placeholder="Write your motivation..."
+            ></textarea>
+            <app-validation-error
+              [control]="form.controls['motivation']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="events" class="label">
+              What event topics interest you (Optionnal)
+            </div>
+            <ng-select
+              formControlName="events"
+              [items]="events"
+              bindLabel="title"
+              placeholder="Select events"
+              [searchable]="true"
+              [multiple]="true"
+              [loading]="isEventsLoading"
+              (search)="onSearchEvents($event.term)"
+              [virtualScroll]="true"
+              (scrollToEnd)="onLoadMore()"
+              (open)="onShowDropdown()"
+              (blur)="onShowDropdown()"
+            >
+            </ng-select>
+            <app-validation-error
+              [control]="form.controls['events']"
+            ></app-validation-error>
+          </div>
+          <div class="control">
+            <div for="otherTopics" class="label">
+              Other topics that interest you (Optionnal)
+            </div>
+            <input
+              #first
+              formControlName="otherTopics"
+              id="otherTopics"
+              type="text"
+              placeholder="Other topics"
+            />
+          </div>
+          <br />
+        </div>
+      </div>
+      <div class="footer">
+        <div class="button-wrapper">
+          <button
+            class="primary"
+            type="submit"
+            [disabled]="!form.value.recaptcha"
+          >
+            Join Us
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

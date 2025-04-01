@@ -1,0 +1,13 @@
+<div id="home-interview" class="interview-container" *ngIf="interview?.length">
+  <div class="video" *ngFor="let item of interview">
+    <!-- width="655"
+    height="350" -->
+    <iframe
+      [src]="item.videoSrc | safe"
+      [title]="item.title"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>

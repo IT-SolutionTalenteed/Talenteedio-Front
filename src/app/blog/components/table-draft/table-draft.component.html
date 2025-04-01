@@ -1,0 +1,60 @@
+<div class="table-container" data-simplebar>
+  <table appOverflowTooltip>
+    <thead>
+      <tr>
+        <th
+          app-sortable-column="id"
+          (sort)="onSort($event)"
+          [sortDirections]="sortDirections"
+        >
+          ID
+        </th>
+        <th
+          app-sortable-column="col1"
+          (sort)="onSort($event)"
+          [initialDirection]="sortDirection.asc"
+        >
+          Col 1 Lorem ipsum
+        </th>
+        <th
+          app-sortable-column="col2"
+          (sort)="onSort($event)"
+          [sortDirections]="sortDirections"
+        >
+          Col 2 col 2
+        </th>
+        <th
+          app-sortable-column="col3"
+          (sort)="onSort($event)"
+          [sortDirections]="sortDirections"
+        >
+          Col 3
+        </th>
+        <th
+          app-sortable-column="col4"
+          (sort)="onSort($event)"
+          [sortDirections]="sortDirections"
+        >
+          Col 4
+        </th>
+      </tr>
+    </thead>
+    <tbody data-simplebar>
+      <tr
+        *ngFor="let item of items"
+        [class.selected]="item._id === currentItem?._id"
+      >
+        <td>{{ item._id }}</td>
+        <td>
+          {{ item.col1 }} Lorem ipsum dolor sit amet, consectetur adipisicing
+          elit. Cumque, ipsum est. Dolorum repellat, atque praesentium numquam
+          blanditiis deleniti repellendus temporibus accusantium quia ipsam odio
+          laudantium perspiciatis iusto quis est libero?
+        </td>
+        <td>{{ item.col2 }}</td>
+        <td>{{ item.col3 }}</td>
+        <td>{{ item.col4 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,165 @@
+@import "form.scss";
+@import "box-shadow.scss";
+@import "colors.scss";
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.form-content {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 0 120px;
+  gap: 60px;
+
+  .form-left, .form-right {
+    flex: 1;
+  }
+
+}
+
+.footer {
+  padding: 0 120px;
+  display: flex;
+
+  .button-wrapper {
+    margin-left: auto;
+  }
+}
+
+.form-container {
+  // TODO: fix width
+  width: 80%;
+  @extend %box-shadow;
+
+  max-height: 100%;
+  border-radius: $border-radius;
+  overflow-y: auto;
+  display: flex;
+  align-items: right;
+  flex-direction: column;
+  position: relative;
+  padding: $content-padding;
+  .sub-title {
+    @extend %sub-title;
+    max-width: 100%;
+  }
+  .label {
+    @extend %generic-label;
+  }
+  .error-content {
+    @extend %error-form-text;
+    font-size: 1rem;
+    height: 19px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+form {
+  @extend %generic-form;
+  width: 100%;
+}
+
+::ng-deep {
+  angular-intl-phone {
+    grid-area: input;
+    z-index: 4;
+    background-color: $generic-form-background !important;
+    color: $text-color;
+    border-radius: $border-radius;
+    &.ng-invalid.ng-dirty.ng-touched {
+      input {
+        @extend %invalid-control;
+      }
+    }
+    .iti {
+      width: 100% !important;
+      border-radius: $border-radius;
+      input {
+        @extend %generic-input;
+        width: 100%;
+      }
+    }
+  }
+
+  .ng-select-multiple {
+    max-width: 400px;
+    @extend %generic-controls;
+    &.ng-invalid.ng-dirty.ng-touched {
+      input {
+        @extend %invalid-control;
+      }
+      .ng-arrow-wrapper {
+        z-index: 2;
+      }
+      .ng-input {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        padding: 15px 20px !important;
+      }
+      .ng-select-container {
+        box-shadow: 0 0 0 0.2rem rgba(226, 11, 50, 0.25);
+      }
+    }
+    .ng-value {
+      max-width: 200px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0 !important;
+    }
+    .ng-value-label {
+      max-width: 150px;
+      padding-top: 0 !important;
+      overflow: hidden;
+      padding-bottom: 0.3rem !important;
+    }
+    .ng-value-container {
+      row-gap: 5px;
+    }
+
+    // .ng-select-container {
+    //   border: none !important;
+
+    //   .ng-value-container {
+    //     padding-top: 0 !important;
+    //     padding-left: 20px !important;
+
+    //     .ng-placeholder {
+    //       top: initial !important;
+    //       padding-bottom: 0 !important;
+    //       padding-left: 0 !important;
+    //       z-index: 10 !important;
+    //     }
+
+    //     .ng-value {
+    //       margin-bottom: 0 !important;
+    //       .ng-value-label {
+    //         padding-bottom: 0.3rem !important;
+    //       }
+    //     }
+    //   }
+    // }
+  }
+}
+
+@media screen and (max-width: $medium-devices-breakpoint) {
+  .form-left {
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  .form-right {
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+}

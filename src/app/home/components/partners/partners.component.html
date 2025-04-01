@@ -1,0 +1,10 @@
+<div class="partner-container" *ngIf="partners?.length > 0">
+  <!-- <app-replay-item
+    style="width: 100%; flex: 1"
+    *ngFor="let interview of replay"
+    [replay]="interview"
+  ></app-replay-item> -->
+  <a *ngFor="let partner of partners" [href]="partner.link" target="_blank">
+    <img [src]="partner.image.fileUrl" alt="partner" />
+  </a>
+</div>

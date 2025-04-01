@@ -1,0 +1,47 @@
+@import 'form.scss';
+// @import 'fonts.scss';
+@import 'breakpoints.scss';
+@import 'box-shadow.scss';
+@import 'colors.scss';
+@import 'sizes.scss';
+@import 'buttons.scss';
+@import 'texts.scss';
+
+
+.container{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.form-container {
+    @extend %box-shadow;
+    border-radius: $border-radius;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: flex;
+    align-items: right;
+    flex-direction: column;
+    position: relative;
+    padding: $content-padding;
+    .sub-title {
+        @extend %sub-title;
+        max-width: 100%;
+        color: $warning;
+    }
+}
+button {
+    @extend %button;
+    width: 100%;
+}
+
+@media (max-width: $medium-devices-breakpoint) {
+    .container {
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+ }

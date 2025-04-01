@@ -1,0 +1,103 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+@import "buttons.scss";
+@import "sizes.scss";
+@import "texts.scss";
+
+.event-detail-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .header {
+    width: 100%;
+    padding: 50px 0 40px 0;
+    text-align: center;
+    .title {
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 41px;
+      text-align: center;
+      color: $black;
+      margin: 0 0 10px;
+    }
+    .creation-info {
+      font-size: 14px;
+      line-height: 24px;
+      color: $text-color;
+      padding-left: 15px;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: $text-color;
+      .icon {
+        font-size: 27px;
+        color: $text-color;
+      }
+      span {
+        padding-left: 15px;
+        position: relative;
+        &:before {
+          position: absolute;
+          left: 4px;
+          top: 8px;
+          height: 5px;
+          width: 5px;
+          border-radius: 5px;
+          background: $text-color;
+          content: "";
+        }
+      }
+    }
+  }
+  .detail-content {
+    flex: 1;
+  }
+  .content {
+    font-family: "Nunito-Regular", sans-serif;
+    max-width: 860px;
+    padding: 0px 15px;
+    margin: 0 auto;
+    width: 100%;
+    &::ng-deep a {
+      color: $primary !important;
+      text-decoration: underline !important;
+    }
+    .social-media {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $gap;
+      .button-container {
+        a {
+          text-decoration: none !important;
+        }
+      }
+      .share-this-post {
+        font-weight: 500;
+        font-size: 16px;
+      }
+      button {
+        @extend %button;
+        min-width: fit-content;
+        display: flex;
+        gap: $gap;
+        align-items: center;
+        padding: 18px 20px 15px 20px;
+      }
+    }
+    hr {
+      margin: 45px 0;
+      border: #ecedf2 solid 1px;
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: $extra-large-devices-breakpoint) {
+  .content {
+    max-width: 1310px;
+  }
+}

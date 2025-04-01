@@ -1,0 +1,13 @@
+<div class="terms-container">
+  <div class="header">
+    <h1 class="title">Terms and Conditions</h1>
+    <div class="links">
+      <a routerLink="/home">Home</a><span> / Terms and Conditions</span>
+    </div>
+  </div>
+  <app-loader [isLoading]="termsLoading$ | async">
+    <app-terms-and-conditions
+      [terms]="terms$ | async"
+    ></app-terms-and-conditions>
+  </app-loader>
+</div>

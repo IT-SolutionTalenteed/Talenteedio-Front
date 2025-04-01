@@ -1,0 +1,79 @@
+<div class="container" [class.detail-hidden]="!isEditingOrDetail">
+  <header>Client</header>
+  <div class="not-detail">
+    <div class="filter" data-simplebar>
+      <!-- <app-list-box-filter
+              [filterUpdates]="clientFilterUpdates$ | async"
+              [filterCategoryLabels]="filterCategoryLabels"
+              [filterItemLabels]="filterItemLabels"
+              [defaultFilters]="clientDefaultFilters"
+              [initialFilterValue]="clientCriteria?.filter"
+              (filter)="onFilter($event)"
+            > -->
+      <app-list-box-filter> </app-list-box-filter>
+    </div>
+
+    <div class="bordered-wrapper"></div>
+
+    <div class="search-bar">
+      <app-search-bar
+        [placeholder]="'Search by name'"
+        [initialValue]="criteria?.search"
+        (search)="onSearch($event)"
+      >
+      </app-search-bar>
+    </div>
+
+    <div class="list-header">
+      <div class="list-title">List header</div>
+    </div>
+    <div class="list">
+      <app-loader [isLoading]="false">
+        <!-- <app-table-draft
+                [items]="items"
+                [currentItem]="currentItem"
+                [editEnabled]="editEnabled"
+                [deleteEnabled]="deleteEnabled"
+                [isEditingOrDetail]="isEditingOrDetail"
+                (sort)="onSort($event)"
+                (view)="onViewDetail($event)"
+                (edit)="onEdit($event)"
+                (delete)="onDelete($event)"
+              > -->
+        <app-table-draft
+          [items]="items"
+          [currentItem]="currentItem"
+          [editEnabled]="editEnabled"
+          [deleteEnabled]="deleteEnabled"
+          [isEditingOrDetail]="isEditingOrDetail"
+          (sort)="onSort($event)"
+          (view)="onViewDetail($event)"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        >
+        </app-table-draft>
+      </app-loader>
+    </div>
+
+    <footer>
+      <app-pagination
+        [totalItems]="50"
+        [initialValue]="criteria?.page"
+        (paginate)="onPaginate($event)"
+      ></app-pagination>
+    </footer>
+  </div>
+
+  <div class="detail-header">
+    <!-- <ng-container *ngIf="isEditingOrDetail"></ng-container> -->
+    <ng-container *ngIf="false"></ng-container>
+  </div>
+  <div class="detail" [class.no-border]="!isEditingOrDetail">
+    <app-detail-draft></app-detail-draft>
+  </div>
+  <!-- <ng-container *ngIf="isEditingOrDetail">
+    <div class="detail" [class.no-border]="!isEditingOrDetail">
+      <app-detail-draft></app-detail-draft>
+    </div>
+  </ng-container> -->
+</div>

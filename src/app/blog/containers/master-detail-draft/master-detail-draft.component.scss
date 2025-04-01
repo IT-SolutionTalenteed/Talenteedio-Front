@@ -1,0 +1,28 @@
+@import "box-shadow.scss";
+@import "filtered-master-detail.scss";
+@import "sizes.scss";
+
+.container {
+  height: 100%;
+  width: 100%;
+  @extend %filtered-master-detail;
+
+  .not-detail {
+    @extend %box-shadow;
+    border-radius: $border-radius;
+    padding: 20px 30px;
+    height: 100%;
+    width: 100%;
+    .list {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .detail {
+    @extend %box-shadow;
+    border-radius: $border-radius;
+    padding: 20px 30px;
+    height: 100%;
+    width: 100%;
+  }
+}

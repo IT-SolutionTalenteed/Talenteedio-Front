@@ -1,0 +1,23 @@
+@import 'colors.scss';
+
+.container {
+    display: flex;
+    flex-direction: row;
+    div {
+        user-select: none;
+    }
+    cursor: pointer;
+    .left {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .right {
+        width: 12px;
+        min-width: 12px;
+        margin-left: 10px;
+        // polygon {
+        //     fill: $sortable-column-arrow;
+        // }
+    }
+}

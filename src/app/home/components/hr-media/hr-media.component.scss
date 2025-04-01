@@ -1,0 +1,35 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+.hr-media {
+  background-size: cover;
+  background-position: top;
+
+  .hr-media_container {
+    display: flex;
+    gap: 40px;
+    max-width: 1310px;
+    width: 100%;
+    margin: auto;
+
+    & > * {
+      flex: 1;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 969px) {
+  .hr-media {
+    padding: 20px;
+
+    .hr-media_container {
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .hr-media {
+    padding: 20px;
+  }
+}

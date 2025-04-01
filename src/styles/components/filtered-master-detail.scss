@@ -1,0 +1,99 @@
+// Never modify the below generic styles !!! :
+
+// FILTERED MASTER DETAIL:
+
+@import 'texts.scss';
+// @import 'headers-and-titles.scss';
+@import 'buttons.scss';
+
+%title {
+    display: flex;
+    align-items: center;
+}
+
+%filtered-master-detail {
+    // background-color: #ffffff;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1% 72% 1% 25% 1%;
+    grid-template-rows: 2% minmax(30px, 3%) 2% minmax(0, 1fr) 2%;
+    grid-template-areas:
+        '.  .          .       .           .'
+        '.  header     header  header      .'
+        '.  .          .       .           .'
+        '.  not-detail .       detail      .'
+        '.  .          .       .           .';
+    transition: all 0.2s; // Animation works only with firefox
+    &.detail-hidden {
+        grid-template-columns: 1% 98% 0% 0% 1%;
+    }
+
+    .not-detail{
+        grid-area: not-detail;
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 25% 2% 40% minmax(0, 1fr);
+        grid-template-rows:  10% minmax(0, 1fr) auto;
+        grid-template-areas:
+        'filter     .       list-header     search-bar'
+        'filter     .       list            list'
+        'filter     .       footer          footer';
+    }
+
+    header {
+        grid-area: header;
+        @extend %sub-title;
+    }
+
+    .filter {
+        grid-area: filter;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bordered-wrapper {
+        grid-column: 3 / 8;
+        grid-row: 3 / 7;
+    }
+
+    .search-bar {
+        grid-area: search-bar;
+    }
+
+    .list-header {
+        grid-area: list-header;
+        .list-title{
+            @extend %form-title;
+        }
+    }
+
+    .list {
+        grid-area: list;
+    }
+
+    footer {
+        grid-area: footer;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        width: 100%;
+        button {
+            @extend %button;
+        }
+    }
+
+    .detail-header {
+        grid-area: detail-header;
+        @extend %form-title;
+        @extend %title;
+    }
+
+    .detail {
+        grid-area: detail;
+        &.no-border {
+            border: 0px !important;
+        }
+    }
+}
