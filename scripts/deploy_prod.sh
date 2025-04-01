@@ -2,6 +2,8 @@
 
 DIR="$(pwd)"
 
+nvm use v18.17
+
 echo "🚀 Starting deployment..."
 
 echo "🔄 Fetching latest changes from origin..."
