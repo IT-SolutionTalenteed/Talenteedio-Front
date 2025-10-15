@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { Store } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { filter, take } from 'rxjs/operators';
 import { logOut } from 'src/app/authentication/store/actions/authentication.actions';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Ad } from 'src/app/shared/models/ad.interface';
@@ -84,6 +84,29 @@ export class HeaderComponent implements OnDestroy, OnChanges {
     if (this.user) {
       this.authenticationStore.dispatch(logOut());
     }
+  }
+
+  goToDashboard(event: Event) {
+    event.preventDefault();
+    
+    // Récupérer les tokens directement depuis le store
+    this.authenticationStore
+      .pipe(
+        select((state: any) => ({
+          accessToken: state?.auth?.token,
+          refreshToken: state?.auth?.refreshToken
+        })),
+        take(1)
+      )
+      .subscribe(tokens => {
+        if (tokens.accessToken) {
+          let url = `${this.backOfficeRoute}?accessToken=${tokens.accessToken}`;
+          if (tokens.refreshToken) {
+            url += `&refreshToken=${tokens.refreshToken}`;
+          }
+          window.location.href = url;
+        }
+      });
   }
 
   toggleUserDropdown() {

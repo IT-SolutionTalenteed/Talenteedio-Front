@@ -7,14 +7,14 @@ export const environment = {
   mock: false,
 
   // dev
-  publicBaseUrl: 'https://api.rhosa.net/public',
-  apiBaseUrl: 'https://api.rhosa.net/api',
-  backOfficeBaseUrl: 'https://talenteed.rhosa.net/admin',
+  // publicBaseUrl: 'https://api.rhosa.net/public',
+  // apiBaseUrl: 'https://api.rhosa.net/api',
+  // backOfficeBaseUrl: 'https://talenteed.rhosa.net/admin',
 
   // locale
-  // publicBaseUrl: 'http://localhost:8080/public',
-  // apiBaseUrl: 'http://localhost:8080/api',
-  // backOfficeBaseUrl: 'http://localhost:5173/admin',
+  publicBaseUrl: 'http://localhost:8080/public',
+  apiBaseUrl: 'http://localhost:8080/api',
+  backOfficeBaseUrl: 'http://localhost:5173/admin',
 
   pdfBaseUrl: 'http://localhost:3010/pdf-generator',
   jwtWhitelistedDomains: ['localhost:3000'],
