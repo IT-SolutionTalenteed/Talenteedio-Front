@@ -43,6 +43,7 @@ export class UserFormComponent implements OnChanges {
     @ViewChild('first', { static: false }) firstInput: ElementRef;
 
     form = this.initForm(EMPTY_USER);
+    profilePictureId: string | null = null;
 
     // eslint-disable-next-line max-params
     constructor(private formBuilder: UntypedFormBuilder, private userService: UserService) {}
@@ -50,6 +51,7 @@ export class UserFormComponent implements OnChanges {
     ngOnChanges() {
         if (this.user) {
             this.form = this.initForm(this.user);
+            this.profilePictureId = this.user.profilePicture?.id || null;
 
             this.isEditing ? this.form.enable() : this.form.disable();
             setTimeout(() => this.isEditing && this.setFocusOnFirstInput());
@@ -58,7 +60,23 @@ export class UserFormComponent implements OnChanges {
     }
 
     onSubmit(form: UntypedFormGroup) {
-        this.form.valid ? this.save.emit(form.value) : this.showErrors();
+        if (this.form.valid) {
+            const userData = {
+                ...form.value,
+                profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null
+            };
+            this.save.emit(userData);
+        } else {
+            this.showErrors();
+        }
+    }
+
+    onProfilePictureChanged(pictureId: string) {
+        this.profilePictureId = pictureId;
+    }
+
+    onProfilePictureRemoved() {
+        this.profilePictureId = null;
     }
 
     private setAsyncValidator() {
@@ -78,6 +96,9 @@ export class UserFormComponent implements OnChanges {
         const localForm = this.formBuilder.group(
             {
                 id: [user.id],
+                lastName: [user.lastname, Validators.required],
+                firstName: [user.firstname, Validators.required],
+                email: [user.email, Validators.compose([Validators.required, Validators.email])],
                 role: [user.role, Validators.required],
                 password: [
                     null,

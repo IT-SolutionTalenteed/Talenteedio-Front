@@ -32,6 +32,11 @@ import { jobListReducer } from './store/reducers/job-list.reducers';
     CardCompanyComponent,
     DidYouKnowComponent,
   ],
+  exports: [
+    TopCompanyComponent,
+    CardCompanyComponent,
+    DidYouKnowComponent,
+  ],
   imports: [
     CommonModule,
     JobListRoutingModule,

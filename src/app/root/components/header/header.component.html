@@ -46,7 +46,11 @@
       <div class="login-item" (click)="toggleUserDropdown()">
         <a class="is_login" id="dropdownMenuUser">
           <div class="icon">
-            <fa-icon [icon]="icon" class="grey-icon"></fa-icon>
+            <img *ngIf="user?.profilePicture?.fileUrl" 
+                 [src]="user.profilePicture.fileUrl" 
+                 alt="Profile" 
+                 class="profile-picture" />
+            <fa-icon *ngIf="!user?.profilePicture?.fileUrl" [icon]="icon" class="grey-icon"></fa-icon>
           </div>
           <span *ngIf="!user" class="full-name">Hello !</span>
           <span *ngIf="user" class="full-name">
@@ -125,7 +129,11 @@
         <div class="login-box" (click)="toggleUserDropdown()">
           <a class="is_login" id="dropdownMenuUser">
             <div class="icon">
-              <fa-icon [icon]="icon" class="grey-icon"></fa-icon>
+              <img *ngIf="user?.profilePicture?.fileUrl" 
+                   [src]="user.profilePicture.fileUrl" 
+                   alt="Profile" 
+                   class="profile-picture" />
+              <fa-icon *ngIf="!user?.profilePicture?.fileUrl" [icon]="icon" class="grey-icon"></fa-icon>
             </div>
           </a>
           <ul

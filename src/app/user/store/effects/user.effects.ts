@@ -11,6 +11,8 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { go } from 'src/app/routeur/store/actions/router.actions';
+import { setUser } from 'src/app/authentication/store/actions/authentication.actions';
+import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { Role } from 'src/app/shared/models/role.interface';
 import { User } from 'src/app/shared/models/user.interface';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
@@ -84,13 +86,25 @@ export class UserEffects {
   saveUserSuccess$ = createEffect(() =>
     this.action$.pipe(
       ofType(saveUserSuccess),
-      withLatestFrom(this.store.pipe(select(getUserCriteria))),
-      mergeMap(([props, criteria]: [User, ListCriteria]) => [
-        go({
-          path: [`${USER_BASE_ROUTE}/detail`, props.id],
-        }),
-        loadUsers(criteria),
-      ])
+      withLatestFrom(
+        this.store.pipe(select(getUserCriteria)),
+        this.store.pipe(select(getLoggedUser))
+      ),
+      mergeMap(([props, criteria, loggedUser]: [User, ListCriteria, User]) => {
+        const actions: any[] = [
+          go({
+            path: [`${USER_BASE_ROUTE}/detail`, props.id],
+          }),
+          loadUsers(criteria),
+        ];
+        
+        // Si l'utilisateur modifié est l'utilisateur connecté, mettre à jour le store d'authentification
+        if (loggedUser && props.id === loggedUser.id) {
+          actions.push(setUser(props));
+        }
+        
+        return actions;
+      })
     )
   );
 

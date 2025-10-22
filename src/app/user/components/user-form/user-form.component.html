@@ -9,6 +9,15 @@
     </header>
     <main data-simplebar>
         <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+            <div class="profile-picture-section">
+                <app-profile-picture-upload
+                    [currentPictureUrl]="user?.profilePicture?.fileUrl"
+                    [disabled]="!form.enabled"
+                    (pictureChanged)="onProfilePictureChanged($event)"
+                    (pictureRemoved)="onProfilePictureRemoved()"
+                ></app-profile-picture-upload>
+            </div>
+            
             <div class="control">
                 <label for="lastName">Nom*</label>
                 <input formControlName="lastName" id="lastName" type="text" #first />

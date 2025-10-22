@@ -1,0 +1,52 @@
+<div class="freelance-container">
+  <div class="banner-container"></div>
+  <div class="header">
+    <h1 class="title">Find <span>Freelance Jobs</span></h1>
+  </div>
+  <div class="filtered-list">
+    <div class="filter">
+      <app-freelance-list-box-filter
+        (saveFilter)="onFilter($event)"
+        [locations]="locations$ | async"
+        [jobTypes]="jobTypes$ | async"
+        [categories]="categories$ | async"
+        [freelanceFilter]="freelanceListCriteria.filter"
+        [user]="user$ | async"
+      ></app-freelance-list-box-filter>
+    </div>
+    <div class="content">
+      <div class="list-content">
+        <div class="sort">
+          <app-freelance-sort
+            [totalItems]="totalItems$ | async"
+            [page]="freelanceListCriteria?.page"
+            [jobLength]="jobLength"
+          ></app-freelance-sort>
+        </div>
+        <div class="list">
+          <app-loader [isLoading]="jobsLoading$ | async">
+            <app-freelance-list
+              [jobs]="jobs$ | async"
+              [user]="user$ | async"
+            ></app-freelance-list>
+          </app-loader>
+        </div>
+      </div>
+      <div class="pagination">
+        <app-pagination
+          [totalItems]="totalItems$ | async"
+          [initialValue]="freelanceListCriteria?.page"
+          (paginate)="onPaginate($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </div>
+  <div class="did-you-know">
+    <app-did-you-know [didYouKnow]="didYouKnow$ | async"></app-did-you-know>
+  </div>
+  <div class="top-company">
+    <app-loader [heightAuto]="true" [isLoading]="companiesLoading$ | async">
+      <app-top-company [companies]="companies$ | async" />
+    </app-loader>
+  </div>
+</div>

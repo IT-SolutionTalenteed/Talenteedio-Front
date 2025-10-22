@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store, select } from '@ngrx/store';
 import { map, pipe } from 'rxjs';
@@ -7,6 +7,8 @@ import { getAccessToken } from './../../../authentication/store/selectors/authen
 
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { setUser } from 'src/app/authentication/store/actions/authentication.actions';
 
 import { Title } from '@angular/platform-browser';
 import { go } from 'src/app/routeur/store/actions/router.actions';
@@ -62,13 +64,15 @@ export class RootComponent implements OnInit, OnDestroy {
   userPlus = faUserPlus;
 
   private subs = new SubSink();
+  private lastFocusTime = Date.now();
 
   // eslint-disable-next-line max-params
   constructor(
     private authenticationStore: Store<AuthenticationState>,
     private routerStore: Store<AppRouterState>,
     private sharedStore: Store<SharedState>,
-    private titleService: Title
+    private titleService: Title,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -81,6 +85,36 @@ export class RootComponent implements OnInit, OnDestroy {
     this.subscribeModals();
     this.location$ = this.sharedStore.pipe(select(getLocation));
     this.ad$ = this.sharedStore.pipe(select(getAd));
+  }
+
+  @HostListener('window:focus', ['$event'])
+  onWindowFocus(event: FocusEvent): void {
+    const now = Date.now();
+    const timeSinceLastFocus = now - this.lastFocusTime;
+    
+    if (timeSinceLastFocus > 5000 && this.accessToken) {
+      this.refreshUserData();
+    }
+    
+    this.lastFocusTime = now;
+  }
+
+  @HostListener('window:blur', ['$event'])
+  onWindowBlur(event: FocusEvent): void {
+    this.lastFocusTime = Date.now();
+  }
+
+  private refreshUserData(): void {
+    this.authenticationService.me().subscribe({
+      next: (response) => {
+        if (response?.user) {
+          this.authenticationStore.dispatch(setUser(response.user));
+        }
+      },
+      error: (error) => {
+        console.error('Error refreshing user data:', error);
+      }
+    });
   }
   initToken() {
     this.subs.sink = this.authenticationStore

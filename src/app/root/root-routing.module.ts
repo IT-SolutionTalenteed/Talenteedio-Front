@@ -81,6 +81,13 @@ const routes: Routes = [
             (m) => m.CommunityModule
           ),
       },
+      {
+        path: 'freelance',
+        loadChildren: () =>
+          import('../freelance/freelance.module').then(
+            (m) => m.FreelanceModule
+          ),
+      },
     ],
   },
 ];

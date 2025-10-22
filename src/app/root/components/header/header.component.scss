@@ -12,6 +12,14 @@ $animation-duration: 0.3s;
   .icon {
     font-size: 35px;
     margin-right: 5px;
+    
+    .profile-picture {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid $primary;
+    }
   }
 
   .grey-icon {

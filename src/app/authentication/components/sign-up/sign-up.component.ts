@@ -77,6 +77,13 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   consentLink = CONSENT_LINK;
 
   roleNameTalent = RoleName.TALENT;
+  roleNameFreelance = RoleName.FREELANCE;
+
+  workModes = [
+    { value: 'remote', label: 'Remote' },
+    { value: 'hybrid', label: 'Hybride' },
+    { value: 'onsite', label: 'Sur site' }
+  ];
 
   config = PHONE_CONFIG;
 
@@ -98,11 +105,18 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     },
     {
       id: null,
+      name: RoleName.FREELANCE,
+      title: 'Freelance',
+    },
+    {
+      id: null,
       name: RoleName.TALENT,
       title: 'Talent',
     },
   ];
   cv: File;
+  profilePictureId: string | null = null;
+  profilePictureUrl: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -118,18 +132,49 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         const consentControl = this.form.get('consent');
         const valuesControl = this.form.get('values');
         const cvControl = this.form.get('cv');
+        const tjmControl = this.form.get('tjm');
+        const mobilityControl = this.form.get('mobility');
+        const availabilityDateControl = this.form.get('availabilityDate');
+        const desiredLocationControl = this.form.get('desiredLocation');
+        const workModeControl = this.form.get('workMode');
 
         if (role === this.roleNameTalent) {
           consentControl.setValidators([Validators.required]);
           valuesControl.setValidators([Validators.required]);
           cvControl.addValidators([Validators.required]);
+          tjmControl.setValidators([Validators.required]);
+          mobilityControl.setValidators([Validators.required]);
+          availabilityDateControl.setValidators([Validators.required]);
+          desiredLocationControl.setValidators([Validators.required]);
+          workModeControl.setValidators([Validators.required]);
+        } else if (role === this.roleNameFreelance) {
+          consentControl.clearValidators();
+          valuesControl.setValidators([Validators.required]);
+          cvControl.addValidators([Validators.required]);
+          tjmControl.setValidators([Validators.required]);
+          mobilityControl.setValidators([Validators.required]);
+          availabilityDateControl.setValidators([Validators.required]);
+          desiredLocationControl.setValidators([Validators.required]);
+          workModeControl.setValidators([Validators.required]);
         } else {
           consentControl.clearValidators();
           valuesControl.clearValidators();
           cvControl.clearValidators();
+          tjmControl.clearValidators();
+          mobilityControl.clearValidators();
+          availabilityDateControl.clearValidators();
+          desiredLocationControl.clearValidators();
+          workModeControl.clearValidators();
         }
-        // Update the 'consent' control's validation status
+        // Update all controls validation status
         consentControl.updateValueAndValidity();
+        valuesControl.updateValueAndValidity();
+        cvControl.updateValueAndValidity();
+        tjmControl.updateValueAndValidity();
+        mobilityControl.updateValueAndValidity();
+        availabilityDateControl.updateValueAndValidity();
+        desiredLocationControl.updateValueAndValidity();
+        workModeControl.updateValueAndValidity();
       });
     }
   }
@@ -144,29 +189,38 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     // this.form.patchValue({ cv: this.cv as File });
   }
 
+  onProfilePictureChanged(pictureId: string) {
+    this.profilePictureId = pictureId;
+  }
+
+  onProfilePictureRemoved() {
+    this.profilePictureId = null;
+    this.profilePictureUrl = null;
+  }
+
   onSubmit(form: FormGroup) {
     const user = form.value as User;
+    const userData: any = {
+      ...user,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      phone: (user.phone as any).internationalNumber,
+      profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null
+    };
 
-    if (form.value.role === this.roleNameTalent) {
+    if (form.value.role === this.roleNameTalent || form.value.role === this.roleNameFreelance) {
       this.form.valid
         ? this.authenticationService
             .uploadMedia(this.cv, 'pdf')
             .subscribe((res) => {
               this.save.emit({
-                ...user,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                phone: (user.phone as any).internationalNumber,
+                ...userData,
                 cvId: res.data.result.id,
               });
             })
         : this.showErrors();
     } else {
       this.form.valid
-        ? this.save.emit({
-            ...user,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            phone: (user.phone as any).internationalNumber,
-          })
+        ? this.save.emit(userData)
         : this.showErrors();
     }
   }
@@ -217,6 +271,11 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         recaptcha: [undefined, Validators.required],
         consent: [false],
         phone: [user.phone, Validators.compose([Validators.required])],
+        tjm: [null],
+        mobility: [null],
+        availabilityDate: [null],
+        desiredLocation: [null],
+        workMode: [null],
       },
       {
         validator: this.confirmationPasswordValidator(

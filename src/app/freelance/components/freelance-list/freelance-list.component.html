@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="list">
+    <a *ngFor="let job of jobs" [routerLink]="'/job/detail/' + job.slug">
+      <app-freelance-item [job]="job" [isReferral]="!!user?.referral"> </app-freelance-item>
+    </a>
+  </div>
+</div>

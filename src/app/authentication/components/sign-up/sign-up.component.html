@@ -5,6 +5,14 @@
     </div>
     <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
       <div class="form-content">
+        <div class="profile-picture-section">
+          <app-profile-picture-upload
+            [currentPictureUrl]="profilePictureUrl"
+            (pictureChanged)="onProfilePictureChanged($event)"
+            (pictureRemoved)="onProfilePictureRemoved()"
+          ></app-profile-picture-upload>
+        </div>
+        
         <div class="control">
           <div for="firstname" class="label">First name*</div>
           <input
@@ -68,7 +76,7 @@
           ></app-validation-error>
         </div>
 
-        <div class="control" *ngIf="form.value.role === roleNameTalent">
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
           <div for="values" class="label">Values*</div>
           <ng-select
             formControlName="values"
@@ -84,7 +92,7 @@
           ></app-validation-error>
         </div>
 
-        <div class="control" *ngIf="form.value.role === roleNameTalent">
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
           <div for="cv" class="label">Cv*</div>
           <div
             class="input"
@@ -111,6 +119,74 @@
             [customErrorLabels]="{
               extensionError: 'Must be a pdf'
             }"
+          ></app-validation-error>
+        </div>
+
+        <!-- Champs conditionnels pour Talent et Freelance -->
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="tjm" class="label">TJM (Taux Journalier Moyen)*</div>
+          <input
+            formControlName="tjm"
+            id="tjm"
+            type="number"
+            placeholder="Entrez votre TJM en €"
+          />
+          <app-validation-error
+            [control]="form.controls['tjm']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="mobility" class="label">Mobilité*</div>
+          <input
+            formControlName="mobility"
+            id="mobility"
+            type="text"
+            placeholder="Ex: France, Europe, International"
+          />
+          <app-validation-error
+            [control]="form.controls['mobility']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="availabilityDate" class="label">Date de disponibilité*</div>
+          <input
+            formControlName="availabilityDate"
+            id="availabilityDate"
+            type="date"
+            placeholder="Sélectionnez une date"
+          />
+          <app-validation-error
+            [control]="form.controls['availabilityDate']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="desiredLocation" class="label">Souhaite travailler où*</div>
+          <input
+            formControlName="desiredLocation"
+            id="desiredLocation"
+            type="text"
+            placeholder="Ex: Paris, Lyon, Remote"
+          />
+          <app-validation-error
+            [control]="form.controls['desiredLocation']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="workMode" class="label">Mode de travail*</div>
+          <ng-select
+            formControlName="workMode"
+            [items]="workModes"
+            bindLabel="label"
+            bindValue="value"
+            placeholder="Sélectionnez un mode de travail"
+          >
+          </ng-select>
+          <app-validation-error
+            [control]="form.controls['workMode']"
           ></app-validation-error>
         </div>
 

@@ -5,8 +5,10 @@ import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RoleService } from '../role/services/role.service';
 import { AutoUpdateStatusComponent } from './components/auto-update-status/auto-update-status.component';
+import { ProfilePictureUploadComponent } from './components/profile-picture-upload/profile-picture-upload.component';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
@@ -49,6 +51,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     RouterModule,
     ReactiveFormsModule,
     NgSelectModule,
+    FontAwesomeModule,
   ],
   declarations: [
     LoaderComponent,
@@ -77,6 +80,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     HtmlParserPipePipe,
     ModalComponent,
     SafePipe,
+    ProfilePictureUploadComponent,
   ],
   exports: [
     CommonModule,
@@ -108,6 +112,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     HtmlParserPipePipe,
     ModalComponent,
     SafePipe,
+    ProfilePictureUploadComponent,
   ],
   providers: [
     RoleAutocompletionService,

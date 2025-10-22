@@ -1,0 +1,60 @@
+<div class="profile-picture-upload">
+  <div class="picture-container">
+    <div class="picture-preview">
+      <img 
+        *ngIf="currentPictureUrl && !isUploading" 
+        [src]="currentPictureUrl" 
+        alt="Photo de profil" 
+      />
+      <fa-icon 
+        *ngIf="!currentPictureUrl && !isUploading" 
+        [icon]="faCircleUser" 
+        class="default-icon"
+      ></fa-icon>
+      <div *ngIf="isUploading" class="uploading">
+        <div class="spinner"></div>
+        <span>Upload en cours...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <input 
+      type="file" 
+      #fileInput 
+      (change)="onFileSelected($event)" 
+      accept="image/*"
+      [disabled]="disabled || isUploading"
+      style="display: none"
+    />
+    
+    <button 
+      type="button"
+      class="btn-upload" 
+      (click)="triggerFileInput(fileInput)"
+      [disabled]="disabled || isUploading"
+    >
+      <fa-icon [icon]="faUpload"></fa-icon>
+      {{ currentPictureUrl ? 'Changer' : 'Ajouter' }} la photo
+    </button>
+    
+    <button 
+      type="button"
+      *ngIf="currentPictureUrl && !isUploading" 
+      class="btn-remove" 
+      (click)="removePicture()"
+      [disabled]="disabled"
+    >
+      <fa-icon [icon]="faTrash"></fa-icon>
+      Supprimer
+    </button>
+  </div>
+
+  <div *ngIf="uploadError" class="error-message">
+    {{ uploadError }}
+  </div>
+
+  <div class="help-text">
+    Formats acceptés: JPG, PNG, GIF (max 5MB)
+  </div>
+</div>

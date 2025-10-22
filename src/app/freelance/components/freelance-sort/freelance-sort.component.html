@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="result">
+    Showing
+    <strong
+      >{{ (page.page - 1) * page.pageSize + 1 }}-{{
+        (page.page - 1) * page.pageSize + jobLength
+      }}</strong
+    >
+    of <strong>{{ totalItems }}</strong> freelance jobs
+  </div>
+  <div class="sort-by"></div>
+</div>

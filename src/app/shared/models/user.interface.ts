@@ -4,6 +4,7 @@ import { Recruiter } from './recruiter.interface';
 import { Referral } from './referral.interface';
 import { Role } from './role.interface';
 import { Value } from './value.interface';
+import { Picture } from './picture';
 
 export interface User {
   id: string;
@@ -23,4 +24,5 @@ export interface User {
   articles: Article[];
   isVerified: boolean;
   phone: string;
+  profilePicture?: Picture;
 }

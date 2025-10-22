@@ -41,6 +41,12 @@ form {
   max-width: 100%;
   // padding: $standard-padding-top-bottom $standard-padding-left-right;
   .form-content {
+    .profile-picture-section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
     a {
       color: $primary;
       text-decoration: none;
