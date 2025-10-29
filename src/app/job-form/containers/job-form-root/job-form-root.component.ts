@@ -13,6 +13,7 @@ import {
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { go } from 'src/app/routeur/store/actions/router.actions';
+import { JobFormService } from '../../services/job-form.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { Job } from 'src/app/shared/models/job.interface';
 import { UserDocument } from 'src/app/shared/models/user-document';
@@ -50,6 +51,10 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   referJobLoading$: Observable<boolean>;
   referJobError$: Observable<string>;
   isClient = false;
+  showMatchScore = false;
+  matchPercentage = 0;
+  matchLoading = false;
+  matchError = '';
   clipBoardIcon = faClipboardList;
   faUserPlus = faUserPlus;
   config = PHONE_CONFIG;
@@ -57,6 +62,7 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   private sub = new SubSink();
   @ViewChild('applyJobModal') applyJobModal: ModalComponent;
   @ViewChild('referJobModal') referJobModal: ModalComponent;
+  @ViewChild('matchJobModal') matchJobModal: ModalComponent;
 
   form = this.initForm({ lmId: undefined, cvId: undefined });
   referForm = this.initReferForm({
@@ -64,6 +70,7 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     talentFullName: undefined,
     talentNumber: undefined,
   });
+  matchForm = this.initMatchForm({ cvId: undefined });
 
   // eslint-disable-next-line max-params
   constructor(
@@ -73,7 +80,8 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private meta: Meta,
     private location: Location,
-    private titleService: Title
+    private titleService: Title,
+    private jobFormService: JobFormService
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +115,12 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
           talentFullName: undefined,
           talentNumber: undefined,
         }))
+    );
+    this.matchJobModal?.closing.subscribe(
+      (message) => {
+        this.matchForm = this.initMatchForm({ cvId: undefined });
+        this.showMatchScore = false;
+      }
     );
   }
   initReferParams() {
@@ -152,6 +166,45 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   onRefer() {
     this.referJobModal.open();
   }
+
+  onMatch() {
+    this.showMatchScore = false;
+    this.matchJobModal.open();
+  }
+
+  onValidateMatch(matchForm) {
+    if (this.matchForm.valid) {
+      this.matchLoading = true;
+      this.matchError = '';
+      
+      // Call the AI matching service
+      this.jobFormService.matchCVWithJob(
+        matchForm.value.cvId,
+        this.job.id  // Use job.id instead of jobId (which is the slug)
+      ).subscribe({
+        next: (response: any) => {
+          this.matchLoading = false;
+          this.matchPercentage = response.data.matchCVWithJob.overall_match_percentage;
+          this.showMatchScore = true;
+        },
+        error: (error) => {
+          this.matchLoading = false;
+          this.matchError = error.message || 'Failed to calculate match score';
+          console.error('Match error:', error);
+        }
+      });
+    } else {
+      this.showMatchErrors();
+    }
+  }
+
+  closeMatchModal() {
+    this.matchJobModal.close();
+    this.showMatchScore = false;
+    this.matchPercentage = 0;
+    this.matchError = '';
+    this.matchForm = this.initMatchForm({ cvId: undefined });
+  }
   onReferJob(referForm) {
     this.referForm.valid
       ? this.jobFormStore.dispatch(
@@ -188,6 +241,12 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
       talentEmail: [form.talentEmail, [Validators.required, Validators.email]],
       talentFullName: [form.talentFullName, Validators.required],
       talentNumber: [form.talentNumber],
+    });
+  }
+
+  private initMatchForm(form: { cvId: UserDocument }): FormGroup {
+    return this.formBuilder.group({
+      cvId: [form.cvId, Validators.required],
     });
   }
   ngOnDestory() {
@@ -269,5 +328,9 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   }
   showReferErrors() {
     markFormAsTouchedAndDirty(this.referForm);
+  }
+
+  showMatchErrors() {
+    markFormAsTouchedAndDirty(this.matchForm);
   }
 }

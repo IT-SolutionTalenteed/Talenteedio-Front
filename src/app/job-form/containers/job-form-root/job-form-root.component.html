@@ -6,6 +6,7 @@
       (apply)="onApply()"
       (refer)="onRefer()"
       (login)="onLogin()"
+      (match)="onMatch()"
     ></app-job-form>
   </app-loader>
 </div>
@@ -150,3 +151,62 @@
   <!-- <ng-template #modalFooter>
   </ng-template> -->
 </modal>
+
+<modal #matchJobModal class="popup-modal success custom">
+  <ng-template #modalBody>
+    <app-loader
+      [isLoading]="matchLoading"
+      style="width: 65%"
+      [width]="80"
+      [height]="80"
+    >
+      <div style="width: 100%;">
+        <div class="modal-title">
+          <h4>Match Profile</h4>
+        </div>
+        
+        <!-- CV Selection Form -->
+        <div *ngIf="!showMatchScore">
+          <p class="modal-p">Select your CV to match with this job</p>
+          <form *ngIf="matchForm" [formGroup]="matchForm" (submit)="onValidateMatch(matchForm)">
+            <div class="form-content">
+              <label for="matchCvId"><strong>Select your CV *</strong></label>
+              <div class="control">
+                <ng-select
+                  formControlName="cvId"
+                  [items]="CVs || []"
+                  bindLabel="title"
+                  bindValue="id"
+                  placeholder="Choose a CV"
+                  required
+                >
+                </ng-select>
+                <app-validation-error
+                  [control]="matchForm.controls['cvId']"
+                ></app-validation-error>
+              </div>
+            </div>
+            <div class="error-content" *ngIf="matchError">
+              <div class="text-wrapper">
+                {{ matchError }}
+              </div>
+            </div>
+            <button class="primary" type="submit">Validate</button>
+          </form>
+        </div>
+
+        <!-- Match Score Display -->
+        <div *ngIf="showMatchScore" style="text-align: center;">
+          <div style="margin: 30px 0;">
+            <div style="font-size: 72px; font-weight: bold; color: rgb(25 103 210 / 68%);">
+              <span id="pourcentage">{{ matchPercentage }}</span>%
+            </div>
+            <p style="margin-top: 20px; color: #666;">
+              Your profile matches this job position
+            </p>
+          </div>
+          <button class="primary" (click)="closeMatchModal()">Close</button>
+        </div>
+      </div>
+    </app-loader>
+  </ng-template>

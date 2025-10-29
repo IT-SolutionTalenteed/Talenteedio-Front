@@ -43,6 +43,7 @@ export class JobFormComponent implements OnChanges {
   @Output() login: EventEmitter<void> = new EventEmitter<void>();
   @Output() apply: EventEmitter<void> = new EventEmitter<void>();
   @Output() refer: EventEmitter<void> = new EventEmitter<void>();
+  @Output() match: EventEmitter<void> = new EventEmitter<void>();
   @Input() job: Job;
   @Input() user: User;
   isExperatedJob = false;
@@ -98,5 +99,9 @@ export class JobFormComponent implements OnChanges {
 
   onApply() {
     this.apply.emit();
+  }
+
+  onMatch() {
+    this.match.emit();
   }
 }

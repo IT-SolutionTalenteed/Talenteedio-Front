@@ -53,8 +53,10 @@
           !job.hasApplied &&
           !!user.isVerified
         "
+        style="display: flex; flex-direction: column; gap: 10px;"
       >
         <button class="primary" (click)="onApply()">Apply</button>
+        <button class="primary" (click)="onMatch()">Match Profile</button>
       </div>
       <div
         class="job-expired"

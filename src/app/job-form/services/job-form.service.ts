@@ -150,6 +150,37 @@ export class JobFormService {
       },
     });
   }
+
+  matchCVWithJob(cvId: string, jobId: string) {
+    const query = gql`
+      query MatchCVWithJob($input: MatchCVInput) {
+        matchCVWithJob(input: $input) {
+          overall_match_percentage
+          criteria_scores {
+            criterion
+            score
+            explanation
+          }
+          strengths
+          gaps
+          recommendation
+        }
+      }
+    `;
+    return this.apollo.query({
+      query,
+      variables: {
+        input: {
+          cvId,
+          jobId,
+        },
+      },
+      fetchPolicy: 'network-only',
+      context: {
+        uri: this.apiUrl,
+      },
+    });
+  }
   loadApplyJobCriteria() {
     return (
       this.apollo
