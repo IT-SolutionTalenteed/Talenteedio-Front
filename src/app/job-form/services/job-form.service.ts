@@ -182,37 +182,60 @@ export class JobFormService {
     });
   }
   loadApplyJobCriteria() {
-    return (
-      this.apollo
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .query<any>({
-          query: gql`
-            {
-              getCVs {
-                rows {
-                  id
-                  title
-                }
-              }
-              getLMs {
-                rows {
-                  id
-                  title
+    return this.apollo
+      .query<any>({
+        query: gql`
+          {
+            getCVs {
+              rows {
+                id
+                title
+                file {
+                  fileUrl
                 }
               }
             }
-          `,
-          fetchPolicy: 'network-only', // Force Apollo to make a network request instead of using cache
-          context: {
-            uri: this.apiUserUrl, // Use the updated API URL
-          },
-        })
-        .pipe(
-          map((response) => ({
-            CVs: response.data.getCVs.rows,
-            LMs: response.data.getLMs.rows,
-          }))
-        )
-    );
+            getLMs {
+              rows {
+                id
+                title
+              }
+            }
+          }
+        `,
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.apiUserUrl,
+        },
+      })
+      .pipe(
+        map((response) => ({
+          CVs: response.data.getCVs.rows.map(cv => ({
+            ...cv,
+            fileUrl: cv.file?.fileUrl
+          })),
+          LMs: response.data.getLMs.rows,
+        }))
+      );
+  }
+
+  /**
+   * Simule un appel API qui renvoie le titre du CV passé en paramètre
+   */
+  scanMyProfileCVWithJob(cvTitle: string) {
+    return new Observable<{ data: string }>((observer) => {
+      setTimeout(() => {
+        observer.next({ data: cvTitle });
+        observer.complete();
+      }, 700);
+    });
+  }
+
+  sendCVToScanApi(pdfUrl: string, jobId: string) {
+    return fetch(`${environment.apiBaseUrl}/scanmyprofilecvwithjob`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdfUrl, jobId })
+    }).then(r => r.json());
   }
 }

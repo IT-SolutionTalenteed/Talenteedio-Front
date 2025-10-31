@@ -55,9 +55,11 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   matchPercentage = 0;
   matchLoading = false;
   matchError = '';
+  scanMyProfileCVWithJobMsg: string = '';
   clipBoardIcon = faClipboardList;
   faUserPlus = faUserPlus;
   config = PHONE_CONFIG;
+  selectedCV: UserDocument | null = null;
 
   private sub = new SubSink();
   @ViewChild('applyJobModal') applyJobModal: ModalComponent;
@@ -176,26 +178,43 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     if (this.matchForm.valid) {
       this.matchLoading = true;
       this.matchError = '';
-      
-      // Call the AI matching service
-      this.jobFormService.matchCVWithJob(
-        matchForm.value.cvId,
-        this.job.id  // Use job.id instead of jobId (which is the slug)
-      ).subscribe({
+      this.scanMyProfileCVWithJobMsg = '';
+      this.selectedCV = this.CVs?.find((c) => c.id === matchForm.value.cvId) || null;
+      const cvTitle = this.selectedCV?.title || 'CV inconnu';
+
+      this.jobFormService.scanMyProfileCVWithJob(cvTitle).subscribe({
         next: (response: any) => {
           this.matchLoading = false;
-          this.matchPercentage = response.data.matchCVWithJob.overall_match_percentage;
+          this.scanMyProfileCVWithJobMsg = response.data;
           this.showMatchScore = true;
         },
         error: (error) => {
           this.matchLoading = false;
-          this.matchError = error.message || 'Failed to calculate match score';
-          console.error('Match error:', error);
-        }
+          this.matchError = error.message || 'Failed to get result';
+          console.error('scanMyProfileCVWithJob error:', error);
+        },
       });
     } else {
       this.showMatchErrors();
     }
+  }
+
+  onSendCVToApi() {
+    if (!this.selectedCV?.fileUrl || !this.job?.id) return;
+    this.matchLoading = true;
+    this.matchError = '';
+    this.scanMyProfileCVWithJobMsg = '';
+    this.jobFormService
+      .sendCVToScanApi(this.selectedCV.fileUrl, this.job.id)
+      .then((result) => {
+        this.scanMyProfileCVWithJobMsg = result.message;
+        this.matchLoading = false;
+        this.showMatchScore = true;
+      })
+      .catch((error) => {
+        this.matchError = error.message || "Erreur lors de l'appel API";
+        this.matchLoading = false;
+      });
   }
 
   closeMatchModal() {
