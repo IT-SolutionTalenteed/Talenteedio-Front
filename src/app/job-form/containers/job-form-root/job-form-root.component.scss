@@ -145,3 +145,137 @@ form {
     }
   }
 }
+
+// Match modal styles
+.match-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  
+  .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 120px;
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #ddd;
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .step-label {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    &.active {
+      .step-number {
+        background-color: rgb(25 103 210 / 68%);
+        color: white;
+      }
+      .step-label {
+        color: #333;
+        font-weight: 600;
+      }
+    }
+    
+    &.completed {
+      .step-number {
+        background-color: #4caf50;
+        color: white;
+      }
+      .step-label {
+        color: #666;
+      }
+    }
+  }
+  
+  .progress-line {
+    height: 2px;
+    background-color: #ddd;
+    flex: 1;
+    max-width: 80px;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    
+    &.completed {
+      background-color: #4caf50;
+    }
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  
+  button.secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    
+    &:hover {
+      background-color: inherit !important;
+    }
+  }
+}
+
+.match-step {
+  min-height: 400px;
+  padding: 20px 0;
+}
+
+.job-preview {
+  ::ng-deep {
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    
+    p {
+      margin-bottom: 1em;
+      line-height: 1.6;
+    }
+    
+    ul, ol {
+      margin-left: 1.5em;
+      margin-bottom: 1em;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+// Larger modal width for matchJobModal
+::ng-deep {
+  modal#matchJobModal .modal-content {
+    width: 1000px !important;
+    max-width: 90vw;
+  }
+}

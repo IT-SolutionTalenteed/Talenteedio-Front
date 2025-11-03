@@ -60,6 +60,10 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   faUserPlus = faUserPlus;
   config = PHONE_CONFIG;
   selectedCV: UserDocument | null = null;
+  // Three-step modal management
+  matchStep: 'cv-selection' | 'cv-preview' | 'job-preview' | 'results' = 'cv-selection';
+  matchAnalysis: string = '';
+  matchRecommendations: string = '';
 
   private sub = new SubSink();
   @ViewChild('applyJobModal') applyJobModal: ModalComponent;
@@ -122,6 +126,10 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
       (message) => {
         this.matchForm = this.initMatchForm({ cvId: undefined });
         this.showMatchScore = false;
+        this.matchStep = 'cv-selection';
+        this.matchAnalysis = '';
+        this.matchRecommendations = '';
+        this.matchPercentage = 0;
       }
     );
   }
@@ -170,51 +178,94 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   }
 
   onMatch() {
+    this.matchStep = 'cv-selection';
     this.showMatchScore = false;
     this.matchJobModal.open();
   }
 
-  onValidateMatch(matchForm) {
+  // Step 1: Select CV
+  onSelectCV(matchForm) {
     if (this.matchForm.valid) {
-      this.matchLoading = true;
-      this.matchError = '';
-      this.scanMyProfileCVWithJobMsg = '';
       this.selectedCV = this.CVs?.find((c) => c.id === matchForm.value.cvId) || null;
-      const cvTitle = this.selectedCV?.title || 'CV inconnu';
-
-      this.jobFormService.scanMyProfileCVWithJob(cvTitle).subscribe({
-        next: (response: any) => {
-          this.matchLoading = false;
-          this.scanMyProfileCVWithJobMsg = response.data;
-          this.showMatchScore = true;
-        },
-        error: (error) => {
-          this.matchLoading = false;
-          this.matchError = error.message || 'Failed to get result';
-          console.error('scanMyProfileCVWithJob error:', error);
-        },
-      });
+      this.matchStep = 'cv-preview';
+      this.matchError = '';
     } else {
       this.showMatchErrors();
     }
   }
 
-  onSendCVToApi() {
-    if (!this.selectedCV?.fileUrl || !this.job?.id) return;
+  // Step 1 → Step 2: CV Preview to Job Preview
+  onContinueFromCVPreview() {
+    this.matchStep = 'job-preview';
+  }
+
+  // Check if HTML content has actual text
+  private hasTextContent(htmlContent: string): boolean {
+    if (!htmlContent || !htmlContent.trim()) {
+      return false;
+    }
+    
+    // Create a temporary DOM element to extract text
+    if (typeof document !== 'undefined') {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      const textContent = tempDiv.textContent || tempDiv.innerText || '';
+      return textContent.trim().length > 0;
+    }
+    
+    // Fallback: simple check if not in browser
+    return htmlContent.trim().length > 0;
+  }
+
+  // Check if match validation is possible
+  canValidateMatch(): boolean {
+    // Check if CV has file URL
+    if (!this.selectedCV?.fileUrl || !this.selectedCV.fileUrl.trim()) {
+      return false;
+    }
+    
+    // Check if job has content/description with actual text
+    if (!this.job?.content || !this.hasTextContent(this.job.content)) {
+      return false;
+    }
+    
+    return true;
+  }
+
+  // Step 2 → Step 3: Job Preview to Results
+  onValidateMatch() {
+    if (!this.canValidateMatch()) {
+      this.matchError = 'Impossible de valider : CV ou offre d\'emploi manquant';
+      return;
+    }
+    
     this.matchLoading = true;
     this.matchError = '';
-    this.scanMyProfileCVWithJobMsg = '';
+    this.matchStep = 'results';
+    
     this.jobFormService
       .sendCVToScanApi(this.selectedCV.fileUrl, this.job.id)
       .then((result) => {
-        this.scanMyProfileCVWithJobMsg = result.message;
         this.matchLoading = false;
-        this.showMatchScore = true;
+        this.matchPercentage = result.pythonReturn?.score || 0;
+        this.matchAnalysis = result.pythonReturn?.analysis || '';
+        this.matchRecommendations = result.pythonReturn?.recommendations || '';
       })
       .catch((error) => {
         this.matchError = error.message || "Erreur lors de l'appel API";
         this.matchLoading = false;
       });
+  }
+
+  // Navigation: go back
+  onGoBack() {
+    if (this.matchStep === 'cv-preview') {
+      this.matchStep = 'cv-selection';
+    } else if (this.matchStep === 'job-preview') {
+      this.matchStep = 'cv-preview';
+    } else if (this.matchStep === 'results') {
+      this.matchStep = 'job-preview';
+    }
   }
 
   closeMatchModal() {
@@ -223,6 +274,9 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     this.matchPercentage = 0;
     this.matchError = '';
     this.matchForm = this.initMatchForm({ cvId: undefined });
+    this.matchStep = 'cv-selection';
+    this.matchAnalysis = '';
+    this.matchRecommendations = '';
   }
   onReferJob(referForm) {
     this.referForm.valid

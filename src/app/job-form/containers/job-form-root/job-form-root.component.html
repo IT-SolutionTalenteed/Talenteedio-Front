@@ -152,10 +152,10 @@
   </ng-template> -->
 </modal>
 
-<modal #matchJobModal class="popup-modal success custom">
+<modal #matchJobModal id="matchJobModal" class="popup-modal success custom">
   <ng-template #modalBody>
     <app-loader
-      [isLoading]="matchLoading"
+      [isLoading]="matchLoading && matchStep === 'results'"
       style="width: 65%"
       [width]="80"
       [height]="80"
@@ -164,11 +164,34 @@
         <div class="modal-title">
           <h4>Match Profile</h4>
         </div>
+
+        <!-- Progress indicator -->
+        <div class="match-progress" style="margin: 20px 0;">
+          <div class="progress-step" [class.active]="matchStep === 'cv-selection'" [class.completed]="matchStep !== 'cv-selection'">
+            <span class="step-number">1</span>
+            <span class="step-label">CV Selection</span>
+          </div>
+          <div class="progress-line" [class.completed]="matchStep !== 'cv-selection'"></div>
+          <div class="progress-step" [class.active]="matchStep === 'cv-preview'" [class.completed]="['job-preview', 'results'].includes(matchStep)">
+            <span class="step-number">2</span>
+            <span class="step-label">CV Preview</span>
+          </div>
+          <div class="progress-line" [class.completed]="['job-preview', 'results'].includes(matchStep)"></div>
+          <div class="progress-step" [class.active]="matchStep === 'job-preview'" [class.completed]="matchStep === 'results'">
+            <span class="step-number">3</span>
+            <span class="step-label">Job Preview</span>
+          </div>
+          <div class="progress-line" [class.completed]="matchStep === 'results'"></div>
+          <div class="progress-step" [class.active]="matchStep === 'results'">
+            <span class="step-number">4</span>
+            <span class="step-label">Results</span>
+          </div>
+        </div>
         
-        <!-- CV Selection Form -->
-        <div *ngIf="!showMatchScore">
+        <!-- STEP 1: CV Selection -->
+        <div *ngIf="matchStep === 'cv-selection'" class="match-step">
           <p class="modal-p">Select your CV to match with this job</p>
-          <form *ngIf="matchForm" [formGroup]="matchForm" (submit)="onValidateMatch(matchForm)">
+          <form *ngIf="matchForm" [formGroup]="matchForm" (submit)="onSelectCV(matchForm); $event.preventDefault()">
             <div class="form-content">
               <label for="matchCvId"><strong>Select your CV *</strong></label>
               <div class="control">
@@ -191,47 +214,96 @@
                 {{ matchError }}
               </div>
             </div>
-            <button class="primary" type="submit">Validate</button>
+            <div class="button-group">
+              <button class="primary" type="submit">Continue</button>
+            </div>
           </form>
         </div>
 
-        <!-- Match Score Display -->
-        <div *ngIf="showMatchScore" style="margin-top:24px;">
-          <div><strong>CV sélectionné :</strong> {{ selectedCV?.title }}</div>
-          <div *ngIf="selectedCV?.fileUrl; else noPreview" style="margin-top:16px;">
-            <iframe 
-              [src]="selectedCV.fileUrl | safe"
-              width="100%"
-              height="500px"
-              style="border: 1px solid #bbb; border-radius:8px;"
-            ></iframe>
+        <!-- STEP 2: CV Preview -->
+        <div *ngIf="matchStep === 'cv-preview'" class="match-step">
+          <div style="margin-top: 20px;">
+            <div><strong>CV sélectionné :</strong> {{ selectedCV?.title }}</div>
+            <div *ngIf="selectedCV?.fileUrl; else noPreview" style="margin-top:16px;">
+              <iframe 
+                [src]="selectedCV.fileUrl | safe"
+                width="100%"
+                height="500px"
+                style="border: 1px solid #bbb; border-radius:8px;"
+              ></iframe>
+            </div>
+            <ng-template #noPreview>
+              <p style="color:#888; margin-top:16px;">Pas de PDF disponible pour ce CV.</p>
+            </ng-template>
           </div>
-          <ng-template #noPreview>
-            <p style="color:#888;">Pas de PDF disponible pour ce CV.</p>
-          </ng-template>
+          <div class="button-group">
+            <button class="secondary" type="button" (click)="onGoBack()">Back</button>
+            <button class="primary" type="button" (click)="onContinueFromCVPreview()">Continue</button>
+          </div>
         </div>
 
-        <!-- Match Score Display -->
-        <div *ngIf="showMatchScore" style="text-align: center;">
-          <ng-container *ngIf="scanMyProfileCVWithJobMsg; else scoreBlock">
-            <div style="margin: 30px 0;">
-              <div style="font-size: 42px; font-weight: bold; color: rgb(25 103 210 / 68%);">
-                {{ scanMyProfileCVWithJobMsg }}
+        <!-- STEP 3: Job Preview -->
+        <div *ngIf="matchStep === 'job-preview'" class="match-step">
+          <div style="margin-top: 20px;">
+            <h4 style="margin-bottom: 16px;">{{ (job$ | async)?.title }}</h4>
+            <ng-container *ngIf="(job$ | async)?.content; else noJobContent">
+              <div class="job-preview" [innerHTML]="(job$ | async)?.content" style="max-height: 500px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 16px; background: #f9f9f9;"></div>
+            </ng-container>
+            <ng-template #noJobContent>
+              <div style="max-height: 500px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 16px; background: #f9f9f9; color: #888; text-align: center;">
+                <p style="font-style: italic;">Cette offre d'emploi n'a pas de description détaillée.</p>
               </div>
+            </ng-template>
+          </div>
+          <div class="error-content" *ngIf="matchError">
+            <div class="text-wrapper">
+              {{ matchError }}
             </div>
-            <button class="primary" (click)="onSendCVToApi()" [disabled]="matchLoading || !selectedCV">Valider</button>
-          </ng-container>
-          <ng-template #scoreBlock>
-            <div style="margin: 30px 0;">
-              <div style="font-size: 72px; font-weight: bold; color: rgb(25 103 210 / 68%);">
-                <span id="pourcentage">{{ matchPercentage }}</span>%
-              </div>
-              <p style="margin-top: 20px; color: #666;">
-                Your profile matches this job position
-              </p>
+          </div>
+          <div class="button-group">
+            <button class="secondary" type="button" (click)="onGoBack()">Back</button>
+            <button 
+              class="primary" 
+              type="button" 
+              (click)="onValidateMatch()"
+              [disabled]="!canValidateMatch() || matchLoading"
+              [title]="!canValidateMatch() ? 'CV ou description d\'offre manquant' : ''"
+            >
+              Validate & Get Match
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Results -->
+        <div *ngIf="matchStep === 'results'" class="match-step">
+          <div style="text-align: center; margin: 30px 0;">
+            <div style="font-size: 72px; font-weight: bold; color: rgb(25 103 210 / 68%);">
+              <span id="pourcentage">{{ matchPercentage }}</span>%
             </div>
-            <button class="primary" (click)="closeMatchModal()">Close</button>
-          </ng-template>
+            <p style="margin-top: 20px; color: #666; font-size: 18px;">
+              Your profile matches this job position
+            </p>
+          </div>
+
+          <div *ngIf="matchAnalysis" style="margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+            <h5 style="margin-bottom: 12px; color: #333;">📋 Analyse</h5>
+            <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">{{ matchAnalysis }}</p>
+          </div>
+
+          <div *ngIf="matchRecommendations" style="margin-top: 20px; padding: 20px; background: #e8f4fd; border-radius: 8px;">
+            <h5 style="margin-bottom: 12px; color: #1976d2;">💡 Recommandations</h5>
+            <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">{{ matchRecommendations }}</p>
+          </div>
+
+          <div class="error-content" *ngIf="matchError">
+            <div class="text-wrapper">
+              {{ matchError }}
+            </div>
+          </div>
+
+          <div class="button-group" style="margin-top: 30px;">
+            <button class="primary" type="button" (click)="closeMatchModal()">Close</button>
+          </div>
         </div>
       </div>
     </app-loader>
