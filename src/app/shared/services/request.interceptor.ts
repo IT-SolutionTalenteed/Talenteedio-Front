@@ -11,7 +11,7 @@ import {
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
-import { Observable, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import {
@@ -68,7 +68,8 @@ export class RequestInterceptor implements HttpInterceptor {
               }
             });
             if (expiredToken) {
-              throw new Error('Invalid token');
+              // Emit a 401 to trigger refresh flow without throwing a generic error
+              throw new HttpErrorResponse({ status: 401, statusText: 'Unauthorized' });
             }
           }),
           catchError((error: HttpErrorResponse) => {
@@ -81,11 +82,8 @@ export class RequestInterceptor implements HttpInterceptor {
                 select(getRefreshToken),
                 switchMap((token: string) => {
                   if (!token) {
-                    this.toastr.error(
-                      error?.error?.msg || error.message,
-                      'Error'
-                    );
-                    return throwError(error);
+                    // No refresh token available: end the stream silently to avoid noisy errors
+                    return EMPTY;
                   }
                   return this.authenticationService.refreshToken(token).pipe(
                     tap((response: AuthenticationResponse) => {
