@@ -1,0 +1,27 @@
+.container {
+  padding: 24px;
+}
+.plans {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.plan {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+}
+.price {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.btn.primary {
+  margin-top: 8px;
+  background: #4fb556;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+

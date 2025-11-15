@@ -17,8 +17,10 @@ export class AuthenticationRouterEffects {
     this.action$.pipe(
       ofType(ROUTER_NAVIGATED),
       map(this.mapToRouterStateUrl),
-      filter(
-        ({ urlWithoutQueryParams }) => urlWithoutQueryParams === SIGN_UP_ROUTE
+      filter(({ urlWithoutQueryParams }) =>
+        [SIGN_UP_ROUTE, '/authentication/sign-up-choice'].includes(
+          urlWithoutQueryParams
+        )
       ),
       mergeMap(() => [loadValues()])
     )

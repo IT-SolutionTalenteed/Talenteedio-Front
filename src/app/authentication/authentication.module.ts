@@ -22,6 +22,9 @@ import { AccountValidationService } from './guards/account-validation.guard';
 import { OnlySingleSignInService } from './guards/only-single-sign-in.guard';
 import { AuthenticationRouterEffects } from './store/effects/authentication-route.effects';
 import { AuthenticationEffects } from './store/effects/authentication.effects';
+import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign-up-choice-root.component';
+import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
+import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
 
 @NgModule({
   imports: [
@@ -49,6 +52,9 @@ import { AuthenticationEffects } from './store/effects/authentication.effects';
     ReinitPasswordComponent,
     ReinitPasswordRootComponent,
     AuthenticationLeftComponent,
+    SignUpChoiceRootComponent,
+    CompanyRegisterRootComponent,
+    CompanyPlanRootComponent,
   ],
   providers: [OnlySingleSignInService, AccountValidationService],
 })

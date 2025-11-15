@@ -1,0 +1,255 @@
+<div class="container">
+  <div class="form-container">
+    <div class="sub-title">
+      <strong>Company Sign Up</strong>
+    </div>
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-content">
+        <!-- Section: Company Information -->
+        <div class="form-section company-info">
+          <div class="control">
+            <div for="company_name" class="label">Company name*</div>
+            <input
+              #first
+              formControlName="company_name"
+              id="company_name"
+              type="text"
+              placeholder="Enter company name"
+            />
+            <app-validation-error
+              [control]="form.controls['company_name']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="categoryId" class="label">Category*</div>
+            <ng-select
+              formControlName="categoryId"
+              [items]="categories"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select a category"
+            >
+            </ng-select>
+            <app-validation-error
+              [control]="form.controls['categoryId']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="logo" class="label">Company logo*</div>
+            <div
+              class="input"
+              [ngClass]="{
+                'ng-invalid': logoError,
+                'ng-dirty': logoTouched,
+                'ng-touched': logoTouched
+              }"
+            >
+              <label for="logo" class="file-upload-button"> Choose File </label>
+              <span class="file-upload-text">{{
+                logoFileName || "No file chosen"
+              }}</span>
+              <input
+                type="file"
+                id="logo"
+                (change)="onLogoSelected($event)"
+                accept="image/*"
+              />
+            </div>
+            <div *ngIf="logoError && logoTouched" class="error-message">
+              Company logo is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Contact Information -->
+        <div class="form-section contact-info">
+          <div class="control">
+            <div for="contactEmail" class="label">Contact email*</div>
+            <input
+              formControlName="contactEmail"
+              id="contactEmail"
+              type="email"
+              placeholder="Enter contact email"
+            />
+            <app-validation-error
+              [control]="form.controls['contactEmail']"
+              [customErrorLabels]="{
+                duplicateEntry: 'Email already registered'
+              }"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="phone" class="label">Phone*</div>
+            <angular-intl-phone formControlName="phone" [config]="config" />
+            <app-validation-error
+              [control]="form.controls['phone']"
+            ></app-validation-error>
+          </div>
+        </div>
+
+        <!-- Section: Address Information -->
+        <div class="form-section address-info">
+          <div class="control full-width">
+            <div for="address_line" class="label">Address line*</div>
+            <input
+              formControlName="address_line"
+              id="address_line"
+              type="text"
+              placeholder="Enter address"
+            />
+            <app-validation-error
+              [control]="form.controls['address_line']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="postalCode" class="label">Postal code*</div>
+            <input
+              formControlName="postalCode"
+              id="postalCode"
+              type="text"
+              placeholder="Enter postal code"
+            />
+            <app-validation-error
+              [control]="form.controls['postalCode']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="city" class="label">City*</div>
+            <input
+              formControlName="city"
+              id="city"
+              type="text"
+              placeholder="Enter city"
+            />
+            <app-validation-error
+              [control]="form.controls['city']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="state" class="label">State/Province*</div>
+            <input
+              formControlName="state"
+              id="state"
+              type="text"
+              placeholder="Enter state or province"
+            />
+            <app-validation-error
+              [control]="form.controls['state']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control">
+            <div for="country" class="label">Country*</div>
+            <input
+              formControlName="country"
+              id="country"
+              type="text"
+              placeholder="Enter country"
+            />
+            <app-validation-error
+              [control]="form.controls['country']"
+            ></app-validation-error>
+          </div>
+        </div>
+
+        <!-- Section: Security -->
+        <div class="form-section security-info">
+          <div class="control password">
+            <div for="password" class="label">Password*</div>
+            <input
+              #password
+              formControlName="password"
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+            />
+            <img
+              src="{{
+                !passwordEl
+                  ? '/assets/img/hide.png'
+                  : passwordEl.nativeElement.type === 'password'
+                  ? '/assets/img/hide.png'
+                  : '/assets/img/show.png'
+              }}"
+              alt="show password"
+              (click)="showPassword('password')"
+            />
+            <app-validation-error
+              [control]="form.controls['password']"
+            ></app-validation-error>
+          </div>
+
+          <div class="control confirm-password">
+            <div for="confirmationPassword" class="label">Confirm password*</div>
+            <input
+              #confirmationPassword
+              formControlName="confirmationPassword"
+              id="confirmationPassword"
+              type="password"
+              placeholder="Confirm your password"
+            />
+            <img
+              src="{{
+                !confirmationPasswordEl
+                  ? '/assets/img/hide.png'
+                  : confirmationPasswordEl.nativeElement.type === 'password'
+                  ? '/assets/img/hide.png'
+                  : '/assets/img/show.png'
+              }}"
+              alt="show password"
+              (click)="showPassword('confirmationPassword')"
+            />
+            <app-validation-error
+              [control]="form.controls['confirmationPassword']"
+              [customErrorLabels]="{
+                mustMatch: 'Password does not match'
+              }"
+            ></app-validation-error>
+          </div>
+        </div>
+
+        <!-- Captcha -->
+        <div class="captcha-section" *ngIf="isWindowLoaded">
+          <ngx-recaptcha2
+            #captchaElem
+            [siteKey]="siteKey"
+            (reset)="handleReset()"
+            (expire)="handleExpire()"
+            (load)="handleLoad()"
+            (success)="handleSuccess($event)"
+            [useGlobalDomain]="false"
+            [size]="size"
+            [hl]="lang"
+            [theme]="theme"
+            [type]="type"
+            formControlName="recaptcha"
+          >
+          </ngx-recaptcha2>
+        </div>
+
+        <div class="footer">
+          <div class="button-wrapper">
+            <button
+              class="primary"
+              type="submit"
+              [disabled]="!form.value.recaptcha || isSubmitting"
+            >
+              {{ isSubmitting ? 'PROCESSING...' : 'CONTINUE' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="signup-label">
+      Already have an account ?
+      <a routerLink="/authentication/sign-in">Sign in</a>
+    </div>
+  </div>
+</div>
+

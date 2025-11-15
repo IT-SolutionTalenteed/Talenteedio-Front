@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Choisissez votre plan</h2>
+  <div class="plans">
+    <div class="plan" *ngFor="let plan of plans">
+      <h3>{{ plan.title }}</h3>
+      <div class="price">{{ plan.price }}</div>
+      <ul>
+        <li *ngFor="let perk of plan.perks">{{ perk }}</li>
+      </ul>
+      <button class="btn primary" (click)="select(plan)">Sélectionner</button>
+    </div>
+  </div>
+</div>
+

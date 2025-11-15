@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Publier une offre</h2>
+  <form [formGroup]="form" (ngSubmit)="create()">
+    <div class="row">
+      <label>Titre</label>
+      <input formControlName="title" />
+    </div>
+    <div class="row">
+      <label>Slug</label>
+      <input formControlName="slug" />
+    </div>
+    <div class="row">
+      <label>Description</label>
+      <textarea formControlName="content"></textarea>
+    </div>
+    <div class="row">
+      <label>Date d'expiration</label>
+      <input type="date" formControlName="expirationDate" />
+    </div>
+    <button class="btn primary" type="submit" [disabled]="creating">Créer l'offre</button>
+  </form>
+
+  <div class="msg ok" *ngIf="createdMsg">{{ createdMsg }}</div>
+  <div class="msg err" *ngIf="errorMsg">{{ errorMsg }}</div>
+</div>
+

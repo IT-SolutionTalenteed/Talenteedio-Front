@@ -1,1 +1,6 @@
-<p>dashboard-root works!</p>
+<div class="dashboard-container">
+  <app-company-profile-form
+    [user]="currentUser$ | async"
+    (save)="onSave($event)"
+  ></app-company-profile-form>
+</div>

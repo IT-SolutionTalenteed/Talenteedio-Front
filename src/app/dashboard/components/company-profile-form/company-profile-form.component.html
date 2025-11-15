@@ -1,0 +1,234 @@
+<div class="form-container">
+  <div class="title">
+    <strong>Profile Settings</strong>
+  </div>
+  <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+    <div class="form-content">
+      <!-- User Information -->
+      <div class="box-shadow user-information">
+        <div class="sub-title">User information</div>
+        
+        <div class="control">
+          <div for="firstname" class="label">First name*</div>
+          <input
+            #first
+            formControlName="firstname"
+            id="firstname"
+            type="text"
+            placeholder="Enter your first name"
+          />
+          <app-validation-error
+            [control]="form.controls['firstname']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="lastname" class="label">Last name*</div>
+          <input
+            formControlName="lastname"
+            id="lastname"
+            type="text"
+            placeholder="Enter your last name"
+          />
+          <app-validation-error
+            [control]="form.controls['lastname']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="email" class="label">Email*</div>
+          <input
+            formControlName="email"
+            id="email"
+            type="email"
+            placeholder="Enter your e-mail address"
+          />
+          <app-validation-error
+            [control]="form.controls['email']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="phone" class="label">Phone*</div>
+          <angular-intl-phone formControlName="phone" [config]="config" />
+          <app-validation-error
+            [control]="form.controls['phone']"
+          ></app-validation-error>
+        </div>
+      </div>
+
+      <!-- Company Information -->
+      <div class="box-shadow company-information">
+        <div class="sub-title">Company information</div>
+
+        <div class="control">
+          <div for="company_name" class="label">Company name*</div>
+          <input
+            formControlName="company_name"
+            id="company_name"
+            type="text"
+            placeholder="Enter company name"
+          />
+          <app-validation-error
+            [control]="form.controls['company_name']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="slogan" class="label">Slogan or tagline</div>
+          <input
+            formControlName="slogan"
+            id="slogan"
+            type="text"
+            placeholder="Enter company slogan"
+          />
+          <app-validation-error
+            [control]="form.controls['slogan']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="description" class="label">Description</div>
+          <textarea
+            formControlName="description"
+            id="description"
+            placeholder="Enter company description"
+            rows="4"
+          ></textarea>
+          <app-validation-error
+            [control]="form.controls['description']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="about" class="label">About</div>
+          <textarea
+            formControlName="about"
+            id="about"
+            placeholder="Tell us about your company"
+            rows="6"
+          ></textarea>
+          <app-validation-error
+            [control]="form.controls['about']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="headquarters" class="label">Headquarters</div>
+          <input
+            formControlName="headquarters"
+            id="headquarters"
+            type="text"
+            placeholder="Enter headquarters location"
+          />
+          <app-validation-error
+            [control]="form.controls['headquarters']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="categoryId" class="label">Sector</div>
+          <ng-select
+            formControlName="categoryId"
+            [items]="categories"
+            bindLabel="name"
+            bindValue="id"
+            placeholder="Select a sector"
+          >
+          </ng-select>
+          <app-validation-error
+            [control]="form.controls['categoryId']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="website" class="label">Website</div>
+          <input
+            formControlName="website"
+            id="website"
+            type="url"
+            placeholder="https://www.example.com"
+          />
+          <app-validation-error
+            [control]="form.controls['website']"
+          ></app-validation-error>
+        </div>
+
+        <!-- Social Networks -->
+        <div class="sub-title" style="margin-top: 20px;">Professional social networks</div>
+
+        <div class="control">
+          <div for="linkedin" class="label">LinkedIn</div>
+          <input
+            formControlName="linkedin"
+            id="linkedin"
+            type="url"
+            placeholder="https://www.linkedin.com/company/..."
+          />
+          <app-validation-error
+            [control]="form.controls['linkedin']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="twitter" class="label">Twitter</div>
+          <input
+            formControlName="twitter"
+            id="twitter"
+            type="url"
+            placeholder="https://twitter.com/..."
+          />
+          <app-validation-error
+            [control]="form.controls['twitter']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control">
+          <div for="facebook" class="label">Facebook</div>
+          <input
+            formControlName="facebook"
+            id="facebook"
+            type="url"
+            placeholder="https://www.facebook.com/..."
+          />
+          <app-validation-error
+            [control]="form.controls['facebook']"
+          ></app-validation-error>
+        </div>
+
+        <!-- Company Logo -->
+        <div class="control">
+          <div for="logo" class="label">Company logo</div>
+          <div
+            class="input"
+            [ngClass]="{
+              'ng-invalid': logoError,
+              'ng-dirty': logoTouched,
+              'ng-touched': logoTouched
+            }"
+          >
+            <label for="logo" class="file-upload-button"> Choose File </label>
+            <span class="file-upload-text">{{
+              logoFileName || "No file chosen"
+            }}</span>
+            <input
+              type="file"
+              id="logo"
+              (change)="onLogoSelected($event)"
+              accept="image/*"
+            />
+          </div>
+          <div *ngIf="currentLogoUrl" class="logo-preview">
+            <img [src]="currentLogoUrl" alt="Company logo" />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="button-wrapper">
+          <button class="primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

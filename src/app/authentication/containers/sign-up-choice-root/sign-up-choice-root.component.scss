@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+.choice {
+  text-align: center;
+}
+.buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.primary {
+  background: #4fb556;
+  color: #fff;
+  border: none;
+}
+.secondary {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+

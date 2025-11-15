@@ -1,0 +1,449 @@
+@import "form.scss";
+@import "breakpoints.scss";
+@import "box-shadow.scss";
+@import "colors.scss";
+@import "sizes.scss";
+@import "buttons.scss";
+@import "texts.scss";
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 1800px;
+  height: fit-content;
+  max-height: 100vh;
+  @extend %box-shadow;
+  border-radius: $border-radius;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 10px 30px;
+  overflow-y: auto;
+  
+  .sub-title {
+    @extend %sub-title;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+  }
+}
+
+button {
+  @extend %button;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  font-size: 13px;
+  height: 38px;
+}
+
+form {
+  @extend %generic-form;
+  width: 100%;
+  
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .form-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px 20px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 0.02);
+
+      &.company-info {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.contact-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.address-info {
+        grid-template-columns: repeat(5, 1fr);
+        
+        .full-width {
+          grid-column: 1 / -1;
+        }
+      }
+
+      &.security-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .captcha-section {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+      min-width: 0; // Permet au contenu de se rétrécir correctement
+      
+      &.full-width {
+        grid-column: 1 / -1;
+      }
+
+      input, ng-select {
+        height: 38px;
+        font-size: 13px;
+        padding: 8px 12px;
+        width: 100%;
+        box-sizing: border-box;
+        
+        &::placeholder {
+          font-size: 13px;
+        }
+      }
+
+      input {
+        min-width: 0; // Permet à l'input de se rétrécir
+      }
+
+      &.password,
+      &.confirm-password {
+        position: relative;
+        img {
+          position: absolute;
+          right: 12px;
+          bottom: 28px;
+          width: 18px;
+          height: 18px;
+          z-index: 3;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .label {
+      @extend %generic-label;
+      margin-bottom: 3px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .error-message {
+      color: #e20b32;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 0;
+      
+      .button-wrapper {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+  }
+
+  .input {
+    grid-area: input;
+    @extend %generic-input;
+    display: flex;
+    padding: 0;
+    height: 38px;
+    input[type="file"] {
+      display: none;
+    }
+    .file-upload-button {
+      display: flex !important;
+      align-items: center !important;
+      background-color: $primary;
+      color: #fff !important;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 0 !important;
+      font-size: 12px;
+      white-space: nowrap;
+      + .file-upload-text {
+        margin-left: 10px;
+        display: flex !important;
+        align-items: center !important;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.signup-label {
+  text-align: center;
+  margin: 3px 0 0 0;
+  font-style: normal;
+  font-weight: 700;
+  color: $text-color;
+  font-size: 12px;
+  line-height: 16px;
+  a {
+    color: $primary;
+    text-decoration: none;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .form-container {
+    max-width: 1200px;
+    padding: 15px 25px;
+  }
+
+  form .form-content {
+    .form-section {
+      &.company-info {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      &.address-info {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-container {
+    max-width: 900px;
+    padding: 20px 25px;
+  }
+
+  form .form-content {
+    gap: 8px;
+
+    .form-section {
+      gap: 8px 15px;
+
+      &.company-info {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      &.contact-info {
+        grid-template-columns: 1fr;
+      }
+
+      &.address-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.security-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: auto;
+    min-height: 100vh;
+    padding: 15px;
+    overflow-y: auto;
+  }
+
+  .form-container {
+    box-shadow: none;
+    border-radius: 0;
+    max-height: none;
+    padding: 15px;
+  }
+
+  form .form-content {
+    gap: 12px;
+
+    .form-section {
+      grid-template-columns: 1fr !important;
+      gap: 10px;
+      padding: 12px;
+
+      .full-width {
+        grid-column: 1;
+      }
+    }
+
+    .control {
+      &.password,
+      &.confirm-password {
+        img {
+          bottom: 32px;
+        }
+      }
+    }
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .form-container {
+    padding: 10px;
+
+    .sub-title {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  form .form-content {
+    gap: 10px;
+
+    .form-section {
+      padding: 10px;
+      gap: 8px;
+    }
+
+    .label {
+      font-size: 11px;
+    }
+
+    .control {
+      input, ng-select {
+        font-size: 12px;
+        padding: 6px 10px;
+        height: 36px;
+      }
+    }
+  }
+
+  .signup-label {
+    font-size: 11px;
+  }
+}
+
+::ng-deep {
+  .ng-select-multiple {
+    @extend %generic-controls;
+    &.ng-invalid.ng-dirty.ng-touched {
+      input {
+        @extend %invalid-control;
+      }
+      .ng-arrow-wrapper {
+        z-index: 2;
+      }
+      .ng-input {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        padding: 8px 12px !important;
+      }
+      .ng-select-container {
+        box-shadow: 0 0 0 0.2rem rgba(226, 11, 50, 0.25);
+      }
+    }
+
+    .ng-select-container {
+      border: none !important;
+      min-height: 38px !important;
+      height: 38px !important;
+
+      .ng-value-container {
+        padding-top: 0 !important;
+        padding-left: 12px !important;
+
+        .ng-placeholder {
+          top: initial !important;
+          padding-bottom: 0 !important;
+          padding-left: 0 !important;
+          z-index: 10 !important;
+          font-size: 13px !important;
+        }
+
+        .ng-value {
+          margin-bottom: 0 !important;
+          .ng-value-label {
+            padding-bottom: 0.3rem !important;
+            font-size: 13px !important;
+          }
+        }
+      }
+    }
+  }
+
+  angular-intl-phone {
+    grid-area: input;
+    z-index: 4;
+    background-color: $generic-form-background !important;
+    color: $text-color !important;
+    border-radius: $border-radius;
+    display: block;
+    width: 100%;
+    
+    &.ng-invalid.ng-dirty.ng-touched {
+      input {
+        @extend %invalid-control;
+      }
+    }
+    
+    .iti {
+      width: 100% !important;
+      border-radius: $border-radius;
+      display: block;
+      
+      input {
+        @extend %generic-input;
+        width: 100% !important;
+        height: 38px !important;
+        font-size: 13px !important;
+        padding: 8px 12px 8px 52px !important;
+        color: $text-color !important;
+        background-color: $generic-form-background !important;
+        border: 1px solid #ced4da !important;
+        box-sizing: border-box !important;
+        
+        &::placeholder {
+          color: #6c757d !important;
+          opacity: 1 !important;
+        }
+        
+        &:focus {
+          color: $text-color !important;
+          background-color: $generic-form-background !important;
+          outline: none !important;
+        }
+      }
+      
+      .iti__flag-container {
+        z-index: 5;
+      }
+    }
+  }
+  
+  // Fix pour le dropdown du téléphone
+  .iti__country-list {
+    z-index: 1000 !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+  }
+}
+

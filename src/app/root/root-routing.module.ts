@@ -88,6 +88,13 @@ const routes: Routes = [
             (m) => m.FreelanceModule
           ),
       },
+      {
+        path: 'employer',
+        loadChildren: () =>
+          import('../employer/employer.module').then(
+            (m) => m.EmployerModule
+          ),
+      },
     ],
   },
 ];

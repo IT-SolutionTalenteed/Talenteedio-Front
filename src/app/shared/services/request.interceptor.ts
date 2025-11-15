@@ -9,6 +9,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { EMPTY, Observable, throwError } from 'rxjs';
@@ -22,6 +23,8 @@ import { AuthenticationState } from 'src/app/authentication/store/reducers/authe
 import { getRefreshToken } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { AuthenticationResponse } from 'src/app/authentication/types/authentication-response.interface';
 import { tokenGetter } from 'src/app/authentication/utils/token-getter';
+import { environment } from 'src/environments/environment';
+import { verifyFailed } from 'src/app/authentication/store/actions/authentication.actions';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -29,7 +32,8 @@ export class RequestInterceptor implements HttpInterceptor {
     private authenticationStore: Store<AuthenticationState>,
     private authenticationService: AuthenticationService,
     private toastr: ToastrService,
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
+    private router: Router
   ) {}
   private tosterOption: Partial<IndividualConfig<unknown>> = {
     progressBar: true,
@@ -74,15 +78,29 @@ export class RequestInterceptor implements HttpInterceptor {
           }),
           catchError((error: HttpErrorResponse) => {
             if (error.status === 498) {
-              this.toastr.error(error.error.msg, 'Error', this.tosterOption);
+              const errorMsg = error.error?.msg || error.error?.message || error.message || 'Token expired';
+              this.toastr.error(errorMsg, 'Error', this.tosterOption);
               return throwError(error);
             }
             if (error.status === 401 || error.message === 'Invalid token') {
+              // If calling /me and unauthorized, redirect to home immediately
+              const isMeEndpoint =
+                request.method === 'GET' &&
+                (request.url === `${environment.apiBaseUrl}/me` ||
+                  request.url.endsWith('/me'));
               return this.authenticationStore.pipe(
                 select(getRefreshToken),
                 switchMap((token: string) => {
                   if (!token) {
-                    // No refresh token available: end the stream silently to avoid noisy errors
+                    // No refresh token available
+                    if (isMeEndpoint) {
+                      // Clear local auth and redirect to home
+                      this.authenticationStore.dispatch(
+                        verifyFailed(new Error('session invalid'))
+                      );
+                      this.router.navigate(['/home']);
+                    }
+                    // End the stream silently
                     return EMPTY;
                   }
                   return this.authenticationService.refreshToken(token).pipe(
@@ -104,18 +122,27 @@ export class RequestInterceptor implements HttpInterceptor {
                       this.authenticationStore.dispatch(
                         refreshTokenFailed(errorRefresh)
                       );
+                      const errorMsg = error.error?.msg || error.error?.message || error.message || 'Session expired';
                       this.toastr.error(
-                        error.error.msg,
+                        errorMsg,
                         'Error',
                         this.tosterOption
                       );
+                      // If refresh also failed and original call was /me, redirect home
+                      if (isMeEndpoint) {
+                        this.authenticationStore.dispatch(
+                          verifyFailed(new Error('session invalid'))
+                        );
+                        this.router.navigate(['/home']);
+                      }
                       return throwError(error);
                     })
                   );
                 })
               );
             }
-            this.toastr.error(error.error.msg, 'Error', this.tosterOption);
+            const errorMsg = error.error?.msg || error.error?.message || error.message || 'An error occurred';
+            this.toastr.error(errorMsg, 'Error', this.tosterOption);
             return throwError(error);
           })
         );

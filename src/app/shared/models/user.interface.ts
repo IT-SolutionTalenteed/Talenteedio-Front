@@ -5,6 +5,7 @@ import { Referral } from './referral.interface';
 import { Role } from './role.interface';
 import { Value } from './value.interface';
 import { Picture } from './picture';
+import { Company } from './company.interface';
 
 export interface User {
   id: string;
@@ -21,6 +22,7 @@ export interface User {
   talent?: Candidate;
   referral?: Referral;
   recruiter?: Recruiter;
+  company?: Company;
   articles: Article[];
   isVerified: boolean;
   phone: string;

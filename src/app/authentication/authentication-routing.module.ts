@@ -5,6 +5,9 @@ import { AuthenticationRootComponent } from './containers/authentication-root/au
 import { ReinitPasswordRootComponent } from './containers/reinit-password-root/reinit-password-root.component';
 import { SignInRootComponent } from './containers/sign-in-root/sign-in-root.component';
 import { SignUpRootComponent } from './containers/sign-up-root/sign-up-root.component';
+import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign-up-choice-root.component';
+import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
+import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
 import { AccountValidationGuard } from './guards/account-validation.guard';
 import { OnlySingleSignInGuard } from './guards/only-single-sign-in.guard';
 
@@ -13,7 +16,13 @@ const routes: Routes = [
     path: '',
     component: AuthenticationRootComponent,
     children: [
-      { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
+      { path: '', redirectTo: 'sign-up-choice', pathMatch: 'full' },
+      {
+        path: 'sign-up-choice',
+        component: SignUpChoiceRootComponent,
+        canActivate: [OnlySingleSignInGuard],
+        data: { title: 'Choisir un type de compte' },
+      },
       {
         path: 'sign-in',
         component: SignInRootComponent,
@@ -25,6 +34,18 @@ const routes: Routes = [
         component: SignUpRootComponent,
         canActivate: [OnlySingleSignInGuard],
         data: { title: 'Registration' },
+      },
+      {
+        path: 'company-register',
+        component: CompanyRegisterRootComponent,
+        canActivate: [OnlySingleSignInGuard],
+        data: { title: 'Créer un compte Société' },
+      },
+      {
+        path: 'company-plan',
+        component: CompanyPlanRootComponent,
+        canActivate: [OnlySingleSignInGuard],
+        data: { title: 'Choisir un plan' },
       },
       {
         path: 'reinit-password',

@@ -1,0 +1,32 @@
+.container {
+  padding: 24px;
+  max-width: 720px;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+textarea, input {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.btn.primary {
+  background: #4fb556;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.msg {
+  margin-top: 10px;
+}
+.ok {
+  color: #2e7d32;
+}
+.err {
+  color: #c62828;
+}
+

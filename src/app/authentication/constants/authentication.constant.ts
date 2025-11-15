@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 export const AUTHENTICATION_BASE_ROUTE = 'authentication';
 export const SIGN_IN_ROUTE = '/authentication/sign-in';
 export const SIGN_UP_ROUTE = '/authentication/sign-up';
+export const SIGN_UP_CHOICE_ROUTE = '/authentication/sign-up-choice';
 
 export const AUTHENTICATION_API_ROUTE = 'authentication';
 
