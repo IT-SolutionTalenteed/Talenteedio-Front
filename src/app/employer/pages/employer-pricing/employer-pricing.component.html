@@ -1,0 +1,209 @@
+<div class="pricing-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge hpfit-fade-in">
+        <span class="badge-icon">⚡</span>
+        <span>Gérer votre abonnement</span>
+      </div>
+      <h1 class="hero-title hpfit-fade-in">Votre abonnement</h1>
+      <p class="hero-description hpfit-fade-in">
+        Gérez votre plan, changez d'abonnement ou accédez au portail client
+      </p>
+
+      <!-- Portal Button -->
+      <div class="hero-actions hpfit-fade-in">
+        <button class="btn-portal" (click)="openPortal()">
+          <span class="portal-icon">⚙️</span>
+          Gérer mon abonnement
+        </button>
+      </div>
+
+      <!-- Billing Toggle -->
+      <div class="hero-billing-toggle hpfit-fade-in">
+        <button
+          [class.active]="planTab === 'monthly'"
+          (click)="planTab = 'monthly'"
+          class="billing-btn"
+        >
+          Facturation mensuelle
+        </button>
+        <button
+          [class.active]="planTab === 'yearly'"
+          (click)="planTab = 'yearly'"
+          class="billing-btn"
+        >
+          Facturation annuelle
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Chargement des plans...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadPlans()">Réessayer</button>
+  </div>
+
+  <!-- Pricing Section -->
+  <section *ngIf="!loading && !error" class="pricing2-hero">
+    <div class="container">
+      <div class="pricing2-table mt-5">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th style="width: 30%"></th>
+              <th style="width: 23.33%">
+                <div class="pricing2-plan">
+                  <div class="plan-title">Plan Gratuit</div>
+                  <div class="plan-price" style="position: relative; top: 30px">
+                    0€/mois
+                  </div>
+                  <div class="plan-desc" style="visibility: hidden">
+                    <br />Parfait pour commencer.<br />
+                  </div>
+                  <button class="btn-custom secondary w-100" disabled>
+                    Plan actuel
+                  </button>
+                </div>
+              </th>
+              <th
+                class="popular"
+                style="width: 23.33%"
+                *ngIf="displayedPlans[0]"
+              >
+                <div class="pricing2-plan">
+                  <div class="plan-title">{{ displayedPlans[0].product.name }}</div>
+                  <div class="plan-price" style="position: relative; top: 30px">
+                    {{ formatPrice(displayedPlans[0]) }}
+                  </div>
+                  <div class="plan-desc" style="visibility: hidden">
+                    {{ displayedPlans[0].product.description }}
+                  </div>
+                  <button
+                    class="btn-custom primary w-100"
+                    (click)="upgradeToplan(displayedPlans[0])"
+                    [disabled]="isProcessing"
+                  >
+                    {{ isProcessing ? 'Traitement...' : 'Passer au Pro' }}
+                  </button>
+                </div>
+              </th>
+              <th style="width: 23.33%" *ngIf="displayedPlans[1]">
+                <div class="pricing2-plan">
+                  <div class="plan-title">{{ displayedPlans[1].product.name }}</div>
+                  <div class="plan-price" style="position: relative; top: 30px">
+                    {{ formatPrice(displayedPlans[1]) }}
+                  </div>
+                  <div class="plan-desc" style="visibility: hidden">
+                    {{ displayedPlans[1].product.description }}
+                  </div>
+                  <button
+                    class="btn-custom secondary w-100"
+                    (click)="upgradeToplan(displayedPlans[1])"
+                    [disabled]="isProcessing"
+                  >
+                    {{ isProcessing ? 'Traitement...' : 'Passer à Enterprise' }}
+                  </button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="pricing2-cell-content">Offres d'emploi actives</div>
+              </td>
+              <td class="plan-col plan-basic">
+                <div class="pricing2-cell-content">1</div>
+              </td>
+              <td
+                class="plan-col plan-business"
+                *ngIf="displayedPlans[0]"
+                style="
+                  box-shadow: inset 2px 0 0 0 #e20b32, inset -2px 0 0 0 #e20b32;
+                "
+              >
+                <div class="pricing2-cell-content">5</div>
+              </td>
+              <td class="plan-col plan-enterprise" *ngIf="displayedPlans[1]">
+                <div class="pricing2-cell-content">Illimitées</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="pricing2-cell-content">Visibilité des offres</div>
+              </td>
+              <td class="plan-col plan-basic">
+                <div class="pricing2-cell-content">Standard</div>
+              </td>
+              <td
+                class="plan-col plan-business"
+                *ngIf="displayedPlans[0]"
+                style="
+                  box-shadow: inset 2px 0 0 0 #e20b32, inset -2px 0 0 0 #e20b32;
+                "
+              >
+                <div class="pricing2-cell-content">Mise en avant</div>
+              </td>
+              <td class="plan-col plan-enterprise" *ngIf="displayedPlans[1]">
+                <div class="pricing2-cell-content">Premium</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="pricing2-cell-content">Support</div>
+              </td>
+              <td class="plan-col plan-basic">
+                <div class="pricing2-cell-content">Email</div>
+              </td>
+              <td
+                class="plan-col plan-business"
+                *ngIf="displayedPlans[0]"
+                style="
+                  box-shadow: inset 2px 0 0 0 #e20b32, inset -2px 0 0 0 #e20b32;
+                "
+              >
+                <div class="pricing2-cell-content">Prioritaire</div>
+              </td>
+              <td class="plan-col plan-enterprise" *ngIf="displayedPlans[1]">
+                <div class="pricing2-cell-content">Dédié</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="pricing2-cell-content">Marque employeur</div>
+              </td>
+              <td class="plan-col plan-basic">
+                <div class="pricing2-cell-content">—</div>
+              </td>
+              <td
+                class="plan-col plan-business"
+                *ngIf="displayedPlans[0]"
+                style="
+                  box-shadow: inset 2px 0 0 0 #e20b32, inset -2px 0 0 0 #e20b32;
+                  inset 0 -2px 0 0 #e20b32;
+                "
+              >
+                <div class="pricing2-cell-content">—</div>
+              </td>
+              <td class="plan-col plan-enterprise" *ngIf="displayedPlans[1]">
+                <div class="pricing2-cell-content">✓</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

@@ -104,6 +104,71 @@
   margin-right: auto;
 }
 
+.hero-actions {
+  margin-bottom: 32px;
+}
+
+.btn-portal {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #e20b32 0%, #b00828 100%);
+  color: #ffffff;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(226, 11, 50, 0.3);
+  text-decoration: none;
+}
+
+.btn-portal:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(226, 11, 50, 0.4);
+}
+
+.portal-icon {
+  font-size: 1.2rem;
+}
+
+.hero-billing-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.billing-btn {
+  border-radius: 25px;
+  border: 2px solid rgba(226, 11, 50, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+  color: #e20b32;
+  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(226, 11, 50, 0.1);
+}
+
+.billing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(226, 11, 50, 0.2);
+  border-color: rgba(226, 11, 50, 0.5);
+}
+
+.billing-btn.active {
+  background: #e20b32;
+  color: #ffffff;
+  border-color: #e20b32;
+  box-shadow: 0 8px 25px rgba(226, 11, 50, 0.3);
+  transform: translateY(-2px);
+}
+
 .hpfit-fade-in {
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
@@ -120,6 +185,9 @@
 }
 .hpfit-fade-in:nth-child(4) {
   animation-delay: 0.4s;
+}
+.hpfit-fade-in:nth-child(5) {
+  animation-delay: 0.5s;
 }
 
 @keyframes fadeInUp {
@@ -336,8 +404,9 @@
 }
 
 .btn-custom:disabled:hover {
-  background: #e20b32;
+  background: #6c757d;
   color: #ffffff;
+  border-color: #6c757d;
 }
 
 .w-100 {
@@ -412,6 +481,22 @@
     font-size: 1rem;
   }
 
+  .hero-billing-toggle {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .billing-btn {
+    width: 250px;
+    padding: 10px 20px;
+  }
+
+  .btn-portal {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
   .pricing2-hero {
     padding: 80px 0 40px 0;
   }
@@ -433,5 +518,14 @@
   .hero-description {
     font-size: 0.95rem;
   }
-}
 
+  .billing-btn {
+    width: 200px;
+    font-size: 0.9rem;
+  }
+
+  .btn-portal {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+}

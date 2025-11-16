@@ -1,13 +1,32 @@
 <div class="container">
   <h2>Choisissez votre plan</h2>
-  <div class="plans">
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading">
+    <p>Chargement des plans...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error">
+    <p>{{ error }}</p>
+    <button class="btn secondary" (click)="loadPlans()">Réessayer</button>
+  </div>
+
+  <!-- Plans -->
+  <div *ngIf="!loading && !error" class="plans">
     <div class="plan" *ngFor="let plan of plans">
-      <h3>{{ plan.title }}</h3>
-      <div class="price">{{ plan.price }}</div>
-      <ul>
-        <li *ngFor="let perk of plan.perks">{{ perk }}</li>
-      </ul>
-      <button class="btn primary" (click)="select(plan)">Sélectionner</button>
+      <h3>{{ plan.product.name }}</h3>
+      <div class="price">{{ formatPrice(plan) }}</div>
+      <p class="description" *ngIf="plan.product.description">
+        {{ plan.product.description }}
+      </p>
+      <button 
+        class="btn primary" 
+        (click)="select(plan)"
+        [disabled]="isProcessing"
+      >
+        {{ isProcessing ? 'Traitement...' : 'Sélectionner' }}
+      </button>
     </div>
   </div>
 </div>
