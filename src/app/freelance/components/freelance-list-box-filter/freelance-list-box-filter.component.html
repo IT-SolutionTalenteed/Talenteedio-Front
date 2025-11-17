@@ -38,21 +38,6 @@
         <fa-icon class="icon" [icon]="fabriefcase"></fa-icon>
       </div>
 
-      <div for="jobTypes" class="label">Job type</div>
-      <div class="control">
-        <ng-select
-          formControlName="jobTypes"
-          [items]="jobTypes"
-          bindLabel="name"
-          bindValue="id"
-          placeholder="Select job types"
-          [multiple]="true"
-          [selectableGroup]="true"
-        >
-        </ng-select>
-        <fa-icon class="icon" [icon]="faTasks"></fa-icon>
-      </div>
-
       <div for="jobTypes" class="label" *ngIf="!!user?.referral">
         Featured Job
       </div>
@@ -72,12 +57,12 @@
           <li *ngFor="let datePeriod of datePeriods">
             <input
               type="radio"
-              id="{{ datePeriod }}"
+              id="{{ datePeriod.value }}"
               name="datePosted"
-              value="{{ datePeriod }}"
+              value="{{ datePeriod.value }}"
               formControlName="datePosted"
             />
-            <label for="{{ datePeriod }}">{{ datePeriod }}</label>
+            <label for="{{ datePeriod.value }}">{{ datePeriod.label }}</label>
             <fa-icon [icon]="faCheck" class="checked-icon"></fa-icon>
           </li>
         </ul>
