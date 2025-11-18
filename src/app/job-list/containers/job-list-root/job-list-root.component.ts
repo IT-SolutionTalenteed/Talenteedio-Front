@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { Company } from 'src/app/shared/models/company.interface';
@@ -56,7 +57,11 @@ export class JobListRootComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.totalItems$ = this.jobListStore.pipe(select(getJobsTotalItems));
     this.jobs$ = this.jobListStore.pipe(select(getJobs));
-    this.jobTypes$ = this.jobListStore.pipe(select(getJobTypes));
+    // Filtrer les jobTypes pour exclure "Freelance"
+    this.jobTypes$ = this.jobListStore.pipe(
+      select(getJobTypes),
+      map((jobTypes) => jobTypes.filter((jobType) => jobType.name !== 'Freelance'))
+    );
     this.categories$ = this.jobListStore.pipe(select(getJobCategories));
     this.jobs$.subscribe((jobs) => (this.jobLength = jobs.length));
     this.jobsLoading$ = this.jobListStore.pipe(select(getJobsLoading));

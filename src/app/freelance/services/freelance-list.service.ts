@@ -7,6 +7,15 @@ import { Company } from 'src/app/shared/models/company.interface';
 import { environment } from 'src/environments/environment';
 import { FreelanceListCriteria } from '../types/freelance-list-criteria.interface';
 
+const DATE_POSTED_TRANSLATION = {
+  ALL: undefined,
+  LAST_HOUR: 1,
+  LAST_24_HOURS: 24,
+  LAST_7_DAYS: 168,
+  LAST_14_DAYS: 336,
+  LAST_30_DAYS: 720,
+};
+
 @Injectable()
 export class FreelanceListService {
   constructor(private apollo: Apollo) {}
@@ -21,13 +30,26 @@ export class FreelanceListService {
         limit: criteria.page.pageSize,
         page: criteria.page.page,
       },
+      filter: {
+        search: criteria?.filter?.search || undefined,
+        location: criteria?.filter?.location || undefined,
+        category: criteria?.filter?.category || undefined,
+        datePosted: criteria?.filter?.datePosted
+          ? DATE_POSTED_TRANSLATION[criteria?.filter?.datePosted]
+          : undefined,
+        isFeatured: criteria?.filter?.isFeatured || undefined,
+        experienceLevels: criteria?.filter?.experienceLevels || undefined,
+        jobTypes: criteria?.filter?.jobTypes?.length > 0 
+          ? criteria?.filter?.jobTypes 
+          : undefined,
+      },
     };
 
     return this.apollo
       .query<any>({
         query: gql`
-          query GetFreelanceJobs($input: PaginationInput) {
-            getFreelanceJobs(input: $input) {
+          query GetFreelanceJobs($input: PaginationInput, $filter: FreelanceJobFilter) {
+            getFreelanceJobs(input: $input, filter: $filter) {
               rows {
                 id
                 slug

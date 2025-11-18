@@ -14,6 +14,11 @@ const routes: Routes = [
         },
       ],
     },
+    {
+      path: 'detail',
+      loadChildren: () =>
+        import('../job-form/job-form.module').then((m) => m.JobFormModule),
+    },
 ];
 
 @NgModule({
