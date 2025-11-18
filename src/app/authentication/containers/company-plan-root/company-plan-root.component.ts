@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { go } from 'src/app/routeur/store/actions/router.actions';
 import { StripeService, StripePlan } from 'src/app/services/stripe.service';
 import { environment } from 'src/environments/environment';
+import { getLoggedUser } from '../../store/selectors/authentication.selectors';
+import { User } from 'src/app/shared/models/user.interface';
 
 @Component({
   selector: 'app-company-plan-root',
@@ -14,6 +16,7 @@ export class CompanyPlanRootComponent implements OnInit {
   loading = true;
   error: string | null = null;
   isProcessing = false;
+  currentUser: User | null = null;
 
   constructor(
     private store: Store,
@@ -22,6 +25,9 @@ export class CompanyPlanRootComponent implements OnInit {
 
   ngOnInit() {
     this.loadPlans();
+    this.store.pipe(select(getLoggedUser)).subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   loadPlans() {
@@ -46,6 +52,7 @@ export class CompanyPlanRootComponent implements OnInit {
     if (plan.unit_amount === 0) {
       try {
         localStorage.setItem('company_selected_plan', 'starter');
+        localStorage.removeItem('company_onboarding_email');
       } catch {}
       this.store.dispatch(go({ path: ['/home'] }));
       return;
@@ -57,10 +64,30 @@ export class CompanyPlanRootComponent implements OnInit {
     const successUrl = `${window.location.origin}/home?payment=success`;
     const cancelUrl = `${window.location.origin}/authentication/company-plan?payment=canceled`;
 
+    // Récupérer l'email de l'utilisateur (connecté ou depuis le localStorage après inscription)
+    let userEmail = this.currentUser?.email;
+    if (!userEmail) {
+      try {
+        userEmail = localStorage.getItem('company_onboarding_email') || undefined;
+      } catch {}
+    }
+
+    console.log('Creating checkout session with email:', userEmail);
+
+    if (!userEmail) {
+      alert('Impossible de récupérer votre email. Veuillez vous reconnecter.');
+      this.isProcessing = false;
+      return;
+    }
+
     this.stripeService
-      .createCheckoutSession(plan.price_id, successUrl, cancelUrl)
+      .createCheckoutSession(plan.price_id, successUrl, cancelUrl, userEmail)
       .subscribe({
         next: (response) => {
+          // Nettoyer le localStorage
+          try {
+            localStorage.removeItem('company_onboarding_email');
+          } catch {}
           // Rediriger vers Stripe Checkout
           window.location.href = response.url;
         },

@@ -243,6 +243,10 @@ export class CompanyRegisterRootComponent implements OnInit, AfterViewInit {
       this.authService.signUpUser(payload as any).subscribe({
         next: () => {
           this.isSubmitting = false;
+          // Stocker l'email pour la page de sélection de plan
+          try {
+            localStorage.setItem('company_onboarding_email', formValue.contactEmail);
+          } catch {}
           this.store.dispatch(go({ path: ['/authentication/company-plan'] }));
         },
         error: () => {

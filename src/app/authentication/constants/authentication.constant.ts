@@ -25,9 +25,11 @@ export const PHONE_CONFIG: AngularIntlPhoneConfig = {
   name: 'telphone',
   placeholder: 'Enter phone number',
   options: {
-    // onlyCountries: ['fr', 'us', 'uk'],
-    // initialCountry: 'uk',
+    initialCountry: 'fr',
+    preferredCountries: ['fr', 'be', 'ch', 'ca'],
     separateDialCode: true,
-    hiddenInput: 'full_phone',
+    allowDropdown: true,
+    autoPlaceholder: 'polite',
+    formatOnDisplay: true,
   },
 };

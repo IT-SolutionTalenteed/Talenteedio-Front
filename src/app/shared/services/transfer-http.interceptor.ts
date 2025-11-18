@@ -36,10 +36,10 @@ export class TransferHttpInterceptorService implements HttpInterceptor {
     if (
       (request.method === 'GET' &&
         request.url === `${environment.apiBaseUrl}/me`) ||
-      (request.method !== 'GET' && !request.body.query)
+      (request.method !== 'GET' && !request.body?.query)
     ) {
       return next.handle(request);
-    } else if (!!request.body.operationName) {
+    } else if (request.body && !!request.body.operationName) {
       const _key = `${request.url}/${
         request.body.operationName
       }?${JSON.stringify(request.body.variables)}`;

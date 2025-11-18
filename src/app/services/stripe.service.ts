@@ -49,7 +49,8 @@ export class StripeService {
   createCheckoutSession(
     priceId: string,
     successUrl: string,
-    cancelUrl: string
+    cancelUrl: string,
+    email?: string
   ): Observable<CheckoutSessionResponse> {
     return this.http.post<CheckoutSessionResponse>(
       `${environment.apiBaseUrl}/billing/checkout-session`,
@@ -57,6 +58,7 @@ export class StripeService {
         price_id: priceId,
         success_url: successUrl,
         cancel_url: cancelUrl,
+        ...(email ? { email } : {}),
       }
     );
   }
