@@ -75,5 +75,28 @@ export class StripeService {
     );
   }
 
+  /**
+   * Crée une session de checkout pour le coaching emploi
+   */
+  createCoachingCheckoutSession(data: {
+    contact: { name: string; email: string; phone: string };
+    consultant: string;
+    service: string;
+    date: string;
+    time: string;
+    frequency?: string;
+    amount: number;
+  }): Observable<CheckoutSessionResponse> {
+    const successUrl = `${window.location.origin}/coaching-emploi/success`;
+    const cancelUrl = `${window.location.origin}/coaching-emploi/services/${data.consultant}`;
 
+    return this.http.post<CheckoutSessionResponse>(
+      `${environment.apiBaseUrl}/billing/coaching-checkout`,
+      {
+        ...data,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+      }
+    );
+  }
 }

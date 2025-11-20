@@ -35,8 +35,7 @@
     <a
       class="ad-banner"
       *ngIf="ad && currentUrl === '/home'"
-      [href]="ad.link"
-      target="_blank"
+      [routerLink]="['/coaching-emploi']"
     >
       <img [src]="ad.image?.fileUrl" />
     </a>

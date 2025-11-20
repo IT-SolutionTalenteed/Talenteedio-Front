@@ -231,11 +231,11 @@ export class JobFormService {
     });
   }
 
-  sendCVToScanApi(pdfUrl: string, jobId: string) {
+  sendCVToScanApi(pdfUrl: string, jobId: string, cvId?: string) {
     return fetch(`${environment.apiBaseUrl}/scanmyprofilecvwithjob`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pdfUrl, jobId })
+      body: JSON.stringify({ pdfUrl, jobId, cvId })
     }).then(r => r.json());
   }
 }

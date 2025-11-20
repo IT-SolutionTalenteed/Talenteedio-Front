@@ -64,6 +64,14 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
   matchStep: 'cv-selection' | 'cv-preview' | 'job-preview' | 'results' = 'cv-selection';
   matchAnalysis: string = '';
   matchRecommendations: string = '';
+  matchSynthesis: string = '';
+  matchInterpretation: string = '';
+  matchEvaluationTable: Array<{
+    criterion: string;
+    score: number;
+    reasons: string;
+    comments: string;
+  }> = [];
 
   private sub = new SubSink();
   @ViewChild('applyJobModal') applyJobModal: ModalComponent;
@@ -129,6 +137,9 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
         this.matchStep = 'cv-selection';
         this.matchAnalysis = '';
         this.matchRecommendations = '';
+        this.matchSynthesis = '';
+        this.matchInterpretation = '';
+        this.matchEvaluationTable = [];
         this.matchPercentage = 0;
       }
     );
@@ -244,12 +255,15 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     this.matchStep = 'results';
     
     this.jobFormService
-      .sendCVToScanApi(this.selectedCV.fileUrl, this.job.id)
+      .sendCVToScanApi(this.selectedCV.fileUrl, this.job.id, this.selectedCV.id)
       .then((result) => {
         this.matchLoading = false;
-        this.matchPercentage = result.pythonReturn?.score || 0;
-        this.matchAnalysis = result.pythonReturn?.analysis || '';
-        this.matchRecommendations = result.pythonReturn?.recommendations || '';
+        const pythonData = result.pythonReturn || {};
+        this.matchPercentage = pythonData.matchPercentage || 0;
+        this.matchSynthesis = pythonData.synthesis || '';
+        this.matchEvaluationTable = pythonData.evaluationTable || [];
+        this.matchInterpretation = pythonData.interpretation || '';
+        this.matchRecommendations = pythonData.recommendations || '';
       })
       .catch((error) => {
         this.matchError = error.message || "Erreur lors de l'appel API";
@@ -277,6 +291,9 @@ export class JobFormRootComponent implements OnInit, AfterViewInit {
     this.matchStep = 'cv-selection';
     this.matchAnalysis = '';
     this.matchRecommendations = '';
+    this.matchSynthesis = '';
+    this.matchInterpretation = '';
+    this.matchEvaluationTable = [];
   }
   onReferJob(referForm) {
     this.referForm.valid

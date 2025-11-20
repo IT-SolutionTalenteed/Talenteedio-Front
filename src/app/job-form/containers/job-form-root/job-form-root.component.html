@@ -154,19 +154,15 @@
 
 <modal #matchJobModal id="matchJobModal" class="popup-modal success custom">
   <ng-template #modalBody>
-    <app-loader
-      [isLoading]="matchLoading && matchStep === 'results'"
-      style="width: 65%"
-      [width]="80"
-      [height]="80"
-    >
-      <div style="width: 100%;">
+    <div class="match-modal-wrapper">
+      <!-- Fixed Header Section -->
+      <div class="match-modal-header">
         <div class="modal-title">
           <h4>Match Profile</h4>
         </div>
 
         <!-- Progress indicator -->
-        <div class="match-progress" style="margin: 20px 0;">
+        <div class="match-progress">
           <div class="progress-step" [class.active]="matchStep === 'cv-selection'" [class.completed]="matchStep !== 'cv-selection'">
             <span class="step-number">1</span>
             <span class="step-label">CV Selection</span>
@@ -187,6 +183,15 @@
             <span class="step-label">Results</span>
           </div>
         </div>
+      </div>
+
+      <!-- Scrollable Content Section -->
+      <div class="match-modal-content">
+        <app-loader
+          [isLoading]="matchLoading && matchStep === 'results'"
+          [width]="80"
+          [height]="80"
+        >
         
         <!-- STEP 1: CV Selection -->
         <div *ngIf="matchStep === 'cv-selection'" class="match-step">
@@ -275,24 +280,69 @@
         </div>
 
         <!-- STEP 4: Results -->
-        <div *ngIf="matchStep === 'results'" class="match-step">
+        <div *ngIf="matchStep === 'results'" class="match-step match-results">
           <div style="text-align: center; margin: 30px 0;">
             <div style="font-size: 72px; font-weight: bold; color: rgb(25 103 210 / 68%);">
               <span id="pourcentage">{{ matchPercentage }}</span>%
             </div>
             <p style="margin-top: 20px; color: #666; font-size: 18px;">
-              Your profile matches this job position
+              Taux de correspondance avec cette offre d'emploi
             </p>
           </div>
 
-          <div *ngIf="matchAnalysis" style="margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
-            <h5 style="margin-bottom: 12px; color: #333;">📋 Analyse</h5>
-            <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">{{ matchAnalysis }}</p>
+          <!-- Synthèse -->
+          <div *ngIf="matchSynthesis" class="result-section synthesis">
+            <h5>📋 Synthèse de l'adéquation</h5>
+            <p>{{ matchSynthesis }}</p>
           </div>
 
-          <div *ngIf="matchRecommendations" style="margin-top: 20px; padding: 20px; background: #e8f4fd; border-radius: 8px;">
-            <h5 style="margin-bottom: 12px; color: #1976d2;">💡 Recommandations</h5>
-            <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">{{ matchRecommendations }}</p>
+          <!-- Tableau d'évaluation -->
+          <div *ngIf="matchEvaluationTable && matchEvaluationTable.length > 0" class="evaluation-table-container">
+            <h5>📊 Tableau d'évaluation détaillé</h5>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Critères</th>
+                    <th class="score-col">Note/10</th>
+                    <th>Raisons</th>
+                    <th>Commentaires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of matchEvaluationTable">
+                    <td class="criterion">{{ item.criterion }}</td>
+                    <td class="score">
+                      <span class="score-value" 
+                            [ngClass]="{
+                              'excellent': item.score >= 8,
+                              'good': item.score >= 6 && item.score < 8,
+                              'poor': item.score < 6
+                            }">
+                        {{ item.score }}
+                      </span>
+                    </td>
+                    <td class="reasons">{{ item.reasons }}</td>
+                    <td class="comments">{{ item.comments }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="grading-legend">
+              <strong>Grille de notation :</strong> 1-3 = très insuffisant | 4-5 = insuffisant | 6-7 = correct | 8-9 = bon | 10 = excellent
+            </div>
+          </div>
+
+          <!-- Interprétation -->
+          <div *ngIf="matchInterpretation" class="result-section interpretation">
+            <h5>🎯 Interprétation du résultat</h5>
+            <p>{{ matchInterpretation }}</p>
+          </div>
+
+          <!-- Recommandations -->
+          <div *ngIf="matchRecommendations" class="result-section recommendations">
+            <h5>💡 Recommandations</h5>
+            <p>{{ matchRecommendations }}</p>
           </div>
 
           <div class="error-content" *ngIf="matchError">
@@ -302,9 +352,11 @@
           </div>
 
           <div class="button-group" style="margin-top: 30px;">
-            <button class="primary" type="button" (click)="closeMatchModal()">Close</button>
+            <button class="primary" type="button" (click)="closeMatchModal()">Fermer</button>
           </div>
         </div>
+        
+        </app-loader>
       </div>
-    </app-loader>
+    </div>
   </ng-template>

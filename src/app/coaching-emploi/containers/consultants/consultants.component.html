@@ -1,0 +1,40 @@
+<div class="consultants-container">
+  <div class="content-wrapper">
+    <h1 class="page-title">Nos Consultants RH</h1>
+    
+    <div class="consultants-grid">
+      <div class="consultant-card" *ngFor="let consultant of consultants">
+        <div class="card-content">
+          <div class="avatar">
+            <span class="initial">{{ consultant.initial }}</span>
+          </div>
+          
+          <h2 class="consultant-name">{{ consultant.name }}</h2>
+          <p class="consultant-title">{{ consultant.title }}</p>
+          
+          <div class="languages">
+            <span class="language-badge" *ngFor="let lang of consultant.languages">
+              <span class="flag">{{ lang.flag }}</span>
+              {{ lang.name }}
+            </span>
+          </div>
+          
+          <div class="experience-badge">
+            {{ consultant.experience }}
+          </div>
+          
+          <div class="specialties">
+            <div class="specialty-item" *ngFor="let specialty of consultant.specialties">
+              <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span>{{ specialty }}</span>
+            </div>
+          </div>
+          
+          <button class="select-button" [routerLink]="['../services', consultant.id]">Choisir {{ consultant.name }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

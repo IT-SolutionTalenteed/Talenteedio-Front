@@ -1,0 +1,172 @@
+<div class="booking-container">
+  <div class="booking-layout">
+    <!-- Colonne gauche: Info du service -->
+    <div class="service-info-panel">
+      <div class="consultant-header">
+        <div class="consultant-avatar">{{ consultantName?.charAt(0).toUpperCase() }}</div>
+        <div>
+          <h2 class="consultant-name">{{ consultantName }}</h2>
+          <p class="service-title">{{ serviceName }}</p>
+        </div>
+      </div>
+      
+      <div class="service-details">
+        <div class="detail-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+          </svg>
+          <span>{{ serviceType === 'bilan' ? '2 heures' : '2 mois' }}</span>
+        </div>
+        
+        <div class="detail-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>Informations fournies à la confirmation</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Colonne droite: Calendrier et créneaux -->
+    <div class="booking-panel">
+      <!-- Bouton retour (visible uniquement sur la page de confirmation) -->
+      <button class="back-button" *ngIf="showConfirmationForm" (click)="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      
+      <h1 class="page-title" *ngIf="!showConfirmationForm">Sélectionnez la date et l'heure</h1>
+      <h1 class="page-title" *ngIf="showConfirmationForm">Indiquez vos informations</h1>
+      
+      <!-- Étape 1: Sélection date/heure -->
+      <div class="booking-content" [class.has-selection]="selectedDate" *ngIf="!showConfirmationForm">
+        <!-- Calendrier -->
+        <div class="calendar-section">
+          <app-calendar
+            [selectedDate]="selectedDate"
+            (dateSelected)="onDateSelected($event)"
+          ></app-calendar>
+          
+          <div class="timezone-info">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+            <span>Fuseau horaire</span>
+            <select 
+              class="timezone-select" 
+              [(ngModel)]="selectedTimezone"
+              (change)="onTimezoneChange()"
+            >
+              <optgroup *ngFor="let group of groupedTimezones | keyvalue" [label]="group.key">
+                <option *ngFor="let tz of group.value" [value]="tz.value">
+                  {{ tz.label }} ({{ tz.offset }})
+                </option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Créneaux horaires (affichés uniquement si une date est sélectionnée) -->
+        <div class="time-slots-section" *ngIf="selectedDate">
+          <div class="selected-date-header">
+            <h3>{{ formattedSelectedDate }}</h3>
+          </div>
+          
+          <div class="time-slots-list">
+            <div 
+              *ngFor="let slot of timeSlots" 
+              class="time-slot-wrapper"
+              [class.has-next-button]="selectedTime === slot"
+            >
+              <button
+                type="button"
+                class="time-slot-button"
+                [class.selected]="selectedTime === slot"
+                (click)="selectTime(slot)"
+              >
+                {{ slot }}
+              </button>
+              <button
+                *ngIf="selectedTime === slot"
+                type="button"
+                class="next-button"
+                (click)="showConfirmation()"
+              >
+                Suivant
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Étape 2: Formulaire de confirmation -->
+      <form class="confirmation-form" *ngIf="showConfirmationForm" (ngSubmit)="confirmBooking()">
+        <div class="form-field">
+          <label for="confirm-name">Nom *</label>
+          <input
+            type="text"
+            id="confirm-name"
+            [(ngModel)]="contactData.name"
+            name="name"
+            required
+            placeholder="Votre nom complet"
+          />
+        </div>
+        
+        <div class="form-field">
+          <label for="confirm-email">E-mail *</label>
+          <input
+            type="email"
+            id="confirm-email"
+            [(ngModel)]="contactData.email"
+            name="email"
+            required
+            placeholder="votre@email.com"
+          />
+        </div>
+        
+        <div class="form-field">
+          <label for="confirm-phone">Contact *</label>
+          <input
+            type="tel"
+            id="confirm-phone"
+            [(ngModel)]="contactData.phone"
+            name="phone"
+            required
+            placeholder="+33 6 12 34 56 78"
+          />
+        </div>
+        
+        <button type="submit" class="confirm-event-button">
+          Confirmer l'événement
+        </button>
+      </form>
+      
+      <!-- Fréquence pour accompagnement -->
+      <div class="frequency-section" *ngIf="serviceType === 'accompagnement' && selectedDate && !showConfirmationForm">
+        <label>Fréquence des sessions</label>
+        <div class="frequency-options">
+          <button
+            type="button"
+            class="frequency-button"
+            [class.selected]="frequency === 'weekly'"
+            (click)="frequency = 'weekly'"
+          >
+            Hebdomadaire
+          </button>
+          <button
+            type="button"
+            class="frequency-button"
+            [class.selected]="frequency === 'biweekly'"
+            (click)="frequency = 'biweekly'"
+          >
+            Toutes les 2 semaines
+          </button>
+        </div>
+      </div>
+      
+
+    </div>
+  </div>
+</div>

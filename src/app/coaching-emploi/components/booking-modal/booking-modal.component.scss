@@ -1,0 +1,268 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: #5a6c7d;
+  }
+  
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.service-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  
+  .consultant-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .consultant-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .consultant-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    text-transform: capitalize;
+  }
+  
+  .service-name {
+    font-size: 0.9rem;
+    color: #5a6c7d;
+    margin: 0.25rem 0 0 0;
+  }
+  
+  .duration-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c3e50;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+      color: #4a90e2;
+    }
+  }
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+}
+
+.modal-subtitle {
+  font-size: 0.95rem;
+  color: #5a6c7d;
+  margin: 0 0 2rem 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  input,
+  select {
+    padding: 0.875rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background-color: white;
+    
+    &:focus {
+      outline: none;
+      border-color: #4a90e2;
+    }
+    
+    &.error {
+      border-color: #e74c3c;
+    }
+  }
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.time-slot {
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    border-color: #4a90e2;
+    background-color: #f0f7ff;
+  }
+  
+  &.selected {
+    border-color: #4a90e2;
+    background-color: #4a90e2;
+    color: white;
+    font-weight: 600;
+  }
+}
+
+.timezone-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  
+  .timezone-icon {
+    width: 20px;
+    height: 20px;
+    color: #5a6c7d;
+    flex-shrink: 0;
+  }
+  
+  span {
+    font-size: 0.9rem;
+    color: #5a6c7d;
+    font-weight: 500;
+  }
+}
+
+.error-message {
+  font-size: 0.8rem;
+  color: #e74c3c;
+  margin-top: -0.25rem;
+}
+
+.price-summary {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .price-label {
+    font-size: 1rem;
+    color: #5a6c7d;
+    font-weight: 600;
+  }
+  
+  .price-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #5cb85c;
+  }
+}
+
+.submit-button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover:not(:disabled) {
+    background-color: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
+  }
+  
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}

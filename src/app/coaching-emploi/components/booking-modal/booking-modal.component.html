@@ -1,0 +1,85 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="onClose()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+    
+    <div class="service-info-header">
+      <div class="consultant-info">
+        <div class="consultant-avatar">{{ consultantName?.charAt(0).toUpperCase() }}</div>
+        <div>
+          <h3 class="consultant-name">{{ consultantName }}</h3>
+          <p class="service-name">{{ serviceType === 'bilan' ? 'Bilan Emploi' : 'Accompagnement Emploi' }}</p>
+        </div>
+      </div>
+      <div class="duration-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        {{ serviceType === 'bilan' ? '2 heures' : '2 mois' }}
+      </div>
+    </div>
+    
+    <h2 class="modal-title">Sélectionnez la date et l'heure</h2>
+    <p class="modal-subtitle">
+      {{ serviceType === 'bilan' ? 'Choisissez le moment qui vous convient pour votre session' : 'Planifiez vos sessions hebdomadaires' }}
+    </p>
+    
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Date *</label>
+        <app-calendar
+          [selectedDate]="selectedDate"
+          (dateSelected)="onDateSelected($event)"
+        ></app-calendar>
+        <span class="error-message" *ngIf="bookingForm.get('date')?.invalid && bookingForm.get('date')?.touched">
+          La date est requise
+        </span>
+      </div>
+      
+      <div class="form-group">
+        <label>Heure *</label>
+        <div class="time-slots-grid">
+          <button
+            type="button"
+            *ngFor="let slot of timeSlots"
+            class="time-slot"
+            [class.selected]="bookingForm.get('time')?.value === slot"
+            (click)="selectTime(slot)"
+          >
+            {{ slot }}
+          </button>
+        </div>
+        <span class="error-message" *ngIf="bookingForm.get('time')?.invalid && bookingForm.get('time')?.touched">
+          L'heure est requise
+        </span>
+      </div>
+      
+      <div class="timezone-info">
+        <svg class="timezone-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        <span>Fuseau horaire: {{ timezone }}</span>
+      </div>
+      
+      <div class="form-group" *ngIf="serviceType === 'accompagnement'">
+        <label for="frequency">Fréquence des sessions *</label>
+        <select id="frequency" formControlName="frequency">
+          <option value="weekly">Hebdomadaire</option>
+          <option value="biweekly">Toutes les 2 semaines</option>
+        </select>
+      </div>
+      
+      <div class="price-summary">
+        <div class="price-label">Prix total</div>
+        <div class="price-value">{{ serviceType === 'bilan' ? '250€' : '300€' }}</div>
+      </div>
+      
+      <button type="submit" class="submit-button" [disabled]="bookingForm.invalid">
+        Procéder au paiement
+      </button>
+    </form>
+  </div>
+</div>

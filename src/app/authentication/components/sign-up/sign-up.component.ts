@@ -133,6 +133,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         const valuesControl = this.form.get('values');
         const cvControl = this.form.get('cv');
         const tjmControl = this.form.get('tjm');
+        const annualSalaryControl = this.form.get('annualSalary');
         const mobilityControl = this.form.get('mobility');
         const availabilityDateControl = this.form.get('availabilityDate');
         const desiredLocationControl = this.form.get('desiredLocation');
@@ -143,6 +144,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           valuesControl.setValidators([Validators.required]);
           cvControl.addValidators([Validators.required]);
           tjmControl.setValidators([Validators.required]);
+          annualSalaryControl.setValidators([Validators.required]);
           mobilityControl.setValidators([Validators.required]);
           availabilityDateControl.setValidators([Validators.required]);
           desiredLocationControl.setValidators([Validators.required]);
@@ -152,6 +154,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           valuesControl.setValidators([Validators.required]);
           cvControl.addValidators([Validators.required]);
           tjmControl.setValidators([Validators.required]);
+          annualSalaryControl.setValidators([Validators.required]);
           mobilityControl.setValidators([Validators.required]);
           availabilityDateControl.setValidators([Validators.required]);
           desiredLocationControl.setValidators([Validators.required]);
@@ -161,6 +164,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           valuesControl.clearValidators();
           cvControl.clearValidators();
           tjmControl.clearValidators();
+          annualSalaryControl.clearValidators();
           mobilityControl.clearValidators();
           availabilityDateControl.clearValidators();
           desiredLocationControl.clearValidators();
@@ -171,6 +175,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         valuesControl.updateValueAndValidity();
         cvControl.updateValueAndValidity();
         tjmControl.updateValueAndValidity();
+        annualSalaryControl.updateValueAndValidity();
         mobilityControl.updateValueAndValidity();
         availabilityDateControl.updateValueAndValidity();
         desiredLocationControl.updateValueAndValidity();
@@ -272,6 +277,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         consent: [false],
         phone: [user.phone, Validators.compose([Validators.required])],
         tjm: [null],
+        annualSalary: [null],
         mobility: [null],
         availabilityDate: [null],
         desiredLocation: [null],

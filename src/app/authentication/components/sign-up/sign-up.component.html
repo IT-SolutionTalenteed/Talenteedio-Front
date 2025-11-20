@@ -137,6 +137,19 @@
         </div>
 
         <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
+          <div for="annualSalary" class="label">Salaire Annuel/12 mois*</div>
+          <input
+            formControlName="annualSalary"
+            id="annualSalary"
+            type="number"
+            placeholder="Entrez votre salaire annuel divisé par 12"
+          />
+          <app-validation-error
+            [control]="form.controls['annualSalary']"
+          ></app-validation-error>
+        </div>
+
+        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
           <div for="mobility" class="label">Mobilité*</div>
           <input
             formControlName="mobility"

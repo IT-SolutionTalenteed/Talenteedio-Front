@@ -95,6 +95,13 @@ const routes: Routes = [
             (m) => m.EmployerModule
           ),
       },
+      {
+        path: 'coaching-emploi',
+        loadChildren: () =>
+          import('../coaching-emploi/coaching-emploi.module').then(
+            (m) => m.CoachingEmploiModule
+          ),
+      },
     ],
   },
 ];

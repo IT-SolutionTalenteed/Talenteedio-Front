@@ -1,0 +1,37 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button type="button" class="nav-button" (click)="previousMonth()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
+    </button>
+    
+    <span class="month-year">{{ currentMonthYear }}</span>
+    
+    <button type="button" class="nav-button" (click)="nextMonth()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="calendar-weekdays">
+    <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+  </div>
+  
+  <div class="calendar-days">
+    <button
+      type="button"
+      *ngFor="let calendarDay of calendarDays"
+      class="calendar-day"
+      [class.other-month]="!calendarDay.isCurrentMonth"
+      [class.today]="calendarDay.isToday"
+      [class.selected]="calendarDay.isSelected"
+      [class.disabled]="calendarDay.isDisabled"
+      [disabled]="calendarDay.isDisabled"
+      (click)="selectDate(calendarDay)"
+    >
+      {{ calendarDay.day }}
+    </button>
+  </div>
+</div>
