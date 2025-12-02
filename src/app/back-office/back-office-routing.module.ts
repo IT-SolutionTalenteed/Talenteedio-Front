@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BackOfficeRootComponent } from './container/back-office-root/back-office-root.component';
 
+import { ConsultantListComponent } from './components/consultant-list/consultant-list.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +21,11 @@ const routes: Routes = [
           import('../dashboard/dashboard.module').then(
             (m) => m.DashboardModule
           ),
+      },
+      {
+        path: 'consultants',
+        component: ConsultantListComponent,
+        data: { title: 'Gestion des Consultants' }
       },
     ],
   },

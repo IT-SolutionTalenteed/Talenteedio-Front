@@ -40,6 +40,7 @@ export class UserRootComponent implements OnInit {
   userCriteria: ListCriteria;
   toBeDeletedUser: User;
 
+
   @ViewChild('deletionConfirmModal', { static: true })
   deletionConfirmModal: ModalComponent;
   @ViewChild('successfullSavingModal', { static: true })
@@ -61,6 +62,8 @@ export class UserRootComponent implements OnInit {
       .subscribe((criteria) => (this.userCriteria = cloneDeep(criteria)));
     this.subscribeModals();
   }
+
+
 
   onSort(sort: Sort) {
     this.userCriteria.sort = sort;

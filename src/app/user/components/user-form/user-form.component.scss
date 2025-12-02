@@ -1,9 +1,7 @@
-@import 'forms.scss';
-@import 'buttons.scss';
-@import 'details.scss';
+@import 'src/styles/components/form.scss';
+@import 'src/styles/components/buttons.scss';
 
 .container {
-    @extend %detail-layout;
     form {
         @extend %generic-form;
         max-width: 100%;

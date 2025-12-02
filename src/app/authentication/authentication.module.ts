@@ -24,6 +24,7 @@ import { AuthenticationRouterEffects } from './store/effects/authentication-rout
 import { AuthenticationEffects } from './store/effects/authentication.effects';
 import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign-up-choice-root.component';
 import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
+import { ConsultantRegisterRootComponent } from './containers/consultant-register-root/consultant-register-root.component';
 import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
 
 @NgModule({
@@ -54,6 +55,7 @@ import { CompanyPlanRootComponent } from './containers/company-plan-root/company
     AuthenticationLeftComponent,
     SignUpChoiceRootComponent,
     CompanyRegisterRootComponent,
+    ConsultantRegisterRootComponent,
     CompanyPlanRootComponent,
   ],
   providers: [OnlySingleSignInService, AccountValidationService],

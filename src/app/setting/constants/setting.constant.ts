@@ -9,9 +9,26 @@ export const EMPTY_SETTING: Setting = {
     },
     contact : {
         id: '',
+        phoneNumber: '',
         email: 'site@mail.com',
-        address: 'address'
-    }
+        address: {
+            id: '',
+            line: '',
+            postalCode: '',
+            city: '',
+            country: '',
+            state: ''
+        }
+    },
+    terms: '',
+    confidentiality: '',
+    didYouKnow: '',
+    gateway: '',
+    voice: '',
+    initiative: '',
+    homeImage1: { id: '', fileUrl: '', fileType: '', fileName: '' },
+    homeImage2: { id: '', fileUrl: '', fileType: '', fileName: '' },
+    homeImage3: { id: '', fileUrl: '', fileType: '', fileName: '' }
 };
 
 export const EMPTY_SETTING_2: Setting = {
@@ -23,9 +40,26 @@ export const EMPTY_SETTING_2: Setting = {
     },
     contact : {
         id: '',
+        phoneNumber: '',
         email: 'site@mail.com',
-        address: 'address'
-    }
+        address: {
+            id: '',
+            line: '',
+            postalCode: '',
+            city: '',
+            country: '',
+            state: ''
+        }
+    },
+    terms: '',
+    confidentiality: '',
+    didYouKnow: '',
+    gateway: '',
+    voice: '',
+    initiative: '',
+    homeImage1: { id: '', fileUrl: '', fileType: '', fileName: '' },
+    homeImage2: { id: '', fileUrl: '', fileType: '', fileName: '' },
+    homeImage3: { id: '', fileUrl: '', fileType: '', fileName: '' }
 };
 
 export const SETTING_API_ROUTE = 'setting';

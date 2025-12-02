@@ -3,6 +3,7 @@
     <div class="search-bar">
         <app-search-bar (search)="onSearch($event)" [initialValue]="userCriteria?.search"></app-search-bar>
     </div>
+
     <div class="list">
         <app-loader [isLoading]="usersLoading$ | async">
             <app-user-list

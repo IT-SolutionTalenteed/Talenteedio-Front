@@ -35,25 +35,18 @@ export class VerifyService {
       flatMap((token: string) => {
         if (token) {
           return authenticationService.me().pipe(
-            map(
-              (res) => (
-                authenticationStore.dispatch(verifySuccess(res.user)), true
-              )
-            ),
-            catchError(
-              (error) => (
-                authenticationStore.dispatch(
-                  verifyFailed(new Error('no token'))
-                ),
-                of(true)
-              )
-            )
+            map((res) => {
+              authenticationStore.dispatch(verifySuccess(res.user));
+              return true;
+            }),
+            catchError((error) => {
+              authenticationStore.dispatch(verifyFailed(new Error('no token')));
+              return of(true);
+            })
           );
         } else {
-          return (
-            authenticationStore.dispatch(verifyFailed(new Error('no token'))),
-            of(true)
-          );
+          authenticationStore.dispatch(verifyFailed(new Error('no token')));
+          return of(true);
         }
       })
     );
