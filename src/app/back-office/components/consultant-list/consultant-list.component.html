@@ -1,0 +1,108 @@
+<div class="consultant-list">
+  <div class="header">
+    <h2>Gestion des Consultants</h2>
+    <div class="header-actions">
+      <span class="total-count">Total: {{ total }} consultant(s)</span>
+      <span *ngIf="getPendingCount() > 0" class="pending-badge">
+        {{ getPendingCount() }} en attente
+      </span>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="btn-filter" (click)="toggleFilter()" [class.active]="showPendingOnly">
+      <i class="fa fa-filter"></i>
+      {{ showPendingOnly ? 'Afficher tous' : 'En attente uniquement' }}
+    </button>
+    <button class="btn-refresh" (click)="loadConsultants()">
+      <i class="fa fa-refresh"></i>
+      Rafraîchir
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    Chargement...
+  </div>
+
+  <div *ngIf="!loading && consultants.length === 0" class="no-data">
+    <p>Aucun consultant trouvé</p>
+  </div>
+
+  <div *ngIf="!loading && consultants.length > 0" class="table-container">
+    <table class="consultants-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Expertise</th>
+          <th>Expérience</th>
+          <th>TJM</th>
+          <th>Catégorie</th>
+          <th>Date d'inscription</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consultant of consultants" 
+            [class.pending]="isPending(consultant)">
+          <td class="name">
+            <strong>{{ consultant.user.firstname }} {{ consultant.user.lastname }}</strong>
+          </td>
+          <td>{{ consultant.user.email }}</td>
+          <td>{{ consultant.contact?.phoneNumber || '-' }}</td>
+          <td>{{ consultant.expertise || '-' }}</td>
+          <td>{{ consultant.yearsOfExperience ? consultant.yearsOfExperience + ' ans' : '-' }}</td>
+          <td>{{ consultant.tjm ? (consultant.tjm + ' €') : '-' }}</td>
+          <td>
+            <span class="category-badge">{{ consultant.category?.name || '-' }}</span>
+          </td>
+          <td>{{ consultant.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <span *ngIf="isPending(consultant)" class="badge pending">
+              <i class="fa fa-clock-o"></i> En attente
+            </span>
+            <span *ngIf="!isPending(consultant)" class="badge validated">
+              <i class="fa fa-check"></i> Validé
+            </span>
+          </td>
+          <td class="actions">
+            <button 
+              *ngIf="isPending(consultant)"
+              (click)="validateConsultant(consultant)"
+              class="btn-validate"
+              title="Valider ce consultant">
+              <i class="fa fa-check-circle"></i>
+              Valider
+            </button>
+            <span *ngIf="!isPending(consultant)" class="validated-date">
+              Validé le {{ consultant.user.validateAt | date:'dd/MM/yyyy' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="total > limit && !loading">
+    <button 
+      class="btn-page" 
+      [disabled]="page === 1" 
+      (click)="previousPage()">
+      <i class="fa fa-chevron-left"></i>
+      Précédent
+    </button>
+    <span class="page-info">
+      Page {{ page }} / {{ getTotalPages() }}
+    </span>
+    <button 
+      class="btn-page" 
+      [disabled]="page * limit >= total" 
+      (click)="nextPage()">
+      Suivant
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

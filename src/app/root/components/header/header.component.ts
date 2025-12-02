@@ -89,20 +89,26 @@ export class HeaderComponent implements OnDestroy, OnChanges {
   goToDashboard(event: Event) {
     event.preventDefault();
     
-    // Récupérer les tokens directement depuis le store
+    // Récupérer les tokens et l'utilisateur depuis le store
     this.authenticationStore
       .pipe(
         select((state: any) => ({
           accessToken: state?.auth?.token,
-          refreshToken: state?.auth?.refreshToken
+          refreshToken: state?.auth?.refreshToken,
+          user: state?.auth?.user
         })),
         take(1)
       )
-      .subscribe(tokens => {
-        if (tokens.accessToken) {
-          let url = `${this.backOfficeRoute}?accessToken=${tokens.accessToken}`;
-          if (tokens.refreshToken) {
-            url += `&refreshToken=${tokens.refreshToken}`;
+      .subscribe(data => {
+        if (data.accessToken) {
+          // Rediriger les consultants vers l'admin Vue.js
+          const isConsultant = data.user?.consultant && !data.user?.admin;
+          const adminUrl = 'http://localhost:5173/admin';
+          
+          let url = isConsultant ? adminUrl : this.backOfficeRoute;
+          url += `?accessToken=${data.accessToken}`;
+          if (data.refreshToken) {
+            url += `&refreshToken=${data.refreshToken}`;
           }
           window.location.href = url;
         }

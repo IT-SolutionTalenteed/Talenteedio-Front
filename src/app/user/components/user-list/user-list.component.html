@@ -17,8 +17,15 @@
             </tr>
         </thead>
         <tbody data-simplebar>
-            <tr *ngFor="let user of users" [class.selected]="user.id === currentUser?.id">
-                <td>{{ user.email }}</td>
+            <tr *ngFor="let user of users" 
+                [class.selected]="user.id === currentUser?.id"
+                [class.pending-validation]="user.consultant && !user.isVerified">
+                <td>
+                    {{ user.email }}
+                    <span *ngIf="user.consultant && !user.isVerified" class="pending-badge">
+                        En attente
+                    </span>
+                </td>
                 <td>{{ user.role?.name }}</td>
                 <td class="actions">
                     <img (click)="view.emit(user); currentUser = user" src="/assets/images/ico-details.svg" title="Voir détail" />

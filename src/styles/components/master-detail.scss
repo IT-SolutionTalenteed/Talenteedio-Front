@@ -3,7 +3,7 @@
 // MASTER DETAIL:
 
 @import 'buttons.scss';
-@import 'texts.scss';
+@import '../texts.scss';
 
 %master-detail {
     background-color: #ffffff;
@@ -26,7 +26,7 @@
 
     header {
         grid-area: header;
-        @extend %feature-title;
+        @extend %title;
     }
 
     .search-bar {

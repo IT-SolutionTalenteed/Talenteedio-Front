@@ -7,6 +7,7 @@ import { SignInRootComponent } from './containers/sign-in-root/sign-in-root.comp
 import { SignUpRootComponent } from './containers/sign-up-root/sign-up-root.component';
 import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign-up-choice-root.component';
 import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
+import { ConsultantRegisterRootComponent } from './containers/consultant-register-root/consultant-register-root.component';
 import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
 import { AccountValidationGuard } from './guards/account-validation.guard';
 import { OnlySingleSignInGuard } from './guards/only-single-sign-in.guard';
@@ -40,6 +41,12 @@ const routes: Routes = [
         component: CompanyRegisterRootComponent,
         canActivate: [OnlySingleSignInGuard],
         data: { title: 'Créer un compte Société' },
+      },
+      {
+        path: 'consultant-register',
+        component: ConsultantRegisterRootComponent,
+        canActivate: [OnlySingleSignInGuard],
+        data: { title: 'Créer un compte Consultant' },
       },
       {
         path: 'company-plan',
