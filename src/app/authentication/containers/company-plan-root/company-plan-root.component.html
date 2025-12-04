@@ -1,31 +1,49 @@
-<div class="container">
-  <h2>Choisissez votre plan</h2>
+<div class="pricing-container">
+  <!-- Header -->
+  <div class="pricing-header">
+    <h1 class="pricing-title">Choisissez votre plan</h1>
+    <p class="pricing-subtitle">Sélectionnez l'offre qui correspond le mieux à vos besoins</p>
+  </div>
 
-  <!-- Loading state -->
-  <div *ngIf="loading" class="loading">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
     <p>Chargement des plans...</p>
   </div>
 
-  <!-- Error state -->
-  <div *ngIf="error && !loading" class="error">
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
     <p>{{ error }}</p>
-    <button class="btn secondary" (click)="loadPlans()">Réessayer</button>
+    <button class="btn-retry" (click)="loadPlans()">Réessayer</button>
   </div>
 
-  <!-- Plans -->
-  <div *ngIf="!loading && !error" class="plans">
-    <div class="plan" *ngFor="let plan of plans">
-      <h3>{{ plan.product.name }}</h3>
-      <div class="price">{{ formatPrice(plan) }}</div>
-      <p class="description" *ngIf="plan.product.description">
-        {{ plan.product.description }}
-      </p>
+  <!-- Plans Grid -->
+  <div *ngIf="!loading && !error" class="plans-grid">
+    <div class="plan-card" *ngFor="let plan of plans">
+      <div class="plan-header">
+        <h3 class="plan-name">{{ plan.product.name }}</h3>
+        <p class="plan-description" *ngIf="plan.product.description">
+          {{ plan.product.description }}
+        </p>
+      </div>
+
+      <div class="plan-price">
+        <span class="price-amount" *ngIf="plan.unit_amount === 0">Gratuit</span>
+        <ng-container *ngIf="plan.unit_amount > 0">
+          <span class="price-amount">{{ plan.unit_amount / 100 }}€</span>
+          <span class="price-period">/{{ plan.interval === 'month' ? 'mois' : 'an' }}</span>
+        </ng-container>
+      </div>
+
       <button 
-        class="btn primary" 
+        class="btn-select" 
         (click)="select(plan)"
         [disabled]="isProcessing"
       >
-        {{ isProcessing ? 'Traitement...' : 'Sélectionner' }}
+        <span *ngIf="!isProcessing">
+          {{ plan.unit_amount === 0 ? 'Commencer gratuitement' : 'Choisir ce plan' }}
+        </span>
+        <span *ngIf="isProcessing">Traitement...</span>
       </button>
     </div>
   </div>

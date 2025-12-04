@@ -1,8 +1,8 @@
-<div class="container" data-simplebar>
-  <div class="authentication-left">
+<div class="container" [class.full-width]="isFullWidth" data-simplebar>
+  <div class="authentication-left" *ngIf="!isFullWidth">
     <app-authentication-left></app-authentication-left>
   </div>
-  <div class="authentication-right">
+  <div class="authentication-right" [class.full-width]="isFullWidth">
     <div class="right-content">
       <router-outlet></router-outlet>
     </div>
