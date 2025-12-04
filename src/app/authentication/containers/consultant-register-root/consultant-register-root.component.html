@@ -95,6 +95,41 @@
               placeholder="Enter years of experience"
             />
           </div>
+
+          <div class="control full-width">
+            <div for="cv" class="label">CV (PDF)*</div>
+            <div class="file-upload-wrapper">
+              <input
+                type="file"
+                id="cv"
+                accept=".pdf"
+                (change)="onCVFileSelected($event)"
+                style="display: none"
+                #cvInput
+              />
+              <button
+                type="button"
+                class="file-upload-btn"
+                (click)="cvInput.click()"
+                [disabled]="uploadingCV"
+              >
+                {{ uploadingCV ? 'Uploading...' : (cvFileName || 'Choose CV file') }}
+              </button>
+              <button
+                *ngIf="cvFileName && !uploadingCV"
+                type="button"
+                class="remove-file-btn"
+                (click)="removeCVFile()"
+              >
+                ✕
+              </button>
+            </div>
+            <small class="file-info">PDF format, max 5MB</small>
+            <small *ngIf="cvFileError" class="file-error">{{ cvFileError }}</small>
+            <app-validation-error
+              [control]="form.controls['cvId']"
+            ></app-validation-error>
+          </div>
         </div>
 
         <!-- Section: Address Information -->

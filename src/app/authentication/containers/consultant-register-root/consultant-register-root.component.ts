@@ -44,6 +44,10 @@ export class ConsultantRegisterRootComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   categories: Array<{ id: string; name: string }> = [];
   isSubmitting = false;
+  cvFile: File | null = null;
+  cvFileName: string = '';
+  uploadingCV = false;
+  cvFileError: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -76,6 +80,7 @@ export class ConsultantRegisterRootComponent implements OnInit, AfterViewInit {
         categoryId: ['', Validators.required],
         expertise: [''],
         yearsOfExperience: [''],
+        cvId: ['', Validators.required],
         address_line: ['', Validators.required],
         postalCode: ['', Validators.required],
         city: ['', Validators.required],
@@ -179,6 +184,67 @@ export class ConsultantRegisterRootComponent implements OnInit, AfterViewInit {
       });
   }
 
+  onCVFileSelected(event: any) {
+    const file = event.target.files[0];
+    this.cvFileError = '';
+    
+    if (file) {
+      // Vérifier que c'est un PDF
+      if (file.type !== 'application/pdf') {
+        this.cvFileError = 'Please select a PDF file';
+        this.cvFile = null;
+        this.cvFileName = '';
+        event.target.value = '';
+        return;
+      }
+      
+      // Vérifier la taille (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        this.cvFileError = 'File size must not exceed 5MB';
+        this.cvFile = null;
+        this.cvFileName = '';
+        event.target.value = '';
+        return;
+      }
+
+      this.cvFile = file;
+      this.cvFileName = file.name;
+      this.uploadCV();
+    }
+  }
+
+  uploadCV() {
+    if (!this.cvFile) return;
+
+    this.uploadingCV = true;
+    this.cvFileError = '';
+    
+    this.authService.uploadMedia(this.cvFile, 'pdf').subscribe({
+      next: (response: any) => {
+        this.uploadingCV = false;
+        const cvId = response?.data?.result?.id;
+        if (cvId) {
+          this.form.patchValue({ cvId });
+        }
+      },
+      error: (error) => {
+        this.uploadingCV = false;
+        this.cvFileError = 'Upload failed. Please try again.';
+        console.error('CV upload error:', error);
+        this.cvFile = null;
+        this.cvFileName = '';
+        this.form.patchValue({ cvId: '' });
+      },
+    });
+  }
+
+  removeCVFile() {
+    this.cvFile = null;
+    this.cvFileName = '';
+    this.cvFileError = '';
+    this.form.patchValue({ cvId: '' });
+  }
+
   submit() {
     if (this.isSubmitting) {
       return;
@@ -210,17 +276,15 @@ export class ConsultantRegisterRootComponent implements OnInit, AfterViewInit {
       state: formValue.state,
       country: formValue.country,
       values: [],
-      cvId: null,
+      cvId: formValue.cvId,
       recaptcha: formValue.recaptcha,
     };
 
     this.authService.signUpUser(payload as any).subscribe({
       next: (response: any) => {
         this.isSubmitting = false;
-        if (response?.pending) {
-          // Compte en attente de validation
-          alert('Inscription réussie ! Votre compte est en attente de validation par notre équipe. Vous recevrez un email dès que votre compte sera activé.');
-        }
+        // Rediriger vers la page de connexion
+        // Le consultant recevra un email de confirmation
         this.store.dispatch(go({ path: ['/authentication/sign-in'] }));
       },
       error: () => {

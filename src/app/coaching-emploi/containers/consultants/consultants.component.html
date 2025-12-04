@@ -2,7 +2,11 @@
   <div class="content-wrapper">
     <h1 class="page-title">Nos Consultants RH</h1>
     
-    <div class="consultants-grid">
+    <div class="loading-spinner" *ngIf="loading">
+      <p>Chargement des consultants...</p>
+    </div>
+    
+    <div class="consultants-grid" *ngIf="!loading">
       <div class="consultant-card" *ngFor="let consultant of consultants">
         <div class="card-content">
           <div class="avatar">
@@ -23,12 +27,23 @@
             {{ consultant.experience }}
           </div>
           
-          <div class="specialties">
+          <div class="specialties" *ngIf="consultant.specialties.length > 0">
             <div class="specialty-item" *ngFor="let specialty of consultant.specialties">
               <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
               <span>{{ specialty }}</span>
+            </div>
+          </div>
+          
+          <div class="pricings" *ngIf="consultant.pricings.length > 0">
+            <h3 class="pricings-title">Tarifs</h3>
+            <div class="pricing-item" *ngFor="let pricing of consultant.pricings">
+              <div class="pricing-header">
+                <span class="pricing-name">{{ pricing.title }}</span>
+                <span class="pricing-price">{{ pricing.price }}€<span class="pricing-unit" *ngIf="pricing.unit">/{{ pricing.unit }}</span></span>
+              </div>
+              <p class="pricing-description" *ngIf="pricing.description">{{ pricing.description }}</p>
             </div>
           </div>
           
