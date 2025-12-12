@@ -21,6 +21,7 @@ export interface Consultant {
   title: string;
   expertise: string;
   yearsOfExperience: number;
+  qualities?: string[];
   pricings?: ConsultantPricing[];
 }
 
@@ -45,6 +46,7 @@ export class ConsultantService {
                 title
                 expertise
                 yearsOfExperience
+                qualities
               }
             }
           }
@@ -93,5 +95,11 @@ export class ConsultantService {
         },
       })
       .pipe(map((response) => response.data.getPricings.rows));
+  }
+
+  getConsultantById(consultantId: string): Observable<Consultant | null> {
+    return this.getConsultants().pipe(
+      map(consultants => consultants.find(c => c.id === consultantId) || null)
+    );
   }
 }

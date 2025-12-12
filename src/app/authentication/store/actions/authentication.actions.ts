@@ -115,3 +115,32 @@ export const loadValuesFail = createAction(
   '[Authentication] Load Values Fail',
   props<Error>()
 );
+
+export const googleSignIn = createAction(
+  '[Authentication] Google Sign In',
+  props<{ credential: string }>()
+);
+
+export const googleSignInSuccess = createAction(
+  '[Authentication] Google Sign In Success',
+  props<AuthenticationResponse>()
+);
+
+export const googleSignInFail = createAction(
+  '[Authentication] Google Sign In Fail',
+  props<Error>()
+);
+
+export const linkGoogleAccount = createAction(
+  '[Authentication] Link Google Account',
+  props<{ credential: string }>()
+);
+
+export const linkGoogleAccountSuccess = createAction(
+  '[Authentication] Link Google Account Success'
+);
+
+export const linkGoogleAccountFail = createAction(
+  '[Authentication] Link Google Account Fail',
+  props<Error>()
+);

@@ -39,7 +39,13 @@ export const getEmailError = createSelector(
 export const getEmailErrorMessage = createSelector(
   getEmailError,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (emailError: any) => emailError?.error?.msg
+  (emailError: any) => {
+    if (!emailError) return '';
+    return emailError?.error?.msg || 
+           emailError?.error?.message || 
+           emailError?.message || 
+           'Email ou mot de passe incorrect';
+  }
 );
 
 export const getReinitPasswordErrorMessage = createSelector(

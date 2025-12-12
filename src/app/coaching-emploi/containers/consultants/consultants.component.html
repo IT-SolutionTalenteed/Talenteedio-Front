@@ -36,16 +36,7 @@
             </div>
           </div>
           
-          <div class="pricings" *ngIf="consultant.pricings.length > 0">
-            <h3 class="pricings-title">Tarifs</h3>
-            <div class="pricing-item" *ngFor="let pricing of consultant.pricings">
-              <div class="pricing-header">
-                <span class="pricing-name">{{ pricing.title }}</span>
-                <span class="pricing-price">{{ pricing.price }}€<span class="pricing-unit" *ngIf="pricing.unit">/{{ pricing.unit }}</span></span>
-              </div>
-              <p class="pricing-description" *ngIf="pricing.description">{{ pricing.description }}</p>
-            </div>
-          </div>
+
           
           <button class="select-button" [routerLink]="['../services', consultant.id]">Choisir {{ consultant.name }}</button>
         </div>

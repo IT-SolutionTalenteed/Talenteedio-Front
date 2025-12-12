@@ -27,11 +27,14 @@ export class SignInComponent implements OnInit, AfterViewInit {
   @ViewChild('first', { static: false }) firstInput: ElementRef;
   @ViewChild('password') passwordEl: ElementRef;
   @Output() signIn: EventEmitter<Credentials> = new EventEmitter<Credentials>();
+  @Output() googleSignIn: EventEmitter<string> = new EventEmitter<string>();
+  @Output() clearError: EventEmitter<void> = new EventEmitter<void>();
   @Input() loginErrorMessage: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set emailError(value: any) {
-    if (value) {
+    if (value && this.captchaElem) {
       this.captchaElem.resetCaptcha();
+      this.form.patchValue({ recaptcha: undefined });
     }
   }
 
@@ -71,12 +74,23 @@ export class SignInComponent implements OnInit, AfterViewInit {
   }
 
   private initForm(): FormGroup {
-    return this.formBuilder.group({
+    const form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       rememberMe: [false],
       recaptcha: [undefined, Validators.required],
     });
+
+    // Clear errors when user starts typing
+    form.get('email')?.valueChanges.subscribe(() => {
+      this.clearError.emit();
+    });
+    
+    form.get('password')?.valueChanges.subscribe(() => {
+      this.clearError.emit();
+    });
+
+    return form;
   }
 
   showErrors() {
@@ -118,5 +132,9 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.captchaSuccess = false;
     this.captchaIsExpired = true;
     this.cdr.detectChanges();
+  }
+
+  onGoogleSignIn(credential: string): void {
+    this.googleSignIn.emit(credential);
   }
 }

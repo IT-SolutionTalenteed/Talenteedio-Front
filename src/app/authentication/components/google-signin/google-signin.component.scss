@@ -1,0 +1,94 @@
+.google-signin-container {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.google-button-auto {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.google-button-manual {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #3c4043;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.30), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    border-color: #dadce0;
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.30), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .google-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button-text {
+    flex: 1;
+    text-align: center;
+  }
+
+  .loading-spinner {
+    position: absolute;
+    right: 12px;
+    
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #4285f4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .google-button-manual {
+    height: 44px;
+    font-size: 13px;
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .google-button-manual {
+    background-color: #2d2d2d;
+    border-color: #5f6368;
+    color: #e8eaed;
+
+    &:hover:not(:disabled) {
+      background-color: #353535;
+    }
+  }
+}

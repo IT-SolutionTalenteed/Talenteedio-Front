@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { logIn } from '../../store/actions/authentication.actions';
+import { logIn, clearError, googleSignIn } from '../../store/actions/authentication.actions';
 import { AuthenticationState } from '../../store/reducers/authentication.reducers';
 import {
   getEmailError,
@@ -32,5 +32,13 @@ export class SignInRootComponent implements OnInit {
 
   onLogIn(credentials: Credentials) {
     this.authenticationStore.dispatch(logIn(credentials));
+  }
+
+  onClearError() {
+    this.authenticationStore.dispatch(clearError());
+  }
+
+  onGoogleSignIn(credential: string) {
+    this.authenticationStore.dispatch(googleSignIn({ credential }));
   }
 }

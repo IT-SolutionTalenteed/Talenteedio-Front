@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+
 import { ConsultantService, Consultant as ApiConsultant, ConsultantPricing } from '../../services/consultant.service';
 
 interface Consultant {
@@ -40,60 +40,29 @@ export class ConsultantsComponent implements OnInit {
           return;
         }
 
-        const pricingRequests = apiConsultants.map((consultant) =>
-          this.consultantService.getPricings(consultant.id)
-        );
+        const apiConsultantsList = apiConsultants.map((consultant) => ({
+          id: consultant.id,
+          initial: consultant.user.firstname?.charAt(0).toUpperCase() || 'C',
+          name: `${consultant.user.firstname} ${consultant.user.lastname}`,
+          title: consultant.title || 'Consultant RH',
+          languages: [
+            { flag: '🇫🇷', name: 'Français' },
+            { flag: '🇬🇧', name: 'English' },
+          ],
+          experience: consultant.yearsOfExperience
+            ? `${consultant.yearsOfExperience}+ ans d'expérience`
+            : 'Expérience confirmée',
+          specialties: consultant.qualities && consultant.qualities.length > 0
+            ? consultant.qualities
+            : (consultant.expertise
+              ? consultant.expertise.split(',').map((s) => s.trim())
+              : []),
+          pricings: [],
+        }));
 
-        forkJoin(pricingRequests).subscribe({
-          next: (pricingsArray) => {
-            console.log('Pricings loaded:', pricingsArray);
-            const apiConsultantsList = apiConsultants.map((consultant, index) => ({
-              id: consultant.id,
-              initial: consultant.user.firstname?.charAt(0).toUpperCase() || 'C',
-              name: `${consultant.user.firstname} ${consultant.user.lastname}`,
-              title: consultant.title || 'Consultant RH',
-              languages: [
-                { flag: '🇫🇷', name: 'Français' },
-                { flag: '🇬🇧', name: 'English' },
-              ],
-              experience: consultant.yearsOfExperience
-                ? `${consultant.yearsOfExperience}+ ans d'expérience`
-                : 'Expérience confirmée',
-              specialties: consultant.expertise
-                ? consultant.expertise.split(',').map((s) => s.trim())
-                : [],
-              pricings: pricingsArray[index] || [],
-            }));
-
-            // Combine API consultants with fallback consultants
-            this.consultants = [...this.getFallbackConsultants(), ...apiConsultantsList];
-            this.loading = false;
-          },
-          error: (error) => {
-            console.error('Error loading pricings:', error);
-            const apiConsultantsList = apiConsultants.map((consultant) => ({
-              id: consultant.id,
-              initial: consultant.user.firstname?.charAt(0).toUpperCase() || 'C',
-              name: `${consultant.user.firstname} ${consultant.user.lastname}`,
-              title: consultant.title || 'Consultant RH',
-              languages: [
-                { flag: '🇫🇷', name: 'Français' },
-                { flag: '🇬🇧', name: 'English' },
-              ],
-              experience: consultant.yearsOfExperience
-                ? `${consultant.yearsOfExperience}+ ans d'expérience`
-                : 'Expérience confirmée',
-              specialties: consultant.expertise
-                ? consultant.expertise.split(',').map((s) => s.trim())
-                : [],
-              pricings: [],
-            }));
-
-            // Combine API consultants with fallback consultants even on error
-            this.consultants = [...this.getFallbackConsultants(), ...apiConsultantsList];
-            this.loading = false;
-          },
-        });
+        // Combine API consultants with fallback consultants
+        this.consultants = [...this.getFallbackConsultants(), ...apiConsultantsList];
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error loading consultants:', error);

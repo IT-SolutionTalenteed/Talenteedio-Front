@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Value } from 'src/app/shared/models/value.interface';
 import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { environment } from 'src/environments/environment';
@@ -22,7 +22,19 @@ export class AuthenticationService implements AuthenticationServiceInterface {
     const { recaptcha, ...apiData } = credentials;
     return this.http
       .post(`${environment.apiBaseUrl}/login`, apiData, { headers })
-      .pipe(map((response: ApiResponse) => response as AuthenticationResponse));
+      .pipe(
+        map((response: ApiResponse) => {
+          return response as AuthenticationResponse;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errorObj = {
+            message: error.error?.msg || error.message || 'Email ou mot de passe incorrect',
+            status: error.status,
+            error: error.error
+          };
+          return throwError(errorObj);
+        })
+      );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,6 +72,43 @@ export class AuthenticationService implements AuthenticationServiceInterface {
     return this.http
       .post(`${environment.apiBaseUrl}/reset-password`, { email })
       .pipe(map((response: ApiResponse) => response as AuthenticationResponse));
+  }
+
+  googleSignIn(credential: string): Observable<AuthenticationResponse> {
+    return this.http
+      .post(`${environment.apiBaseUrl}/auth/google`, { credential })
+      .pipe(
+        map((response: ApiResponse) => {
+          console.log('Google sign-in response:', response);
+          return response as AuthenticationResponse;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          console.log('Google sign-in error:', error);
+          const errorObj = {
+            message: error.error?.msg || error.message || 'Erreur de connexion Google',
+            status: error.status,
+            error: error.error
+          };
+          return throwError(errorObj);
+        })
+      );
+  }
+
+  linkGoogleAccount(credential: string): Observable<any> {
+    return this.http
+      .post(`${environment.apiBaseUrl}/auth/link-google`, { credential })
+      .pipe(
+        map((response: ApiResponse) => response),
+        catchError((error: HttpErrorResponse) => {
+          console.log('Link Google account error:', error);
+          const errorObj = {
+            message: error.error?.msg || error.message || 'Erreur de liaison du compte Google',
+            status: error.status,
+            error: error.error
+          };
+          return throwError(errorObj);
+        })
+      );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

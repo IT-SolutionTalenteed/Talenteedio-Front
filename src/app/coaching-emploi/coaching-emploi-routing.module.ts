@@ -24,6 +24,10 @@ const routes: Routes = [
     component: BookingComponent,
   },
   {
+    path: 'booking/:consultant',
+    component: BookingComponent,
+  },
+  {
     path: 'success',
     component: SuccessComponent,
   },

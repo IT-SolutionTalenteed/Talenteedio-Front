@@ -66,6 +66,27 @@ form {
           justify-content: center;
           align-items: center;
         }
+
+        .separator {
+          display: flex;
+          align-items: center;
+          margin: 20px 0;
+          
+          &::before,
+          &::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #dadce0;
+          }
+          
+          span {
+            padding: 0 16px;
+            color: #5f6368;
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
     }
 }
 

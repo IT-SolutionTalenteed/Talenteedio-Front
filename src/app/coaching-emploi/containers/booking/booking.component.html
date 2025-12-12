@@ -11,20 +11,35 @@
       </div>
       
       <div class="service-details">
-        <div class="detail-item">
+        <div class="detail-item" *ngIf="serviceData?.duration || serviceType">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
           </svg>
-          <span>{{ serviceType === 'bilan' ? '2 heures' : '2 mois' }}</span>
+          <span>{{ serviceData?.duration || (serviceType === 'bilan' ? '2 heures' : '2 mois') }}</span>
         </div>
         
-        <div class="detail-item">
+        <div class="detail-item" *ngIf="serviceData?.price">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+          </svg>
+          <span>{{ serviceData.price }}€{{ serviceData.unit ? '/' + serviceData.unit : '' }}</span>
+        </div>
+        
+        <div class="detail-item" *ngIf="serviceData?.description">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+          </svg>
+          <span>{{ serviceData.description }}</span>
+        </div>
+        
+        <div class="detail-item" *ngIf="!serviceData">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
           </svg>
           <span>Informations fournies à la confirmation</span>
         </div>
       </div>
+
     </div>
     
     <!-- Colonne droite: Calendrier et créneaux -->
@@ -56,13 +71,11 @@
             <select 
               class="timezone-select" 
               [(ngModel)]="selectedTimezone"
-              (change)="onTimezoneChange()"
+              (ngModelChange)="onTimezoneChange()"
             >
-              <optgroup *ngFor="let group of groupedTimezones | keyvalue" [label]="group.key">
-                <option *ngFor="let tz of group.value" [value]="tz.value">
-                  {{ tz.label }} ({{ tz.offset }})
-                </option>
-              </optgroup>
+              <option *ngFor="let tz of sortedTimezones" [value]="tz.value">
+                {{ tz.label }} ({{ tz.offset }})
+              </option>
             </select>
           </div>
         </div>

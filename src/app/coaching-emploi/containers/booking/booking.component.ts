@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StripeService } from 'src/app/services/stripe.service';
 import { TIMEZONES, Timezone } from '../../constants/timezones';
+import { ConsultantService, Consultant } from '../../services/consultant.service';
 
 @Component({
   selector: 'app-booking',
@@ -10,9 +11,11 @@ import { TIMEZONES, Timezone } from '../../constants/timezones';
 })
 export class BookingComponent implements OnInit {
   consultantName: string;
+  consultantData: Consultant | null = null;
   serviceType: 'bilan' | 'accompagnement';
   serviceName: string;
   contactData: any;
+  serviceData: any; // Données du service sélectionné
   
   selectedDate: Date | null = null;
   selectedTime: string = '';
@@ -27,7 +30,8 @@ export class BookingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private consultantService: ConsultantService
   ) {
     // Détecter automatiquement le fuseau horaire de l'utilisateur
     this.detectUserTimezone();
@@ -44,12 +48,10 @@ export class BookingComponent implements OnInit {
       
       if (foundTimezone) {
         this.selectedTimezone = browserTimezone;
-        console.log(`✅ Fuseau horaire détecté: ${browserTimezone}`);
       } else {
-        // Essayer de trouver un fuseau similaire
+        // Essayer de trouver un fuseau similaire dans la même région
         const similarTimezone = this.findSimilarTimezone(browserTimezone);
         this.selectedTimezone = similarTimezone || 'Europe/Paris';
-        console.log(`⚠️ Fuseau ${browserTimezone} non trouvé, utilisation de ${this.selectedTimezone}`);
       }
     } catch (error) {
       console.error('Erreur lors de la détection du fuseau horaire:', error);
@@ -69,9 +71,14 @@ export class BookingComponent implements OnInit {
   
   generateTimeSlots() {
     this.timeSlots = [];
-    for (let hour = 9; hour <= 17; hour++) {
+    
+    // Créneaux par défaut (peuvent être personnalisés par consultant plus tard)
+    const startHour = 9;
+    const endHour = 17;
+    
+    for (let hour = startHour; hour <= endHour; hour++) {
       this.timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
-      if (hour < 17) {
+      if (hour < endHour) {
         this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
       }
     }
@@ -83,15 +90,94 @@ export class BookingComponent implements OnInit {
     this.selectedTime = '';
   }
 
+
+
+  // Charger les données du consultant
+  loadConsultantData(consultantId: string) {
+    this.consultantService.getConsultantById(consultantId).subscribe({
+      next: (consultant) => {
+        this.consultantData = consultant;
+        if (consultant?.user) {
+          this.consultantName = `${consultant.user.firstname} ${consultant.user.lastname}`;
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement du consultant:', error);
+      }
+    });
+  }
+
+  // Valider la structure des données du service
+  private validateServiceData(data: any): boolean {
+    const requiredFields = ['pricingId', 'title', 'price'];
+    const missingFields = requiredFields.filter(field => !data[field]);
+    
+    if (missingFields.length > 0) {
+      return false;
+    }
+    
+    if (!data.consultant || !data.consultant.id) {
+      return false;
+    }
+    
+    return true;
+  }
+
   ngOnInit(): void {
-    // Récupérer les paramètres de la route
+    // Récupérer les paramètres de route
     this.route.paramMap.subscribe(params => {
-      this.consultantName = params.get('consultant') || '';
-      this.serviceType = params.get('service') as 'bilan' | 'accompagnement';
+      const consultantParam = params.get('consultant');
+      const serviceParam = params.get('service');
       
-      this.serviceName = this.serviceType === 'bilan' 
-        ? 'Bilan Emploi (2h)' 
-        : 'Accompagnement Emploi (2 mois)';
+      // Récupérer les données du service sélectionné
+      const storedServiceData = sessionStorage.getItem('selectedServiceData');
+      
+      if (storedServiceData) {
+        try {
+          // Service dynamique sélectionné
+          this.serviceData = JSON.parse(storedServiceData);
+          
+          // Vérifier que les données correspondent au consultant actuel
+          const storedConsultantId = this.serviceData.consultant?.id;
+          if (consultantParam && storedConsultantId && consultantParam !== storedConsultantId) {
+            sessionStorage.removeItem('selectedServiceData');
+            this.serviceData = null;
+          } else if (this.validateServiceData(this.serviceData)) {
+            this.consultantName = this.serviceData.consultant?.name || consultantParam || 'Consultant';
+            this.serviceName = this.serviceData.title;
+            
+            // Charger les données complètes du consultant
+            if (this.serviceData.consultant?.id) {
+              this.loadConsultantData(this.serviceData.consultant.id);
+            }
+          } else {
+            sessionStorage.removeItem('selectedServiceData');
+            this.serviceData = null;
+          }
+        } catch (error) {
+          console.error('Erreur lors du parsing des données:', error);
+          this.serviceData = null;
+        }
+      }
+      
+      // Si pas de données de service ou données nettoyées
+      if (!this.serviceData) {
+        if (consultantParam && serviceParam) {
+          // Service statique (guy, kerian)
+          this.consultantName = consultantParam;
+          this.serviceType = serviceParam as 'bilan' | 'accompagnement';
+          this.serviceName = this.serviceType === 'bilan' 
+            ? 'Bilan Emploi (2h)' 
+            : 'Accompagnement Emploi (2 mois)';
+        } else if (consultantParam) {
+          // Page booking d'un consultant sans service spécifique
+          this.consultantName = consultantParam;
+          this.serviceName = 'Service de coaching';
+          
+          // Charger les données du consultant
+          this.loadConsultantData(consultantParam);
+        }
+      }
     });
 
     // Récupérer les données de contact
@@ -146,6 +232,29 @@ export class BookingComponent implements OnInit {
     const tz = this.timezones.find(t => t.value === this.selectedTimezone);
     return tz ? `${tz.label} (${tz.offset})` : this.selectedTimezone;
   }
+
+  get sortedTimezones(): Timezone[] {
+    // Trier les fuseaux horaires par région puis par nom
+    return [...this.timezones].sort((a, b) => {
+      const regionA = a.value.split('/')[0];
+      const regionB = b.value.split('/')[0];
+      
+      if (regionA !== regionB) {
+        // Ordre des régions
+        const regionOrder = ['Europe', 'America', 'Asia', 'Africa', 'Australia', 'Pacific', 'Atlantic'];
+        const indexA = regionOrder.indexOf(regionA);
+        const indexB = regionOrder.indexOf(regionB);
+        
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+        
+        return regionA.localeCompare(regionB);
+      }
+      
+      return a.label.localeCompare(b.label);
+    });
+  }
   
   get groupedTimezones() {
     const groups: { [key: string]: Timezone[] } = {
@@ -190,17 +299,54 @@ export class BookingComponent implements OnInit {
       return;
     }
 
+    // Calculer le montant en centimes
+    let amount: number;
+    let serviceTitle: string;
+    let pricingId: string | undefined;
+    let serviceDetails: any = undefined;
+
+    if (this.serviceData) {
+      // Service dynamique avec pricing
+      amount = this.serviceData.price * 100;
+      serviceTitle = this.serviceData.title;
+      pricingId = this.serviceData.pricingId;
+      serviceDetails = {
+        id: this.serviceData.pricingId,
+        title: this.serviceData.title,
+        description: this.serviceData.description,
+        price: this.serviceData.price,
+        unit: this.serviceData.unit,
+        duration: this.serviceData.duration,
+        features: this.serviceData.features
+      };
+    } else {
+      // Services statiques (Guy et Kerian) - utiliser les vrais prix
+      if (this.serviceType === 'bilan') {
+        amount = 25000; // 250€
+        serviceTitle = 'Bilan Emploi';
+      } else {
+        amount = 30000; // 300€
+        serviceTitle = 'Accompagnement Emploi';
+      }
+    }
+
+    // Récupérer l'ID du consultant
+    const consultantId = this.serviceData?.consultant?.id || this.route.snapshot.paramMap.get('consultant') || this.consultantName;
+    
     const checkoutData = {
       contact: this.contactData,
-      consultant: this.consultantName,
-      service: this.serviceType,
+      consultant: consultantId,
+      service: serviceTitle,
       date: this.selectedDate.toISOString().split('T')[0],
       time: this.selectedTime,
       frequency: this.serviceType === 'accompagnement' ? this.frequency : undefined,
-      timezone: this.selectedTimezone, // Envoyer le fuseau horaire sélectionné
-      amount: this.serviceType === 'bilan' ? 25000 : 30000,
+      timezone: this.selectedTimezone,
+      amount: amount,
+      pricingId: pricingId,
+      serviceDetails: serviceDetails,
     };
 
+    // Stocker les données pour référence
     sessionStorage.setItem('coachingBookingData', JSON.stringify(checkoutData));
 
     // Rediriger vers Stripe Checkout

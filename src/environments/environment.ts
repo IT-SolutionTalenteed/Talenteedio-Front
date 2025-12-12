@@ -14,6 +14,7 @@ export const environment = {
   // locale
   publicBaseUrl: 'http://localhost:8080/public',
   apiBaseUrl: 'http://localhost:8080/api',
+  apiUrl: 'http://localhost:8080',
   backOfficeBaseUrl: 'http://localhost:5173/admin',
 
   pdfBaseUrl: 'http://localhost:3010/pdf-generator',
@@ -22,6 +23,7 @@ export const environment = {
   googleAnalytics: 'G-ME05LJVVQ2',
   siteKey: '6LeLpugnAAAAANy32tV8QyXokyO1q7HgCZUE-hLR',
   stripePublicKey: 'pk_test_51SU6lA8RbHgy6D1m3Litx37vWguQEYbYkSu5V7IAvoDHUVkslR0SwDPvx82hufR4Ol3PqFINEOh2GeQ6Ijt7jHC000Vce02392', // À remplacer par votre clé publique Stripe
+  googleClientId: 'YOUR_GOOGLE_CLIENT_ID_HERE', // À remplacer par votre Google Client ID
 };
 
 /*

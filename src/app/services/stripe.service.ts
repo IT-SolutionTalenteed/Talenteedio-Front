@@ -84,8 +84,19 @@ export class StripeService {
     service: string;
     date: string;
     time: string;
+    timezone: string;
     frequency?: string;
     amount: number;
+    pricingId?: string;
+    serviceDetails?: {
+      id: string;
+      title: string;
+      description?: string;
+      price: number;
+      unit?: string;
+      duration?: string;
+      features?: string[];
+    };
   }): Observable<CheckoutSessionResponse> {
     const successUrl = `${window.location.origin}/coaching-emploi/success`;
     const cancelUrl = `${window.location.origin}/coaching-emploi/services/${data.consultant}`;

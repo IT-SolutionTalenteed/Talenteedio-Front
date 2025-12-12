@@ -93,6 +93,17 @@
         >
           Sign in
         </button>
+
+        <!-- Séparateur -->
+        <div class="separator">
+          <span>ou</span>
+        </div>
+
+        <!-- Bouton Google Sign-In -->
+        <app-google-signin
+          (googleSignIn)="onGoogleSignIn($event)"
+          buttonText="Se connecter avec Google"
+        ></app-google-signin>
       </div>
     </form>
 
