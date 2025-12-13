@@ -10,6 +10,7 @@ import { SuccessComponent } from './containers/success/success.component';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
 import { BookingModalComponent } from './components/booking-modal/booking-modal.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { BookingValidationComponent } from './containers/booking-validation/booking-validation.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     ContactModalComponent,
     BookingModalComponent,
     CalendarComponent,
+    BookingValidationComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CoachingEmploiRoutingModule],
 })

@@ -5,6 +5,7 @@ import { ConsultantsComponent } from './containers/consultants/consultants.compo
 import { ServicesComponent } from './containers/services/services.component';
 import { BookingComponent } from './containers/booking/booking.component';
 import { SuccessComponent } from './containers/success/success.component';
+import { BookingValidationComponent } from './containers/booking-validation/booking-validation.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'success',
     component: SuccessComponent,
+  },
+  {
+    path: 'validate-booking/:bookingId',
+    component: BookingValidationComponent,
   },
 ];
 

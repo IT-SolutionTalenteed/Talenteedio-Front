@@ -23,7 +23,7 @@ export const environment = {
   googleAnalytics: 'G-ME05LJVVQ2',
   siteKey: '6LeLpugnAAAAANy32tV8QyXokyO1q7HgCZUE-hLR',
   stripePublicKey: 'pk_test_51SU6lA8RbHgy6D1m3Litx37vWguQEYbYkSu5V7IAvoDHUVkslR0SwDPvx82hufR4Ol3PqFINEOh2GeQ6Ijt7jHC000Vce02392', // À remplacer par votre clé publique Stripe
-  googleClientId: 'YOUR_GOOGLE_CLIENT_ID_HERE', // À remplacer par votre Google Client ID
+  googleClientId: '694175521874-pke5utmlb5rmo9ptfqo7t35rvkto4kmk.apps.googleusercontent.com', 
 };
 
 /*

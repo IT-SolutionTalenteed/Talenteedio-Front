@@ -6,4 +6,5 @@ export const environment = {
   siteKey: '6LeLpugnAAAAANy32tV8QyXokyO1q7HgCZUE-hLR',
   googleAnalytics: 'G-ME05LJVVQ2',
   stripePublicKey: 'pk_live_your_live_public_key_here', // À remplacer par votre clé publique Stripe LIVE
+  googleClientId: 'MEME_ID_CLIENT_QUE_DEVELOPMENT', // Même ID client pour production
 };

@@ -18,6 +18,8 @@ export class GoogleSigninComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
+      console.log('Current origin:', window.location.origin);
+      console.log('Google Client ID:', environment.googleClientId);
       await this.googleAuthService.initialize(environment.googleClientId);
       this.setupGoogleButton();
     } catch (error) {
@@ -55,23 +57,15 @@ export class GoogleSigninComponent implements OnInit, OnDestroy {
     if (response.credential) {
       this.isLoading = true;
       this.googleSignIn.emit(response.credential);
+      
+      // Réinitialiser le chargement après un délai (au cas où la connexion échoue)
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 10000);
     } else {
       console.error('No credential received from Google');
     }
   }
 
-  onManualSignIn() {
-    if (this.disabled || this.isLoading) return;
-
-    this.isLoading = true;
-    
-    if (typeof window !== 'undefined' && window.google) {
-      window.google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          console.log('Google Sign-In prompt not displayed');
-          this.isLoading = false;
-        }
-      });
-    }
-  }
+  // Méthode supprimée - nous utilisons seulement le bouton officiel Google
 }

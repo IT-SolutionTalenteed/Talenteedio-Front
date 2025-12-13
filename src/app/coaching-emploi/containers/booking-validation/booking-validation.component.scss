@@ -1,0 +1,338 @@
+.validation-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8eef3 0%, #d4dde6 100%);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-wrapper {
+  max-width: 600px;
+  width: 100%;
+}
+
+.validation-card, .success-card, .error-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.booking-info {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.booking-id {
+  font-size: 1rem;
+  color: #5a6c7d;
+  font-family: monospace;
+  background: #f8fafb;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.booking-details {
+  background: #f8fafb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e8eef5;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detail-row .label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.detail-row .value {
+  color: #5a6c7d;
+  text-align: right;
+}
+
+.action-section {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 16px;
+  
+  &.confirm {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    
+    .action-icon {
+      background: #10b981;
+      color: white;
+    }
+    
+    h2 {
+      color: #065f46;
+    }
+  }
+  
+  &.reject {
+    background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%);
+    
+    .action-icon {
+      background: #ef4444;
+      color: white;
+    }
+    
+    h2 {
+      color: #991b1b;
+    }
+  }
+}
+
+.action-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.action-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.action-description {
+  text-align: left;
+  
+  p {
+    color: #5a6c7d;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.validation-form {
+  text-align: left;
+}
+
+.form-field {
+  margin-bottom: 2rem;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.form-field textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e8eef5;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cancel-button, .validate-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button {
+  background: #f8fafb;
+  color: #5a6c7d;
+  
+  &:hover {
+    background: #e8eef5;
+    transform: translateY(-2px);
+  }
+}
+
+.validate-button {
+  &.confirm {
+    background: #10b981;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.reject {
+    background: #ef4444;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Success and Error Cards
+.success-card, .error-card {
+  svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: #5a6c7d;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+}
+
+.success-card {
+  svg {
+    color: #10b981;
+  }
+  
+  h2 {
+    color: #065f46;
+  }
+}
+
+.error-card {
+  svg {
+    color: #ef4444;
+  }
+  
+  h2 {
+    color: #991b1b;
+  }
+}
+
+.redirect-info {
+  background: #f0f9ff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #0369a1;
+  }
+}
+
+.home-button {
+  background: #4a90e2;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  
+  &:hover {
+    background: #357abd;
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .validation-container {
+    padding: 1rem;
+  }
+  
+  .validation-card, .success-card, .error-card {
+    padding: 2rem;
+  }
+  
+  .page-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .cancel-button, .validate-button {
+    width: 100%;
+  }
+}
