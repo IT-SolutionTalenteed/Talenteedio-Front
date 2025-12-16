@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output } from '@angular/core';
 
 interface CalendarDay {
   date: Date;
@@ -7,6 +7,7 @@ interface CalendarDay {
   isSelected: boolean;
   isToday: boolean;
   isDisabled: boolean;
+  isBlocked: boolean;
 }
 
 @Component({
@@ -14,8 +15,9 @@ interface CalendarDay {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnChanges {
   @Input() selectedDate: Date | null = null;
+  @Input() blockedDates: string[] = []; // Dates bloquées au format YYYY-MM-DD
   @Output() dateSelected = new EventEmitter<Date>();
 
   currentMonth: Date = new Date();
@@ -28,6 +30,19 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.generateCalendar();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Régénérer le calendrier quand les dates bloquées changent
+    if (changes['blockedDates'] && !changes['blockedDates'].firstChange) {
+      console.log('📅 Blocked dates changed, regenerating calendar:', this.blockedDates);
+      this.generateCalendar();
+    }
+    
+    // Régénérer aussi quand la date sélectionnée change
+    if (changes['selectedDate'] && !changes['selectedDate'].firstChange) {
+      this.generateCalendar();
+    }
   }
 
   generateCalendar() {
@@ -61,6 +76,7 @@ export class CalendarComponent implements OnInit {
         isSelected: false,
         isToday: false,
         isDisabled: true,
+        isBlocked: false,
       });
     }
     
@@ -69,11 +85,13 @@ export class CalendarComponent implements OnInit {
       const date = new Date(year, month, day);
       date.setHours(0, 0, 0, 0);
       
+      const dateStr = date.toISOString().split('T')[0];
       const isToday = date.getTime() === today.getTime();
       const isSelected = this.selectedDate ? 
         date.getTime() === new Date(this.selectedDate).setHours(0, 0, 0, 0) : 
         false;
-      const isDisabled = date < today;
+      const isBlocked = this.blockedDates.includes(dateStr);
+      const isDisabled = date < today || isBlocked;
       
       this.calendarDays.push({
         date,
@@ -82,6 +100,7 @@ export class CalendarComponent implements OnInit {
         isSelected,
         isToday,
         isDisabled,
+        isBlocked,
       });
     }
     
@@ -96,6 +115,7 @@ export class CalendarComponent implements OnInit {
         isSelected: false,
         isToday: false,
         isDisabled: true,
+        isBlocked: false,
       });
     }
   }

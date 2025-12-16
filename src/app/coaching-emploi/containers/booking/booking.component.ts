@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StripeService } from 'src/app/services/stripe.service';
 import { TIMEZONES, Timezone } from '../../constants/timezones';
 import { ConsultantService, Consultant } from '../../services/consultant.service';
+import { AvailabilityService, AvailabilityResponse } from '../../services/availability.service';
 
 @Component({
   selector: 'app-booking',
@@ -26,16 +27,100 @@ export class BookingComponent implements OnInit {
   timezones: Timezone[] = TIMEZONES;
   
   timeSlots: string[] = [];
+  availableSlots: {[time: string]: boolean} = {};
+  loadingAvailability: boolean = false;
+  blockedDates: string[] = [];
+  loadingBlockedDates: boolean = false;
+  blockedDatesLoaded: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private stripeService: StripeService,
-    private consultantService: ConsultantService
+    private consultantService: ConsultantService,
+    private availabilityService: AvailabilityService
   ) {
     // Détecter automatiquement le fuseau horaire de l'utilisateur
     this.detectUserTimezone();
     this.generateTimeSlots();
+    
+    // Debug: exposer les méthodes dans la console pour les tests
+    if (typeof window !== 'undefined') {
+      (window as any).bookingDebug = {
+        availableSlots: () => this.availableSlots,
+        isTimeSlotAvailable: (time: string) => this.isTimeSlotAvailable(time),
+        isTimeSlotDisabled: (time: string) => this.isTimeSlotDisabled(time),
+        loadingAvailability: () => this.loadingAvailability,
+        checkAvailability: (date: Date) => this.checkAvailabilityForDate(date),
+        setMockMode: (enabled: boolean) => this.availabilityService.setMockMode(enabled),
+        consultantId: () => this.getConsultantId(),
+        reloadCurrentDate: () => {
+          if (this.selectedDate) {
+            this.checkAvailabilityForDate(this.selectedDate);
+          }
+        },
+        inspectSlot: (time: string) => {
+          console.log(`🔍 Inspection du créneau ${time}:`);
+          console.log(`- Available: ${this.isTimeSlotAvailable(time)}`);
+          console.log(`- Disabled: ${this.isTimeSlotDisabled(time)}`);
+          console.log(`- Raw value: ${this.availableSlots[time]}`);
+          console.log(`- Loading: ${this.loadingAvailability}`);
+          
+          // Vérifier les éléments DOM
+          const buttons = document.querySelectorAll(`[data-time="${time}"]`);
+          if (buttons.length > 0) {
+            const button = buttons[0] as HTMLElement;
+            console.log(`- DOM classes: ${button.className}`);
+            console.log(`- DOM disabled: ${(button as HTMLButtonElement).disabled}`);
+            console.log(`- DOM style: ${button.style.cssText}`);
+          }
+        },
+        forceUnavailable: (time: string) => {
+          this.availableSlots[time] = false;
+          console.log(`Créneau ${time} forcé comme non disponible`);
+        },
+        forceAvailable: (time: string) => {
+          this.availableSlots[time] = true;
+          console.log(`Créneau ${time} forcé comme disponible`);
+        },
+        blockedDates: () => this.blockedDates,
+        isDateBlocked: (date: string) => this.blockedDates.includes(date),
+        blockDate: (date: string) => {
+          if (!this.blockedDates.includes(date)) {
+            this.blockedDates.push(date);
+            console.log(`Date ${date} bloquée`);
+          }
+        },
+        unblockDate: (date: string) => {
+          const index = this.blockedDates.indexOf(date);
+          if (index > -1) {
+            this.blockedDates.splice(index, 1);
+            console.log(`Date ${date} débloquée`);
+          }
+        },
+        reloadBlockedDates: () => {
+          this.blockedDatesLoaded = false;
+          this.loadBlockedDates();
+        },
+        help: () => {
+          console.log(`
+🔧 Booking Debug Commands:
+- bookingDebug.availableSlots() - Voir l'état des créneaux
+- bookingDebug.blockedDates() - Voir les dates bloquées
+- bookingDebug.isTimeSlotAvailable('14:00') - Tester un créneau
+- bookingDebug.isDateBlocked('2024-12-16') - Tester si une date est bloquée
+- bookingDebug.blockDate('2024-12-16') - Bloquer une date
+- bookingDebug.unblockDate('2024-12-16') - Débloquer une date
+- bookingDebug.reloadBlockedDates() - Recharger les dates bloquées
+- bookingDebug.inspectSlot('14:00') - Inspecter un créneau en détail
+- bookingDebug.consultantId() - Voir l'ID du consultant
+- bookingDebug.setMockMode(true/false) - Activer/désactiver le mock
+- bookingDebug.reloadCurrentDate() - Recharger les créneaux de la date sélectionnée
+- bookingDebug.help() - Afficher cette aide
+          `);
+        }
+      };
+    }
   }
   
   private detectUserTimezone() {
@@ -124,6 +209,9 @@ export class BookingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Charger les dates bloquées
+    this.loadBlockedDates();
+    
     // Récupérer les paramètres de route
     this.route.paramMap.subscribe(params => {
       const consultantParam = params.get('consultant');
@@ -197,10 +285,149 @@ export class BookingComponent implements OnInit {
   onDateSelected(date: Date) {
     this.selectedDate = date;
     this.selectedTime = ''; // Réinitialiser l'heure sélectionnée
+    
+    const dateStr = date.toISOString().split('T')[0];
+    
+    // Vérifier si la date entière est bloquée
+    if (this.blockedDates.includes(dateStr)) {
+      console.log('📅 Date entière bloquée, pas de vérification des créneaux');
+      // Marquer tous les créneaux comme non disponibles
+      this.availableSlots = {};
+      this.timeSlots.forEach(time => {
+        this.availableSlots[time] = false;
+      });
+      return;
+    }
+    
+    // Initialiser tous les créneaux comme non disponibles pendant le chargement
+    this.availableSlots = {};
+    this.timeSlots.forEach(time => {
+      this.availableSlots[time] = false;
+    });
+    
+    this.checkAvailabilityForDate(date);
+  }
+
+  private checkAvailabilityForDate(date: Date) {
+    const consultantId = this.getConsultantId();
+    if (!consultantId) {
+      console.log('No consultant ID found');
+      return;
+    }
+
+    const dateStr = date.toISOString().split('T')[0];
+    this.loadingAvailability = true;
+    
+    // Réinitialiser les créneaux disponibles
+    this.availableSlots = {};
+    
+    console.log('🔍 Checking availability for:', { consultantId, dateStr, timeSlots: this.timeSlots });
+    console.log('📡 Using real API (mock disabled)');
+
+    // Vérifier chaque créneau individuellement
+    const availabilityChecks = this.timeSlots.map(time => 
+      this.availabilityService.checkAvailability(consultantId, dateStr, time)
+        .toPromise()
+        .then(result => {
+          console.log(`Availability for ${time}:`, result);
+          return { time, available: result.available, reason: result.reason };
+        })
+        .catch(error => {
+          console.error(`Error checking ${time}:`, error);
+          // En cas d'erreur, considérer comme non disponible pour la sécurité
+          return { time, available: false, reason: 'Erreur de vérification' };
+        })
+    );
+
+    Promise.all(availabilityChecks).then(results => {
+      results.forEach(({ time, available, reason }) => {
+        this.availableSlots[time] = available;
+        if (!available && reason) {
+          console.log(`Slot ${time} unavailable: ${reason}`);
+        }
+      });
+      console.log('Final availability results:', this.availableSlots);
+      this.loadingAvailability = false;
+    }).catch(error => {
+      console.error('Error checking availability:', error);
+      this.loadingAvailability = false;
+      // En cas d'erreur globale, marquer tous les créneaux comme non disponibles
+      this.timeSlots.forEach(time => {
+        this.availableSlots[time] = false;
+      });
+    });
+  }
+
+  private getConsultantId(): string | null {
+    return this.serviceData?.consultant?.id || 
+           this.route.snapshot.paramMap.get('consultant') || 
+           this.consultantName;
+  }
+
+  private loadBlockedDates() {
+    const consultantId = this.getConsultantId();
+    if (!consultantId) {
+      console.log('No consultant ID found for blocked dates');
+      return;
+    }
+
+    this.loadingBlockedDates = true;
+    console.log('📅 Loading blocked dates for consultant:', consultantId);
+
+    this.availabilityService.getBlockedDates(consultantId).subscribe({
+      next: (response) => {
+        this.blockedDates = response.blockedDates;
+        console.log('📅 Blocked dates loaded:', this.blockedDates);
+        this.loadingBlockedDates = false;
+        this.blockedDatesLoaded = true;
+      },
+      error: (error) => {
+        console.error('Error loading blocked dates:', error);
+        this.blockedDates = []; // En cas d'erreur, pas de dates bloquées
+        this.loadingBlockedDates = false;
+        this.blockedDatesLoaded = true;
+      }
+    });
+  }
+
+  isTimeSlotAvailable(time: string): boolean {
+    // Si on est en train de charger, considérer comme non disponible
+    if (this.loadingAvailability) {
+      return false;
+    }
+    // Si pas encore vérifié, considérer comme non disponible
+    if (this.availableSlots[time] === undefined) {
+      return false;
+    }
+    const available = this.availableSlots[time] === true;
+    return available;
+  }
+
+  isTimeSlotDisabled(time: string): boolean {
+    const disabled = !this.isTimeSlotAvailable(time) || this.loadingAvailability;
+    return disabled;
+  }
+
+  isDateBlocked(date: Date): boolean {
+    const dateStr = date.toISOString().split('T')[0];
+    return this.blockedDates.includes(dateStr);
   }
 
   selectTime(time: string) {
+    if (this.isTimeSlotDisabled(time)) {
+      console.log(`Cannot select time ${time}: disabled or unavailable`);
+      // Afficher un message visuel pour l'utilisateur
+      const button = document.querySelector(`[data-time="${time}"]`) as HTMLElement;
+      if (button) {
+        button.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+          button.style.animation = '';
+        }, 500);
+      }
+      return; // Ne pas permettre la sélection d'un créneau non disponible
+    }
     this.selectedTime = time;
+    console.log(`Selected time: ${time}`);
   }
   
   showConfirmation() {
@@ -208,6 +435,14 @@ export class BookingComponent implements OnInit {
       alert('Veuillez sélectionner une date et une heure');
       return;
     }
+    
+    // Vérifier que le créneau sélectionné est toujours disponible
+    if (!this.isTimeSlotAvailable(this.selectedTime)) {
+      alert('Le créneau sélectionné n\'est plus disponible. Veuillez en choisir un autre.');
+      this.selectedTime = '';
+      return;
+    }
+    
     this.showConfirmationForm = true;
   }
   
@@ -296,6 +531,12 @@ export class BookingComponent implements OnInit {
   confirmBooking() {
     if (!this.selectedDate || !this.selectedTime) {
       alert('Veuillez sélectionner une date et une heure');
+      return;
+    }
+
+    // Vérification finale de disponibilité
+    if (!this.isTimeSlotAvailable(this.selectedTime)) {
+      alert('Le créneau sélectionné n\'est plus disponible. Veuillez actualiser la page et choisir un autre créneau.');
       return;
     }
 

@@ -133,6 +133,27 @@
       
       &:hover {
         background: none;
+        transform: none;
+      }
+    }
+    
+    &.blocked {
+      background-color: #ecf0f1 !important;
+      color: #7f8c8d !important;
+      cursor: not-allowed !important;
+      position: relative;
+      
+      &::before {
+        content: '🚫';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        font-size: 0.6rem;
+      }
+      
+      &:hover {
+        background-color: #d5dbdb !important;
+        transform: none;
       }
     }
   }

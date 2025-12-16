@@ -27,6 +27,7 @@ import { CompanyRegisterRootComponent } from './containers/company-register-root
 import { ConsultantRegisterRootComponent } from './containers/consultant-register-root/consultant-register-root.component';
 import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
 import { GoogleSigninComponent } from './components/google-signin/google-signin.component';
+import { GoogleRegisterComponent } from './components/google-register/google-register.component';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { GoogleSigninComponent } from './components/google-signin/google-signin.
     ConsultantRegisterRootComponent,
     CompanyPlanRootComponent,
     GoogleSigninComponent,
+    GoogleRegisterComponent,
   ],
   providers: [OnlySingleSignInService, AccountValidationService],
 })

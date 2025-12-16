@@ -58,8 +58,14 @@
       <div class="booking-content" [class.has-selection]="selectedDate" *ngIf="!showConfirmationForm">
         <!-- Calendrier -->
         <div class="calendar-section">
+          <div *ngIf="loadingBlockedDates" class="loading-calendar">
+            <div class="loading-spinner">⟳</div>
+            <span>Chargement du calendrier...</span>
+          </div>
           <app-calendar
+            *ngIf="blockedDatesLoaded"
             [selectedDate]="selectedDate"
+            [blockedDates]="blockedDates"
             (dateSelected)="onDateSelected($event)"
           ></app-calendar>
           
@@ -96,9 +102,18 @@
                 type="button"
                 class="time-slot-button"
                 [class.selected]="selectedTime === slot"
+                [class.unavailable]="isTimeSlotDisabled(slot)"
+                [class.time-slot-unavailable]="isTimeSlotDisabled(slot)"
+                [disabled]="isTimeSlotDisabled(slot)"
                 (click)="selectTime(slot)"
+                [title]="isTimeSlotDisabled(slot) ? 'Créneau non disponible' : ''"
+                [attr.data-available]="isTimeSlotAvailable(slot)"
+                [attr.data-disabled]="isTimeSlotDisabled(slot)"
+                [attr.data-time]="slot"
               >
                 {{ slot }}
+                <span *ngIf="!isTimeSlotAvailable(slot) && !loadingAvailability" class="unavailable-indicator">✕</span>
+                <span *ngIf="loadingAvailability" class="loading-indicator">⟳</span>
               </button>
               <button
                 *ngIf="selectedTime === slot"

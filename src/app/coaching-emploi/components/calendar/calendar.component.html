@@ -28,6 +28,7 @@
       [class.today]="calendarDay.isToday"
       [class.selected]="calendarDay.isSelected"
       [class.disabled]="calendarDay.isDisabled"
+      [class.blocked]="calendarDay.isBlocked"
       [disabled]="calendarDay.isDisabled"
       (click)="selectDate(calendarDay)"
     >

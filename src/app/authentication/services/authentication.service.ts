@@ -87,6 +87,32 @@ export class AuthenticationService implements AuthenticationServiceInterface {
           const errorObj = {
             message: error.error?.msg || error.message || 'Erreur de connexion Google',
             status: error.status,
+            error: error.error,
+            needsRegistration: error.error?.needsRegistration || false,
+            googleData: error.error?.googleData || null
+          };
+          return throwError(errorObj);
+        })
+      );
+  }
+
+  googleRegister(credential: string, role: string, additionalData?: any): Observable<AuthenticationResponse> {
+    return this.http
+      .post(`${environment.apiBaseUrl}/auth/google/register`, { 
+        credential, 
+        role, 
+        additionalData 
+      })
+      .pipe(
+        map((response: ApiResponse) => {
+          console.log('Google register response:', response);
+          return response as AuthenticationResponse;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          console.log('Google register error:', error);
+          const errorObj = {
+            message: error.error?.msg || error.message || 'Erreur d\'inscription Google',
+            status: error.status,
             error: error.error
           };
           return throwError(errorObj);

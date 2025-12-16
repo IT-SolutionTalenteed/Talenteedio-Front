@@ -9,3 +9,12 @@
     ></app-sign-in>
   </app-loader>
 </div>
+
+<!-- Google Registration Modal -->
+<app-google-register
+  *ngIf="showGoogleRegisterModal"
+  [googleData]="googleData"
+  [credential]="googleCredential"
+  (registrationComplete)="onGoogleRegistrationComplete($event)"
+  (cancel)="onGoogleRegistrationCancel()">
+</app-google-register>
