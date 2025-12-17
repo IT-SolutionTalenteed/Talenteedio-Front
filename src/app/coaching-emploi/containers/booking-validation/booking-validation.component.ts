@@ -24,9 +24,12 @@ export class BookingValidationComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingId = this.route.snapshot.paramMap.get('bookingId') || '';
-    this.action = this.route.snapshot.queryParamMap.get('action') as 'confirm' | 'reject' | null;
+    const actionParam = this.route.snapshot.queryParamMap.get('action') as 'confirm' | 'reject' | null;
     
-    if (!this.bookingId || !this.action) {
+    // Si pas d'action spécifiée, on assume que c'est une confirmation
+    this.action = actionParam || 'confirm';
+    
+    if (!this.bookingId) {
       this.error = 'Paramètres de validation invalides';
       return;
     }
