@@ -101,6 +101,7 @@ const routes: Routes = [
           import('../coaching-emploi/coaching-emploi.module').then(
             (m) => m.CoachingEmploiModule
           ),
+        data: { title: 'Coaching' },
       },
     ],
   },

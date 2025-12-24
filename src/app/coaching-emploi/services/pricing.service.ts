@@ -11,6 +11,7 @@ export interface Pricing {
   unit?: string;
   duration?: string;
   features?: string[];
+  meetingLink?: string;
   consultant?: {
     id: string;
     user: {

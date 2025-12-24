@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ConsultantService, Consultant as ApiConsultant, ConsultantPricing } from '../../services/consultant.service';
+import { ConsultantService, ConsultantPricing } from '../../services/consultant.service';
 
 interface Consultant {
   id: string;
@@ -31,16 +31,16 @@ export class ConsultantsComponent implements OnInit {
   loadConsultants(): void {
     this.consultantService.getConsultants().subscribe({
       next: (apiConsultants) => {
-        console.log('Consultants loaded:', apiConsultants);
+        console.log('Consultants loaded from API:', apiConsultants);
 
         if (!apiConsultants || apiConsultants.length === 0) {
-          console.log('No consultants from API, using only fallback data');
-          this.consultants = this.getFallbackConsultants();
+          console.log('No consultants from API');
+          this.consultants = [];
           this.loading = false;
           return;
         }
 
-        const apiConsultantsList = apiConsultants.map((consultant) => ({
+        this.consultants = apiConsultants.map((consultant) => ({
           id: consultant.id,
           initial: consultant.user.firstname?.charAt(0).toUpperCase() || 'C',
           name: `${consultant.user.firstname} ${consultant.user.lastname}`,
@@ -52,54 +52,23 @@ export class ConsultantsComponent implements OnInit {
           experience: consultant.yearsOfExperience
             ? `${consultant.yearsOfExperience}+ ans d'expérience`
             : 'Expérience confirmée',
-          specialties: consultant.qualities && consultant.qualities.length > 0
-            ? consultant.qualities
-            : (consultant.expertise
-              ? consultant.expertise.split(',').map((s) => s.trim())
-              : []),
+          specialties:
+            consultant.qualities && consultant.qualities.length > 0
+              ? consultant.qualities
+              : consultant.expertise
+                ? consultant.expertise.split(',').map((s) => s.trim())
+                : [],
           pricings: [],
         }));
 
-        // Combine API consultants with fallback consultants
-        this.consultants = [...this.getFallbackConsultants(), ...apiConsultantsList];
+        console.log('Final consultants list:', this.consultants);
         this.loading = false;
       },
       error: (error) => {
         console.error('Error loading consultants:', error);
-        this.consultants = this.getFallbackConsultants();
+        this.consultants = [];
         this.loading = false;
       },
     });
-  }
-
-  private getFallbackConsultants(): Consultant[] {
-    return [
-      {
-        id: 'guy',
-        initial: 'G',
-        name: 'Guy',
-        title: 'Consultant RH Senior',
-        languages: [
-          { flag: '🇫🇷', name: 'Français' },
-          { flag: '🇬🇧', name: 'English' },
-        ],
-        experience: "15+ ans d'expérience",
-        specialties: ['Transitions de carrière', 'Leadership', 'Stratégie de recherche'],
-        pricings: [],
-      },
-      {
-        id: 'kerian',
-        initial: 'K',
-        name: 'Kerian',
-        title: 'Consultant RH',
-        languages: [
-          { flag: '🇫🇷', name: 'Français' },
-          { flag: '🇬🇧', name: 'English' },
-        ],
-        experience: "10+ ans d'expérience",
-        specialties: ['Développement professionnel', 'CV & Entretiens', 'Networking'],
-        pricings: [],
-      },
-    ];
   }
 }

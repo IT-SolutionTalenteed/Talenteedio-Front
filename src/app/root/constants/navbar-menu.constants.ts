@@ -33,18 +33,12 @@ export const NAVAR_MENUS: Menu[] = [
     color: '#696969',
     colorActive: '#6bbee3',
   },
-  // {
-  //   title: 'Initiative',
-  //   routerLink: '/initiative',
-  //   accessRight: 'ALL',
-  //   color: '#696969',
-  //   colorActive: '#6bbee3',
-  // },
-  // {
-  //   title: 'HR Society',
-  //   routerLink: '/community',
-  //   accessRight: 'ALL',
-  //   color: '#696969',
-  //   colorActive: '#6bbee3',
-  // },
+  {
+    title: 'Coaching Emploi',
+    routerLink: '/coaching-emploi',
+    parentRouterLink: '/coaching-emploi',
+    accessRight: 'ALL',
+    color: '#696969',
+    colorActive: '#6bbee3',
+  },
 ];
