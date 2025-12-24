@@ -11,10 +11,10 @@ export const environment = {
   // apiBaseUrl: 'https://api.rhosa.net/api',
   // backOfficeBaseUrl: 'https://talenteed.rhosa.net/admin',
 
-  // locale
-  publicBaseUrl: 'http://localhost:8080/public',
-  apiBaseUrl: 'http://localhost:8080/api',
-  apiUrl: 'http://localhost:8080',
+  // locale (Docker)
+  publicBaseUrl: 'http://localhost:4000/public',
+  apiBaseUrl: 'http://localhost:4000/api',
+  apiUrl: 'http://localhost:4000',
   backOfficeBaseUrl: 'http://localhost:5173/admin',
 
   pdfBaseUrl: 'http://localhost:3010/pdf-generator',

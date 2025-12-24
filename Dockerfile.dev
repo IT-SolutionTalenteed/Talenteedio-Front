@@ -1,0 +1,16 @@
+# Dockerfile de développement avec hot reload
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copie les fichiers de dépendances
+COPY package*.json ./
+
+# Installe toutes les dépendances (dev incluses)
+RUN npm install
+
+# Expose le port 4200
+EXPOSE 4200
+
+# Installe les dépendances et démarre Angular
+CMD ["sh", "-c", "npm install && npx ng serve --host 0.0.0.0 --poll 2000"]
