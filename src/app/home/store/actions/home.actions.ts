@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Article } from 'src/app/shared/models/article.interface';
+import { Company } from 'src/app/shared/models/company.interface';
 import { Interview } from 'src/app/shared/models/interview.interface';
 import { Partner } from 'src/app/shared/models/partner.interface';
 import { Setting } from 'src/app/shared/models/setting.interface';
@@ -76,4 +77,16 @@ export const loadHomeSettingFail = createAction(
 export const loadHomeSettingSuccess = createAction(
   '[Home] Load Home Setting Success',
   props<Partial<Setting>>()
+);
+
+export const loadCompanies = createAction('[Home] Load Companies');
+
+export const loadCompaniesFail = createAction(
+  '[Home] Load Companies Fail',
+  props<Error>()
+);
+
+export const loadCompaniesSuccess = createAction(
+  '[Home] Load Companies Success',
+  props<{ payload: Company[] }>()
 );

@@ -79,8 +79,8 @@ export const TESTIMONIALS_CAROUSEL_OPTIONS: OwlOptions = {
 
 export const HOME_ARTICLE_CRITERIA: ArticleListCriteria = {
   ...BLOG_DEFAULT_CRITERIA,
-  sort: { by: 'createdAt', direction: SortDirection.asc },
-  page: { ...BLOG_DEFAULT_CRITERIA.page, pageSize: 1 },
+  sort: { by: 'createdAt', direction: SortDirection.desc },
+  page: { ...BLOG_DEFAULT_CRITERIA.page, pageSize: 6 },
   filter: { category: 'interview' },
 };
 

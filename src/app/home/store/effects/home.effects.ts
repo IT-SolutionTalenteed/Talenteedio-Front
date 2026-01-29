@@ -4,6 +4,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { BlogService } from 'src/app/blog/services/blog.service';
 import { JobListService } from 'src/app/job-list/services/job-list.service';
 import { Article } from 'src/app/shared/models/article.interface';
+import { Company } from 'src/app/shared/models/company.interface';
 import { Interview } from 'src/app/shared/models/interview.interface';
 import { Partner } from 'src/app/shared/models/partner.interface';
 import { Setting } from 'src/app/shared/models/setting.interface';
@@ -19,6 +20,9 @@ import {
   loadArticles,
   loadArticlesFail,
   loadArticlesSuccess,
+  loadCompanies,
+  loadCompaniesFail,
+  loadCompaniesSuccess,
   loadHomeSetting,
   loadHomeSettingFail,
   loadHomeSettingSuccess,
@@ -121,6 +125,20 @@ export class HomeEffects {
         this.settingService.loadSetting().pipe(
           map((response: Setting) => loadHomeSettingSuccess(response)),
           catchError((error) => of(loadHomeSettingFail(error)))
+        )
+      )
+    )
+  );
+
+  loadCompanies$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(loadCompanies),
+      switchMap(() =>
+        this.homeService.loadCompanies().pipe(
+          map((response: Company[]) =>
+            loadCompaniesSuccess({ payload: response })
+          ),
+          catchError((error) => of(loadCompaniesFail(error)))
         )
       )
     )

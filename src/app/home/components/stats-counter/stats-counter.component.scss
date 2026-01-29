@@ -1,0 +1,37 @@
+@import "colors.scss";
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    background: $background;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $secondary;
+    
+    ::ng-deep svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .stat-content {
+    .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: $black;
+      transition: all 0.3s ease;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: $text-color;
+    }
+  }
+}
