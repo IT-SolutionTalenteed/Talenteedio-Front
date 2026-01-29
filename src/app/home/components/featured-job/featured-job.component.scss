@@ -1,43 +1,29 @@
 @import "colors.scss";
 @import "breakpoints.scss";
+
 .featured-job {
+  background: transparent !important;
+  
   .container {
     display: flex;
-    max-width: 1310px;
+    max-width: 1200px;
     width: 100%;
     margin: auto;
     justify-content: space-between;
-
-    .featured-job_text {
-      width: 100%;
-      flex-shrink: 1;
-      padding: 20px 30px;
-      background-color: rgba(255, 255, 255, 0.705);
-      border-radius: 10px;
-      color: $black;
-      .content-text {
-        font-size: 16px;
-        &::ng-deep a {
-          color: $primary !important;
-          text-decoration: underline !important;
-        }
-      }
-      h1 {
-        margin: 0;
-      }
-
-      .text {
-        font-size: 16px;
-      }
-
-      .text_accent {
-        color: #eb5432;
-      }
-    }
+    padding: 0;
 
     .container-our-customer {
       width: 100%;
-      flex-shrink: 1;
+    }
+  }
+}
+
+::ng-deep {
+  .featured-job {
+    .owl-carousel {
+      .owl-stage-outer {
+        padding: 20px 0;
+      }
     }
   }
 }
@@ -47,22 +33,6 @@
     .container {
       flex-direction: column;
       gap: 30px;
-
-      .featured-job_text {
-        max-width: unset;
-      }
-
-      .container-our-customer {
-        max-width: unset;
-      }
     }
   }
 }
-
-// https://devfacts.com/media-queries-breakpoints-2022/
-// Small devices (landscape phones, 576px and up)
-// @media (min-width: $large-devices-breakpoint) {
-//     .container-our-customer{
-//         flex-direction: row !important;
-//     }
-// }

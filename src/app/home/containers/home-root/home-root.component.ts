@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { JOB_LIST_BASE_ROUTE } from 'src/app/job-list/constants/job-list.constant';
 import { go } from 'src/app/routeur/store/actions/router.actions';
 import { Article } from 'src/app/shared/models/article.interface';
+import { Company } from 'src/app/shared/models/company.interface';
 import { Interview } from 'src/app/shared/models/interview.interface';
 import { Job } from 'src/app/shared/models/job.interface';
 import { LocationJob } from 'src/app/shared/models/location-job.interface';
@@ -16,6 +17,8 @@ import { HomeState } from '../../store/reducers/home.reducers';
 import {
   getArticles,
   getArticlesLoading,
+  getCompanies,
+  getCompaniesLoading,
   getHomeSetting,
   getHomeSettingLoading,
   getInterview,
@@ -45,6 +48,8 @@ export class HomeRootComponent implements OnInit {
   homeSettingLoading$: Observable<boolean>;
   partners$: Observable<Partial<Partner>[]>;
   partnersLoading$: Observable<boolean>;
+  companies$: Observable<Company[]>;
+  companiesLoading$: Observable<boolean>;
 
   constructor(
     private sharedStore: Store<SharedState>,
@@ -67,6 +72,8 @@ export class HomeRootComponent implements OnInit {
     );
     this.partners$ = this.homeStore.pipe(select(getPartners));
     this.partnersLoading$ = this.homeStore.pipe(select(getPartnersLoading));
+    this.companies$ = this.homeStore.pipe(select(getCompanies));
+    this.companiesLoading$ = this.homeStore.pipe(select(getCompaniesLoading));
   }
   onFindJob(jobCriteria) {
     this.go([`${JOB_LIST_BASE_ROUTE}`], { ...jobCriteria });

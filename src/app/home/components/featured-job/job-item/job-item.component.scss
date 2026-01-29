@@ -6,100 +6,137 @@
   height: 100%;
   cursor: pointer;
   display: inline-block;
+  text-decoration: none;
+  
   .job-box {
     height: 100%;
-    background-color: #f0f5f7c5;
-    padding: 43px;
+    background: white;
+    padding: 32px;
     border-radius: 20px;
-    border: solid $secondary 1px;
-    // min-height: 200px;
-    // width: fit-content;
-    margin-left: 2%;
+    border: 1px solid #E8EAED;
+    margin: 0 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      border-color: $secondary;
+    }
+    
     .content {
       height: 100%;
       position: relative;
       padding-left: 68px;
       min-height: 51px;
+      
       .company-logo {
         position: absolute;
         left: 0;
         top: 0;
-        width: 50px;
-        height: 50px;
+        width: 56px;
+        height: 56px;
         overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid #E8EAED;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
         img {
-          border-radius: 50%;
           height: 100%;
           width: 100%;
-          -o-object-fit: contain;
-          object-fit: contain;
+          object-fit: cover;
         }
       }
+      
       .job-detail {
         position: relative;
+        
         .job-title {
-          @extend %box-title;
-        }
-        ul.job-info {
-          margin: 0;
-          margin-bottom: 10px;
-          padding: 0;
-          li {
-            position: relative;
-            font-size: 14px;
-            line-height: 22px;
-            color: $text-color;
-            font-weight: 400;
-            padding-left: 25px;
-            margin-bottom: 5px;
-            margin-right: 20px;
-            .icon {
-              position: absolute;
-              left: 0;
-              top: 0;
-              font-size: 18px;
-              line-height: 22px;
-              color: $text-color;
+          font-size: 20px;
+          font-weight: 700;
+          color: $black;
+          margin-bottom: 12px;
+          line-height: 1.3;
+          
+          a {
+            color: $black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: $secondary;
             }
           }
         }
+        
+        ul.job-info {
+          margin: 0;
+          margin-bottom: 16px;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          
+          li {
+            position: relative;
+            font-size: 14px;
+            line-height: 20px;
+            color: $text-color;
+            font-weight: 500;
+            padding-left: 24px;
+            display: flex;
+            align-items: center;
+            
+            .icon {
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 16px;
+              color: $secondary;
+            }
+          }
+        }
+        
         ul.job-chips {
           display: flex;
           padding: 0;
           margin: 0;
           flex-wrap: wrap;
+          gap: 8px;
+          
           li {
             position: relative;
-            font-size: 13px;
-            line-height: 15px;
-            margin-right: 15px;
-            padding: 5px 20px;
-            border-radius: 50px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 16px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
           }
+          
           li.time {
-            background: rgba(25, 103, 210, 0.15);
-            color: $primary;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            color: #1976D2;
           }
+          
           li.privacy {
-            background: rgba(52, 168, 83, 0.15);
-            color: #34a853;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            color: #388E3C;
           }
+          
           li.required {
-            background: rgba(249, 171, 0, 0.15);
-            color: $secondary;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            color: #F57C00;
           }
         }
       }
     }
   }
-  .job-box:hover {
-    box-shadow: 0px 7px 18px rgba(64, 79, 104, 0.05);
-  }
-}
-a:hover {
-  cursor: pointer;
-  color: $primary;
 }
 
 ul {

@@ -1,45 +1,59 @@
 @import "breakpoints";
 @import "colors";
-@import "buttons";
 
 #home-new {
   width: 100%;
-  background-color: #f0f5f7c5;
-  padding: 43px;
-  border-radius: 20px;
-  border: solid $secondary 1px;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 40px;
 }
 
-.title {
-  margin-bottom: 20px;
-  h2 {
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: 0;
-    color: $black;
+.news-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  
+  @media screen and (max-width: 968px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media screen and (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 }
-.news-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  column-gap: 50px;
-  row-gap: 50px;
-  justify-content: flex-start;
-}
+
 .see-all {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-  button {
-    @extend %button;
-    min-width: 239px;
-    height: 52px;
+  justify-content: center;
+  text-decoration: none;
+  
+  .view-more-button {
+    background: $secondary;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    svg {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: $secondary-hover;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(235, 84, 50, 0.4);
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
   }
 }

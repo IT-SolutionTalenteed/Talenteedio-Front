@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Article } from 'src/app/shared/models/article.interface';
+import { Company } from 'src/app/shared/models/company.interface';
 import { Job } from 'src/app/shared/models/job.interface';
 import { Partner } from 'src/app/shared/models/partner.interface';
 import { Setting } from 'src/app/shared/models/setting.interface';
@@ -10,6 +11,9 @@ import {
   loadArticles,
   loadArticlesFail,
   loadArticlesSuccess,
+  loadCompanies,
+  loadCompaniesFail,
+  loadCompaniesSuccess,
   loadHomeSetting,
   loadHomeSettingFail,
   loadHomeSettingSuccess,
@@ -46,6 +50,9 @@ export interface HomeState {
   partners: Partial<Partner>[];
   partnersLoading: boolean;
   partnersLoaded: boolean;
+  companies: Company[];
+  companiesLoading: boolean;
+  companiesLoaded: boolean;
 }
 
 const initialState: HomeState = {
@@ -67,6 +74,9 @@ const initialState: HomeState = {
   partners: [],
   partnersLoading: false,
   partnersLoaded: false,
+  companies: [],
+  companiesLoading: false,
+  companiesLoaded: false,
 };
 
 const loadJobsReducer = (state: HomeState): HomeState => ({
@@ -201,6 +211,28 @@ const loadPartnersSuccessReducer = (
   partners: props.payload,
 });
 
+const loadCompaniesReducer = (state: HomeState): HomeState => ({
+  ...state,
+  companiesLoading: true,
+  companiesLoaded: false,
+});
+
+const loadCompaniesFailReducer = (state: HomeState): HomeState => ({
+  ...state,
+  companiesLoading: false,
+  companiesLoaded: false,
+});
+
+const loadCompaniesSuccessReducer = (
+  state: HomeState,
+  props: { payload: Company[] }
+): HomeState => ({
+  ...state,
+  companiesLoading: false,
+  companiesLoaded: true,
+  companies: props.payload,
+});
+
 const reducer = createReducer(
   initialState,
   on(loadHomeSetting, loadHomeSettingReducer),
@@ -220,7 +252,10 @@ const reducer = createReducer(
   on(loadTestimonialsSuccess, loadTestimonialsSuccessReducer),
   on(loadPartners, loadPartnersReducer),
   on(loadPartnersFail, loadPartnersFailReducer),
-  on(loadPartnersSuccess, loadPartnersSuccessReducer)
+  on(loadPartnersSuccess, loadPartnersSuccessReducer),
+  on(loadCompanies, loadCompaniesReducer),
+  on(loadCompaniesFail, loadCompaniesFailReducer),
+  on(loadCompaniesSuccess, loadCompaniesSuccessReducer)
 );
 
 export function homeReducer(state: HomeState | undefined, action: Action) {

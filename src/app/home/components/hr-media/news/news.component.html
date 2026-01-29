@@ -1,15 +1,16 @@
 <div id="home-new" class="bloc" *ngIf="news?.length > 0">
-  <div class="title">
-    <h2>News</h2>
-  </div>
   <div class="news-container">
     <app-new-item
-      style="width: 100%"
-      *ngFor="let new of news"
+      *ngFor="let new of news | slice:0:6"
       [news]="new"
     ></app-new-item>
-    <a class="see-all" [routerLink]="'/blog'">
-      <Button class="secondary">See all the news</Button>
-    </a>
   </div>
+  <a class="see-all" [routerLink]="'/blog'">
+    <button class="view-more-button">
+      View All Articles
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </a>
 </div>

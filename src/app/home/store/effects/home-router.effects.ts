@@ -7,6 +7,7 @@ import { AppRouterState } from '../../../routeur/store/reducers/router.reducers'
 import { HOME_ROUTE } from '../../constants/home.constant';
 import {
   loadArticles,
+  loadCompanies,
   loadHomeSetting,
   loadInterview,
   loadJobs,
@@ -34,6 +35,7 @@ export class HomeRouterEffects {
         loadPartners(),
         loadArticles(),
         loadInterview(),
+        loadCompanies(),
       ])
     )
   );
