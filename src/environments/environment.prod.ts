@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
   // URLs locales pour Docker
-  publicBaseUrl: 'http://localhost:4000/public',
-  apiBaseUrl: 'http://localhost:4000/api',
-  apiUrl: 'http://localhost:4000',
+  publicBaseUrl: 'http://localhost:8080/public',
+  apiBaseUrl: 'http://localhost:8080/api',
+  apiUrl: 'http://localhost:8080',
   backOfficeBaseUrl: 'http://localhost:8082/admin',
   siteKey: '6LeLpugnAAAAANy32tV8QyXokyO1q7HgCZUE-hLR',
   googleAnalytics: 'G-ME05LJVVQ2',
