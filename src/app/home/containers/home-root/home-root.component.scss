@@ -240,7 +240,6 @@ $border-color: #E8EAED;
 // Services Section
 .services-section {
   @include section-base;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
 
   .services-grid {
     display: grid;
@@ -365,7 +364,6 @@ $border-color: #E8EAED;
 // Companies Section
 .companies-section {
   @include section-base;
-  background: linear-gradient(180deg, #F8F9FA 0%, #FFFFFF 100%);
 
   .section-header {
     @include section-header;
