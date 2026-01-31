@@ -48,7 +48,7 @@ export class EventRouterEffects {
       ofType(ROUTER_NAVIGATED),
       map(this.mapToRouterStateUrl),
       filter((routerState) => EVENT_DETAIL_ROUTE_REGEX.test(routerState.url)),
-      map((routerState) => loadEvent({ id: routerState.params['eventId'] }))
+      map((routerState) => loadEvent({ id: routerState.params['slug'] }))
     )
   );
 

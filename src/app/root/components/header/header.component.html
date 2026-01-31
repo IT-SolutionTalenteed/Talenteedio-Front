@@ -1,174 +1,296 @@
-<div class="container">
-  <!-- Main box -->
-  <div class="main-box">
-    <!--Nav Outer -->
-    <div class="nav-outer">
-      <div class="logo-box">
-        <div class="logo">
-          <a routerLink="/home">
-            <img
-              [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
-              alt="Talenteed.io"
-            />
-            <span class="slogan">The alternative media for HR</span>
-          </a>
-        </div>
+<div class="header-container">
+  <!-- Desktop Header -->
+  <header class="desktop-header">
+    <div class="header-content">
+      <!-- Logo -->
+      <div class="logo-section">
+        <a routerLink="/home" class="logo-link">
+          <img
+            [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
+            alt="Talenteed.io"
+            class="logo-image"
+          />
+        </a>
+        <span class="logo-tagline">The alternative media for HR</span>
       </div>
 
-      <nav class="main-menu" *ngIf="currentUrl !== '/home'">
-        <ul class="navigation" id="navbar">
-          <li *ngFor="let menu of navbarMenus">
+      <!-- Navigation Menu -->
+      <nav class="main-navigation">
+        <ul class="nav-list">
+          <li
+            *ngFor="let menu of navbarMenus"
+            class="nav-item"
+            [class.has-mega-menu]="menu.megaMenu"
+          >
             <a
-              [routerLink]="menu.routerLink"
-              [class.active]="currentUrl.includes(menu.routerLink)"
-              >{{ menu.title }}</a
+              [routerLink]="menu.megaMenu ? null : menu.routerLink"
+              class="nav-link"
+              [class.active]="currentUrl.includes(menu.parentRouterLink)"
+              (mouseenter)="onMenuHover(menu)"
             >
+              {{ menu.title }}
+            </a>
+
+            <!-- Mega Menu Dropdown -->
+            <div
+              *ngIf="menu.megaMenu && hoveredMenu === menu"
+              class="mega-menu-dropdown"
+              @fadeInOut
+              (mouseenter)="onMenuHover(menu)"
+              (mouseleave)="onMenuLeave()"
+            >
+              <div class="mega-menu-content">
+                <div class="mega-menu-layout">
+                  <!-- Left Column - Hero Message -->
+                  <div class="mega-menu-hero">
+                    <h3 class="mega-menu-hero-title">
+                      Ouvrez-vous à un nouveau monde de possibilités
+                    </h3>
+                    <p class="mega-menu-hero-subtitle">
+                      Découvrez les meilleures opportunités
+                    </p>
+                  </div>
+
+                  <!-- Right Column - Links -->
+                  <div class="mega-menu-links">
+                    <a
+                      *ngFor="let subMenu of menu.subMenus"
+                      [routerLink]="subMenu.routerLink"
+                      class="mega-menu-link-item"
+                      (click)="onMenuLeave()"
+                    >
+                      <div class="mega-menu-link-content">
+                        <h4 class="mega-menu-link-title">{{ subMenu.title }}</h4>
+                        <p *ngIf="subMenu.description" class="mega-menu-link-description">
+                          {{ subMenu.description }}
+                        </p>
+                      </div>
+                      <svg class="mega-menu-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <!-- <li><a routerLink="/job" [class.active]="currentUrl.includes(menu.parentRouterLink)">Jobs</a></li>
-          <li><a routerLink="/blog" [class.active]="currentUrl.includes(menu.parentRouterLink)">Blog</a></li>
-          <li><a routerLink="/contact" [class.active]="currentUrl.includes(menu.parentRouterLink)">Contact</a></li> -->
         </ul>
       </nav>
-      <!-- Main Menu End-->
-    </div>
 
-    <!-- Ad banner removed - Coaching Emploi is now in the navbar menu -->
-
-    <div class="outer-box">
-      <!-- Login/Register -->
-      <div class="login-item" (click)="toggleUserDropdown()">
-        <a class="is_login" id="dropdownMenuUser">
-          <div class="icon">
-            <img *ngIf="user?.profilePicture?.fileUrl" 
-                 [src]="user.profilePicture.fileUrl" 
-                 alt="Profile" 
-                 class="profile-picture" />
-            <fa-icon *ngIf="!user?.profilePicture?.fileUrl" [icon]="icon" class="grey-icon"></fa-icon>
-          </div>
-          <span *ngIf="!user" class="full-name">Hello !</span>
-          <span *ngIf="user" class="full-name">
-            {{
-              user.lastname
-                ? user.lastname
-                : user.firstname
-                ? user.firstname
-                : user.email
-            }}</span
+      <!-- Right Section -->
+      <div class="header-actions">
+        <!-- Auth Buttons (Not Logged In) -->
+        <div *ngIf="!user" class="auth-buttons">
+          <a
+            [routerLink]="['/authentication/sign-up']"
+            class="btn btn-outline"
           >
-          <i class="fa fa-angle-down"></i>
-        </a>
-        <ul
-          class="dropdown-menu text-left"
-          aria-labelledby="dropdownMenuUser"
-          [ngClass]="{ show: showUserDropdown }"
-        >
-          <li class="menu-hr" *ngFor="let menu of menusCopy; let i = index">
-            <a *ngIf="menu.title === 'Dashboard'" href="#" (click)="goToDashboard($event)">{{
-              menu.title
-            }}</a>
+            Inscription
+          </a>
+          <a
+            [routerLink]="['/authentication/sign-in']"
+            [queryParams]="{ redirect: currentUrl }"
+            class="btn btn-primary"
+          >
+            Connexion
+          </a>
+        </div>
+
+        <!-- User Menu (Logged In) -->
+        <div *ngIf="user" class="user-menu" (click)="toggleUserDropdown()">
+          <button class="user-button">
+            <img
+              *ngIf="user?.profilePicture?.fileUrl"
+              [src]="user.profilePicture.fileUrl"
+              alt="Profile"
+              class="user-avatar"
+            />
+            <div *ngIf="!user?.profilePicture?.fileUrl" class="user-avatar-placeholder">
+              <fa-icon [icon]="icon"></fa-icon>
+            </div>
+            <span class="user-name">
+              {{
+                user.lastname
+                  ? user.lastname
+                  : user.firstname
+                  ? user.firstname
+                  : user.email
+              }}
+            </span>
+            <svg class="dropdown-icon" width="12" height="8" viewBox="0 0 12 8">
+              <path
+                d="M1 1.5L6 6.5L11 1.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <!-- User Dropdown -->
+          <div class="user-dropdown" [class.show]="showUserDropdown">
             <a
-              *ngIf="menu.title !== 'Dashboard'"
-              [routerLink]="[menu.routerLink]"
-              >{{ menu.title }}</a
+              *ngFor="let menu of menusCopy"
+              [routerLink]="menu.title === 'Dashboard' ? null : [menu.routerLink]"
+              (click)="menu.title === 'Dashboard' ? goToDashboard($event) : null"
+              class="dropdown-item"
             >
-          </li>
-          <li *ngIf="user" class="menu-hr">
-            <a (click)="logout()">Logout</a>
-          </li>
-          <li *ngIf="!user" class="menu-hr">
-            <a
-              [routerLink]="['/authentication/sign-in']"
-              [queryParams]="{ redirect: currentUrl }"
-              >Login</a
-            >
-          </li>
-        </ul>
-        <form id="logout-form" style="display: none">
-          <input
-            type="hidden"
-            name="_token"
-            value="CyxybjJ0ve91Us2G2w0eMS4JYK20ZfPuXUdQTAUa"
-          />
-        </form>
+              {{ menu.title }}
+            </a>
+            <div class="dropdown-divider"></div>
+            <a (click)="logout()" class="dropdown-item logout">
+              <i class="fas fa-sign-out-alt"></i>
+              Déconnexion
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- Mobile Header -->
-  <div class="mobile-header">
-    <div class="logo">
-      <a routerLink="/home">
+  <header class="mobile-header">
+    <div class="mobile-header-content">
+      <!-- Logo -->
+      <a routerLink="/home" class="mobile-logo">
         <img
           [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
           alt="Talenteed.io"
         />
       </a>
-    </div>
-    <nav class="menu-items" [ngClass]="{ active: isShowingMobileNav }">
-      <div class="menu-title"><span>Menu</span></div>
-      <ul class="navigation" id="navbar">
-        <li *ngFor="let menu of navbarMenus" (click)="onToggleNavbar()">
-          <a
-            [routerLink]="menu.routerLink"
-            [class.active]="currentUrl.includes(menu.routerLink)"
-            >{{ menu.title }}</a
-          >
-        </li>
-      </ul>
-    </nav>
 
-    <div class="nav-outer">
-      <div class="outer-box">
-        <div class="login-box" (click)="toggleUserDropdown()">
-          <a class="is_login" id="dropdownMenuUser">
-            <div class="icon">
-              <img *ngIf="user?.profilePicture?.fileUrl" 
-                   [src]="user.profilePicture.fileUrl" 
-                   alt="Profile" 
-                   class="profile-picture" />
-              <fa-icon *ngIf="!user?.profilePicture?.fileUrl" [icon]="icon" class="grey-icon"></fa-icon>
-            </div>
-          </a>
-          <ul
-            class="dropdown-menu text-left"
-            aria-labelledby="dropdownMenuUser"
-            [ngClass]="{ show: showUserDropdown }"
-          >
-            <li class="menu-hr" *ngFor="let menu of menusCopy; let i = index">
-              <a *ngIf="menu.title === 'Dashboard'" href="#" (click)="goToDashboard($event)">{{ menu.title }}</a>
-              <a
-                *ngIf="menu.title !== 'Dashboard'"
-                [routerLink]="[menu.routerLink]"
-                >{{ menu.title }}</a
-              >
-            </li>
-            <li *ngIf="user" class="menu-hr">
-              <a (click)="logout()">Logout</a>
-            </li>
-            <li *ngIf="!user" class="menu-hr">
-              <a
-                [routerLink]="['/authentication/sign-in']"
-                [queryParams]="{ redirect: currentUrl }"
-                >Login</a
-              >
-            </li>
-          </ul>
-        </div>
+      <!-- Mobile Actions -->
+      <div class="mobile-actions">
+        <!-- User Avatar -->
+        <button *ngIf="user" class="mobile-user-btn" (click)="toggleUserDropdown()">
+          <img
+            *ngIf="user?.profilePicture?.fileUrl"
+            [src]="user.profilePicture.fileUrl"
+            alt="Profile"
+            class="mobile-avatar"
+          />
+          <div *ngIf="!user?.profilePicture?.fileUrl" class="mobile-avatar-placeholder">
+            <fa-icon [icon]="icon"></fa-icon>
+          </div>
+        </button>
 
+        <!-- Hamburger Menu -->
         <button
-          class="mobile-nav-toggler"
-          [ngClass]="{ active: isShowingMobileNav }"
+          class="mobile-menu-toggle"
+          [class.active]="isShowingMobileNav"
           (click)="onToggleNavbar()"
         >
-          <div class="container-lignes">
-            <div class="ligne"></div>
-            <div class="ligne"></div>
-            <div class="ligne"></div>
-          </div>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Mobile Nav -->
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" [class.active]="isShowingMobileNav">
+      <div class="mobile-nav-content">
+        <ul class="mobile-nav-list">
+          <li *ngFor="let menu of navbarMenus" class="mobile-nav-item">
+            <!-- Menu without submenu -->
+            <a
+              *ngIf="!menu.megaMenu"
+              [routerLink]="menu.routerLink"
+              class="mobile-nav-link"
+              (click)="onToggleNavbar()"
+            >
+              {{ menu.title }}
+            </a>
+
+            <!-- Menu with submenu -->
+            <div *ngIf="menu.megaMenu" class="mobile-nav-group">
+              <button
+                class="mobile-nav-link with-submenu"
+                (click)="toggleMobileSubmenu(menu)"
+                [class.active]="activeMobileSubmenu === menu"
+              >
+                {{ menu.title }}
+                <svg class="mobile-dropdown-icon" width="12" height="8" viewBox="0 0 12 8">
+                  <path
+                    d="M1 1.5L6 6.5L11 1.5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="mobile-submenu"
+                [class.show]="activeMobileSubmenu === menu"
+              >
+                <li *ngFor="let subMenu of menu.subMenus">
+                  <a
+                    [routerLink]="subMenu.routerLink"
+                    class="mobile-submenu-link"
+                    (click)="onToggleNavbar()"
+                  >
+                    <i [class]="'fas fa-' + subMenu.icon"></i>
+                    {{ subMenu.title }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Mobile Auth Buttons -->
+        <div *ngIf="!user" class="mobile-auth-buttons">
+          <a
+            [routerLink]="['/authentication/sign-up']"
+            class="mobile-btn mobile-btn-outline"
+            (click)="onToggleNavbar()"
+          >
+            Inscription
+          </a>
+          <a
+            [routerLink]="['/authentication/sign-in']"
+            [queryParams]="{ redirect: currentUrl }"
+            class="mobile-btn mobile-btn-primary"
+            (click)="onToggleNavbar()"
+          >
+            Connexion
+          </a>
+        </div>
+
+        <!-- Mobile User Menu -->
+        <div *ngIf="user" class="mobile-user-menu">
+          <div class="mobile-user-info">
+            <img
+              *ngIf="user?.profilePicture?.fileUrl"
+              [src]="user.profilePicture.fileUrl"
+              alt="Profile"
+              class="mobile-user-avatar"
+            />
+            <div *ngIf="!user?.profilePicture?.fileUrl" class="mobile-user-avatar-placeholder">
+              <fa-icon [icon]="icon"></fa-icon>
+            </div>
+            <span class="mobile-user-name">
+              {{ user.firstname }} {{ user.lastname }}
+            </span>
+          </div>
+          <div class="mobile-user-links">
+            <a
+              *ngFor="let menu of menusCopy"
+              [routerLink]="menu.title === 'Dashboard' ? null : [menu.routerLink]"
+              (click)="menu.title === 'Dashboard' ? goToDashboard($event) : onToggleNavbar()"
+              class="mobile-user-link"
+            >
+              {{ menu.title }}
+            </a>
+            <a (click)="logout()" class="mobile-user-link logout">
+              <i class="fas fa-sign-out-alt"></i>
+              Déconnexion
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 </div>

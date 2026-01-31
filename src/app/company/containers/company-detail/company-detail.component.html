@@ -1,0 +1,120 @@
+<div class="company-detail-container">
+  <app-loader [isLoading]="loading">
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+      <button class="action-button secondary" [routerLink]="['/companies']">
+        Retour à la liste
+      </button>
+    </div>
+    <ng-container *ngIf="company$ | async as company">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="company-header">
+            <div class="company-logo">
+              <img 
+                [src]="company?.logo?.fileUrl || 'assets/img/favicon.png'" 
+                [alt]="company.company_name"
+              />
+            </div>
+            <div class="company-info">
+              <h1 class="company-name">{{ company.company_name }}</h1>
+              <div class="company-meta" *ngIf="company?.contact?.address">
+                <fa-icon [icon]="faMapMarker" class="icon"></fa-icon>
+                <span>{{ company.contact.address.city }}, {{ company.contact.address.country }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Content -->
+      <section class="content-section">
+        <div class="content-wrapper">
+          <!-- About Section -->
+          <div class="main-content">
+            <div class="section-card">
+              <h2 class="section-title">
+                <fa-icon [icon]="faBuilding" class="title-icon"></fa-icon>
+                À propos de l'entreprise
+              </h2>
+              <div class="section-content">
+                <div class="company-stats">
+                  <div class="stat-item" *ngIf="company.jobs && company.jobs.length > 0">
+                    <div class="stat-value">{{ company.jobs.length }}</div>
+                    <div class="stat-label">Offres d'emploi</div>
+                  </div>
+                  <div class="stat-item" *ngIf="company.category">
+                    <div class="stat-value">{{ company.category.name }}</div>
+                    <div class="stat-label">Secteur d'activité</div>
+                  </div>
+                </div>
+                <p *ngIf="!company.jobs || company.jobs.length === 0" class="no-data">
+                  Cette entreprise n'a pas encore publié d'offres d'emploi.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="sidebar">
+            <!-- Contact Card -->
+            <div class="info-card">
+              <h3 class="card-title">Informations de contact</h3>
+              <div class="info-list">
+                <div class="info-item" *ngIf="company?.contact?.address">
+                  <div class="info-icon">
+                    <fa-icon [icon]="faMapMarker"></fa-icon>
+                  </div>
+                  <div class="info-content">
+                    <div class="info-label">Adresse</div>
+                    <div class="info-value">
+                      {{ company.contact.address.line }}<br>
+                      {{ company.contact.address.postalCode }} {{ company.contact.address.city }}<br>
+                      {{ company.contact.address.country }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="company?.contact?.phoneNumber">
+                  <div class="info-icon">
+                    <fa-icon [icon]="faPhone"></fa-icon>
+                  </div>
+                  <div class="info-content">
+                    <div class="info-label">Téléphone</div>
+                    <div class="info-value">
+                      <a [href]="'tel:' + company.contact.phoneNumber">{{ company.contact.phoneNumber }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="company?.contact?.email">
+                  <div class="info-icon">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                  </div>
+                  <div class="info-content">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">
+                      <a [href]="'mailto:' + company.contact.email">{{ company.contact.email }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions Card -->
+            <div class="actions-card">
+              <button class="action-button primary" [routerLink]="['/job']">
+                <fa-icon [icon]="faBriefcase"></fa-icon>
+                Voir les offres
+              </button>
+              <button class="action-button secondary" [routerLink]="['/companies']">
+                Retour à la liste
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+  </app-loader>
+</div>

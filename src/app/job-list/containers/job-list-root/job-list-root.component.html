@@ -1,52 +1,83 @@
 <div class="job-container">
-  <div class="banner-container"></div>
-  <div class="header">
-    <h1 class="title">Find <span>Jobs</span></h1>
-  </div>
-  <div class="filtered-list">
-    <div class="filter">
-      <app-job-list-box-filter
-        (saveFilter)="onFilter($event)"
-        [locations]="locations$ | async"
-        [jobTypes]="jobTypes$ | async"
-        [categories]="categories$ | async"
-        [jobFilter]="jobListCriteria.filter"
-        [user]="user$ | async"
-      ></app-job-list-box-filter>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM14 6H10V4H14V6Z" fill="currentColor"/>
+          </svg>
+          <span>Opportunités de carrière</span>
+        </div>
+        <h1 class="hero-title">
+          Trouvez votre <span class="accent">emploi idéal</span>
+        </h1>
+        <p class="hero-description">
+          Découvrez des milliers d'opportunités adaptées à vos compétences et aspirations professionnelles
+        </p>
+      </div>
     </div>
-    <div class="content">
-      <div class="list-content">
-        <div class="sort">
-          <app-job-sort
+  </section>
+
+  <!-- Main Content Section -->
+  <section class="main-section">
+    <div class="filtered-list">
+      <div class="filter">
+        <app-job-list-box-filter
+          (saveFilter)="onFilter($event)"
+          [locations]="locations$ | async"
+          [jobTypes]="jobTypes$ | async"
+          [categories]="categories$ | async"
+          [jobFilter]="jobListCriteria.filter"
+          [user]="user$ | async"
+        ></app-job-list-box-filter>
+      </div>
+      <div class="content">
+        <div class="list-content">
+          <div class="sort">
+            <app-job-sort
+              [totalItems]="totalItems$ | async"
+              [page]="jobListCriteria?.page"
+              [jobLength]="jobLength"
+            ></app-job-sort>
+          </div>
+          <div class="list">
+            <app-loader [isLoading]="jobsLoading$ | async">
+              <app-job-list
+                [jobs]="jobs$ | async"
+                [user]="user$ | async"
+              ></app-job-list>
+            </app-loader>
+          </div>
+        </div>
+        <div class="pagination">
+          <app-pagination
             [totalItems]="totalItems$ | async"
-            [page]="jobListCriteria?.page"
-            [jobLength]="jobLength"
-          ></app-job-sort>
+            [initialValue]="jobListCriteria?.page"
+            (paginate)="onPaginate($event)"
+          ></app-pagination>
         </div>
-        <div class="list">
-          <app-loader [isLoading]="jobsLoading$ | async">
-            <app-job-list
-              [jobs]="jobs$ | async"
-              [user]="user$ | async"
-            ></app-job-list>
-          </app-loader>
-        </div>
-      </div>
-      <div class="pagination">
-        <app-pagination
-          [totalItems]="totalItems$ | async"
-          [initialValue]="jobListCriteria?.page"
-          (paginate)="onPaginate($event)"
-        ></app-pagination>
       </div>
     </div>
-  </div>
-  <div class="did-you-know">
-    <app-did-you-know [didYouKnow]="didYouKnow$ | async"></app-did-you-know>
-  </div>
-  <div class="top-company">
-    <app-loader [heightAuto]="true" [isLoading]="companiesLoading$ | async">
-      <app-top-company [companies]="companies$ | async" />
-    </app-loader>
-  </div>
+  </section>
+
+  <!-- Did You Know Section -->
+  <section class="info-section">
+    <div class="did-you-know">
+      <app-did-you-know [didYouKnow]="didYouKnow$ | async"></app-did-you-know>
+    </div>
+  </section>
+
+  <!-- Top Companies Section -->
+  <section class="companies-section">
+    <div class="section-header">
+      <h2 class="section-title">Entreprises <span class="accent">qui recrutent</span></h2>
+      <p class="section-description">Découvrez les entreprises leaders qui recherchent des talents comme vous</p>
+    </div>
+    <div class="top-company">
+      <app-loader [heightAuto]="true" [isLoading]="companiesLoading$ | async">
+        <app-top-company [companies]="companies$ | async" />
+      </app-loader>
+    </div>
+  </section>
 </div>

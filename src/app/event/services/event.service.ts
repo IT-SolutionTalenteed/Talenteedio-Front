@@ -20,7 +20,11 @@ export class EventService {
         orderBy: eventCriteria.sort.by || 'date',
         direction: eventCriteria.sort.direction || 'desc',
       },
-      filter: { title: eventCriteria?.filter?.search, status: 'public' },
+      filter: { 
+        title: eventCriteria?.filter?.search, 
+        status: 'public',
+        category: eventCriteria?.filter?.category
+      },
     };
     return (
       this.apollo
@@ -36,6 +40,11 @@ export class EventService {
                   createdAt
                   slug
                   date
+                  category {
+                    id
+                    name
+                    slug
+                  }
                 }
                 total
               }

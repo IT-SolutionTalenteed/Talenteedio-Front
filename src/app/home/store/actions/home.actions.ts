@@ -90,3 +90,15 @@ export const loadCompaniesSuccess = createAction(
   '[Home] Load Companies Success',
   props<{ payload: Company[] }>()
 );
+
+export const loadUpcomingEvents = createAction('[Home] Load Upcoming Events');
+
+export const loadUpcomingEventsFail = createAction(
+  '[Home] Load Upcoming Events Fail',
+  props<Error>()
+);
+
+export const loadUpcomingEventsSuccess = createAction(
+  '[Home] Load Upcoming Events Success',
+  props<{ payload: any[] }>()
+);

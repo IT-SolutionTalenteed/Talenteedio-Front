@@ -12,6 +12,7 @@ import {
   loadInterview,
   loadJobs,
   loadPartners,
+  loadUpcomingEvents,
 } from '../actions/home.actions';
 import { HomeState } from '../reducers/home.reducers';
 
@@ -36,6 +37,7 @@ export class HomeRouterEffects {
         loadArticles(),
         loadInterview(),
         loadCompanies(),
+        loadUpcomingEvents(),
       ])
     )
   );

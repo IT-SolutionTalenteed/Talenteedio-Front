@@ -28,6 +28,8 @@ import {
   getPartnersLoading,
   getTestimonials,
   getTestimonialsLoading,
+  getUpcomingEvents,
+  getUpcomingEventsLoading,
 } from '../../store/selectors/home.selectors';
 
 @Component({
@@ -50,6 +52,8 @@ export class HomeRootComponent implements OnInit {
   partnersLoading$: Observable<boolean>;
   companies$: Observable<Company[]>;
   companiesLoading$: Observable<boolean>;
+  upcomingEvents$: Observable<any[]>;
+  upcomingEventsLoading$: Observable<boolean>;
 
   constructor(
     private sharedStore: Store<SharedState>,
@@ -74,6 +78,8 @@ export class HomeRootComponent implements OnInit {
     this.partnersLoading$ = this.homeStore.pipe(select(getPartnersLoading));
     this.companies$ = this.homeStore.pipe(select(getCompanies));
     this.companiesLoading$ = this.homeStore.pipe(select(getCompaniesLoading));
+    this.upcomingEvents$ = this.homeStore.pipe(select(getUpcomingEvents));
+    this.upcomingEventsLoading$ = this.homeStore.pipe(select(getUpcomingEventsLoading));
   }
   onFindJob(jobCriteria) {
     this.go([`${JOB_LIST_BASE_ROUTE}`], { ...jobCriteria });

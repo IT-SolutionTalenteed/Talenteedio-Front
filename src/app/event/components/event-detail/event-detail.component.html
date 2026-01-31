@@ -1,43 +1,194 @@
-<div class="event-detail-container">
-  <div class="header" *ngIf="event">
-    <h1 class="title">{{ event.title }}</h1>
-    <div class="creation-info">
-      <div class="icon">
+<!-- Hero Section -->
+<section class="event-hero" *ngIf="event">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="event-badge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor"/>
+      </svg>
+      <span>Event</span>
+    </div>
+    <h1 class="event-title">{{ event.title }}</h1>
+    <div class="event-meta">
+      <div class="meta-item">
         <fa-icon [icon]="icon"></fa-icon>
+        <span>{{ event.admin?.user.name }}</span>
       </div>
-      {{ event.admin?.user.name }}
-      <span>{{ event.date | date : "dd/MM/yyyy" }}</span>
-    </div>
-  </div>
-  <div class="content detail-content" *ngIf="content">
-    <div class="content-text" [innerHTML]="content"></div>
-  </div>
-  <div class="content">
-    <hr />
-    <div class="social-media">
-      <div class="share-this-post">Share this post</div>
-      <div class="button-container">
-        <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
-          ><button class="facebook">
-            <fa-icon [icon]="fbIcon"></fa-icon> Facebook
-          </button></a
-        >
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20Z" fill="currentColor"/>
+        </svg>
+        <span>{{ event.date | date : "EEEE, MMMM d, yyyy" }}</span>
       </div>
-      <div class="button-container">
-        <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
-          ><button class="twitter">
-            <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
-          </button></a
-        >
-      </div>
-      <div class="button-container">
-        <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
-          ><button class="linkedin">
-            <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
-          </button></a
-        >
+      <div class="meta-divider" *ngIf="event.category"></div>
+      <div class="meta-item" *ngIf="event.category">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+          <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+        </svg>
+        <span>{{ event.category.name }}</span>
       </div>
     </div>
-    <hr />
   </div>
+</section>
+
+<div class="event-detail-container" *ngIf="event">
+  <!-- Main Content -->
+  <div class="event-main-content">
+    <div class="content-wrapper">
+      <!-- Left Column: Event Details -->
+      <div class="event-details-column">
+        <!-- Quick Info Card -->
+        <div class="info-card">
+          <h2 class="card-title">Event <span class="accent">Information</span></h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="info-content">
+                <div class="info-label">Event Date</div>
+                <div class="info-value">{{ event.date | date : "EEEE, MMMM d, yyyy" }}</div>
+              </div>
+            </div>
+
+            <div class="info-item" *ngIf="event.category">
+              <div class="info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                  <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+                </svg>
+              </div>
+              <div class="info-content">
+                <div class="info-label">Category</div>
+                <div class="info-value">{{ event.category.name }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="info-content">
+                <div class="info-label">Published</div>
+                <div class="info-value">{{ event.createdAt | date : "MMM d, yyyy" }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="info-content">
+                <div class="info-label">Status</div>
+                <div class="info-value">
+                  <span class="status-badge" 
+                        [class.status-public]="event.status === 'public'"
+                        [class.status-draft]="event.status === 'draft'"
+                        [class.status-blocked]="event.status === 'blocked'"
+                        [class.status-review]="event.status === 'in_review'">
+                    {{ event.status | uppercase }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Description -->
+        <div class="description-card">
+          <h2 class="card-title">About this <span class="accent">Event</span></h2>
+          <div class="description-content" [innerHTML]="content"></div>
+        </div>
+
+        <!-- Share Section -->
+        <div class="share-card">
+          <h3 class="share-title">Share this event</h3>
+          <div class="share-buttons">
+            <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-button facebook">
+              <fa-icon [icon]="fbIcon"></fa-icon>
+              <span>Facebook</span>
+            </a>
+            <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)" class="share-button twitter">
+              <fa-icon [icon]="twitterIcon"></fa-icon>
+              <span>Twitter</span>
+            </a>
+            <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)" class="share-button linkedin">
+              <fa-icon [icon]="linkedinIcon"></fa-icon>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <div class="event-sidebar">
+        <div class="sidebar-card organizer-card">
+          <h3 class="sidebar-title">Event Organizer</h3>
+          <div class="organizer-info">
+            <div class="organizer-avatar">
+              <fa-icon [icon]="icon"></fa-icon>
+            </div>
+            <div class="organizer-details">
+              <div class="organizer-name">{{ event.admin?.user.name }}</div>
+              <div class="organizer-role">Event Organizer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-card info-sidebar-card">
+          <h3 class="sidebar-title">Event Details</h3>
+          <div class="sidebar-info-list">
+            <div class="sidebar-info-item">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20Z" fill="currentColor"/>
+                </svg>
+                Date
+              </div>
+              <div class="sidebar-info-value">{{ event.date | date : "MMM d, yyyy" }}</div>
+            </div>
+            <div class="sidebar-info-item" *ngIf="event.category">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                </svg>
+                Category
+              </div>
+              <div class="sidebar-info-value">{{ event.category.name }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-card cta-card">
+          <div class="cta-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="cta-title">Interested?</h3>
+          <p class="cta-text">Get more information about this event and stay updated.</p>
+          <button class="cta-button">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="!event">
+  <div class="loading-spinner"></div>
+  <p>Loading event details...</p>
 </div>

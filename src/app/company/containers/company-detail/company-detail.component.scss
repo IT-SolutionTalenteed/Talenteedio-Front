@@ -1,0 +1,377 @@
+@import "colors.scss";
+@import "breakpoints.scss";
+
+$max-width: 1200px;
+$border-radius-lg: 16px;
+$border-radius-md: 12px;
+$border-radius-sm: 8px;
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+.company-detail-container {
+  width: 100%;
+  background: #FAFBFC;
+  min-height: 100vh;
+
+  // Error Message
+  .error-message {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    text-align: center;
+
+    p {
+      color: #DC2626;
+      font-size: 16px;
+      margin: 0 0 24px 0;
+      font-weight: 500;
+    }
+
+    .action-button {
+      padding: 14px 24px;
+      border-radius: $border-radius-md;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      background: white;
+      color: $black;
+      border: 1.5px solid #E8EAED;
+
+      &:hover {
+        background: #F9FAFB;
+        border-color: #D1D5DB;
+      }
+    }
+  }
+
+  // Hero Section
+  .hero-section {
+    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      max-width: $max-width;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+
+      .company-header {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        flex-direction: column;
+
+        @media (min-width: 640px) {
+          flex-direction: row;
+        }
+
+        .company-logo {
+          width: 120px;
+          height: 120px;
+          border-radius: 16px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          background: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          flex-shrink: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 16px;
+          }
+        }
+
+        .company-info {
+          flex: 1;
+          text-align: center;
+
+          @media (min-width: 640px) {
+            text-align: left;
+          }
+
+          .company-name {
+            font-size: 40px;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 12px 0;
+            line-height: 1.2;
+
+            @media (max-width: 768px) {
+              font-size: 32px;
+            }
+          }
+
+          .company-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
+            font-weight: 500;
+            justify-content: center;
+
+            @media (min-width: 640px) {
+              justify-content: flex-start;
+            }
+
+            .icon {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Content Section
+  .content-section {
+    padding: 60px 20px;
+    max-width: $max-width;
+    margin: 0 auto;
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+      }
+
+      .main-content {
+        flex: 1;
+
+        .section-card {
+          background: white;
+          border-radius: $border-radius-lg;
+          padding: 40px;
+          box-shadow: $shadow-sm;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+
+          .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: $black;
+            margin: 0 0 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #F3F4F6;
+
+            .title-icon {
+              color: $secondary;
+              font-size: 24px;
+            }
+          }
+
+          .section-content {
+            color: #374151;
+            line-height: 1.7;
+            font-size: 16px;
+
+            p {
+              margin: 0;
+            }
+
+            .no-data {
+              color: #9CA3AF;
+              font-style: italic;
+            }
+
+            .company-stats {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 24px;
+              margin-bottom: 24px;
+
+              .stat-item {
+                background: linear-gradient(135deg, rgba(241, 117, 90, 0.05) 0%, rgba(255, 140, 107, 0.05) 100%);
+                border: 1px solid rgba(241, 117, 90, 0.1);
+                border-radius: $border-radius-md;
+                padding: 24px;
+                text-align: center;
+
+                .stat-value {
+                  font-size: 32px;
+                  font-weight: 700;
+                  color: $secondary;
+                  margin-bottom: 8px;
+                }
+
+                .stat-label {
+                  font-size: 14px;
+                  font-weight: 600;
+                  color: #6B7280;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .sidebar {
+        width: 100%;
+
+        @media (min-width: 768px) {
+          width: 380px;
+          flex-shrink: 0;
+        }
+
+        .info-card,
+        .actions-card {
+          background: white;
+          border-radius: $border-radius-lg;
+          padding: 32px;
+          box-shadow: $shadow-sm;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          margin-bottom: 24px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        .info-card {
+          .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: $black;
+            margin: 0 0 24px 0;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #F3F4F6;
+          }
+
+          .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+
+            .info-item {
+              display: flex;
+              gap: 16px;
+
+              .info-icon {
+                width: 44px;
+                height: 44px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, rgba(241, 117, 90, 0.1) 0%, rgba(255, 140, 107, 0.1) 100%);
+                border-radius: $border-radius-sm;
+
+                fa-icon {
+                  font-size: 18px;
+                  color: $secondary;
+                }
+              }
+
+              .info-content {
+                flex: 1;
+
+                .info-label {
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: #6B7280;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  margin-bottom: 4px;
+                }
+
+                .info-value {
+                  font-size: 15px;
+                  color: $black;
+                  font-weight: 500;
+                  line-height: 1.5;
+
+                  a {
+                    color: $secondary;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                      color: darken($secondary, 10%);
+                      text-decoration: underline;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .actions-card {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+
+          .action-button {
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: $border-radius-md;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+
+            fa-icon {
+              font-size: 16px;
+            }
+
+            &.primary {
+              background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+              color: white;
+              box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(241, 117, 90, 0.4);
+              }
+            }
+
+            &.secondary {
+              background: white;
+              color: $black;
+              border: 1.5px solid #E8EAED;
+
+              &:hover {
+                background: #F9FAFB;
+                border-color: #D1D5DB;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

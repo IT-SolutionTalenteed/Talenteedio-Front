@@ -10,6 +10,8 @@
   background-color: $background;
   
   &.full-width {
+    background-color: white;
+    
     .authentication-right {
       width: 100%;
       padding: 0;

@@ -29,6 +29,9 @@ import {
   loadTestimonials,
   loadTestimonialsFail,
   loadTestimonialsSuccess,
+  loadUpcomingEvents,
+  loadUpcomingEventsFail,
+  loadUpcomingEventsSuccess,
 } from '../actions/home.actions';
 
 export interface HomeState {
@@ -53,6 +56,9 @@ export interface HomeState {
   companies: Company[];
   companiesLoading: boolean;
   companiesLoaded: boolean;
+  upcomingEvents: any[];
+  upcomingEventsLoading: boolean;
+  upcomingEventsLoaded: boolean;
 }
 
 const initialState: HomeState = {
@@ -77,6 +83,9 @@ const initialState: HomeState = {
   companies: [],
   companiesLoading: false,
   companiesLoaded: false,
+  upcomingEvents: [],
+  upcomingEventsLoading: false,
+  upcomingEventsLoaded: false,
 };
 
 const loadJobsReducer = (state: HomeState): HomeState => ({
@@ -233,6 +242,28 @@ const loadCompaniesSuccessReducer = (
   companies: props.payload,
 });
 
+const loadUpcomingEventsReducer = (state: HomeState): HomeState => ({
+  ...state,
+  upcomingEventsLoading: true,
+  upcomingEventsLoaded: false,
+});
+
+const loadUpcomingEventsFailReducer = (state: HomeState): HomeState => ({
+  ...state,
+  upcomingEventsLoading: false,
+  upcomingEventsLoaded: false,
+});
+
+const loadUpcomingEventsSuccessReducer = (
+  state: HomeState,
+  props: { payload: any[] }
+): HomeState => ({
+  ...state,
+  upcomingEventsLoading: false,
+  upcomingEventsLoaded: true,
+  upcomingEvents: props.payload,
+});
+
 const reducer = createReducer(
   initialState,
   on(loadHomeSetting, loadHomeSettingReducer),
@@ -255,7 +286,10 @@ const reducer = createReducer(
   on(loadPartnersSuccess, loadPartnersSuccessReducer),
   on(loadCompanies, loadCompaniesReducer),
   on(loadCompaniesFail, loadCompaniesFailReducer),
-  on(loadCompaniesSuccess, loadCompaniesSuccessReducer)
+  on(loadCompaniesSuccess, loadCompaniesSuccessReducer),
+  on(loadUpcomingEvents, loadUpcomingEventsReducer),
+  on(loadUpcomingEventsFail, loadUpcomingEventsFailReducer),
+  on(loadUpcomingEventsSuccess, loadUpcomingEventsSuccessReducer)
 );
 
 export function homeReducer(state: HomeState | undefined, action: Action) {

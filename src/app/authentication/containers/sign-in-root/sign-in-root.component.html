@@ -1,14 +1,12 @@
-<div class="container">
-  <app-loader [isLoading]="loading$ | async" style="width: 100%; height: 100%">
-    <app-sign-in
-      (signIn)="onLogIn($event)"
-      (googleSignIn)="onGoogleSignIn($event)"
-      (clearError)="onClearError()"
-      [loginErrorMessage]="emailErrorMessage$ | async"
-      [emailError]="emailError$ | async"
-    ></app-sign-in>
-  </app-loader>
-</div>
+<app-loader [isLoading]="loading$ | async" style="width: 100%; min-height: 100vh;">
+  <app-sign-in
+    (signIn)="onLogIn($event)"
+    (googleSignIn)="onGoogleSignIn($event)"
+    (clearError)="onClearError()"
+    [loginErrorMessage]="emailErrorMessage$ | async"
+    [emailError]="emailError$ | async"
+  ></app-sign-in>
+</app-loader>
 
 <!-- Google Registration Modal -->
 <app-google-register

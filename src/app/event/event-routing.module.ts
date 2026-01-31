@@ -19,7 +19,7 @@ const routes: Routes = [
         data: { title: 'Event' },
       },
       {
-        path: 'detail/:eventId',
+        path: 'detail/:slug',
         component: EventDetailRootComponent,
         data: { title: 'Event' },
       },

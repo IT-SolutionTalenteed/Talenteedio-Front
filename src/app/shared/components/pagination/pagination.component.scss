@@ -7,12 +7,14 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    padding: 20px 0;
 
     .paginator {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        gap: 16px;
 
         ul {
             list-style-type: none;
@@ -21,46 +23,81 @@
             justify-content: center;
             flex-wrap: wrap;
             padding: 0;
+            margin: 0;
+            gap: 8px;
 
-            .left-arrow, .left-left-arrow {
+            .left-arrow, .left-left-arrow, .right-arrow, .right-right-arrow {
                 padding: 0;
-            }
-
-            .right-arrow, .right-right-arrow {
-                padding: 0;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: white;
+                border: 1.5px solid #E8EAED;
+                transition: all 0.3s ease;
+                
+                span {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+                
+                &:hover:not(.disabled) {
+                    background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+                    border-color: $secondary;
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+                }
             }
 
             li {
                 position: relative;
-                margin: 0 5px;
-                font-size: 14px;
-                color: $text-color;
-                line-height: 45px;
-                min-width: 45px;
-                font-weight: 400;
+                margin: 0;
+                font-size: 15px;
+                color: #6B7280;
+                line-height: 1;
+                min-width: 40px;
+                height: 40px;
+                font-weight: 600;
                 text-align: center;
-                border-radius: 50%;
+                border-radius: 10px;
                 cursor: pointer;
                 user-select: none;
-            }
-            .btn {
-                &:hover {
-                    background-color: $primary;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: white;
+                border: 1.5px solid #E8EAED;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                
+                &:hover:not(.current) {
+                    background: #F9FAFB;
+                    border-color: #D1D5DB;
+                    transform: translateY(-2px);
                 }
-
+            }
+            
+            .btn {
                 img {
                     vertical-align: bottom;
                 }
             }
+            
             .current {
                 color: white;
-                background-color: $primary;
+                background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+                border-color: $secondary;
+                box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+                transform: translateY(-2px);
             }
+            
             select {
                 outline: none;
                 border: none;
                 border-bottom: 1px solid $text-color;
             }
+            
             label {
                 width: 100px;
                 padding-left: 15px;
@@ -72,14 +109,21 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            align-items: baseline;
-            margin: 0 5px 0 10px;
-        }
-
-        .page-size label {
-            padding: 0 10px;
-            font-size: 14px;
-            color: $text-color;
+            align-items: center;
+            margin: 0;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 10px;
+            border: 1.5px solid #E8EAED;
+            gap: 12px;
+            
+            label {
+                padding: 0;
+                font-size: 14px;
+                color: #6B7280;
+                font-weight: 500;
+                margin: 0;
+            }
         }
     }
 }

@@ -1,0 +1,59 @@
+<div class="companies-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Annuaire des entreprises</span>
+        </div>
+        <h1 class="hero-title">
+          Découvrez les <span class="accent">entreprises</span> qui recrutent
+        </h1>
+        <p class="hero-description">
+          Explorez notre réseau d'entreprises partenaires et trouvez votre futur employeur
+        </p>
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input 
+            type="text" 
+            placeholder="Rechercher une entreprise..." 
+            (input)="onSearch($event)"
+            [value]="searchTerm"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Companies Grid Section -->
+  <section class="companies-section">
+    <div class="companies-content">
+      <app-loader [isLoading]="loading">
+        <div class="companies-grid" *ngIf="(filteredCompanies$ | async) as companies">
+          <app-company-card 
+            *ngFor="let company of companies" 
+            [company]="company"
+          ></app-company-card>
+          
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="companies.length === 0">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <h3>Aucune entreprise trouvée</h3>
+            <p>Essayez de modifier votre recherche</p>
+          </div>
+        </div>
+      </app-loader>
+    </div>
+  </section>
+</div>

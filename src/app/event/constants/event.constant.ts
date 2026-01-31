@@ -16,4 +16,4 @@ export const EVENT_LIST_BASE_ROUTE = '/event/list';
 
 export const EVENT_BASE_ROUTE = '/event';
 
-export const EVENT_DETAIL_ROUTE_REGEX = /\/event\/\w+\/[\w+\d+]+/;
+export const EVENT_DETAIL_ROUTE_REGEX = /\/event\/detail\/[\w-]+/;

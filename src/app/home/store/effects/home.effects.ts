@@ -38,6 +38,9 @@ import {
   loadTestimonials,
   loadTestimonialsFail,
   loadTestimonialsSuccess,
+  loadUpcomingEvents,
+  loadUpcomingEventsFail,
+  loadUpcomingEventsSuccess,
 } from '../actions/home.actions';
 
 @Injectable()
@@ -139,6 +142,20 @@ export class HomeEffects {
             loadCompaniesSuccess({ payload: response })
           ),
           catchError((error) => of(loadCompaniesFail(error)))
+        )
+      )
+    )
+  );
+
+  loadUpcomingEvents$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(loadUpcomingEvents),
+      switchMap(() =>
+        this.homeService.loadUpcomingEvents().pipe(
+          map((response: any[]) =>
+            loadUpcomingEventsSuccess({ payload: response })
+          ),
+          catchError((error) => of(loadUpcomingEventsFail(error)))
         )
       )
     )
