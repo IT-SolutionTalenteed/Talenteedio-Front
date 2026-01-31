@@ -578,13 +578,20 @@ $border-color: #E8EAED;
 
 // Upcoming Events Section
 .upcoming-events-section {
-  @include section-base;
   background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
-  border-radius: $border-radius-lg;
-  margin: 80px auto;
+  padding: 100px 0;
+  margin: 80px 0;
+
+  @media screen and (max-width: 768px) {
+    padding: 60px 0;
+  }
 
   .section-header {
     @include section-header;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
   }
 
   .events-grid {
@@ -592,6 +599,10 @@ $border-color: #E8EAED;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 32px;
     margin-bottom: 48px;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 
     @media screen and (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -754,6 +765,9 @@ $border-color: #E8EAED;
     text-align: center;
     padding: 80px 20px;
     color: $text-color;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
 
     svg {
       margin-bottom: 24px;
@@ -768,6 +782,10 @@ $border-color: #E8EAED;
 
   .section-footer {
     text-align: center;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 
     .view-more-button {
       background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
