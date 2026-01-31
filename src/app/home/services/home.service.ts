@@ -173,4 +173,64 @@ export class HomeService {
         .pipe(map((response) => response.data.getCompanies.rows))
     );
   }
+
+  // eslint-disable-next-line max-lines-per-function
+  loadUpcomingEvents(): Observable<any[]> {
+    const eventApiUrl = `${environment.apiBaseUrl}/event`;
+    const props = {
+      input: {
+        limit: 3,
+        page: 1,
+      },
+      filter: { status: 'public' },
+    };
+
+    return (
+      this.apollo
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .query<any>({
+          query: gql`
+            query GetEvents(
+              $input: PaginationInput
+              $filter: EventFilter
+            ) {
+              getEvents(input: $input, filter: $filter) {
+                rows {
+                  id
+                  title
+                  slug
+                  date
+                  startTime
+                  endTime
+                  location
+                  maxParticipants
+                  companies {
+                    company_name
+                    logo {
+                      fileUrl
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          variables: props,
+          fetchPolicy: 'network-only',
+          context: {
+            uri: eventApiUrl,
+          },
+        })
+        .pipe(
+          map((response) => {
+            const events = response.data.getEvents.rows;
+            // Filter and sort to get upcoming events
+            const now = new Date();
+            return events
+              .filter((event: any) => new Date(event.date) >= now)
+              .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
+              .slice(0, 3);
+          })
+        )
+    );
+  }
 }

@@ -5,12 +5,14 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { Store, select } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { logOut } from 'src/app/authentication/store/actions/authentication.actions';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Ad } from 'src/app/shared/models/ad.interface';
@@ -19,18 +21,32 @@ import { nthOccurenceOf } from 'src/app/shared/utils/string';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
 import { Menu } from '../../types/menu.interface';
+import { CategoryService } from 'src/app/shared/services/category.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('150ms ease-in', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class HeaderComponent implements OnDestroy, OnChanges {
+export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
   connexionTime: string;
   currentRoute: string;
   showUserDropdown = false;
   menusCopy: Menu[];
   isShowingMobileNav = false;
+  hoveredMenu: Menu | null = null;
+  activeMobileSubmenu: Menu | null = null;
 
   backOfficeRoute = environment.backOfficeBaseUrl;
 
@@ -49,7 +65,8 @@ export class HeaderComponent implements OnDestroy, OnChanges {
   constructor(
     private authenticationStore: Store<AuthenticationState>,
     router: Router,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private categoryService: CategoryService
   ) {
     this.currentRoute = router.url.slice(0, nthOccurenceOf('/', 3, router.url));
     this.subs.sink = router.events
@@ -63,22 +80,71 @@ export class HeaderComponent implements OnDestroy, OnChanges {
       });
   }
 
+  ngOnInit(): void {
+    this.loadEventCategories();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['user'] || changes['menus']) && this.menus) {
       this.menusCopy = this.menus.filter((menu) => menu.title !== 'Logout');
     }
+    if (changes['navbarMenus'] && this.navbarMenus) {
+      this.loadEventCategories();
+    }
+  }
+
+  loadEventCategories(): void {
+    if (!this.navbarMenus) return;
+    
+    this.subs.sink = this.categoryService.getEventCategories().subscribe({
+      next: (categories) => {
+        const eventMenu = this.navbarMenus.find(menu => menu.title === 'Événements');
+        if (eventMenu && eventMenu.subMenus) {
+          // Ajouter les catégories après "Tous nos événements"
+          const categoryMenus = categories.map(category => ({
+            title: category.name,
+            routerLink: `/event/list?category=${category.slug}`,
+            icon: 'tag',
+            description: `Événements ${category.name}`
+          }));
+          
+          // Garder "Tous nos événements" et ajouter les catégories
+          eventMenu.subMenus = [
+            eventMenu.subMenus[0], // Tous nos événements
+            ...categoryMenus
+          ];
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des catégories:', error);
+      }
+    });
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  onMenuHover(menu: Menu) {
+    if (menu.megaMenu) {
+      this.hoveredMenu = menu;
+    }
+  }
+
+  onMenuLeave() {
+    this.hoveredMenu = null;
+  }
+
+  toggleMobileSubmenu(menu: Menu) {
+    this.activeMobileSubmenu = this.activeMobileSubmenu === menu ? null : menu;
+  }
+
   onToggleNavbar() {
     this.isShowingMobileNav = !this.isShowingMobileNav;
+    if (!this.isShowingMobileNav) {
+      this.activeMobileSubmenu = null;
+    }
   }
-  // navigateToProfilePage() {
-  //     this.authenticationStore.dispatch(go({ path: [USER_PROFILE_BASE_ROUTE] }));
-  // }
 
   logout() {
     if (this.user) {
@@ -89,7 +155,6 @@ export class HeaderComponent implements OnDestroy, OnChanges {
   goToDashboard(event: Event) {
     event.preventDefault();
     
-    // Récupérer les tokens et l'utilisateur depuis le store
     this.authenticationStore
       .pipe(
         select((state: any) => ({
@@ -101,7 +166,6 @@ export class HeaderComponent implements OnDestroy, OnChanges {
       )
       .subscribe(data => {
         if (data.accessToken) {
-          // Rediriger les consultants vers l'admin Vue.js
           const isConsultant = data.user?.consultant && !data.user?.admin;
           const adminUrl = 'http://localhost:5173/admin';
           
@@ -125,6 +189,7 @@ export class HeaderComponent implements OnDestroy, OnChanges {
     const isInside = this.elementRef.nativeElement.contains(target);
     if (!isInside) {
       this.showUserDropdown = false;
+      this.hoveredMenu = null;
     }
   }
 }

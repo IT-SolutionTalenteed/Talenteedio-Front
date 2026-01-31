@@ -72,3 +72,13 @@ export const getCompaniesLoading = createSelector(
   getHomeState,
   (state: HomeState) => state.companiesLoading
 );
+
+export const getUpcomingEvents = createSelector(
+  getHomeState,
+  (state: HomeState) => state.upcomingEvents
+);
+
+export const getUpcomingEventsLoading = createSelector(
+  getHomeState,
+  (state: HomeState) => state.upcomingEventsLoading
+);

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
@@ -27,16 +28,34 @@ export class EventListRootComponent implements OnInit, OnDestroy {
 
   subs = new SubSink();
 
-  constructor(private eventStore: Store<EventState>) {}
+  constructor(
+    private eventStore: Store<EventState>,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.events$ = this.eventStore.pipe(select(getEvents));
     this.totalItems$ = this.eventStore.pipe(select(getEventTotalItems));
     this.eventsLoading$ = this.eventStore.select(getEventsLoading);
+    
     this.subs.sink = this.eventStore
       .select(getEventListCriteria)
-      .subscribe((criteria) => (this.eventCriteria = cloneDeep(criteria)));
+      .subscribe((criteria) => {
+        this.eventCriteria = cloneDeep(criteria);
+        
+        // Vérifier les query params pour la catégorie
+        this.subs.sink = this.route.queryParams.subscribe(params => {
+          if (params['category']) {
+            this.eventCriteria.filter = {
+              ...this.eventCriteria.filter,
+              category: params['category']
+            };
+            this.eventStore.dispatch(loadEvents(this.eventCriteria));
+          }
+        });
+      });
   }
+  
   onSaveFilter(filter) {
     this.eventCriteria.filter = filter;
     this.eventStore.dispatch(
@@ -46,9 +65,11 @@ export class EventListRootComponent implements OnInit, OnDestroy {
       })
     );
   }
+  
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
+  
   onPaginate(page) {
     this.eventCriteria.page = page;
     this.eventStore.dispatch(loadEvents(this.eventCriteria));

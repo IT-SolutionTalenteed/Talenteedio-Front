@@ -10,33 +10,55 @@ export const NAVAR_MENUS: Menu[] = [
     colorActive: '#6bbee3',
   },
   {
-    title: 'Jobs',
+    title: 'Annonces',
     routerLink: '/job',
     parentRouterLink: '/job',
     accessRight: 'ALL',
     color: '#696969',
     colorActive: '#6bbee3',
+    megaMenu: true,
+    subMenus: [
+      {
+        title: 'Offres d\'emploi',
+        routerLink: '/job',
+        icon: 'briefcase',
+        description: 'Plus de 1000 opportunités à saisir !'
+      },
+      {
+        title: 'Missions Freelance',
+        routerLink: '/freelance',
+        icon: 'laptop',
+        description: 'Trouvez votre prochaine mission'
+      },
+      {
+        title: 'Recherchez une entreprise',
+        routerLink: '/companies',
+        icon: 'building',
+        description: 'Suivez et découvrez les entreprises'
+      },
+    ]
   },
   {
-    title: 'Missions',
-    routerLink: '/freelance',
-    parentRouterLink: '/freelance',
+    title: 'Événements',
+    routerLink: '/event',
+    parentRouterLink: '/event',
     accessRight: 'ALL',
     color: '#696969',
     colorActive: '#6bbee3',
+    megaMenu: true,
+    subMenus: [
+      {
+        title: 'Tous nos événements',
+        routerLink: '/event/list',
+        icon: 'calendar',
+        description: 'Participez aux événements RH'
+      }
+    ]
   },
   {
-    title: 'Voice',
-    routerLink: '/voice',
-    parentRouterLink: '/voice',
-    accessRight: 'ALL',
-    color: '#696969',
-    colorActive: '#6bbee3',
-  },
-  {
-    title: 'Coaching Emploi',
-    routerLink: '/coaching-emploi',
-    parentRouterLink: '/coaching-emploi',
+    title: 'Articles',
+    routerLink: '/blog',
+    parentRouterLink: '/blog',
     accessRight: 'ALL',
     color: '#696969',
     colorActive: '#6bbee3',

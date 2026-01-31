@@ -1,0 +1,23 @@
+<div class="company-card" [routerLink]="['/companies', company.slug]">
+  <div class="company-header">
+    <div class="company-logo">
+      <img 
+        [src]="company?.logo?.fileUrl || 'assets/img/favicon.png'" 
+        [alt]="company.company_name"
+      />
+    </div>
+  </div>
+  
+  <div class="company-body">
+    <h3 class="company-name">{{ company.company_name }}</h3>
+    
+    <div class="company-info" *ngIf="company?.contact?.address">
+      <fa-icon [icon]="faMapMarker" class="icon"></fa-icon>
+      <span>{{ company.contact.address.line || company.contact.address.city }}</span>
+    </div>
+  </div>
+  
+  <div class="company-footer">
+    <button class="view-button">Voir l'entreprise</button>
+  </div>
+</div>
