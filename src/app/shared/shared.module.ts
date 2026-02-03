@@ -32,6 +32,7 @@ import { HtmlParserPipePipe } from './pipes/html-parser-pipe.pipe';
 import { JoinedListPipe } from './pipes/joined-list.pipe';
 import { MonthLabelPipe } from './pipes/month-label.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { ValidityNbDayPipe } from './pipes/validity-nb-day.pipe';
 import { AdService } from './services/ad.service';
@@ -80,6 +81,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     HtmlParserPipePipe,
     ModalComponent,
     SafePipe,
+    TimeAgoPipe,
     ProfilePictureUploadComponent,
   ],
   exports: [
@@ -112,6 +114,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     HtmlParserPipePipe,
     ModalComponent,
     SafePipe,
+    TimeAgoPipe,
     ProfilePictureUploadComponent,
   ],
   providers: [

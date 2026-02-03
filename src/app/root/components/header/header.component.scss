@@ -266,6 +266,11 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  app-favorite-menu {
+    display: flex;
+    align-items: center;
+  }
 }
 
 // Auth Buttons
@@ -446,6 +451,11 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    .mobile-favorite-menu {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .mobile-user-btn {

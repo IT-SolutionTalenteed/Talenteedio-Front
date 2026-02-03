@@ -64,6 +64,8 @@ export class JobFormComponent implements OnChanges {
   twitterUrl: string;
   pinterestUrl: string;
   linkedinUrl: string;
+  favoriteType: 'job' | 'freelance' = 'job';
+  
   constructor(
     private sanitizer: DomSanitizer,
     private location: Location,
@@ -89,6 +91,11 @@ export class JobFormComponent implements OnChanges {
       this.content = this.sanitizer.bypassSecurityTrustHtml(
         this.job?.content ?? ''
       );
+      // Déterminer le type basé sur l'URL ou le jobType
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname;
+        this.favoriteType = path.includes('/freelance/') ? 'freelance' : 'job';
+      }
     }
   }
 

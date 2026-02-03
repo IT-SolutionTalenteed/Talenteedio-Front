@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared/shared.module';
 import { JobListModule } from '../job-list/job-list.module';
+import { FavoriteModule } from '../favorite/favorite.module';
 import { FreelanceItemComponent } from './components/freelance-item/freelance-item.component';
 import { FreelanceListBoxFilterComponent } from './components/freelance-list-box-filter/freelance-list-box-filter.component';
 import { FreelanceListComponent } from './components/freelance-list/freelance-list.component';
@@ -35,6 +36,7 @@ import { freelanceListReducer } from './store/reducers/freelance-list.reducers';
     ReactiveFormsModule,
     SharedModule,
     JobListModule,
+    FavoriteModule,
     StoreModule.forFeature('freelanceList', freelanceListReducer),
     EffectsModule.forFeature([FreelanceListEffects, FreelanceListRouterEffects]),
   ],

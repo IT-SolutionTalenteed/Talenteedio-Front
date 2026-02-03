@@ -27,7 +27,7 @@
           </li>
           <li>
             <fa-icon class="icon" [icon]="faClock"></fa-icon
-            >{{ popularJob.updatedAt | date : "dd/MM/yy" }}
+            >{{ popularJob.updatedAt | timeAgo }}
           </li>
           <li>
             <fa-icon class="icon" [icon]="faMoney"></fa-icon

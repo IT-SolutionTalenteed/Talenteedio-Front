@@ -11,6 +11,13 @@
         <div class="job-detail">
           <div class="job-title">
             <h4>{{ job.title }}</h4>
+            <app-favorite-button
+              *ngIf="user"
+              [itemId]="job.id"
+              [type]="favoriteType"
+              size="medium"
+              style="margin-left: 12px;"
+            ></app-favorite-button>
           </div>
           <ul class="job-info">
             <li>

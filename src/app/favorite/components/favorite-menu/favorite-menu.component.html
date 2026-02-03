@@ -1,0 +1,59 @@
+<div class="favorite-menu-container">
+  <button class="favorite-menu-trigger" (click)="toggleMenu()" type="button" [class.has-favorites]="favoritesCount > 0">
+    <fa-icon [icon]="faHeart"></fa-icon>
+    <span class="badge" *ngIf="favoritesCount > 0">{{
+      favoritesCount
+    }}</span>
+  </button>
+
+  <div class="favorite-dropdown" *ngIf="isOpen" (click)="$event.stopPropagation()">
+    <div class="dropdown-header">
+      <h3>Favoris récents</h3>
+    </div>
+
+    <div class="dropdown-content">
+      <div *ngIf="isLoading" class="loading">Chargement...</div>
+
+      <div *ngIf="!isLoading && recentFavorites.length === 0" class="empty">
+        <p>Aucun favori pour le moment</p>
+      </div>
+
+      <div
+        *ngIf="!isLoading && recentFavorites.length > 0"
+        class="favorites-list"
+      >
+        <div
+          *ngFor="let favorite of recentFavorites"
+          class="favorite-item"
+          (click)="goToItem(favorite)"
+        >
+          <div class="item-image">
+            <img [src]="getItemImage(favorite)" [alt]="getItemTitle(favorite)" />
+          </div>
+          <div class="item-details">
+            <h4 class="item-title">{{ getItemTitle(favorite) }}</h4>
+            <div class="item-meta">
+              <span class="meta-item">
+                <fa-icon [icon]="faMapMarker"></fa-icon>
+                {{ getItemLocation(favorite) }}
+              </span>
+              <span class="meta-item">
+                <fa-icon [icon]="faBriefcase"></fa-icon>
+                {{ getItemCategory(favorite) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown-footer">
+      <button class="btn-view-all" (click)="goToFavorites()" type="button">
+        Voir tous les favoris
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop to close menu when clicking outside -->
+<div class="backdrop" *ngIf="isOpen" (click)="toggleMenu()"></div>
