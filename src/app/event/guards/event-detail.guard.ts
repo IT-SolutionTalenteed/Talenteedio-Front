@@ -28,13 +28,13 @@ export class EventDetailService {
     return authenticationStore.pipe(
       select(getUserRole),
       map((role: Role) => {
-        if (route.data['roles'].includes(role?.name)) {
-          return true;
-        } else {
+        // Toujours permettre l'accès à la page
+        // Le composant gérera l'affichage du contenu selon le rôle
+        if (!route.data['roles']?.includes(role?.name)) {
+          // Afficher le modal seulement si l'utilisateur n'a pas le bon rôle
           authenticationStore.dispatch(openBecomeMemberModal());
-          router.navigate([router.url]);
-          return false;
         }
+        return true;
       })
     );
   }
