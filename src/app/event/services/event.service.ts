@@ -88,6 +88,13 @@ export class EventService {
                   }
                 }
                 slug
+                companies {
+                  id
+                  company_name
+                  logo {
+                    fileUrl
+                  }
+                }
               }
             }
           `,

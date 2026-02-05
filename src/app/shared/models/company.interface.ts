@@ -1,6 +1,6 @@
 import { Contact } from './contact.interface';
 import { Picture } from './picture';
-import { Category, Job } from './job.interface';
+import { Category } from './job.interface';
 
 export interface Company {
   id?: string;
@@ -15,7 +15,7 @@ export interface Company {
   category?: Category;
   categoryId?: string;
   website?: string;
-  jobs?: Job[];
+  jobs?: any[]; // Changed from Job[] to any[] to avoid circular dependency
   socialNetworks?: {
     linkedin?: string;
     twitter?: string;

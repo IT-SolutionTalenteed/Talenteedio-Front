@@ -4,8 +4,8 @@
       <div class="content">
         <div class="company-logo">
           <img
-            src="{{ job?.featuredImage?.fileUrl || 'assets/img/favicon.png' }}"
-            alt="Job image"
+            src="{{ job?.company?.logo?.fileUrl || 'assets/img/favicon.png' }}"
+            alt="Company logo"
           />
         </div>
         <div class="job-detail">
@@ -99,7 +99,18 @@
     </div>
   </div>
   <div class="detail" *ngIf="job">
-    <div class="detail-content" [innerHtml]="content"></div>
+    <div class="detail-content">
+      <!-- Featured Image Section -->
+      <div class="featured-image-section" *ngIf="job.featuredImage?.fileUrl">
+        <img 
+          [src]="job.featuredImage.fileUrl" 
+          [alt]="job.title"
+          class="featured-image"
+        />
+      </div>
+      
+      <div [innerHtml]="content"></div>
+    </div>
     <div class="detail-info">
       <h4>Job viewer</h4>
       <div class="info-item">

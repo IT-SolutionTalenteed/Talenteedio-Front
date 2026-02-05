@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { tap, shareReplay, catchError } from 'rxjs/operators';
+import { Observable, of, forkJoin } from 'rxjs';
+import { tap, shareReplay, catchError, switchMap } from 'rxjs/operators';
 import { Company } from 'src/app/shared/models/company.interface';
-import { faMapMarkerAlt, faPhone, faEnvelope, faGlobe, faBriefcase, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faPhone, faEnvelope, faGlobe, faBriefcase, faBuilding, faCalendar, faNewspaper, faBriefcase as faJobIcon } from '@fortawesome/free-solid-svg-icons';
 import { CompanyService } from '../../services/company.service';
 
 @Component({
@@ -13,6 +13,11 @@ import { CompanyService } from '../../services/company.service';
 })
 export class CompanyDetailComponent implements OnInit {
   company$: Observable<Company>;
+  events$: Observable<any[]>;
+  articles$: Observable<any[]>;
+  jobs$: Observable<any[]>;
+  freelanceJobs$: Observable<any[]>;
+  
   loading = true;
   error: string = null;
   companySlug: string;
@@ -23,6 +28,9 @@ export class CompanyDetailComponent implements OnInit {
   faGlobe = faGlobe;
   faBriefcase = faBriefcase;
   faBuilding = faBuilding;
+  faCalendar = faCalendar;
+  faNewspaper = faNewspaper;
+  faJobIcon = faJobIcon;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +52,8 @@ export class CompanyDetailComponent implements OnInit {
         next: (company) => {
           console.log('Company loaded successfully in component:', company);
           this.loading = false;
+          // Charger les données associées
+          this.loadCompanyRelatedData(company.id);
         },
         error: (error) => {
           console.error('Error in tap:', error);
@@ -74,5 +84,12 @@ export class CompanyDetailComponent implements OnInit {
         console.log('Subscription complete');
       }
     });
+  }
+
+  loadCompanyRelatedData(companyId: string): void {
+    this.events$ = this.companyService.loadCompanyEvents(companyId);
+    this.articles$ = this.companyService.loadCompanyArticles(companyId);
+    this.jobs$ = this.companyService.loadCompanyJobs(companyId);
+    this.freelanceJobs$ = this.companyService.loadCompanyFreelanceJobs(companyId);
   }
 }

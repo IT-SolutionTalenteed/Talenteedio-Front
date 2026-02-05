@@ -20,8 +20,8 @@ const routes: Routes = [
       {
         path: 'detail/:slug',
         component: EventDetailRootComponent,
-        data: { title: 'Event', roles: ['admin', 'hr-first-club'] },
-        canActivate: [EventDetailGuard],
+        data: { title: 'Event' },
+        // Guard removed - everyone can access event details without modal
       },
     ],
   },

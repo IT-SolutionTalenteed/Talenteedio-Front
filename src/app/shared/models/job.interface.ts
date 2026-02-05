@@ -3,6 +3,7 @@ import { LocationJob } from './location-job.interface';
 import { Skill } from './skill.interface';
 import { Status } from './status.enum';
 import { User } from './user.interface';
+import { Company } from './company.interface';
 
 export enum HourType {
   DAY = 'Day',
@@ -55,6 +56,7 @@ export interface Job {
   category: Category;
   skills: Skill[];
   user: string | User;
+  company?: Company;
   referralLink?: string;
   hasApplied: boolean;
   slug: string;

@@ -86,6 +86,9 @@ export class JobFormService {
                 company {
                   id
                   company_name
+                  logo {
+                    fileUrl
+                  }
                 }
                 hasApplied
               }
