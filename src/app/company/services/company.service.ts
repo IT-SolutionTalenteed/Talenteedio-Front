@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, map, switchMap, catchError, throwError } from 'rxjs';
+import { Observable, map, switchMap, catchError, throwError, of } from 'rxjs';
 import { Company } from 'src/app/shared/models/company.interface';
 import { environment } from 'src/environments/environment';
 
@@ -56,9 +56,117 @@ const GET_COMPANY = gql`
   }
 `;
 
+const GET_COMPANY_EVENTS = gql`
+  query GetCompanyEvents {
+    getEvents(input: { limit: 100, page: 1 }, filter: { status: "public" }) {
+      rows {
+        id
+        title
+        slug
+        metaDescription
+        date
+        startTime
+        endTime
+        location
+        companies {
+          id
+        }
+        createdAt
+      }
+      total
+    }
+  }
+`;
+
+const GET_COMPANY_ARTICLES = gql`
+  query GetCompanyArticles($companyId: String!) {
+    getArticles(input: { limit: 3, page: 1 }, filter: { companyId: $companyId, status: "public" }) {
+      rows {
+        id
+        title
+        slug
+        publicContent
+        metaDescription
+        image {
+          fileUrl
+        }
+        createdAt
+        admin {
+          user {
+            firstname
+            lastname
+          }
+        }
+      }
+      total
+    }
+  }
+`;
+
+const GET_COMPANY_JOBS = gql`
+  query GetCompanyJobs($companyId: String!) {
+    getJobs(input: { limit: 3, page: 1 }, filter: { companyId: $companyId, status: "public" }) {
+      rows {
+        id
+        title
+        slug
+        content
+        featuredImage {
+          fileUrl
+        }
+        location {
+          name
+          address {
+            city
+            country
+          }
+        }
+        jobType {
+          name
+        }
+        createdAt
+      }
+      total
+    }
+  }
+`;
+
+const GET_COMPANY_FREELANCE_JOBS = gql`
+  query GetCompanyFreelanceJobs($companyId: String!) {
+    getFreelanceJobs(input: { limit: 3, page: 1 }, filter: { companyId: $companyId }) {
+      rows {
+        id
+        title
+        slug
+        salaryMin
+        salaryMax
+        featuredImage {
+          fileUrl
+        }
+        location {
+          name
+          address {
+            city
+            country
+          }
+        }
+        jobType {
+          name
+        }
+        createdAt
+      }
+      total
+    }
+  }
+`;
+
 @Injectable()
 export class CompanyService {
   private userApiUrl = `${environment.apiBaseUrl}/user`;
+  private eventApiUrl = `${environment.apiBaseUrl}/event`;
+  private articleApiUrl = `${environment.apiBaseUrl}/article`;
+  private jobApiUrl = `${environment.apiBaseUrl}/job`;
+  private jobFreelanceApiUrl = `${environment.apiBaseUrl}/jobfreelance`;
 
   constructor(private apollo: Apollo) {}
 
@@ -259,5 +367,83 @@ export class CompanyService {
           );
       })
     );
+  }
+
+  loadCompanyEvents(companyId: string): Observable<any[]> {
+    return this.apollo
+      .query<{ getEvents: { rows: any[]; total: number } }>({
+        query: GET_COMPANY_EVENTS,
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.eventApiUrl,
+        },
+      })
+      .pipe(
+        map((response) => {
+          // Filtrer les événements qui incluent cette entreprise
+          const events = response.data.getEvents.rows.filter(event => 
+            event.companies && event.companies.some(company => company.id === companyId)
+          );
+          // Limiter à 3 événements
+          return events.slice(0, 3);
+        }),
+        catchError(() => of([]))
+      );
+  }
+
+  loadCompanyArticles(companyId: string): Observable<any[]> {
+    return this.apollo
+      .query<{ getArticles: { rows: any[]; total: number } }>({
+        query: GET_COMPANY_ARTICLES,
+        variables: { companyId },
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.articleApiUrl,
+        },
+      })
+      .pipe(
+        map((response) => response.data.getArticles.rows),
+        catchError(() => of([]))
+      );
+  }
+
+  loadCompanyJobs(companyId: string): Observable<any[]> {
+    console.log('[DEBUG] loadCompanyJobs called with companyId:', companyId);
+    return this.apollo
+      .query<{ getJobs: { rows: any[]; total: number } }>({
+        query: GET_COMPANY_JOBS,
+        variables: { companyId },
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.jobApiUrl,
+        },
+      })
+      .pipe(
+        map((response) => {
+          console.log('[DEBUG] loadCompanyJobs response:', response.data.getJobs);
+          return response.data.getJobs.rows;
+        }),
+        catchError(() => of([]))
+      );
+  }
+
+  loadCompanyFreelanceJobs(companyId: string): Observable<any[]> {
+    console.log('[DEBUG] loadCompanyFreelanceJobs called with companyId:', companyId);
+    return this.apollo
+      .query<{ getFreelanceJobs: { rows: any[]; total: number } }>({
+        query: GET_COMPANY_FREELANCE_JOBS,
+        variables: { companyId },
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.jobFreelanceApiUrl,
+        },
+      })
+      .pipe(
+        map((response) => {
+          console.log('[DEBUG] loadCompanyFreelanceJobs response:', response.data.getFreelanceJobs);
+          return response.data.getFreelanceJobs.rows;
+        }),
+        catchError(() => of([]))
+      );
   }
 }

@@ -2,30 +2,100 @@
 @import "colors";
 @import "texts";
 
+// Variables
+$modal-border-radius: 16px;
+$modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+$primary-color: #f1755a;
+$primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+
 .job-form-root {
   min-height: 50vh;
 }
 
+// Modern Modal Styles
+::ng-deep {
+  .popup-modal.custom {
+    .modal-content {
+      border-radius: $modal-border-radius;
+      box-shadow: $modal-shadow;
+      border: none;
+      overflow: hidden;
+      max-width: 600px;
+      width: 90vw;
+    }
+    
+    .modal-header {
+      background: $primary-gradient;
+      padding: 0;
+      border: none;
+      
+      .close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        color: white;
+        opacity: 0.9;
+        font-size: 28px;
+        font-weight: 300;
+        z-index: 10;
+        
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    
+    .modal-body {
+      padding: 40px;
+      background: white;
+    }
+  }
+}
+
 .modal-title {
   text-align: center;
+  padding: 32px 40px 24px 40px;
+  background: $primary-gradient;
+  color: white;
+  
   h4 {
-    @extend %title;
-    margin: 0 0 1.33rem 0;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 12px 0 0 0;
+    color: white;
   }
+  
   .icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px auto;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    
     h4 {
       margin: 0;
+      
+      fa-icon {
+        font-size: 32px;
+        color: white;
+      }
     }
   }
 }
 
 .modal-p {
   text-align: center;
-  margin: 10px 0px !important;
+  margin: 0 0 24px 0 !important;
+  color: #6B7280;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 form {
-  @extend %generic-form;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,35 +103,65 @@ form {
   max-width: 100%;
 
   .error-content {
-    @extend %error-form-text;
-    font-size: 1rem;
-    min-height: 19px;
-    margin-bottom: 10px;
+    background: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #DC2626;
+    min-height: auto;
+    margin-bottom: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    
+    .text-wrapper {
+      text-align: center;
+    }
   }
 
   .form-content {
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 16px;
+    
     label {
-      @extend %generic-label;
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 8px;
+      
+      strong {
+        font-weight: 600;
+      }
     }
 
     .control {
       position: relative;
-      margin-top: 7px;
-      .icon {
-        z-index: 1001;
-        position: absolute;
-        left: 20px;
-        top: 26px;
-        margin-top: -15px;
-        font-size: 16px;
-        line-height: 30px;
-        color: $text-color;
+      margin-top: 0;
+      margin-bottom: 20px;
+      
+      input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid #E5E7EB;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: white;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba(241, 117, 90, 0.1);
+        }
+        
+        &::placeholder {
+          color: #9CA3AF;
+        }
       }
+      
       ng-select {
         text-transform: none;
         text-overflow: clip;
@@ -73,27 +173,36 @@ form {
     .ng-placeholder {
       white-space: normal !important;
       z-index: 1 !important;
+      color: #9CA3AF;
     }
+    
+    .ng-select .ng-select-container {
+      background: white;
+      border: 1.5px solid #E5E7EB !important;
+      border-radius: 8px;
+      min-height: 48px;
+      transition: all 0.3s ease;
+    }
+    
     .ng-select.ng-select-focused > .ng-select-container {
-      border: 1px solid $primary !important;
-      box-shadow: none !important;
+      border-color: $primary-color !important;
+      box-shadow: 0 0 0 3px rgba(241, 117, 90, 0.1) !important;
     }
+    
     .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
-      border-color: $primary !important;
-      box-shadow: none;
+      border-color: $primary-color !important;
+      box-shadow: 0 0 0 3px rgba(241, 117, 90, 0.1);
     }
 
-    .ng-select .ng-select-container {
-      background: $white;
-      border: 1px solid $border !important;
-    }
     .ng-select.ng-select-opened > .ng-select-container {
-      background: $white;
+      background: white;
+      border-color: $primary-color !important;
     }
 
     .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
-      padding: 15px 20px 15px 54px;
+      padding: 8px 16px;
     }
+    
     .ng-select.ng-select-multiple
       .ng-select-container
       .ng-value-container
@@ -102,24 +211,86 @@ form {
       padding-bottom: auto;
       padding-left: auto;
     }
+    
     .ng-select.ng-select-multiple
       .ng-select-container
       .ng-value-container
       .ng-value {
-      background-color: rgba(25, 103, 210, 0.15);
-      color: $primary;
+      background: rgba(241, 117, 90, 0.1);
+      color: $primary-color;
+      border-radius: 6px;
+      padding: 4px 8px;
+      margin: 2px;
+      font-weight: 500;
     }
+    
     .ng-select.ng-select-multiple
       .ng-select-container
       .ng-value-container
       .ng-value
       .ng-value-icon:hover {
-      background-color: transparent;
+      background-color: rgba(241, 117, 90, 0.2);
+    }
+    
+    .ng-dropdown-panel {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin-top: 4px;
+    }
+    
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+      padding: 10px 16px;
+      transition: all 0.2s ease;
+      
+      &.ng-option-marked {
+        background: rgba(241, 117, 90, 0.05);
+      }
+      
+      &.ng-option-selected {
+        background: rgba(241, 117, 90, 0.1);
+        color: $primary-color;
+        font-weight: 500;
+      }
     }
   }
 
   button {
-    width: fit-content;
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    
+    &.primary {
+      background: $primary-gradient;
+      color: white;
+      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(241, 117, 90, 0.4);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    &.secondary {
+      background: white;
+      color: #374151;
+      border: 1.5px solid #E5E7EB;
+      
+      &:hover {
+        background: #F9FAFB;
+        border-color: #D1D5DB;
+      }
+    }
   }
 }
 
@@ -127,31 +298,121 @@ form {
   angular-intl-phone {
     grid-area: input;
     z-index: 4;
-    background-color: $generic-form-background !important;
-    color: $text-color;
-    border-radius: $border-radius;
+    background-color: white !important;
+    color: #374151;
+    border-radius: 8px;
+    
     &.ng-invalid.ng-dirty.ng-touched {
       input {
-        @extend %invalid-control;
+        border-color: #DC2626 !important;
       }
     }
+    
     .iti {
       width: 100% !important;
-      border-radius: $border-radius;
+      border-radius: 8px;
+      
       input {
-        @extend %generic-input;
         width: 100%;
+        padding: 12px 16px 12px 52px;
+        border: 1.5px solid #E5E7EB;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba(241, 117, 90, 0.1);
+        }
       }
     }
   }
 }
 
 // Match modal styles
+::ng-deep {
+  modal#matchJobModal .modal-content {
+    width: 1200px !important;
+    max-width: 95vw;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: $modal-border-radius;
+    box-shadow: $modal-shadow;
+    border: none;
+  }
+  
+  modal#matchJobModal .modal-header {
+    flex-shrink: 0;
+    background: $primary-gradient;
+    padding: 0;
+    border: none;
+    
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: white;
+      opacity: 0.9;
+      font-size: 28px;
+      font-weight: 300;
+      z-index: 10;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  
+  modal#matchJobModal .modal-body {
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: white;
+  }
+  
+  modal#matchJobModal .modal-footer {
+    flex-shrink: 0;
+  }
+}
+
+.match-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.match-modal-header {
+  flex-shrink: 0;
+  background: $primary-gradient;
+  padding: 32px 40px 24px 40px;
+  color: white;
+  z-index: 1;
+  
+  .modal-title {
+    padding: 0;
+    background: transparent;
+    
+    h4 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      color: white;
+    }
+  }
+}
+
 .match-progress {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 15px 0 0 0;
+  margin: 24px 0 0 0;
   
   .progress-step {
     display: flex;
@@ -161,59 +422,82 @@ form {
     max-width: 120px;
     
     .step-number {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background-color: #ddd;
-      color: #888;
+      background: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 16px;
       margin-bottom: 8px;
       transition: all 0.3s ease;
+      border: 2px solid transparent;
     }
     
     .step-label {
-      font-size: 12px;
-      color: #888;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
       text-align: center;
       transition: all 0.3s ease;
+      font-weight: 500;
     }
     
     &.active {
       .step-number {
-        background-color: rgb(25 103 210 / 68%);
-        color: white;
+        background: white;
+        color: $primary-color;
+        border-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+      
       .step-label {
-        color: #333;
+        color: white;
         font-weight: 600;
       }
     }
     
     &.completed {
       .step-number {
-        background-color: #4caf50;
+        background: rgba(76, 175, 80, 0.3);
         color: white;
+        border-color: rgba(76, 175, 80, 0.5);
       }
+      
       .step-label {
-        color: #666;
+        color: rgba(255, 255, 255, 0.9);
       }
     }
   }
   
   .progress-line {
-    height: 2px;
-    background-color: #ddd;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
     flex: 1;
     max-width: 80px;
     margin: 0 10px;
     transition: all 0.3s ease;
+    border-radius: 2px;
     
     &.completed {
-      background-color: #4caf50;
+      background: rgba(76, 175, 80, 0.5);
     }
+  }
+}
+
+.match-modal-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 40px;
+  min-height: 0;
+  background: #FAFBFC;
+  
+  app-loader {
+    width: 100% !important;
+    display: block;
   }
 }
 
@@ -221,24 +505,48 @@ form {
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 24px;
   
-  button.secondary {
-    background-color: #f5f5f5;
-    color: #333;
-    border: 1px solid #ddd;
+  button {
+    min-width: 140px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
     
-    &:hover {
-      background-color: #e0e0e0;
+    &.primary {
+      background: $primary-gradient;
+      color: white;
+      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(241, 117, 90, 0.4);
+      }
     }
-  }
-  
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed !important;
     
-    &:hover {
-      background-color: inherit !important;
+    &.secondary {
+      background: white;
+      color: #374151;
+      border: 1.5px solid #E5E7EB;
+      
+      &:hover {
+        background: #F9FAFB;
+        border-color: #D1D5DB;
+      }
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed !important;
+      
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
     }
   }
 }
@@ -246,8 +554,11 @@ form {
 .match-step {
   min-height: 300px;
   padding: 20px 0;
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   
-  // Remove min-height for results to allow natural flow
   &.match-results {
     min-height: auto;
   }
@@ -258,11 +569,13 @@ form {
     h1, h2, h3, h4, h5, h6 {
       margin-top: 0.5em;
       margin-bottom: 0.5em;
+      color: #1F2937;
     }
     
     p {
       margin-bottom: 1em;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: #374151;
     }
     
     ul, ol {
@@ -277,144 +590,96 @@ form {
   }
 }
 
-// Larger modal for matchJobModal with automatic scroll
-::ng-deep {
-  modal#matchJobModal .modal-content {
-    width: 1200px !important;
-    max-width: 95vw;
-    max-height: 95vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  modal#matchJobModal .modal-header {
-    flex-shrink: 0;
-  }
-  
-  modal#matchJobModal .modal-body {
-    flex: 1;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 0; // Important for flexbox to work properly
-  }
-  
-  modal#matchJobModal .modal-footer {
-    flex-shrink: 0;
-  }
-}
-
-// Wrapper for match modal with fixed header and scrollable content
-.match-modal-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0; // Important for flexbox to work properly
-  width: 100%;
-}
-
-// Fixed header section (no scroll)
-.match-modal-header {
-  flex-shrink: 0;
-  background: white;
-  padding: 20px 30px;
-  border-bottom: 1px solid #e0e0e0;
-  z-index: 1;
-}
-
-// Scrollable content section
-.match-modal-content {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 20px 30px 30px 30px;
-  min-height: 0; // Important for flexbox to work properly
-  
-  // Make sure loader takes full width
-  app-loader {
-    width: 100% !important;
-    display: block;
-  }
-}
-
-// Results section styles
 .match-results {
   .result-section {
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 8px;
+    margin-top: 24px;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid;
     
     h5 {
-      margin-bottom: 12px;
-      font-size: 16px;
-      font-weight: 600;
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     p {
-      color: #555;
-      line-height: 1.6;
+      color: #4B5563;
+      line-height: 1.7;
       white-space: pre-wrap;
+      margin: 0;
     }
     
     &.synthesis {
-      background: #f5f5f5;
-      border-left: 4px solid #1976d2;
+      background: #F0F9FF;
+      border-color: #BAE6FD;
+      
+      h5 {
+        color: #0369A1;
+      }
     }
     
     &.interpretation {
-      background: #e3f2fd;
-      border-left: 4px solid #2196f3;
+      background: #F5F3FF;
+      border-color: #DDD6FE;
       
       h5 {
-        color: #1565c0;
+        color: #7C3AED;
       }
     }
     
     &.recommendations {
-      background: #e8f5e9;
-      border-left: 4px solid #4caf50;
+      background: #F0FDF4;
+      border-color: #BBF7D0;
       
       h5 {
-        color: #2e7d32;
+        color: #15803D;
       }
     }
   }
   
   .evaluation-table-container {
-    margin-top: 30px;
+    margin-top: 32px;
     
     h5 {
-      margin-bottom: 16px;
-      color: #333;
-      font-size: 16px;
-      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1F2937;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     .table-wrapper {
       overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       
       table {
         width: 100%;
         border-collapse: collapse;
         background: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        border-radius: 8px;
-        overflow: hidden;
         
         thead {
           tr {
-            background: #1976d2;
+            background: $primary-gradient;
             color: white;
             
             th {
-              padding: 12px;
+              padding: 16px;
               text-align: left;
               font-weight: 600;
+              font-size: 14px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
               
               &.score-col {
                 text-align: center;
-                width: 80px;
+                width: 100px;
               }
             }
           }
@@ -422,46 +687,60 @@ form {
         
         tbody {
           tr {
+            transition: background 0.2s ease;
+            
             &:nth-child(even) {
-              background: #f9f9f9;
+              background: #F9FAFB;
             }
             
             &:nth-child(odd) {
               background: white;
             }
             
+            &:hover {
+              background: #FEF3F2;
+            }
+            
             td {
-              padding: 12px;
-              border-bottom: 1px solid #e0e0e0;
+              padding: 16px;
+              border-bottom: 1px solid #E5E7EB;
               
               &.criterion {
-                font-weight: 500;
+                font-weight: 600;
+                color: #1F2937;
               }
               
               &.score {
                 text-align: center;
                 
                 .score-value {
-                  font-weight: bold;
-                  font-size: 16px;
+                  display: inline-block;
+                  font-weight: 700;
+                  font-size: 18px;
+                  padding: 6px 12px;
+                  border-radius: 8px;
                   
                   &.excellent {
-                    color: #4caf50;
+                    color: #15803D;
+                    background: #DCFCE7;
                   }
                   
                   &.good {
-                    color: #ff9800;
+                    color: #EA580C;
+                    background: #FFEDD5;
                   }
                   
                   &.poor {
-                    color: #f44336;
+                    color: #DC2626;
+                    background: #FEE2E2;
                   }
                 }
               }
               
               &.reasons,
               &.comments {
-                color: #555;
+                color: #6B7280;
+                line-height: 1.6;
               }
             }
           }
@@ -470,15 +749,16 @@ form {
     }
     
     .grading-legend {
-      margin-top: 12px;
-      padding: 10px;
-      background: #fff3cd;
-      border-radius: 6px;
-      font-size: 13px;
-      color: #856404;
+      margin-top: 16px;
+      padding: 16px;
+      background: #FEF3C7;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #92400E;
+      border: 1px solid #FDE68A;
       
       strong {
-        font-weight: 600;
+        font-weight: 700;
       }
     }
   }
@@ -491,14 +771,43 @@ form {
       width: 98vw !important;
       max-height: 98vh;
     }
+    
+    .popup-modal.custom .modal-content {
+      width: 95vw;
+    }
+    
+    .popup-modal.custom .modal-body {
+      padding: 24px;
+    }
+  }
+  
+  .modal-title {
+    padding: 24px 20px 16px 20px;
+    
+    h4 {
+      font-size: 20px;
+    }
+    
+    .icon {
+      width: 56px;
+      height: 56px;
+      
+      h4 fa-icon {
+        font-size: 28px;
+      }
+    }
   }
   
   .match-modal-header {
-    padding: 15px;
+    padding: 24px 20px 16px 20px;
+    
+    .modal-title h4 {
+      font-size: 22px;
+    }
   }
   
   .match-modal-content {
-    padding: 15px;
+    padding: 20px;
   }
   
   .match-progress {
@@ -506,13 +815,13 @@ form {
       max-width: 80px;
       
       .step-label {
-        font-size: 10px;
+        font-size: 11px;
       }
       
       .step-number {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
       }
     }
     
@@ -524,7 +833,15 @@ form {
   
   .match-step {
     min-height: 200px;
-    padding: 10px 0;
+    padding: 20px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+    }
   }
   
   .match-results {
@@ -535,7 +852,7 @@ form {
           
           thead th,
           tbody td {
-            padding: 8px;
+            padding: 10px;
           }
         }
       }

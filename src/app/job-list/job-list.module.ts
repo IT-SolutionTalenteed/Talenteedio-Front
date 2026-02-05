@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared/shared.module';
+import { FavoriteModule } from '../favorite/favorite.module';
 import { DidYouKnowComponent } from './components/did-you-know/did-you-know.component';
 import { JobItemComponent } from './components/job-item/job-item.component';
 import { JobListBoxFilterComponent } from './components/job-list-box-filter/job-list-box-filter.component';
@@ -44,6 +45,7 @@ import { jobListReducer } from './store/reducers/job-list.reducers';
     NgSelectModule,
     ReactiveFormsModule,
     SharedModule,
+    FavoriteModule,
     StoreModule.forFeature('jobList', jobListReducer),
     EffectsModule.forFeature([JobListEffects, JobListRouterEffects]),
   ],

@@ -1,5 +1,12 @@
 <div class="container">
   <div class="job-box">
+    <div class="favorite-action" *ngIf="user$ | async">
+      <app-favorite-button
+        [itemId]="job.id"
+        type="freelance"
+        size="medium"
+      ></app-favorite-button>
+    </div>
     <div class="content">
       <div class="company-logo">
         <img
@@ -22,7 +29,7 @@
           </li>
           <li>
             <fa-icon class="icon" [icon]="faClock"></fa-icon
-            >{{ job.updatedAt | date : "dd/MM/yy" }}
+            >{{ job.updatedAt | timeAgo }}
           </li>
           <li>
             <fa-icon class="icon" [icon]="faMoney"></fa-icon

@@ -1,0 +1,129 @@
+<div class="favorite-list-container">
+  <div class="page-header">
+    <h1>Mes Favoris</h1>
+    <p class="subtitle">Retrouvez toutes vos offres sauvegardées</p>
+  </div>
+
+  <div class="filter-tabs">
+    <button
+      class="tab"
+      [class.active]="selectedType === null"
+      (click)="filterByType(null)"
+      type="button"
+    >
+      Tous ({{ total }})
+    </button>
+    <button
+      class="tab"
+      [class.active]="selectedType === FavoriteType.JOB"
+      (click)="filterByType(FavoriteType.JOB)"
+      type="button"
+    >
+      <fa-icon [icon]="faBriefcase"></fa-icon>
+      Emplois
+    </button>
+    <button
+      class="tab"
+      [class.active]="selectedType === FavoriteType.FREELANCE"
+      (click)="filterByType(FavoriteType.FREELANCE)"
+      type="button"
+    >
+      <fa-icon [icon]="faLaptop"></fa-icon>
+      Freelance
+    </button>
+  </div>
+
+  <div class="favorites-content">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement de vos favoris...</p>
+    </div>
+
+    <div *ngIf="!isLoading && favorites.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <fa-icon [icon]="faBriefcase" size="3x"></fa-icon>
+      </div>
+      <h2>Aucun favori</h2>
+      <p>Vous n'avez pas encore ajouté d'offres en favoris.</p>
+      <a routerLink="/job" class="btn-primary">Découvrir les offres</a>
+    </div>
+
+    <div *ngIf="!isLoading && favorites.length > 0" class="favorites-grid">
+      <div *ngFor="let favorite of favorites" class="favorite-card">
+        <div class="card-header">
+          <app-favorite-button
+            [itemId]="favorite.job?.id"
+            [type]="favorite.type"
+            size="small"
+          ></app-favorite-button>
+          <span class="type-badge" [class.job]="favorite.type === FavoriteType.JOB">
+            {{ favorite.type === FavoriteType.JOB ? 'Emploi' : 'Freelance' }}
+          </span>
+        </div>
+
+        <div
+          class="card-content"
+          [routerLink]="['/job/detail', favorite.job?.slug]"
+        >
+          <div class="company-logo">
+            <img
+              [src]="favorite.job?.featuredImage?.fileUrl || 'assets/img/favicon.png'"
+              [alt]="favorite.job?.title"
+            />
+          </div>
+
+          <div class="job-details">
+            <h3 class="job-title">
+              {{ favorite.job?.title }}
+            </h3>
+
+            <div class="job-meta">
+              <span class="meta-item">
+                <fa-icon [icon]="faBriefcase"></fa-icon>
+                {{ favorite.job?.category?.name || '-' }}
+              </span>
+              <span class="meta-item">
+                <fa-icon icon="map-marker-alt"></fa-icon>
+                {{ favorite.job?.location?.name || '-' }}
+              </span>
+            </div>
+
+            <div class="job-footer">
+              <span class="salary" *ngIf="favorite.job">
+                {{ favorite.job?.salaryMin }} € -
+                {{ favorite.job?.salaryMax }} €
+              </span>
+              <span class="date">
+                Ajouté {{ favorite.createdAt | timeAgo }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && totalPages > 1" class="pagination">
+      <button
+        class="page-btn"
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)"
+        type="button"
+      >
+        Précédent
+      </button>
+
+      <span class="page-info">
+        Page {{ currentPage }} sur {{ totalPages }}
+      </span>
+
+      <button
+        class="page-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)"
+        type="button"
+      >
+        Suivant
+      </button>
+    </div>
+  </div>
+</div>

@@ -84,6 +84,10 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
             position: relative;
             top: 0;
             margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
             
             h4 {
               font-weight: 700;
@@ -226,6 +230,22 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
       border-radius: $border-radius-lg;
       box-shadow: $shadow-sm;
       border: 1px solid rgba(0, 0, 0, 0.06);
+      
+      .featured-image-section {
+        width: 100%;
+        margin: 0 0 32px 0;
+        border-radius: $border-radius-md;
+        overflow: hidden;
+        box-shadow: $shadow-md;
+        
+        .featured-image {
+          width: 100%;
+          height: auto;
+          max-height: 500px;
+          object-fit: cover;
+          display: block;
+        }
+      }
       
       ::ng-deep {
         h1, h2, h3, h4, h5, h6 {

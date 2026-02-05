@@ -26,6 +26,7 @@ import { RouteurModule } from './routeur/routeur.module';
 import { RequestInterceptor } from './shared/services/request.interceptor';
 import { TransferHttpInterceptorService } from './shared/services/transfer-http.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
 registerLocaleData(localeFr);
 
@@ -71,6 +72,7 @@ export function localStorageSyncReducer(
     NgxGoogleAnalyticsModule.forRoot(environment.googleAnalytics),
     NgxGoogleAnalyticsRouterModule,
     SharedModule,
+    FavoriteModule,
   ],
   providers: [
     {

@@ -1,6 +1,7 @@
 import { Category } from './job.interface';
 import { Status } from './status.enum';
 import { User } from './user.interface';
+import { Company } from './company.interface';
 
 export interface Event {
   id: string;
@@ -12,5 +13,6 @@ export interface Event {
   status: Status;
   admin: { id: string; user: User };
   category: Category;
+  companies?: Company[];
   createdAt: Date;
 }

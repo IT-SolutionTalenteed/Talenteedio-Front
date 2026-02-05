@@ -9,8 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: EventRootComponent,
-    data: { title: 'Event', roles: ['admin', 'hr-first-club'] },
-    canActivate: [EventDetailGuard],
+    data: { title: 'Event' },
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       {
@@ -22,6 +21,7 @@ const routes: Routes = [
         path: 'detail/:slug',
         component: EventDetailRootComponent,
         data: { title: 'Event' },
+        // Guard removed - everyone can access event details without modal
       },
     ],
   },

@@ -56,10 +56,9 @@ a {
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 }
-// transition animation
-* {
-  transition: all 0.3s ease-out;
-}
+
+// Removed global transition to prevent performance issues and visual bugs
+// Apply transitions on specific elements instead
 
 .container-center {
   width: 70%;

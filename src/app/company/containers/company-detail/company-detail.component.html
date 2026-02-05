@@ -54,6 +54,146 @@
                 </p>
               </div>
             </div>
+
+            <!-- Events Section -->
+            <div class="section-card" *ngIf="events$ | async as events">
+              <h2 class="section-title">
+                <fa-icon [icon]="faCalendar" class="title-icon"></fa-icon>
+                Événements
+              </h2>
+              <div class="section-content">
+                <div class="cards-grid" *ngIf="events.length > 0">
+                  <div class="content-card" *ngFor="let event of events">
+                    <a [routerLink]="['/event/detail', event.slug]" class="card-link">
+                      <div class="card-body">
+                        <h3 class="card-title">{{ event.title }}</h3>
+                        <p class="card-description" *ngIf="event.metaDescription">{{ event.metaDescription }}</p>
+                        <div class="card-meta">
+                          <span class="meta-item" *ngIf="event.date">
+                            <fa-icon [icon]="faCalendar"></fa-icon>
+                            {{ event.date | date: 'dd/MM/yyyy' }}
+                          </span>
+                          <span class="meta-item" *ngIf="event.startTime">
+                            {{ event.startTime }}
+                          </span>
+                          <span class="meta-item" *ngIf="event.location">
+                            <fa-icon [icon]="faMapMarker"></fa-icon>
+                            {{ event.location }}
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <p *ngIf="events.length === 0" class="no-data">
+                  Aucun événement publié par cette entreprise.
+                </p>
+              </div>
+            </div>
+
+            <!-- Articles Section -->
+            <div class="section-card" *ngIf="articles$ | async as articles">
+              <h2 class="section-title">
+                <fa-icon [icon]="faNewspaper" class="title-icon"></fa-icon>
+                Articles
+              </h2>
+              <div class="section-content">
+                <div class="cards-grid" *ngIf="articles.length > 0">
+                  <div class="content-card" *ngFor="let article of articles">
+                    <a [routerLink]="['/blog/detail', article.slug]" class="card-link">
+                      <div class="card-image" *ngIf="article.image?.fileUrl">
+                        <img [src]="article.image.fileUrl" [alt]="article.title" />
+                      </div>
+                      <div class="card-body">
+                        <h3 class="card-title">{{ article.title }}</h3>
+                        <p class="card-description" *ngIf="article.metaDescription">{{ article.metaDescription }}</p>
+                        <div class="card-meta">
+                          <span class="meta-item" *ngIf="article.createdAt">
+                            {{ article.createdAt | date: 'dd/MM/yyyy' }}
+                          </span>
+                          <span class="meta-item" *ngIf="article.admin">
+                            Par {{ article.admin.firstname }} {{ article.admin.lastname }}
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <p *ngIf="articles.length === 0" class="no-data">
+                  Aucun article publié par cette entreprise.
+                </p>
+              </div>
+            </div>
+
+            <!-- Jobs Section -->
+            <div class="section-card" *ngIf="(jobs$ | async) as jobs">
+              <h2 class="section-title">
+                <fa-icon [icon]="faJobIcon" class="title-icon"></fa-icon>
+                Annonces
+              </h2>
+              <div class="section-content">
+                <ng-container *ngIf="freelanceJobs$ | async as freelanceJobs">
+                  <div class="cards-grid" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
+                    <!-- Regular Jobs -->
+                    <div class="content-card" *ngFor="let job of jobs">
+                      <a [routerLink]="['/job/detail', job.slug]" class="card-link">
+                        <div class="card-image" *ngIf="job.featuredImage?.fileUrl">
+                          <img [src]="job.featuredImage.fileUrl" [alt]="job.title" />
+                        </div>
+                        <div class="card-body">
+                          <div class="job-badge">Emploi</div>
+                          <h3 class="card-title">{{ job.title }}</h3>
+                          <div class="card-meta">
+                            <span class="meta-item" *ngIf="job.jobType">
+                              <fa-icon [icon]="faBriefcase"></fa-icon>
+                              {{ job.jobType.name }}
+                            </span>
+                            <span class="meta-item" *ngIf="job.location?.address">
+                              <fa-icon [icon]="faMapMarker"></fa-icon>
+                              {{ job.location.address.city }}, {{ job.location.address.country }}
+                            </span>
+                            <span class="meta-item" *ngIf="job.createdAt">
+                              <fa-icon [icon]="faCalendar"></fa-icon>
+                              {{ job.createdAt | date: 'dd/MM/yyyy' }}
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    
+                    <!-- Freelance Jobs -->
+                    <div class="content-card" *ngFor="let freelanceJob of freelanceJobs">
+                      <a [routerLink]="['/freelance/detail', freelanceJob.slug]" class="card-link">
+                        <div class="card-image" *ngIf="freelanceJob.featuredImage?.fileUrl">
+                          <img [src]="freelanceJob.featuredImage.fileUrl" [alt]="freelanceJob.title" />
+                        </div>
+                        <div class="card-body">
+                          <div class="job-badge freelance">Freelance</div>
+                          <h3 class="card-title">{{ freelanceJob.title }}</h3>
+                          <div class="card-meta">
+                            <span class="meta-item" *ngIf="freelanceJob.jobType">
+                              <fa-icon [icon]="faBriefcase"></fa-icon>
+                              {{ freelanceJob.jobType.name }}
+                            </span>
+                            <span class="meta-item" *ngIf="freelanceJob.location?.address">
+                              <fa-icon [icon]="faMapMarker"></fa-icon>
+                              {{ freelanceJob.location.address.city }}, {{ freelanceJob.location.address.country }}
+                            </span>
+                            <span class="meta-item" *ngIf="freelanceJob.createdAt">
+                              <fa-icon [icon]="faCalendar"></fa-icon>
+                              {{ freelanceJob.createdAt | date: 'dd/MM/yyyy' }}
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <p *ngIf="jobs.length === 0 && freelanceJobs.length === 0" class="no-data">
+                    Aucune annonce publiée par cette entreprise.
+                  </p>
+                </ng-container>
+              </div>
+            </div>
           </div>
 
           <!-- Sidebar -->

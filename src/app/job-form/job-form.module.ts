@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { AngularIntlPhoneModule } from 'angular-intl-phone';
 import { ClipboardModule } from 'ngx-clipboard';
 import { SharedModule } from '../shared/shared.module';
+import { FavoriteModule } from '../favorite/favorite.module';
 import { JobFormComponent } from './components/job-form/job-form.component';
 import { JobFormRootComponent } from './containers/job-form-root/job-form-root.component';
 import { JobFormRoutingModule } from './job-form-routing.module';
@@ -24,6 +25,7 @@ import { jobFormReducer } from './store/reducers/job-form.reducers';
     JobFormRoutingModule,
     FontAwesomeModule,
     SharedModule,
+    FavoriteModule,
     ClipboardModule,
     NgSelectModule,
     ReactiveFormsModule,

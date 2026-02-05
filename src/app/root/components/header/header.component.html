@@ -79,6 +79,9 @@
 
       <!-- Right Section -->
       <div class="header-actions">
+        <!-- Favorites Menu (Logged In) -->
+        <app-favorite-menu *ngIf="user"></app-favorite-menu>
+
         <!-- Auth Buttons (Not Logged In) -->
         <div *ngIf="!user" class="auth-buttons">
           <a
@@ -162,6 +165,9 @@
 
       <!-- Mobile Actions -->
       <div class="mobile-actions">
+        <!-- Favorites Menu (Mobile) -->
+        <app-favorite-menu *ngIf="user" class="mobile-favorite-menu"></app-favorite-menu>
+
         <!-- User Avatar -->
         <button *ngIf="user" class="mobile-user-btn" (click)="toggleUserDropdown()">
           <img

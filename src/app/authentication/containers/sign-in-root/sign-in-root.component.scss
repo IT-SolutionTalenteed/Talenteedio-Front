@@ -6,10 +6,5 @@
   min-height: 100vh;
 }
 
-::ng-deep {
-  app-loader {
-    display: block;
-    width: 100%;
-    min-height: 100vh;
-  }
-}
+// Removed ::ng-deep app-loader to prevent global style pollution
+// The loader will inherit the height from its parent container

@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { AuthenticationEffects } from '../authentication/store/effects/authentication.effects';
 import { SharedModule } from '../shared/shared.module';
+import { FavoriteModule } from '../favorite/favorite.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RootComponent } from './components/root/root.component';
@@ -27,6 +28,7 @@ import { RootRoutingModule } from './root-routing.module';
     EffectsModule.forFeature([AuthenticationEffects]),
     FontAwesomeModule,
     SharedModule,
+    FavoriteModule,
   ],
   declarations: [
     RootComponent,

@@ -108,6 +108,25 @@
           <div class="description-content" [innerHTML]="content"></div>
         </div>
 
+        <!-- Participating Companies -->
+        <div class="companies-card" *ngIf="event.companies && event.companies.length > 0">
+          <h2 class="card-title">Participating <span class="accent">Companies</span></h2>
+          <div class="companies-grid">
+            <div *ngFor="let company of event.companies" 
+               class="company-item">
+              <div class="company-logo">
+                <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name">
+                <div *ngIf="!company.logo?.fileUrl" class="company-logo-placeholder">
+                  {{ company.company_name.charAt(0).toUpperCase() }}
+                </div>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">{{ company.company_name }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Share Section -->
         <div class="share-card">
           <h3 class="share-title">Share this event</h3>

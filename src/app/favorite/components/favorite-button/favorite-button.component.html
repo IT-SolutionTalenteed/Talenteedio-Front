@@ -1,0 +1,16 @@
+<button
+  class="favorite-button"
+  [class.is-favorite]="isFavorite"
+  [class.is-loading]="isLoading"
+  [class.size-small]="size === 'small'"
+  [class.size-medium]="size === 'medium'"
+  [class.size-large]="size === 'large'"
+  (click)="toggleFavorite($event)"
+  [disabled]="isLoading"
+  type="button"
+>
+  <fa-icon
+    [icon]="isFavorite ? faHeartSolid : faHeartRegular"
+    [class.animate]="!isLoading"
+  ></fa-icon>
+</button>
