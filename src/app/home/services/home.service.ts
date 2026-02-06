@@ -204,6 +204,7 @@ export class HomeService {
                   endTime
                   location
                   maxParticipants
+                  image
                   companies {
                     company_name
                     logo {

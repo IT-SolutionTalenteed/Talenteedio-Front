@@ -40,6 +40,7 @@ export class EventService {
                   createdAt
                   slug
                   date
+                  image
                   category {
                     id
                     name
@@ -50,6 +51,13 @@ export class EventService {
                     faq {
                       question
                       answer
+                    }
+                  }
+                  companies {
+                    id
+                    company_name
+                    logo {
+                      fileUrl
                     }
                   }
                 }
@@ -89,6 +97,7 @@ export class EventService {
                 content
                 createdAt
                 date
+                image
                 admin {
                   user {
                     name
@@ -126,6 +135,16 @@ export class EventService {
               hasRequestedParticipation
               participationRequestStatus
               userReservation {
+                id
+                companyStand {
+                  id
+                  company_name
+                  logo {
+                    fileUrl
+                  }
+                }
+              }
+              userReservations {
                 id
                 companyStand {
                   id
@@ -198,6 +217,36 @@ export class EventService {
         },
       })
       .pipe(map((response) => response.data.createEventReservation));
+  }
+
+  createMultipleEventReservations(eventId: string, companyStandIds: string[], notes?: string): Observable<any> {
+    return this.apollo
+      .mutate<any>({
+        mutation: gql`
+          mutation CreateMultipleEventReservations($input: CreateMultipleReservationsInput!) {
+            createMultipleEventReservations(input: $input) {
+              id
+              status
+              notes
+              companyStand {
+                id
+                company_name
+                logo {
+                  fileUrl
+                }
+              }
+              createdAt
+            }
+          }
+        `,
+        variables: {
+          input: { eventId, companyStandIds, notes },
+        },
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.createMultipleEventReservations));
   }
 
   cancelEventReservation(reservationId: string): Observable<any> {

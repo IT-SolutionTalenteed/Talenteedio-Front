@@ -2,10 +2,13 @@
 @import "breakpoints.scss";
 
 $max-width: 1200px;
-$border-radius-lg: 16px;
-$border-radius-md: 12px;
-$border-radius-sm: 8px;
-$primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+$border-radius-lg: 20px;
+$border-radius-md: 16px;
+$border-radius-sm: 12px;
+$transition: all 0.3s ease;
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
 
 .category-detail-container {
   width: 100%;
@@ -13,43 +16,22 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
   background: #FAFBFC;
 }
 
-// Hero Section
+// Hero Section - Clean and minimal
 .category-hero {
+  background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+  padding: 80px 20px 60px;
   position: relative;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-  background-color: $secondary;
-  overflow: hidden;
 
   @media (max-width: 768px) {
-    min-height: 320px;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(241, 117, 90, 0.92) 0%, rgba(255, 140, 107, 0.88) 100%);
+    padding: 60px 20px 40px;
   }
 
   .hero-content {
-    position: relative;
-    z-index: 1;
     max-width: $max-width;
     width: 100%;
-    padding: 60px 20px;
+    margin: 0 auto;
     text-align: center;
     color: white;
-
-    @media (max-width: 768px) {
-      padding: 40px 20px;
-    }
   }
 
   .breadcrumb {
@@ -72,11 +54,18 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     }
 
     .separator {
-      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      opacity: 0.7;
+
+      svg {
+        stroke: currentColor;
+      }
     }
 
     .current {
-      opacity: 0.9;
+      opacity: 0.95;
+      font-weight: 600;
     }
   }
 
@@ -85,7 +74,6 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     font-weight: 800;
     margin: 0 0 16px 0;
     line-height: 1.2;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
     @media (max-width: 768px) {
       font-size: 32px;
@@ -93,14 +81,17 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
   }
 
   .category-subtitle {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
     margin: 0 0 24px 0;
     opacity: 0.95;
-    line-height: 1.5;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 
     @media (max-width: 768px) {
-      font-size: 17px;
+      font-size: 16px;
     }
   }
 
@@ -113,27 +104,63 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 24px;
+      padding: 10px 20px;
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
-      border-radius: 24px;
-      font-size: 15px;
+      border-radius: 50px;
+      font-size: 14px;
       font-weight: 600;
       border: 1px solid rgba(255, 255, 255, 0.3);
 
       svg {
         flex-shrink: 0;
+        stroke: currentColor;
       }
     }
   }
 }
 
-// Content Section
-.content-section {
-  padding: 60px 20px;
+// Category Image Section - Large display
+.category-image-section {
+  max-width: $max-width;
+  margin: -40px auto 0;
+  padding: 0 20px 60px;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
-    padding: 40px 20px;
+    margin-top: -20px;
+    padding-bottom: 40px;
+  }
+
+  .image-container {
+    width: 100%;
+    height: 400px;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 4px solid white;
+
+    @media (max-width: 768px) {
+      height: 250px;
+      border-radius: $border-radius-md;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+}
+
+// Content Section - Clean card
+.content-section {
+  padding: 0 20px 60px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px 40px;
   }
 
   .section-container {
@@ -143,24 +170,24 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
 
   .description-card {
     background: white;
-    padding: 40px;
+    padding: 48px;
     border-radius: $border-radius-lg;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: $shadow-sm;
     border: 1px solid #F3F4F6;
 
     @media (max-width: 768px) {
-      padding: 28px;
+      padding: 32px 24px;
     }
   }
 
   .section-title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: $black;
     margin: 0 0 20px 0;
 
     @media (max-width: 768px) {
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 
@@ -178,10 +205,10 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
 
 // Events Section
 .events-section {
-  padding: 0 20px 60px 20px;
+  padding: 0 20px 80px;
 
   @media (max-width: 768px) {
-    padding: 0 20px 40px 20px;
+    padding: 0 20px 60px;
   }
 
   .section-container {
@@ -189,36 +216,38 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     margin: 0 auto;
   }
 
-  .section-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: $black;
-    margin: 0 0 32px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    svg {
-      color: $secondary;
-      flex-shrink: 0;
-    }
+  .section-header {
+    margin-bottom: 40px;
+    text-align: center;
 
     @media (max-width: 768px) {
-      font-size: 26px;
-      margin-bottom: 24px;
-
-      svg {
-        width: 24px;
-        height: 24px;
-      }
+      margin-bottom: 32px;
     }
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: $black;
+    margin: 0 0 12px 0;
+
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: $text-color;
+    margin: 0;
+    font-weight: 500;
   }
 }
 
-// Events Grid
+// Events Grid - Clean and modern
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 24px;
   margin-bottom: 48px;
 
@@ -232,42 +261,37 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     background: white;
     border: 1px solid #F3F4F6;
     border-radius: $border-radius-md;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    height: 100%;
+    padding: 24px;
+    transition: $transition;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    gap: 20px;
+    position: relative;
 
     &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
       border-color: rgba(241, 117, 90, 0.3);
-    }
 
-    .card-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      height: 100%;
-    }
-
-    .card-content {
-      padding: 24px;
-      display: flex;
-      gap: 20px;
-      height: 100%;
+      .event-arrow {
+        opacity: 1;
+        transform: translateX(4px);
+      }
     }
 
     .event-date {
       flex-shrink: 0;
       width: 70px;
       height: 70px;
-      background: $primary-gradient;
+      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
       border-radius: $border-radius-sm;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       color: white;
-      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.25);
 
       .date-day {
         font-size: 28px;
@@ -276,7 +300,7 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
       }
 
       .date-month {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         text-transform: uppercase;
         margin-top: 4px;
@@ -284,11 +308,12 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
       }
     }
 
-    .event-info {
+    .event-content {
       flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
 
       .event-title {
         font-size: 18px;
@@ -325,7 +350,7 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
       .event-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 16px;
         margin-top: auto;
 
         .meta-item {
@@ -343,6 +368,18 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
         }
       }
     }
+
+    .event-arrow {
+      flex-shrink: 0;
+      color: $secondary;
+      opacity: 0;
+      transition: $transition;
+      align-self: center;
+
+      svg {
+        stroke: currentColor;
+      }
+    }
   }
 }
 
@@ -356,6 +393,7 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     color: #D1D5DB;
     margin-bottom: 24px;
     opacity: 0.6;
+    stroke: currentColor;
   }
 
   p {
@@ -367,11 +405,11 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
 
 // FAQ Section
 .faq-section {
-  padding: 0 20px 80px 20px;
-  background: linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 100%);
+  padding: 0 20px 80px;
+  background: white;
 
   @media (max-width: 768px) {
-    padding: 0 20px 60px 20px;
+    padding: 0 20px 60px;
   }
 
   .section-container {
@@ -400,6 +438,7 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
   svg {
     color: #D1D5DB;
     margin-bottom: 32px;
+    stroke: currentColor;
   }
 
   h2 {
@@ -424,16 +463,20 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     align-items: center;
     gap: 8px;
     padding: 14px 28px;
-    background: $primary-gradient;
+    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
     border: none;
-    border-radius: $border-radius-md;
+    border-radius: 50px;
     color: white;
     font-weight: 600;
     font-size: 15px;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: $transition;
     box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+
+    svg {
+      stroke: currentColor;
+    }
 
     &:hover {
       transform: translateY(-2px);

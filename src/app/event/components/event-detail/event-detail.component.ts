@@ -41,7 +41,7 @@ export class EventDetailComponent implements OnChanges, OnInit {
   participationStatus: any = null;
   showReservationModal = false;
   showParticipationModal = false;
-  selectedCompanyStand: any = null;
+  selectedCompanyStands: any[] = [];
   reservationNotes = '';
   participationMessage = '';
   isLoading = false;
@@ -133,8 +133,9 @@ export class EventDetailComponent implements OnChanges, OnInit {
       return 'Demander une participation';
     }
     if (this.isRegularUser) {
-      if (this.participationStatus?.userReservation) {
-        return 'Réservation confirmée';
+      if (this.participationStatus?.userReservations?.length > 0) {
+        const count = this.participationStatus.userReservations.length;
+        return count === 1 ? 'Réservation confirmée' : `${count} réservations confirmées`;
       }
       return 'Réserver ma place';
     }
@@ -145,8 +146,8 @@ export class EventDetailComponent implements OnChanges, OnInit {
     if (this.isCompany && this.participationStatus?.hasRequestedParticipation) {
       return this.participationStatus.participationRequestStatus === 'PENDING';
     }
-    if (this.isRegularUser && this.participationStatus?.userReservation) {
-      return true;
+    if (this.isRegularUser && this.participationStatus?.userReservations?.length > 0) {
+      return false; // Permettre de réserver d'autres stands
     }
     return false;
   }
@@ -170,7 +171,7 @@ export class EventDetailComponent implements OnChanges, OnInit {
 
   closeReservationModal(): void {
     this.showReservationModal = false;
-    this.selectedCompanyStand = null;
+    this.selectedCompanyStands = [];
     this.reservationNotes = '';
   }
 
@@ -179,26 +180,54 @@ export class EventDetailComponent implements OnChanges, OnInit {
     this.participationMessage = '';
   }
 
+  toggleCompanySelection(company: any): void {
+    const index = this.selectedCompanyStands.findIndex(c => c.id === company.id);
+    if (index > -1) {
+      this.selectedCompanyStands.splice(index, 1);
+    } else {
+      // Vérifier si l'utilisateur a déjà une réservation pour ce stand
+      const alreadyReserved = this.participationStatus?.userReservations?.some(
+        (r: any) => r.companyStand.id === company.id
+      );
+      if (!alreadyReserved) {
+        this.selectedCompanyStands.push(company);
+      }
+    }
+  }
+
+  isCompanySelected(company: any): boolean {
+    return this.selectedCompanyStands.some(c => c.id === company.id);
+  }
+
+  isCompanyAlreadyReserved(company: any): boolean {
+    return this.participationStatus?.userReservations?.some(
+      (r: any) => r.companyStand.id === company.id
+    ) || false;
+  }
+
   submitReservation(): void {
-    if (!this.selectedCompanyStand) {
-      alert('Veuillez sélectionner une entreprise.');
+    if (!this.selectedCompanyStands || this.selectedCompanyStands.length === 0) {
+      alert('Veuillez sélectionner au moins une entreprise.');
       return;
     }
 
     this.isLoading = true;
-    this.eventService.createEventReservation(
+    const companyStandIds = this.selectedCompanyStands.map(c => c.id);
+    
+    this.eventService.createMultipleEventReservations(
       this.event.id,
-      this.selectedCompanyStand.id,
+      companyStandIds,
       this.reservationNotes
     ).subscribe({
-      next: () => {
-        alert('Votre réservation a été confirmée avec succès!');
+      next: (reservations) => {
+        const count = reservations.length;
+        alert(`${count} réservation${count > 1 ? 's' : ''} confirmée${count > 1 ? 's' : ''} avec succès!`);
         this.closeReservationModal();
         this.loadParticipationStatus();
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error creating reservation:', error);
+        console.error('Error creating reservations:', error);
         alert(error.message || 'Une erreur est survenue lors de la réservation.');
         this.isLoading = false;
       }

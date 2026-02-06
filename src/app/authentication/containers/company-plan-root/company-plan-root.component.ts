@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { go } from 'src/app/routeur/store/actions/router.actions';
-import { StripeService, StripePlan } from 'src/app/services/stripe.service';
-import { environment } from 'src/environments/environment';
-import { getLoggedUser } from '../../store/selectors/authentication.selectors';
-import { User } from 'src/app/shared/models/user.interface';
+import { Router } from '@angular/router';
+import { CompanyPlanService, CompanyPlan } from '../../services/company-plan.service';
 
 @Component({
   selector: 'app-company-plan-root',
@@ -12,29 +8,24 @@ import { User } from 'src/app/shared/models/user.interface';
   styleUrls: ['./company-plan-root.component.scss'],
 })
 export class CompanyPlanRootComponent implements OnInit {
-  plans: StripePlan[] = [];
+  plans: CompanyPlan[] = [];
   loading = true;
   error: string | null = null;
-  isProcessing = false;
-  currentUser: User | null = null;
 
   constructor(
-    private store: Store,
-    private stripeService: StripeService
+    private router: Router,
+    private companyPlanService: CompanyPlanService
   ) {}
 
   ngOnInit() {
     this.loadPlans();
-    this.store.pipe(select(getLoggedUser)).subscribe(user => {
-      this.currentUser = user;
-    });
   }
 
   loadPlans() {
     this.loading = true;
-    this.stripeService.getPlans().subscribe({
-      next: (response) => {
-        this.plans = response.plans;
+    this.companyPlanService.getActiveCompanyPlans().subscribe({
+      next: (plans) => {
+        this.plans = plans;
         this.loading = false;
       },
       error: (error) => {
@@ -45,70 +36,21 @@ export class CompanyPlanRootComponent implements OnInit {
     });
   }
 
-  select(plan: StripePlan) {
-    if (this.isProcessing) return;
-
-    // Si c'est le plan gratuit (Starter), rediriger directement vers home
-    if (plan.unit_amount === 0) {
-      try {
-        localStorage.setItem('company_selected_plan', 'starter');
-        localStorage.removeItem('company_onboarding_email');
-      } catch {}
-      this.store.dispatch(go({ path: ['/home'] }));
-      return;
-    }
-
-    this.isProcessing = true;
-
-    // Créer une session de checkout Stripe
-    const successUrl = `${window.location.origin}/home?payment=success`;
-    const cancelUrl = `${window.location.origin}/authentication/company-plan?payment=canceled`;
-
-    // Récupérer l'email de l'utilisateur (connecté ou depuis le localStorage après inscription)
-    let userEmail = this.currentUser?.email;
-    if (!userEmail) {
-      try {
-        userEmail = localStorage.getItem('company_onboarding_email') || undefined;
-      } catch {}
-    }
-
-    console.log('Creating checkout session with email:', userEmail);
-
-    if (!userEmail) {
-      alert('Impossible de récupérer votre email. Veuillez vous reconnecter.');
-      this.isProcessing = false;
-      return;
-    }
-
-    this.stripeService
-      .createCheckoutSession(plan.price_id, successUrl, cancelUrl, userEmail)
-      .subscribe({
-        next: (response) => {
-          // Nettoyer le localStorage
-          try {
-            localStorage.removeItem('company_onboarding_email');
-          } catch {}
-          // Rediriger vers Stripe Checkout
-          window.location.href = response.url;
-        },
-        error: (error) => {
-          console.error('Error creating checkout session:', error);
-          alert('Erreur lors de la création de la session de paiement. Veuillez réessayer.');
-          this.isProcessing = false;
-        },
-      });
+  selectPlan(planId: string) {
+    this.router.navigate(['/authentication/company-contact'], {
+      queryParams: { planId },
+    });
   }
 
-  formatPrice(plan: StripePlan): string {
-    if (plan.unit_amount === 0) {
-      return 'Gratuit';
-    }
+  formatLimit(limit: number): string {
+    return limit === -1 ? 'Illimité' : limit.toString();
+  }
 
-    const amount = plan.unit_amount / 100;
-    const currency = plan.currency === 'EUR' ? '€' : plan.currency;
-    const interval = plan.interval === 'month' ? 'mois' : 'an';
-
-    return `${amount}${currency}/${interval}`;
+  formatPrice(price: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price);
   }
 }
 

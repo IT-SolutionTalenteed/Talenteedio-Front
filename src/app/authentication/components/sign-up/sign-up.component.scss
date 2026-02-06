@@ -1,194 +1,739 @@
-@import "form.scss";
-// @import 'fonts.scss';
-@import "breakpoints.scss";
-@import "box-shadow.scss";
-@import "colors.scss";
-@import "sizes.scss";
-@import "buttons.scss";
-@import "texts.scss";
+@import 'colors.scss';
+@import 'breakpoints.scss';
 
-.container {
-  height: 100%;
+// Variables
+$border-radius-lg: 20px;
+$border-radius-md: 16px;
+$border-radius-sm: 12px;
+$transition: all 0.3s ease;
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+$border-color: #E8EAED;
+
+// Main Container - Split Screen Layout
+.signup-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
   width: 100%;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Left Side - Branding Section (same as sign-in)
+.branding-section {
+  background: linear-gradient(135deg, #eb5432 0%, #ec4c28 100%);
+  padding: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.form-container {
-  width: 100%;
-  max-height: 100%;
-  @extend %box-shadow;
-  border-radius: $border-radius;
-  overflow-y: auto;
-  display: flex;
-  align-items: right;
-  flex-direction: column;
   position: relative;
-  padding: $content-padding;
-  .sub-title {
-    @extend %sub-title;
-    max-width: 100%;
+  overflow: hidden;
+
+  // Decorative elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  @media (max-width: 968px) {
+    display: none;
   }
 }
 
-button {
-  @extend %button;
+.branding-content {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  color: white;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 60px;
+
+  .logo-circle {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: $border-radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .brand-name {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+  }
+}
+
+.hero-content {
+  margin-bottom: 48px;
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: white;
+
+    .accent {
+      color: #FFD93D;
+      text-shadow: 0 0 30px rgba(255, 217, 61, 0.5);
+    }
+  }
+
+  .hero-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: $border-radius-md;
+    padding: 24px 20px;
+    text-align: center;
+    transition: $transition;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.3;
+    }
+  }
+}
+
+// Right Side - Form Section
+.form-section {
+  background: white;
+  padding: 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow-y: auto;
+  max-height: 100vh;
+
+  @media (max-width: 968px) {
+    padding: 40px 24px;
+  }
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 540px;
+  padding: 20px 0;
+}
+
+.form-header {
+  margin-bottom: 32px;
+
+  .form-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: $black;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .form-subtitle {
+    font-size: 16px;
+    color: $text-color;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// Form Styles
+form {
   width: 100%;
 }
-form {
-  @extend %generic-form;
-  max-width: 100%;
-  // padding: $standard-padding-top-bottom $standard-padding-left-right;
-  .form-content {
-    .profile-picture-section {
-      margin-bottom: 30px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    
-    a {
-      color: $primary;
-      text-decoration: none;
-      font-style: normal;
-      line-height: 20px;
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-    .password-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: auto;
-    }
-    .label {
-      @extend %generic-label;
-    }
-    .error-content {
-      @extend %error-form-text;
-      font-size: 1rem;
-      height: 19px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Profile Picture Section
+.profile-picture-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+// Form Row for side-by-side fields
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $black;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    color: $secondary;
+    flex-shrink: 0;
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid $border-color;
+  border-radius: $border-radius-sm;
+  font-size: 15px;
+  color: $black;
+  background: white;
+  transition: $transition;
+  outline: none;
+  font-family: inherit;
+
+  &::placeholder {
+    color: #999999;
+  }
+
+  &:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 0 4px rgba(235, 84, 50, 0.1);
+  }
+
+  &:disabled {
+    background: #f9f9f9;
+    cursor: not-allowed;
+  }
+}
+
+// Custom Select Styling
+::ng-deep .custom-select {
+  .ng-select-container {
+    border: 2px solid $border-color !important;
+    border-radius: $border-radius-sm !important;
+    min-height: 46px !important;
+    transition: $transition;
+    background: white !important;
+
+    &:hover {
+      border-color: lighten($secondary, 20%) !important;
     }
   }
 
-  .input {
-    grid-area: input;
-    @extend %generic-input;
-    display: flex;
-    padding: 0;
-    input[type="file"] {
-      display: none; /* Cacher l'input par défaut */
+  &.ng-select-focused .ng-select-container {
+    border-color: $secondary !important;
+    box-shadow: 0 0 0 4px rgba(235, 84, 50, 0.1) !important;
+  }
+
+  .ng-value-container {
+    padding: 4px 14px !important;
+
+    .ng-placeholder {
+      color: #999999 !important;
+      font-size: 15px !important;
     }
-    .file-upload-button {
-      display: flex !important;
-      align-items: center !important;
-      background-color: $primary;
-      color: #fff !important;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      display: inline-block;
-      margin-bottom: 0 !important;
-      /* Style du texte affiché à côté du bouton */
-      + .file-upload-text {
-        margin-left: 10px;
+
+    .ng-value {
+      font-size: 15px !important;
+      color: $black !important;
+    }
+
+    .ng-input {
+      padding: 4px 0 !important;
+      
+      input {
+        font-size: 15px !important;
+        color: $black !important;
+      }
+    }
+  }
+
+  .ng-arrow-wrapper {
+    padding-right: 14px !important;
+  }
+
+  .ng-clear-wrapper {
+    padding-right: 8px !important;
+  }
+}
+
+// Dropdown styling
+::ng-deep .ng-dropdown-panel {
+  border: 2px solid $border-color !important;
+  border-radius: $border-radius-sm !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 4px !important;
+
+  .ng-dropdown-panel-items {
+    .ng-option {
+      padding: 10px 14px !important;
+      font-size: 15px !important;
+      transition: $transition;
+
+      &.ng-option-marked {
+        background-color: #FFF5F2 !important;
+      }
+
+      &.ng-option-selected {
+        background-color: $secondary !important;
+        color: white !important;
+      }
+
+      &:hover {
+        background-color: #FFF5F2 !important;
+      }
+    }
+  }
+}
+
+// Phone Input Styling
+::ng-deep angular-intl-phone {
+  display: block;
+  width: 100%;
+
+  .iti {
+    width: 100% !important;
+    display: block !important;
+
+    input {
+      width: 100% !important;
+      padding: 12px 14px 12px 52px !important;
+      border: 2px solid $border-color !important;
+      border-radius: $border-radius-sm !important;
+      font-size: 15px !important;
+      color: $black !important;
+      background: white !important;
+      transition: $transition !important;
+      outline: none !important;
+      font-family: inherit !important;
+      box-sizing: border-box !important;
+      height: 46px !important;
+
+      &::placeholder {
+        color: #999999 !important;
+      }
+
+      &:focus {
+        border-color: $secondary !important;
+        box-shadow: 0 0 0 4px rgba(235, 84, 50, 0.1) !important;
+      }
+    }
+
+    .iti__flag-container {
+      z-index: 5 !important;
+
+      .iti__selected-flag {
+        padding: 0 8px 0 12px !important;
+        height: 46px !important;
         display: flex !important;
         align-items: center !important;
-      }
-    }
-  }
-}
 
-.signup-label {
-  text-align: center;
-  margin: 30px 0;
-
-  font-style: normal;
-  font-weight: 700;
-  color: $text-color;
-  font-size: 14px;
-  line-height: 20px;
-  a {
-    color: $primary;
-    text-decoration: none;
-    font-size: 15px;
-  }
-}
-@media (max-width: $medium-devices-breakpoint) {
-  .form-container {
-    box-shadow: none;
-    border-radius: 0;
-  }
-}
-
-::ng-deep {
-  .ng-select-multiple {
-    @extend %generic-controls;
-    &.ng-invalid.ng-dirty.ng-touched {
-      input {
-        @extend %invalid-control;
-      }
-      .ng-arrow-wrapper {
-        z-index: 2;
-      }
-      .ng-input {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        padding: 15px 20px !important;
-      }
-      .ng-select-container {
-        box-shadow: 0 0 0 0.2rem rgba(226, 11, 50, 0.25);
-      }
-    }
-
-    .ng-select-container {
-      border: none !important;
-
-      .ng-value-container {
-        padding-top: 0 !important;
-        padding-left: 20px !important;
-
-        .ng-placeholder {
-          top: initial !important;
-          padding-bottom: 0 !important;
-          padding-left: 0 !important;
-          z-index: 10 !important;
+        .iti__flag {
+          margin-right: 8px !important;
         }
 
-        .ng-value {
-          margin-bottom: 0 !important;
-          .ng-value-label {
-            padding-bottom: 0.3rem !important;
+        .iti__arrow {
+          margin-left: 6px !important;
+          border-left: 4px solid transparent !important;
+          border-right: 4px solid transparent !important;
+          border-top: 4px solid #999 !important;
+        }
+      }
+    }
+  }
+
+  .iti__country-list {
+    z-index: 1000 !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    border: 2px solid $border-color !important;
+    border-radius: $border-radius-sm !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+    margin-top: 4px !important;
+
+    .iti__country {
+      padding: 8px 12px !important;
+      transition: $transition !important;
+
+      &:hover {
+        background-color: #FFF5F2 !important;
+      }
+
+      &.iti__highlight {
+        background-color: $secondary !important;
+        color: white !important;
+      }
+
+      .iti__flag {
+        margin-right: 8px !important;
+      }
+
+      .iti__country-name {
+        font-size: 14px !important;
+        color: $black !important;
+      }
+
+      .iti__dial-code {
+        font-size: 13px !important;
+        color: $text-color !important;
+      }
+    }
+  }
+}
+
+// File Upload Styling
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2px dashed $border-color;
+  border-radius: $border-radius-sm;
+  background: #FAFBFC;
+  transition: $transition;
+
+  &:hover {
+    border-color: $secondary;
+    background: #FFF5F2;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .file-upload-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: $secondary;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    white-space: nowrap;
+
+    &:hover {
+      background: $secondary-hover;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .file-upload-text {
+    flex: 1;
+    font-size: 14px;
+    color: $text-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// Password Wrapper
+.password-wrapper {
+  position: relative;
+
+  .form-input {
+    padding-right: 48px;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: $text-color;
+    transition: $transition;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $secondary;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+}
+
+// Conditional Fields
+.conditional-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #FFF5F2 0%, #FFE8E0 100%);
+  border-radius: $border-radius-md;
+  border: 2px solid rgba(235, 84, 50, 0.1);
+}
+
+// Checkbox Group
+.checkbox-group {
+  margin-top: -8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+
+  .checkbox-input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: $secondary;
+    flex-shrink: 0;
+  }
+
+  .checkbox-text {
+    font-size: 14px;
+    color: $text-color;
+    font-weight: 500;
+    line-height: 1.5;
+
+    a {
+      color: $secondary;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// reCAPTCHA
+.recaptcha-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0;
+
+  ::ng-deep > div {
+    transform: scale(0.95);
+    transform-origin: center;
+  }
+}
+
+// Submit Button
+.submit-button {
+  width: 100%;
+  padding: 16px 24px;
+  background: $secondary;
+  color: white;
+  border: none;
+  border-radius: $border-radius-sm;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0 4px 12px rgba(235, 84, 50, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover:not(:disabled) {
+    background: $secondary-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(235, 84, 50, 0.4);
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &:disabled {
+    background: $disabled-button-color;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+
+    svg {
+      transform: none;
+    }
+  }
+}
+
+// Footer Text
+.footer-text {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 14px;
+  color: $text-color;
+  font-weight: 500;
+
+  .signin-link {
+    color: $secondary;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+    transition: $transition;
+
+    &:hover {
+      color: $secondary-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 968px) {
+  .form-header {
+    .form-title {
+      font-size: 28px;
+    }
+  }
+
+  .form-section {
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-wrapper {
+    max-width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Multi-select styling (for values field)
+::ng-deep .ng-select.ng-select-multiple {
+  .ng-select-container {
+    border: 2px solid $border-color !important;
+    border-radius: $border-radius-sm !important;
+    min-height: 46px !important;
+    transition: $transition;
+    background: white !important;
+
+    &:hover {
+      border-color: lighten($secondary, 20%) !important;
+    }
+
+    .ng-value-container {
+      padding: 4px 8px !important;
+
+      .ng-placeholder {
+        color: #999999 !important;
+        font-size: 15px !important;
+        padding: 0 6px !important;
+      }
+
+      .ng-value {
+        background-color: $secondary !important;
+        color: white !important;
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        margin: 2px 4px !important;
+        font-size: 14px !important;
+
+        .ng-value-icon {
+          &:hover {
+            background-color: darken($secondary, 10%) !important;
           }
         }
       }
+
+      .ng-input {
+        padding: 4px 6px !important;
+        
+        input {
+          font-size: 15px !important;
+          color: $black !important;
+        }
+      }
     }
   }
 
-  angular-intl-phone {
-    grid-area: input;
-    z-index: 4;
-    background-color: $generic-form-background !important;
-    color: $text-color;
-    border-radius: $border-radius;
-    &.ng-invalid.ng-dirty.ng-touched {
-      input {
-        @extend %invalid-control;
-      }
-    }
-    .iti {
-      width: 100% !important;
-      border-radius: $border-radius;
-      input {
-        @extend %generic-input;
-        width: 100%;
-      }
-    }
+  &.ng-select-focused .ng-select-container {
+    border-color: $secondary !important;
+    box-shadow: 0 0 0 4px rgba(235, 84, 50, 0.1) !important;
   }
 }

@@ -1,306 +1,414 @@
-<div class="container">
-  <div class="form-container">
-    <div class="sub-title">
-      <strong>Sign Up</strong>
-    </div>
-    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
-      <div class="form-content">
-        <div class="profile-picture-section">
-          <app-profile-picture-upload
-            [currentPictureUrl]="profilePictureUrl"
-            (pictureChanged)="onProfilePictureChanged($event)"
-            (pictureRemoved)="onProfilePictureRemoved()"
-          ></app-profile-picture-upload>
+<div class="signup-container">
+  <!-- Left Side - Branding (same as sign-in) -->
+  <div class="branding-section">
+    <div class="branding-content">
+      <div class="logo-section">
+        <div class="logo-circle">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+          </svg>
         </div>
-        
-        <div class="control">
-          <div for="firstname" class="label">First name*</div>
-          <input
-            #first
-            formControlName="firstname"
-            id="firstname"
-            type="firstname"
-            placeholder="Enter your first name"
-          />
-          <app-validation-error
-            [control]="form.controls['firstname']"
-          ></app-validation-error>
-        </div>
-        <div class="control">
-          <div for="lastname" class="label">Last name*</div>
-          <input
-            formControlName="lastname"
-            id="lastname"
-            type="lastname"
-            placeholder="Enter your last name"
-          />
-          <app-validation-error
-            [control]="form.controls['lastname']"
-          ></app-validation-error>
-        </div>
-        <div class="control">
-          <div for="email" class="label">Email*</div>
-          <input
-            formControlName="email"
-            id="email"
-            type="email"
-            placeholder="Enter your e-mail adress"
-          />
-          <app-validation-error
-            [control]="form.controls['email']"
-            [customErrorLabels]="{
-              duplicateEntry: 'Email already registered'
-            }"
-          ></app-validation-error>
-        </div>
+        <h1 class="brand-name">Talenteed</h1>
+      </div>
+      
+      <div class="hero-content">
+        <h2 class="hero-title">
+          Start Your Journey.<br/>
+          Today. <span class="accent">Now.</span>
+        </h2>
+        <p class="hero-description">
+          Join thousands of professionals who trust Talenteed to exceed their career expectations
+        </p>
+      </div>
 
-        <div class="control">
-          <div for="phone" class="label">Phone*</div>
-          <angular-intl-phone formControlName="phone" [config]="config" />
-          <app-validation-error
-            [control]="form.controls['phone']"
-          ></app-validation-error>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">20k+</div>
+          <div class="stat-label">Events Planned</div>
         </div>
-        <div class="control">
-          <div for="role" class="label">Role*</div>
-          <ng-select
-            formControlName="role"
-            [items]="roles"
-            bindLabel="name"
-            bindValue="name"
-            placeholder="Select a role"
-          >
-          </ng-select>
-          <app-validation-error
-            [control]="form.controls['role']"
-          ></app-validation-error>
+        <div class="stat-card">
+          <div class="stat-number">260+</div>
+          <div class="stat-label">Event Organizers</div>
         </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="values" class="label">Values*</div>
-          <ng-select
-            formControlName="values"
-            [items]="values"
-            bindLabel="title"
-            bindValue="id"
-            placeholder="Select values"
-            [multiple]="true"
-          >
-          </ng-select>
-          <app-validation-error
-            [control]="form.controls['values']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="cv" class="label">Cv*</div>
-          <div
-            class="input"
-            [ngClass]="{
-              'ng-invalid': form.controls['cv'].invalid,
-              'ng-dirty': form.controls['cv'].dirty,
-              'ng-touched': form.controls['cv'].touched
-            }"
-          >
-            <label for="cv" class="file-upload-button"> Choose File </label>
-            <span class="file-upload-text">{{
-              form.controls["cv"].value ?? "No file chosen"
-            }}</span>
-            <input
-              type="file"
-              id="cv"
-              formControlName="cv"
-              (change)="onCvChange($event)"
-            />
-          </div>
-
-          <app-validation-error
-            [control]="form.controls['cv']"
-            [customErrorLabels]="{
-              extensionError: 'Must be a pdf'
-            }"
-          ></app-validation-error>
-        </div>
-
-        <!-- Champs conditionnels pour Talent et Freelance -->
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="tjm" class="label">TJM (Taux Journalier Moyen)*</div>
-          <input
-            formControlName="tjm"
-            id="tjm"
-            type="number"
-            placeholder="Entrez votre TJM en €"
-          />
-          <app-validation-error
-            [control]="form.controls['tjm']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="annualSalary" class="label">Salaire Annuel/12 mois*</div>
-          <input
-            formControlName="annualSalary"
-            id="annualSalary"
-            type="number"
-            placeholder="Entrez votre salaire annuel divisé par 12"
-          />
-          <app-validation-error
-            [control]="form.controls['annualSalary']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="mobility" class="label">Mobilité*</div>
-          <input
-            formControlName="mobility"
-            id="mobility"
-            type="text"
-            placeholder="Ex: France, Europe, International"
-          />
-          <app-validation-error
-            [control]="form.controls['mobility']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="availabilityDate" class="label">Date de disponibilité*</div>
-          <input
-            formControlName="availabilityDate"
-            id="availabilityDate"
-            type="date"
-            placeholder="Sélectionnez une date"
-          />
-          <app-validation-error
-            [control]="form.controls['availabilityDate']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="desiredLocation" class="label">Souhaite travailler où*</div>
-          <input
-            formControlName="desiredLocation"
-            id="desiredLocation"
-            type="text"
-            placeholder="Ex: Paris, Lyon, Remote"
-          />
-          <app-validation-error
-            [control]="form.controls['desiredLocation']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control" *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance">
-          <div for="workMode" class="label">Mode de travail*</div>
-          <ng-select
-            formControlName="workMode"
-            [items]="workModes"
-            bindLabel="label"
-            bindValue="value"
-            placeholder="Sélectionnez un mode de travail"
-          >
-          </ng-select>
-          <app-validation-error
-            [control]="form.controls['workMode']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control password">
-          <div for="password" class="label">Password*</div>
-          <input
-            #password
-            formControlName="password"
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-          />
-          <img
-            src="{{
-              !passwordEl
-                ? '/assets/img/hide.png'
-                : passwordEl.nativeElement.type === 'password'
-                ? '/assets/img/hide.png'
-                : '/assets/img/show.png'
-            }}"
-            alt="show password"
-            (click)="showPassword('password')"
-          />
-          <app-validation-error
-            [control]="form.controls['password']"
-          ></app-validation-error>
-        </div>
-
-        <div class="control confirm-password">
-          <div for="confirmationPassword" class="label">Confirm password*</div>
-          <input
-            #confirmationPassword
-            formControlName="confirmationPassword"
-            id="confirmationPassword"
-            type="password"
-            placeholder="Confirm your password"
-          />
-          <img
-            src="{{
-              !passwordEl
-                ? '/assets/img/hide.png'
-                : passwordEl.nativeElement.type === 'password'
-                ? '/assets/img/hide.png'
-                : '/assets/img/show.png'
-            }}"
-            alt="show password"
-            (click)="showPassword('confirmationPassword')"
-          />
-          <app-validation-error
-            [control]="form.controls['confirmationPassword']"
-            [customErrorLabels]="{
-              mustMatch: 'Password does not match'
-            }"
-          ></app-validation-error>
-        </div>
-        <div style="margin-bottom: 20px" *ngIf="isWindowLoaded">
-          <ngx-recaptcha2
-            #captchaElem
-            [siteKey]="siteKey"
-            (reset)="handleReset()"
-            (expire)="handleExpire()"
-            (load)="handleLoad()"
-            (success)="handleSuccess($event)"
-            [useGlobalDomain]="false"
-            [size]="size"
-            [hl]="lang"
-            [theme]="theme"
-            [type]="type"
-            formControlName="recaptcha"
-          >
-          </ngx-recaptcha2>
-        </div>
-        <div
-          class="checkbox-control"
-          *ngIf="form.value?.role === roleNameTalent"
-        >
-          <input type="checkbox" formControlName="consent" />
-          <div class="label">
-            I acknowledge having read
-            <a [href]="consentLink" target="_blank">the consent</a> and agree to
-            sign it electronically with my name.
-          </div>
-        </div>
-        <div class="footer">
-          <div class="button-wrapper">
-            <button
-              class="primary"
-              [disabled]="
-                !form.value.recaptcha ||
-                (form.value?.role === roleNameTalent && !form.value.consent)
-              "
-            >
-              REGISTER
-            </button>
-          </div>
+        <div class="stat-card">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Companies</div>
         </div>
       </div>
-    </form>
-    <div class="signup-label">
-      Already have an account ?
-      <a routerLink="/authentication/sign-in">Sign in</a>
+    </div>
+  </div>
+
+  <!-- Right Side - Sign Up Form -->
+  <div class="form-section">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h2 class="form-title">Create Account</h2>
+        <p class="form-subtitle">Join our community today</p>
+      </div>
+
+      <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+        <div class="form-content">
+          <!-- Profile Picture -->
+          <div class="profile-picture-section">
+            <app-profile-picture-upload
+              [currentPictureUrl]="profilePictureUrl"
+              (pictureChanged)="onProfilePictureChanged($event)"
+              (pictureRemoved)="onProfilePictureRemoved()"
+            ></app-profile-picture-upload>
+          </div>
+
+          <!-- Name Fields Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstname" class="form-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+                First Name
+              </label>
+              <input
+                #first
+                id="firstname"
+                formControlName="firstname"
+                placeholder="Enter your first name"
+                type="text"
+                class="form-input"
+              />
+              <app-validation-error [control]="form.controls['firstname']"></app-validation-error>
+            </div>
+
+            <div class="form-group">
+              <label for="lastname" class="form-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+                Last Name
+              </label>
+              <input
+                id="lastname"
+                formControlName="lastname"
+                placeholder="Enter your last name"
+                type="text"
+                class="form-input"
+              />
+              <app-validation-error [control]="form.controls['lastname']"></app-validation-error>
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email" class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+              </svg>
+              Email Address
+            </label>
+            <input
+              id="email"
+              formControlName="email"
+              placeholder="your.email@example.com"
+              type="email"
+              class="form-input"
+            />
+            <app-validation-error
+              [control]="form.controls['email']"
+              [customErrorLabels]="{duplicateEntry: 'Email already registered'}"
+            ></app-validation-error>
+          </div>
+
+          <!-- Phone Field -->
+          <div class="form-group">
+            <label for="phone" class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+              </svg>
+              Phone Number
+            </label>
+            <angular-intl-phone formControlName="phone" [config]="config" />
+            <app-validation-error [control]="form.controls['phone']"></app-validation-error>
+          </div>
+
+          <!-- Role Field -->
+          <div class="form-group">
+            <label for="role" class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z" fill="currentColor"/>
+              </svg>
+              Role
+            </label>
+            <ng-select
+              formControlName="role"
+              [items]="roles"
+              bindLabel="name"
+              bindValue="name"
+              placeholder="Select a role"
+              class="custom-select"
+            >
+            </ng-select>
+            <app-validation-error [control]="form.controls['role']"></app-validation-error>
+          </div>
+
+          <!-- Conditional Fields for Talent/Freelance -->
+          <div *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance" class="conditional-fields">
+            
+            <!-- Values -->
+            <div class="form-group">
+              <label for="values" class="form-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+                Values
+              </label>
+              <ng-select
+                formControlName="values"
+                [items]="values"
+                bindLabel="title"
+                bindValue="id"
+                placeholder="Select values"
+                [multiple]="true"
+                class="custom-select"
+              >
+              </ng-select>
+              <app-validation-error [control]="form.controls['values']"></app-validation-error>
+            </div>
+
+            <!-- CV Upload -->
+            <div class="form-group">
+              <label for="cv" class="form-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z" fill="currentColor"/>
+                </svg>
+                CV (PDF)
+              </label>
+              <div class="file-upload-wrapper">
+                <label for="cv" class="file-upload-button">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 16H15V10H19L12 3L5 10H9V16ZM5 18H19V20H5V18Z" fill="currentColor"/>
+                  </svg>
+                  Choose File
+                </label>
+                <span class="file-upload-text">{{ form.controls["cv"].value ?? "No file chosen" }}</span>
+                <input
+                  type="file"
+                  id="cv"
+                  formControlName="cv"
+                  (change)="onCvChange($event)"
+                  accept=".pdf"
+                />
+              </div>
+              <app-validation-error
+                [control]="form.controls['cv']"
+                [customErrorLabels]="{extensionError: 'Must be a PDF file'}"
+              ></app-validation-error>
+            </div>
+
+            <!-- TJM and Salary Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tjm" class="form-label">TJM (€)</label>
+                <input
+                  id="tjm"
+                  formControlName="tjm"
+                  type="number"
+                  placeholder="Daily rate"
+                  class="form-input"
+                />
+                <app-validation-error [control]="form.controls['tjm']"></app-validation-error>
+              </div>
+
+              <div class="form-group">
+                <label for="annualSalary" class="form-label">Annual Salary/12</label>
+                <input
+                  id="annualSalary"
+                  formControlName="annualSalary"
+                  type="number"
+                  placeholder="Monthly salary"
+                  class="form-input"
+                />
+                <app-validation-error [control]="form.controls['annualSalary']"></app-validation-error>
+              </div>
+            </div>
+
+            <!-- Mobility and Location Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="mobility" class="form-label">Mobility</label>
+                <input
+                  id="mobility"
+                  formControlName="mobility"
+                  type="text"
+                  placeholder="France, Europe..."
+                  class="form-input"
+                />
+                <app-validation-error [control]="form.controls['mobility']"></app-validation-error>
+              </div>
+
+              <div class="form-group">
+                <label for="desiredLocation" class="form-label">Desired Location</label>
+                <input
+                  id="desiredLocation"
+                  formControlName="desiredLocation"
+                  type="text"
+                  placeholder="Paris, Remote..."
+                  class="form-input"
+                />
+                <app-validation-error [control]="form.controls['desiredLocation']"></app-validation-error>
+              </div>
+            </div>
+
+            <!-- Availability and Work Mode Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="availabilityDate" class="form-label">Availability Date</label>
+                <input
+                  id="availabilityDate"
+                  formControlName="availabilityDate"
+                  type="date"
+                  class="form-input"
+                />
+                <app-validation-error [control]="form.controls['availabilityDate']"></app-validation-error>
+              </div>
+
+              <div class="form-group">
+                <label for="workMode" class="form-label">Work Mode</label>
+                <ng-select
+                  formControlName="workMode"
+                  [items]="workModes"
+                  bindLabel="label"
+                  bindValue="value"
+                  placeholder="Select work mode"
+                  class="custom-select"
+                >
+                </ng-select>
+                <app-validation-error [control]="form.controls['workMode']"></app-validation-error>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Fields -->
+          <div class="form-group">
+            <label for="password" class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+              </svg>
+              Password
+            </label>
+            <div class="password-wrapper">
+              <input
+                #password
+                id="password"
+                formControlName="password"
+                type="password"
+                placeholder="Enter your password"
+                class="form-input"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword('password')"
+                tabindex="-1"
+              >
+                <svg *ngIf="passwordEl?.nativeElement?.type === 'password'" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+                </svg>
+                <svg *ngIf="passwordEl?.nativeElement?.type !== 'password'" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+            <app-validation-error [control]="form.controls['password']"></app-validation-error>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmationPassword" class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+              </svg>
+              Confirm Password
+            </label>
+            <div class="password-wrapper">
+              <input
+                #confirmationPassword
+                id="confirmationPassword"
+                formControlName="confirmationPassword"
+                type="password"
+                placeholder="Confirm your password"
+                class="form-input"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword('confirmationPassword')"
+                tabindex="-1"
+              >
+                <svg *ngIf="confirmationPasswordEl?.nativeElement?.type === 'password'" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+                </svg>
+                <svg *ngIf="confirmationPasswordEl?.nativeElement?.type !== 'password'" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+            <app-validation-error
+              [control]="form.controls['confirmationPassword']"
+              [customErrorLabels]="{mustMatch: 'Password does not match'}"
+            ></app-validation-error>
+          </div>
+
+          <!-- Consent Checkbox for Talent -->
+          <div class="checkbox-group" *ngIf="form.value?.role === roleNameTalent">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                id="consent"
+                formControlName="consent"
+                class="checkbox-input"
+              />
+              <span class="checkbox-text">
+                I acknowledge having read
+                <a [href]="consentLink" target="_blank">the consent</a> and agree to sign it electronically with my name.
+              </span>
+            </label>
+          </div>
+
+          <!-- reCAPTCHA -->
+          <div class="recaptcha-wrapper" *ngIf="isWindowLoaded">
+            <ngx-recaptcha2
+              #captchaElem
+              [siteKey]="siteKey"
+              (reset)="handleReset()"
+              (expire)="handleExpire()"
+              (load)="handleLoad()"
+              (success)="handleSuccess($event)"
+              [useGlobalDomain]="false"
+              [size]="size"
+              [hl]="lang"
+              [theme]="theme"
+              [type]="type"
+              formControlName="recaptcha"
+            >
+            </ngx-recaptcha2>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="!form.value.recaptcha || (form.value?.role === roleNameTalent && !form.value.consent)"
+          >
+            <span>Create Account</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Sign In Link -->
+      <div class="footer-text">
+        Already have an account?
+        <a routerLink="/authentication/sign-in" class="signin-link">Sign in</a>
+      </div>
     </div>
   </div>
 </div>

@@ -85,7 +85,7 @@
         <!-- Auth Buttons (Not Logged In) -->
         <div *ngIf="!user" class="auth-buttons">
           <a
-            [routerLink]="['/authentication/sign-up']"
+            [routerLink]="['/authentication/sign-up-choice']"
             class="btn btn-outline"
           >
             Inscription
@@ -249,7 +249,7 @@
         <!-- Mobile Auth Buttons -->
         <div *ngIf="!user" class="mobile-auth-buttons">
           <a
-            [routerLink]="['/authentication/sign-up']"
+            [routerLink]="['/authentication/sign-up-choice']"
             class="mobile-btn mobile-btn-outline"
             (click)="onToggleNavbar()"
           >

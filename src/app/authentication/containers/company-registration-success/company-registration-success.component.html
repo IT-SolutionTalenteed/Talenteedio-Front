@@ -1,0 +1,88 @@
+<div class="success-container">
+  <div class="success-content">
+    <!-- Success Icon -->
+    <div class="success-icon">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" fill="#28a745" opacity="0.1"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#28a745"/>
+      </svg>
+    </div>
+
+    <!-- Success Message -->
+    <h1 class="success-title">Demande envoyée avec succès !</h1>
+    <p class="success-description">
+      Merci pour votre inscription. Votre demande a été transmise à notre équipe.
+    </p>
+
+    <!-- Info Steps -->
+    <div class="info-steps">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Vérification</h3>
+          <p>Notre équipe va examiner votre demande dans les plus brefs délais</p>
+        </div>
+      </div>
+
+      <div class="step-divider">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Notification</h3>
+          <p>Vous recevrez un email de confirmation une fois votre compte validé</p>
+        </div>
+      </div>
+
+      <div class="step-divider">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Activation</h3>
+          <p>Vous pourrez alors vous connecter avec vos identifiants</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
+      </svg>
+      <div>
+        <strong>Identifiants de connexion</strong>
+        <p>Votre email sera votre identifiant. Un mot de passe temporaire vous sera communiqué par email après validation.</p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn-secondary" (click)="goToHome()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z" fill="currentColor"/>
+        </svg>
+        Retour à l'accueil
+      </button>
+      <button class="btn-primary" (click)="goToLogin()">
+        Aller à la connexion
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <p>Des questions ? Contactez-nous à <a href="mailto:contact@talenteed.com">contact@talenteed.com</a></p>
+    </div>
+  </div>
+</div>

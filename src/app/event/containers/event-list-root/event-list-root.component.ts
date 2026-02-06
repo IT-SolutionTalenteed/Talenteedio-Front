@@ -29,6 +29,8 @@ interface CategoryWithEvents {
   faq?: { question: string; answer: string }[];
   events: Event[];
   totalEvents: number;
+  displayedEventsCount: number; // Nombre d'événements affichés
+  showAll: boolean; // Flag pour afficher tous les événements
 }
 
 @Component({
@@ -135,7 +137,9 @@ export class EventListRootComponent implements OnInit, OnDestroy {
           image: category.image,
           faq: category.faq,
           events: eventsByCategoryId.get(category.id) || [],
-          totalEvents: eventCountByCategory.get(category.id) || 0
+          totalEvents: eventCountByCategory.get(category.id) || 0,
+          displayedEventsCount: 3, // Afficher 3 événements par défaut
+          showAll: false
         }))
         .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
         
@@ -166,6 +170,32 @@ export class EventListRootComponent implements OnInit, OnDestroy {
   
   viewMoreCategory(categorySlug: string) {
     this.router.navigate(['/event/category', categorySlug]);
+  }
+  
+  loadMoreEventsInCategory(categoryId: string) {
+    const category = this.categoriesWithEvents.find(c => c.id === categoryId);
+    if (category) {
+      category.displayedEventsCount = Math.min(
+        category.displayedEventsCount + 3,
+        category.events.length
+      );
+    }
+  }
+  
+  showAllEventsInCategory(categoryId: string) {
+    const category = this.categoriesWithEvents.find(c => c.id === categoryId);
+    if (category) {
+      category.displayedEventsCount = category.events.length;
+      category.showAll = true;
+    }
+  }
+  
+  getDisplayedEvents(category: CategoryWithEvents): Event[] {
+    return category.events.slice(0, category.displayedEventsCount);
+  }
+  
+  hasMoreEventsToShow(category: CategoryWithEvents): boolean {
+    return category.displayedEventsCount < category.events.length;
   }
   
   onSaveFilter(filter) {

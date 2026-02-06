@@ -26,6 +26,8 @@ import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign
 import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
 import { ConsultantRegisterRootComponent } from './containers/consultant-register-root/consultant-register-root.component';
 import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
+import { CompanyContactRootComponent } from './containers/company-contact-root/company-contact-root.component';
+import { CompanyRegistrationSuccessComponent } from './containers/company-registration-success/company-registration-success.component';
 import { GoogleSigninComponent } from './components/google-signin/google-signin.component';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
 
@@ -59,6 +61,8 @@ import { GoogleRegisterComponent } from './components/google-register/google-reg
     CompanyRegisterRootComponent,
     ConsultantRegisterRootComponent,
     CompanyPlanRootComponent,
+    CompanyContactRootComponent,
+    CompanyRegistrationSuccessComponent,
     GoogleSigninComponent,
     GoogleRegisterComponent,
   ],

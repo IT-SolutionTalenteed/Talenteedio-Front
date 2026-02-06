@@ -15,7 +15,7 @@ export class SignUpChoiceRootComponent {
   }
 
   onChooseCompany() {
-    this.store.dispatch(go({ path: ['/authentication/company-register'] }));
+    this.store.dispatch(go({ path: ['/authentication/company-plan'] }));
   }
 
   onChooseConsultant() {

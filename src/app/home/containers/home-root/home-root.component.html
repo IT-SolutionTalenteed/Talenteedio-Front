@@ -126,7 +126,14 @@
     <app-loader [isLoading]="upcomingEventsLoading$ | async">
       <div class="events-grid" *ngIf="upcomingEvents$ | async as events">
         <div class="event-card" *ngFor="let event of events" [routerLink]="['/event/detail', event.slug]">
-          <div class="event-date-badge">
+          <div class="event-image" *ngIf="event.image">
+            <img [src]="event.image" [alt]="event.title" />
+            <div class="event-date-badge">
+              <div class="event-day">{{ event.date | date: 'dd' }}</div>
+              <div class="event-month">{{ event.date | date: 'MMM' }}</div>
+            </div>
+          </div>
+          <div class="event-date-badge" *ngIf="!event.image">
             <div class="event-day">{{ event.date | date: 'dd' }}</div>
             <div class="event-month">{{ event.date | date: 'MMM' }}</div>
           </div>

@@ -1,12 +1,161 @@
-<div class="container">
-  <div class="choice">
-    <h2>Créer un compte</h2>
-    <p>Choisissez votre profil:</p>
-    <div class="buttons">
-      <button class="btn primary" (click)="onChooseClient()">Je cherche un job</button>
-      <button class="btn secondary" (click)="onChooseCompany()">Je suis une société</button>
-      <button class="btn tertiary" (click)="onChooseConsultant()">Je suis consultant</button>
+<div class="choice-container-full">
+  <div class="choice-wrapper">
+    <!-- Header with Logo -->
+    <div class="choice-header">
+      <div class="logo-section">
+        <div class="logo-circle">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h1 class="brand-name">Talenteed</h1>
+      </div>
+      
+      <h2 class="choice-title">Create Your Account</h2>
+      <p class="choice-subtitle">Choose your profile to get started</p>
+    </div>
+
+    <!-- Choice Cards -->
+    <div class="choice-cards">
+      <!-- Talent/Job Seeker Card -->
+      <div class="choice-card" (click)="onChooseClient()">
+        <div class="card-icon talent">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">I'm looking for a job</h3>
+          <p class="card-description">Find your dream job and connect with top companies</p>
+          <ul class="card-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Access to exclusive job offers
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Professional profile showcase
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Career development resources
+            </li>
+          </ul>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Company Card -->
+      <div class="choice-card" (click)="onChooseCompany()">
+        <div class="card-icon company">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">I'm a company</h3>
+          <p class="card-description">Find the best talents and grow your team</p>
+          <ul class="card-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Post unlimited job offers
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Access to talent database
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Recruitment management tools
+            </li>
+          </ul>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Consultant Card (Coming Soon) -->
+      <div class="choice-card disabled">
+        <div class="coming-soon-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="currentColor"/>
+          </svg>
+          Coming Soon
+        </div>
+        <div class="card-icon consultant">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6ZM20 18H4V8H20V18ZM8 13.01L10.01 15L15 10L16.5 11.5L10.01 18L6.5 14.5L8 13.01Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">I'm a consultant</h3>
+          <p class="card-description">Offer your expertise and find consulting missions</p>
+          <ul class="card-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Exclusive consulting missions
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Professional network expansion
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+              </svg>
+              Project management tools
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-section">
+      <div class="footer-text">
+        Already have an account?
+        <a routerLink="/authentication/sign-in" class="signin-link">Sign in</a>
+      </div>
+      
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-number">20k+</div>
+          <div class="stat-label">Events Planned</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">260+</div>
+          <div class="stat-label">Event Organizers</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Companies</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
