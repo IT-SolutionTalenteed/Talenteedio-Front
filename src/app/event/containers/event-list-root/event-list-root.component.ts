@@ -164,10 +164,8 @@ export class EventListRootComponent implements OnInit, OnDestroy {
     });
   }
   
-  viewMoreCategory(categoryId: string) {
-    this.router.navigate(['/event/list'], { 
-      queryParams: { category: categoryId } 
-    });
+  viewMoreCategory(categorySlug: string) {
+    this.router.navigate(['/event/category', categorySlug]);
   }
   
   onSaveFilter(filter) {

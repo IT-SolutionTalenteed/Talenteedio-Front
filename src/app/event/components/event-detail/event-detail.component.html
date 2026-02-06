@@ -186,19 +186,35 @@
           </div>
         </div>
 
-        <div class="sidebar-card cta-card">
+        <div class="sidebar-card cta-card" *ngIf="shouldShowCTA">
           <div class="cta-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
             </svg>
           </div>
-          <h3 class="cta-title">Interested?</h3>
-          <p class="cta-text">Get more information about this event and stay updated.</p>
-          <button class="cta-button">
-            Learn More
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <h3 class="cta-title">{{ isAuthenticated ? 'Participer' : 'Intéressé?' }}</h3>
+          <p class="cta-text" *ngIf="!isAuthenticated">Connectez-vous pour participer à cet événement.</p>
+          <p class="cta-text" *ngIf="isCompany && !participationStatus?.hasRequestedParticipation">Demandez à participer à cet événement en tant qu'exposant.</p>
+          <p class="cta-text" *ngIf="isCompany && participationStatus?.hasRequestedParticipation && participationStatus?.participationRequestStatus === 'PENDING'">Votre demande de participation est en cours de traitement.</p>
+          <p class="cta-text" *ngIf="isCompany && participationStatus?.participationRequestStatus === 'REJECTED'">Votre demande de participation a été refusée.</p>
+          <p class="cta-text" *ngIf="isRegularUser && !participationStatus?.userReservation">Réservez votre place sur le stand d'une entreprise participante.</p>
+          <p class="cta-text" *ngIf="isRegularUser && participationStatus?.userReservation">Vous avez réservé une place sur le stand de {{ participationStatus.userReservation.companyStand.company_name }}.</p>
+          
+          <button class="cta-button" 
+                  (click)="handleCTAClick()" 
+                  [disabled]="ctaButtonDisabled"
+                  [class.disabled]="ctaButtonDisabled">
+            {{ ctaButtonText }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" *ngIf="!ctaButtonDisabled">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
+          </button>
+
+          <button class="cta-button-secondary" 
+                  *ngIf="isRegularUser && participationStatus?.userReservation"
+                  (click)="cancelReservation()"
+                  [disabled]="isLoading">
+            Annuler ma réservation
           </button>
         </div>
       </div>
@@ -210,4 +226,99 @@
 <div class="loading-container" *ngIf="!event">
   <div class="loading-spinner"></div>
   <p>Loading event details...</p>
+</div>
+
+<!-- Reservation Modal -->
+<div class="modal-overlay" *ngIf="showReservationModal" (click)="closeReservationModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Réserver ma place</h2>
+      <button class="modal-close" (click)="closeReservationModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-description">Sélectionnez l'entreprise dont vous souhaitez visiter le stand lors de cet événement.</p>
+      
+      <div class="company-selection">
+        <label class="form-label">Entreprise *</label>
+        <div class="company-options">
+          <div *ngFor="let company of event.companies" 
+               class="company-option"
+               [class.selected]="selectedCompanyStand?.id === company.id"
+               (click)="selectedCompanyStand = company">
+            <div class="company-option-logo">
+              <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name">
+              <div *ngIf="!company.logo?.fileUrl" class="company-option-logo-placeholder">
+                {{ company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="company-option-name">{{ company.company_name }}</div>
+            <div class="company-option-check" *ngIf="selectedCompanyStand?.id === company.id">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes (optionnel)</label>
+        <textarea 
+          class="form-textarea"
+          [(ngModel)]="reservationNotes"
+          placeholder="Ajoutez des notes ou des questions pour l'entreprise..."
+          rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeReservationModal()" [disabled]="isLoading">
+        Annuler
+      </button>
+      <button class="btn-primary" (click)="submitReservation()" [disabled]="!selectedCompanyStand || isLoading">
+        {{ isLoading ? 'En cours...' : 'Confirmer la réservation' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Participation Request Modal -->
+<div class="modal-overlay" *ngIf="showParticipationModal" (click)="closeParticipationModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Demander une participation</h2>
+      <button class="modal-close" (click)="closeParticipationModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-description">Envoyez une demande pour participer à cet événement en tant qu'exposant. Un administrateur examinera votre demande.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Message (optionnel)</label>
+        <textarea 
+          class="form-textarea"
+          [(ngModel)]="participationMessage"
+          placeholder="Présentez votre entreprise et expliquez pourquoi vous souhaitez participer..."
+          rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeParticipationModal()" [disabled]="isLoading">
+        Annuler
+      </button>
+      <button class="btn-primary" (click)="submitParticipationRequest()" [disabled]="isLoading">
+        {{ isLoading ? 'En cours...' : 'Envoyer la demande' }}
+      </button>
+    </div>
+  </div>
 </div>

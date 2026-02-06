@@ -23,10 +23,12 @@
             <!-- Text Content -->
             <div class="category-info" [class.full-width]="!category.image">
               <div class="category-title-row">
-                <h2 class="category-title">{{ category.name }}</h2>
+                <a [routerLink]="['/event/category', category.slug]" class="category-title-link">
+                  <h2 class="category-title">{{ category.name }}</h2>
+                </a>
                 <button 
                   class="view-more-btn" 
-                  (click)="viewMoreCategory(category.id)"
+                  (click)="viewMoreCategory(category.slug)"
                   *ngIf="category.totalEvents > 6"
                 >
                   Voir tout ({{ category.totalEvents }})

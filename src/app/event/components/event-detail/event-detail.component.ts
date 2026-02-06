@@ -1,6 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import {
   faFacebookF,
   faLinkedin,
@@ -13,12 +16,16 @@ import {
   TWITTER_SHARE_BASE_URL,
 } from 'src/app/shared/constants/shared.constant';
 import { Event } from 'src/app/shared/models/event.interface';
+import { User } from 'src/app/shared/models/user.interface';
+import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
+import { EventService } from '../../services/event.service';
+
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.scss'],
 })
-export class EventDetailComponent implements OnChanges {
+export class EventDetailComponent implements OnChanges, OnInit {
   @Input() event: Event;
   icon = faCircleUser;
   fbIcon = faFacebookF;
@@ -28,7 +35,24 @@ export class EventDetailComponent implements OnChanges {
   facebookUrl: string;
   twitterUrl: string;
   linkedinUrl: string;
-  constructor(private sanitizer: DomSanitizer, private location: Location) {
+  
+  currentUser$: Observable<User>;
+  currentUser: User | null = null;
+  participationStatus: any = null;
+  showReservationModal = false;
+  showParticipationModal = false;
+  selectedCompanyStand: any = null;
+  reservationNotes = '';
+  participationMessage = '';
+  isLoading = false;
+
+  constructor(
+    private sanitizer: DomSanitizer, 
+    private location: Location,
+    private store: Store,
+    private eventService: EventService,
+    private router: Router
+  ) {
     if (typeof window !== 'undefined') {
       this.facebookUrl =
         FACEBOOK_SHARE_BASE_URL + window.location.origin + this.location.path();
@@ -38,13 +62,191 @@ export class EventDetailComponent implements OnChanges {
         LINKEDIN_SHARE_BASE_URL + window.location.origin + this.location.path();
     }
   }
+
+  ngOnInit(): void {
+    this.currentUser$ = this.store.pipe(select(getLoggedUser));
+    this.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      if (user && this.event) {
+        this.loadParticipationStatus();
+      }
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['event']) {
       this.content = this.sanitizer.bypassSecurityTrustHtml(
         this.event?.content ?? ''
       );
+      if (this.currentUser && this.event) {
+        this.loadParticipationStatus();
+      }
     }
   }
+
+  loadParticipationStatus(): void {
+    if (!this.event?.id) return;
+    
+    this.eventService.getMyEventParticipationStatus(this.event.id).subscribe({
+      next: (status) => {
+        this.participationStatus = status;
+      },
+      error: (error) => {
+        console.error('Error loading participation status:', error);
+      }
+    });
+  }
+
+  get isAuthenticated(): boolean {
+    return !!this.currentUser;
+  }
+
+  get isAdmin(): boolean {
+    return this.currentUser?.roles?.some(role => role.name === 'admin') || false;
+  }
+
+  get isCompany(): boolean {
+    return this.currentUser?.company != null;
+  }
+
+  get isRegularUser(): boolean {
+    return this.isAuthenticated && !this.isAdmin && !this.isCompany;
+  }
+
+  get shouldShowCTA(): boolean {
+    if (!this.isAuthenticated) return true;
+    if (this.isAdmin) return false;
+    if (this.isCompany) {
+      return !this.participationStatus?.isOwner && !this.participationStatus?.isParticipating;
+    }
+    return this.isRegularUser;
+  }
+
+  get ctaButtonText(): string {
+    if (!this.isAuthenticated) return 'Connectez-vous pour participer';
+    if (this.isCompany) {
+      if (this.participationStatus?.hasRequestedParticipation) {
+        const status = this.participationStatus.participationRequestStatus;
+        if (status === 'PENDING') return 'Demande en attente';
+        if (status === 'REJECTED') return 'Demande refusée';
+      }
+      return 'Demander une participation';
+    }
+    if (this.isRegularUser) {
+      if (this.participationStatus?.userReservation) {
+        return 'Réservation confirmée';
+      }
+      return 'Réserver ma place';
+    }
+    return 'Learn More';
+  }
+
+  get ctaButtonDisabled(): boolean {
+    if (this.isCompany && this.participationStatus?.hasRequestedParticipation) {
+      return this.participationStatus.participationRequestStatus === 'PENDING';
+    }
+    if (this.isRegularUser && this.participationStatus?.userReservation) {
+      return true;
+    }
+    return false;
+  }
+
+  handleCTAClick(): void {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/authentication/login']);
+      return;
+    }
+
+    if (this.isCompany) {
+      this.showParticipationModal = true;
+    } else if (this.isRegularUser) {
+      if (!this.event.companies || this.event.companies.length === 0) {
+        alert('Aucune entreprise ne participe encore à cet événement.');
+        return;
+      }
+      this.showReservationModal = true;
+    }
+  }
+
+  closeReservationModal(): void {
+    this.showReservationModal = false;
+    this.selectedCompanyStand = null;
+    this.reservationNotes = '';
+  }
+
+  closeParticipationModal(): void {
+    this.showParticipationModal = false;
+    this.participationMessage = '';
+  }
+
+  submitReservation(): void {
+    if (!this.selectedCompanyStand) {
+      alert('Veuillez sélectionner une entreprise.');
+      return;
+    }
+
+    this.isLoading = true;
+    this.eventService.createEventReservation(
+      this.event.id,
+      this.selectedCompanyStand.id,
+      this.reservationNotes
+    ).subscribe({
+      next: () => {
+        alert('Votre réservation a été confirmée avec succès!');
+        this.closeReservationModal();
+        this.loadParticipationStatus();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error creating reservation:', error);
+        alert(error.message || 'Une erreur est survenue lors de la réservation.');
+        this.isLoading = false;
+      }
+    });
+  }
+
+  submitParticipationRequest(): void {
+    this.isLoading = true;
+    this.eventService.requestEventParticipation(
+      this.event.id,
+      this.participationMessage
+    ).subscribe({
+      next: () => {
+        alert('Votre demande de participation a été envoyée avec succès!');
+        this.closeParticipationModal();
+        this.loadParticipationStatus();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error requesting participation:', error);
+        alert(error.message || 'Une erreur est survenue lors de l\'envoi de la demande.');
+        this.isLoading = false;
+      }
+    });
+  }
+
+  cancelReservation(): void {
+    if (!this.participationStatus?.userReservation?.id) return;
+
+    if (!confirm('Êtes-vous sûr de vouloir annuler votre réservation?')) return;
+
+    this.isLoading = true;
+    this.eventService.cancelEventReservation(
+      this.participationStatus.userReservation.id
+    ).subscribe({
+      next: () => {
+        alert('Votre réservation a été annulée.');
+        this.loadParticipationStatus();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error canceling reservation:', error);
+        alert(error.message || 'Une erreur est survenue lors de l\'annulation.');
+        this.isLoading = false;
+      }
+    });
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   openWindow(event: any, link) {
     event.preventDefault(); // Prevent the default link behavior

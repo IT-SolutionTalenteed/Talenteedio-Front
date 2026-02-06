@@ -182,6 +182,16 @@ $primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
           }
         }
 
+        .category-title-link {
+          text-decoration: none;
+          color: inherit;
+          transition: opacity 0.2s ease;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+
         .category-title {
           font-size: 28px;
           font-weight: 700;

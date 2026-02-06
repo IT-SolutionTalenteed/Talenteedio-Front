@@ -103,9 +103,9 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
           // Ajouter les catégories après "Tous nos événements"
           const categoryMenus = categories.map(category => ({
             title: category.name,
-            routerLink: `/event/list?category=${category.slug}`,
+            routerLink: `/event/category/${category.slug}`,
             icon: 'tag',
-            description: `Événements ${category.name}`
+            description: category.subtitle || `Événements ${category.name}`
           }));
           
           // Garder "Tous nos événements" et ajouter les catégories
