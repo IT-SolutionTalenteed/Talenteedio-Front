@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Event } from 'src/app/shared/models/event.interface';
 import { SortDirection } from 'src/app/shared/types/sort.interface';
 import { SubSink } from 'subsink';
 import { EventService } from '../../services/event.service';
+import { CategoryService } from 'src/app/shared/services/category.service';
 import { loadEvents } from '../../store/actions/event.actions';
 import { EventState } from '../../store/reducers/event.reducers';
 import {
@@ -22,6 +23,10 @@ interface CategoryWithEvents {
   id: string;
   name: string;
   slug: string;
+  subtitle?: string;
+  description?: string;
+  image?: string;
+  faq?: { question: string; answer: string }[];
   events: Event[];
   totalEvents: number;
 }
@@ -49,7 +54,8 @@ export class EventListRootComponent implements OnInit, OnDestroy {
     private eventStore: Store<EventState>,
     private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService
+    private eventService: EventService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -84,48 +90,62 @@ export class EventListRootComponent implements OnInit, OnDestroy {
   loadEventsByCategories() {
     this.loadingCategories = true;
     
-    // Load all public events to extract categories
-    this.eventService.loadEvents({
-      page: { page: 1, pageSize: 100 }, // Load more events to get all categories
-      sort: { by: 'date', direction: SortDirection.desc },
-      filter: { search: '' }
-    }).subscribe(result => {
-      // Extract unique categories from events
-      const categoryMap = new Map<string, CategoryWithEvents>();
-      
-      result.items.forEach(event => {
-        if (event.category) {
-          const categoryId = event.category.id;
-          
-          if (!categoryMap.has(categoryId)) {
-            categoryMap.set(categoryId, {
-              id: event.category.id,
-              name: event.category.name,
-              slug: event.category.slug,
-              events: [],
-              totalEvents: 0
-            });
+    // Load all categories and all events in parallel
+    forkJoin({
+      categories: this.categoryService.getEventCategories(),
+      events: this.eventService.loadEvents({
+        page: { page: 1, pageSize: 1000 },
+        sort: { by: 'date', direction: SortDirection.desc },
+        filter: { search: '' }
+      })
+    }).subscribe({
+      next: (result) => {
+        // Create a map of events by category ID
+        const eventsByCategoryId = new Map<string, Event[]>();
+        const eventCountByCategory = new Map<string, number>();
+        
+        result.events.items.forEach(event => {
+          if (event.category) {
+            const categoryId = event.category.id;
+            
+            // Count all events
+            eventCountByCategory.set(
+              categoryId, 
+              (eventCountByCategory.get(categoryId) || 0) + 1
+            );
+            
+            // Store only first 6 events for display
+            if (!eventsByCategoryId.has(categoryId)) {
+              eventsByCategoryId.set(categoryId, []);
+            }
+            const categoryEvents = eventsByCategoryId.get(categoryId);
+            if (categoryEvents && categoryEvents.length < 6) {
+              categoryEvents.push(event);
+            }
           }
-          
-          const category = categoryMap.get(categoryId);
-          if (category && category.events.length < 6) {
-            category.events.push(event);
-          }
-          if (category) {
-            category.totalEvents++;
-          }
-        }
-      });
-      
-      // Convert map to array and filter categories with events
-      this.categoriesWithEvents = Array.from(categoryMap.values())
-        .filter(cat => cat.events.length > 0);
-      
-      this.loadingCategories = false;
-    }, error => {
-      console.error('Error loading events by categories:', error);
-      this.categoriesWithEvents = [];
-      this.loadingCategories = false;
+        });
+        
+        // Map all categories with their events
+        this.categoriesWithEvents = result.categories.map(category => ({
+          id: category.id,
+          name: category.name,
+          slug: category.slug,
+          subtitle: category.subtitle,
+          description: category.description,
+          image: category.image,
+          faq: category.faq,
+          events: eventsByCategoryId.get(category.id) || [],
+          totalEvents: eventCountByCategory.get(category.id) || 0
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+        
+        this.loadingCategories = false;
+      },
+      error: (error) => {
+        console.error('Error loading categories and events:', error);
+        this.categoriesWithEvents = [];
+        this.loadingCategories = false;
+      }
     });
   }
   

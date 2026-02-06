@@ -67,6 +67,10 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
+  subtitle?: string;
+  description?: string;
+  image?: string;
+  faq?: { question: string; answer: string }[];
   status: Status;
   model: Model;
 }

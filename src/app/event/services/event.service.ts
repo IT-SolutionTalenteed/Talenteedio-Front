@@ -44,6 +44,13 @@ export class EventService {
                     id
                     name
                     slug
+                    subtitle
+                    description
+                    image
+                    faq {
+                      question
+                      answer
+                    }
                   }
                 }
                 total

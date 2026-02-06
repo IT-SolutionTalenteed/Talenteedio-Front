@@ -7,6 +7,10 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
+  subtitle?: string;
+  description?: string;
+  image?: string;
+  faq?: { question: string; answer: string }[];
   model: string;
   status: string;
 }
@@ -29,6 +33,13 @@ export class CategoryService {
                 id
                 name
                 slug
+                subtitle
+                description
+                image
+                faq {
+                  question
+                  answer
+                }
                 model
                 status
               }
