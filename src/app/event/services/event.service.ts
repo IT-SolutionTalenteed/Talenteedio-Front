@@ -40,10 +40,25 @@ export class EventService {
                   createdAt
                   slug
                   date
+                  image
                   category {
                     id
                     name
                     slug
+                    subtitle
+                    description
+                    image
+                    faq {
+                      question
+                      answer
+                    }
+                  }
+                  companies {
+                    id
+                    company_name
+                    logo {
+                      fileUrl
+                    }
                   }
                 }
                 total
@@ -82,6 +97,7 @@ export class EventService {
                 content
                 createdAt
                 date
+                image
                 admin {
                   user {
                     name
@@ -106,5 +122,149 @@ export class EventService {
         })
         .pipe(map((response) => response.data.getOneEvent as Event))
     );
+  }
+
+  getMyEventParticipationStatus(eventId: string): Observable<any> {
+    return this.apollo
+      .query<any>({
+        query: gql`
+          query GetMyEventParticipationStatus($eventId: String!) {
+            getMyEventParticipationStatus(eventId: $eventId) {
+              isOwner
+              isParticipating
+              hasRequestedParticipation
+              participationRequestStatus
+              userReservation {
+                id
+                companyStand {
+                  id
+                  company_name
+                  logo {
+                    fileUrl
+                  }
+                }
+              }
+              userReservations {
+                id
+                companyStand {
+                  id
+                  company_name
+                  logo {
+                    fileUrl
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: { eventId },
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.getMyEventParticipationStatus));
+  }
+
+  requestEventParticipation(eventId: string, message?: string): Observable<any> {
+    return this.apollo
+      .mutate<any>({
+        mutation: gql`
+          mutation RequestEventParticipation($input: RequestParticipationInput!) {
+            requestEventParticipation(input: $input) {
+              id
+              status
+              message
+              createdAt
+            }
+          }
+        `,
+        variables: {
+          input: { eventId, message },
+        },
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.requestEventParticipation));
+  }
+
+  createEventReservation(eventId: string, companyStandId: string, notes?: string): Observable<any> {
+    return this.apollo
+      .mutate<any>({
+        mutation: gql`
+          mutation CreateEventReservation($input: CreateReservationInput!) {
+            createEventReservation(input: $input) {
+              id
+              status
+              notes
+              companyStand {
+                id
+                company_name
+                logo {
+                  fileUrl
+                }
+              }
+              createdAt
+            }
+          }
+        `,
+        variables: {
+          input: { eventId, companyStandId, notes },
+        },
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.createEventReservation));
+  }
+
+  createMultipleEventReservations(eventId: string, companyStandIds: string[], notes?: string): Observable<any> {
+    return this.apollo
+      .mutate<any>({
+        mutation: gql`
+          mutation CreateMultipleEventReservations($input: CreateMultipleReservationsInput!) {
+            createMultipleEventReservations(input: $input) {
+              id
+              status
+              notes
+              companyStand {
+                id
+                company_name
+                logo {
+                  fileUrl
+                }
+              }
+              createdAt
+            }
+          }
+        `,
+        variables: {
+          input: { eventId, companyStandIds, notes },
+        },
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.createMultipleEventReservations));
+  }
+
+  cancelEventReservation(reservationId: string): Observable<any> {
+    return this.apollo
+      .mutate<any>({
+        mutation: gql`
+          mutation CancelEventReservation($reservationId: String!) {
+            cancelEventReservation(reservationId: $reservationId) {
+              id
+              status
+            }
+          }
+        `,
+        variables: { reservationId },
+        context: {
+          uri: this.apiUrl,
+        },
+      })
+      .pipe(map((response) => response.data.cancelEventReservation));
   }
 }

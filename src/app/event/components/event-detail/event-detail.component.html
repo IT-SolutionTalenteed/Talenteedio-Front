@@ -1,33 +1,48 @@
 <!-- Hero Section -->
 <section class="event-hero" *ngIf="event">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="event-badge">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor"/>
-      </svg>
-      <span>Event</span>
+  <div class="hero-container">
+    <div class="hero-breadcrumb">
+      <a routerLink="/event" class="breadcrumb-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Retour aux événements
+      </a>
     </div>
-    <h1 class="event-title">{{ event.title }}</h1>
-    <div class="event-meta">
-      <div class="meta-item">
-        <fa-icon [icon]="icon"></fa-icon>
-        <span>{{ event.admin?.user.name }}</span>
+    
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="event-badge" *ngIf="event.category">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+            <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+          </svg>
+          <span>{{ event.category.name }}</span>
+        </div>
+        
+        <h1 class="event-title">{{ event.title }}</h1>
+        
+        <div class="event-quick-info">
+          <div class="quick-info-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20Z" fill="currentColor"/>
+            </svg>
+            <span>{{ event.date | date : "EEEE d MMMM yyyy" }}</span>
+          </div>
+          
+          <div class="quick-info-item" *ngIf="event.admin?.user.name">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+            </svg>
+            <span>Par {{ event.admin.user.name }}</span>
+          </div>
+        </div>
       </div>
-      <div class="meta-divider"></div>
-      <div class="meta-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20Z" fill="currentColor"/>
-        </svg>
-        <span>{{ event.date | date : "EEEE, MMMM d, yyyy" }}</span>
-      </div>
-      <div class="meta-divider" *ngIf="event.category"></div>
-      <div class="meta-item" *ngIf="event.category">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
-          <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
-        </svg>
-        <span>{{ event.category.name }}</span>
+      
+      <div class="hero-right" *ngIf="event.image">
+        <div class="hero-image-wrapper">
+          <img [src]="event.image" [alt]="event.title" class="hero-image" />
+        </div>
       </div>
     </div>
   </div>
@@ -39,9 +54,22 @@
     <div class="content-wrapper">
       <!-- Left Column: Event Details -->
       <div class="event-details-column">
+        <!-- Event Image -->
+        <div class="description-card" *ngIf="event.image">
+          <div class="event-image-container">
+            <img [src]="event.image" [alt]="event.title" class="event-image" />
+          </div>
+        </div>
+
+        <!-- Event Description -->
+        <div class="description-card">
+          <h2 class="card-title">À propos de cet <span class="accent">événement</span></h2>
+          <div class="description-content" [innerHTML]="content"></div>
+        </div>
+
         <!-- Quick Info Card -->
         <div class="info-card">
-          <h2 class="card-title">Event <span class="accent">Information</span></h2>
+          <h2 class="card-title">Informations <span class="accent">pratiques</span></h2>
           <div class="info-grid">
             <div class="info-item">
               <div class="info-icon">
@@ -50,8 +78,8 @@
                 </svg>
               </div>
               <div class="info-content">
-                <div class="info-label">Event Date</div>
-                <div class="info-value">{{ event.date | date : "EEEE, MMMM d, yyyy" }}</div>
+                <div class="info-label">Date de l'événement</div>
+                <div class="info-value">{{ event.date | date : "EEEE d MMMM yyyy" }}</div>
               </div>
             </div>
 
@@ -63,7 +91,7 @@
                 </svg>
               </div>
               <div class="info-content">
-                <div class="info-label">Category</div>
+                <div class="info-label">Catégorie</div>
                 <div class="info-value">{{ event.category.name }}</div>
               </div>
             </div>
@@ -75,8 +103,8 @@
                 </svg>
               </div>
               <div class="info-content">
-                <div class="info-label">Published</div>
-                <div class="info-value">{{ event.createdAt | date : "MMM d, yyyy" }}</div>
+                <div class="info-label">Publié le</div>
+                <div class="info-value">{{ event.createdAt | date : "d MMM yyyy" }}</div>
               </div>
             </div>
 
@@ -87,14 +115,14 @@
                 </svg>
               </div>
               <div class="info-content">
-                <div class="info-label">Status</div>
+                <div class="info-label">Statut</div>
                 <div class="info-value">
                   <span class="status-badge" 
                         [class.status-public]="event.status === 'public'"
                         [class.status-draft]="event.status === 'draft'"
                         [class.status-blocked]="event.status === 'blocked'"
                         [class.status-review]="event.status === 'in_review'">
-                    {{ event.status | uppercase }}
+                    {{ event.status === 'public' ? 'PUBLIC' : event.status === 'draft' ? 'BROUILLON' : event.status === 'blocked' ? 'BLOQUÉ' : 'EN RÉVISION' }}
                   </span>
                 </div>
               </div>
@@ -102,15 +130,10 @@
           </div>
         </div>
 
-        <!-- Event Description -->
-        <div class="description-card">
-          <h2 class="card-title">About this <span class="accent">Event</span></h2>
-          <div class="description-content" [innerHTML]="content"></div>
-        </div>
-
         <!-- Participating Companies -->
         <div class="companies-card" *ngIf="event.companies && event.companies.length > 0">
-          <h2 class="card-title">Participating <span class="accent">Companies</span></h2>
+          <h2 class="card-title">Entreprises <span class="accent">participantes</span></h2>
+          <p class="card-subtitle">Découvrez les entreprises qui seront présentes à cet événement</p>
           <div class="companies-grid">
             <div *ngFor="let company of event.companies" 
                class="company-item">
@@ -123,13 +146,18 @@
               <div class="company-info">
                 <h3 class="company-name">{{ company.company_name }}</h3>
               </div>
+              <div class="company-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Share Section -->
         <div class="share-card">
-          <h3 class="share-title">Share this event</h3>
+          <h3 class="share-title">Partager cet événement</h3>
           <div class="share-buttons">
             <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-button facebook">
               <fa-icon [icon]="fbIcon"></fa-icon>
@@ -149,21 +177,58 @@
 
       <!-- Right Column: Sidebar -->
       <div class="event-sidebar">
+        <div class="sidebar-card cta-card" *ngIf="shouldShowCTA">
+          <div class="cta-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="cta-title">{{ isAuthenticated ? 'Participer' : 'Intéressé ?' }}</h3>
+          <p class="cta-text" *ngIf="!isAuthenticated">Connectez-vous pour participer à cet événement.</p>
+          <p class="cta-text" *ngIf="isCompany && !participationStatus?.hasRequestedParticipation">Demandez à participer à cet événement en tant qu'exposant.</p>
+          <p class="cta-text" *ngIf="isCompany && participationStatus?.hasRequestedParticipation && participationStatus?.participationRequestStatus === 'PENDING'">Votre demande de participation est en cours de traitement.</p>
+          <p class="cta-text" *ngIf="isCompany && participationStatus?.participationRequestStatus === 'REJECTED'">Votre demande de participation a été refusée.</p>
+          <p class="cta-text" *ngIf="isRegularUser && (!participationStatus?.userReservations || participationStatus?.userReservations.length === 0)">Réservez votre place sur les stands des entreprises participantes.</p>
+          <p class="cta-text" *ngIf="isRegularUser && participationStatus?.userReservations && participationStatus?.userReservations.length > 0">
+            Vous avez réservé {{ participationStatus.userReservations.length }} stand{{ participationStatus.userReservations.length > 1 ? 's' : '' }} :
+            <span *ngFor="let reservation of participationStatus.userReservations; let last = last">
+              {{ reservation.companyStand.company_name }}{{ !last ? ', ' : '' }}
+            </span>
+          </p>
+          
+          <button class="cta-button" 
+                  (click)="handleCTAClick()" 
+                  [disabled]="ctaButtonDisabled"
+                  [class.disabled]="ctaButtonDisabled">
+            {{ ctaButtonText }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" *ngIf="!ctaButtonDisabled">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <button class="cta-button-secondary" 
+                  *ngIf="isRegularUser && participationStatus?.userReservations && participationStatus?.userReservations.length > 0"
+                  (click)="showReservationModal = true"
+                  [disabled]="isLoading">
+            Gérer mes réservations
+          </button>
+        </div>
+
         <div class="sidebar-card organizer-card">
-          <h3 class="sidebar-title">Event Organizer</h3>
+          <h3 class="sidebar-title">Organisateur</h3>
           <div class="organizer-info">
             <div class="organizer-avatar">
               <fa-icon [icon]="icon"></fa-icon>
             </div>
             <div class="organizer-details">
               <div class="organizer-name">{{ event.admin?.user.name }}</div>
-              <div class="organizer-role">Event Organizer</div>
+              <div class="organizer-role">Organisateur de l'événement</div>
             </div>
           </div>
         </div>
 
         <div class="sidebar-card info-sidebar-card">
-          <h3 class="sidebar-title">Event Details</h3>
+          <h3 class="sidebar-title">Détails</h3>
           <div class="sidebar-info-list">
             <div class="sidebar-info-item">
               <div class="sidebar-info-label">
@@ -172,34 +237,18 @@
                 </svg>
                 Date
               </div>
-              <div class="sidebar-info-value">{{ event.date | date : "MMM d, yyyy" }}</div>
+              <div class="sidebar-info-value">{{ event.date | date : "d MMM yyyy" }}</div>
             </div>
             <div class="sidebar-info-item" *ngIf="event.category">
               <div class="sidebar-info-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
                 </svg>
-                Category
+                Catégorie
               </div>
               <div class="sidebar-info-value">{{ event.category.name }}</div>
             </div>
           </div>
-        </div>
-
-        <div class="sidebar-card cta-card">
-          <div class="cta-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
-            </svg>
-          </div>
-          <h3 class="cta-title">Interested?</h3>
-          <p class="cta-text">Get more information about this event and stay updated.</p>
-          <button class="cta-button">
-            Learn More
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
         </div>
       </div>
     </div>
@@ -210,4 +259,106 @@
 <div class="loading-container" *ngIf="!event">
   <div class="loading-spinner"></div>
   <p>Loading event details...</p>
+</div>
+
+<!-- Reservation Modal -->
+<div class="modal-overlay" *ngIf="showReservationModal" (click)="closeReservationModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Réserver ma place</h2>
+      <button class="modal-close" (click)="closeReservationModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-description">Sélectionnez une ou plusieurs entreprises dont vous souhaitez visiter les stands lors de cet événement.</p>
+      
+      <div class="company-selection">
+        <label class="form-label">Entreprises *</label>
+        <div class="company-options">
+          <div *ngFor="let company of event.companies" 
+               class="company-option"
+               [class.selected]="isCompanySelected(company)"
+               [class.disabled]="isCompanyAlreadyReserved(company)"
+               (click)="!isCompanyAlreadyReserved(company) && toggleCompanySelection(company)">
+            <div class="company-option-logo">
+              <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name">
+              <div *ngIf="!company.logo?.fileUrl" class="company-option-logo-placeholder">
+                {{ company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="company-option-name">
+              {{ company.company_name }}
+              <span *ngIf="isCompanyAlreadyReserved(company)" class="already-reserved">(Déjà réservé)</span>
+            </div>
+            <div class="company-option-check" *ngIf="isCompanySelected(company)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <p class="selection-count" *ngIf="selectedCompanyStands.length > 0">
+          {{ selectedCompanyStands.length }} entreprise{{ selectedCompanyStands.length > 1 ? 's' : '' }} sélectionnée{{ selectedCompanyStands.length > 1 ? 's' : '' }}
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes (optionnel)</label>
+        <textarea 
+          class="form-textarea"
+          [(ngModel)]="reservationNotes"
+          placeholder="Ajoutez des notes ou des questions pour les entreprises..."
+          rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeReservationModal()" [disabled]="isLoading">
+        Annuler
+      </button>
+      <button class="btn-primary" (click)="submitReservation()" [disabled]="selectedCompanyStands.length === 0 || isLoading">
+        {{ isLoading ? 'En cours...' : 'Confirmer ' + (selectedCompanyStands.length > 1 ? 'les réservations' : 'la réservation') }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Participation Request Modal -->
+<div class="modal-overlay" *ngIf="showParticipationModal" (click)="closeParticipationModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Demander une participation</h2>
+      <button class="modal-close" (click)="closeParticipationModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-description">Envoyez une demande pour participer à cet événement en tant qu'exposant. Un administrateur examinera votre demande.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Message (optionnel)</label>
+        <textarea 
+          class="form-textarea"
+          [(ngModel)]="participationMessage"
+          placeholder="Présentez votre entreprise et expliquez pourquoi vous souhaitez participer..."
+          rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeParticipationModal()" [disabled]="isLoading">
+        Annuler
+      </button>
+      <button class="btn-primary" (click)="submitParticipationRequest()" [disabled]="isLoading">
+        {{ isLoading ? 'En cours...' : 'Envoyer la demande' }}
+      </button>
+    </div>
+  </div>
 </div>

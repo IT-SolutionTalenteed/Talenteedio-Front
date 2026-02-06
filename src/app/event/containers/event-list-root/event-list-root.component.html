@@ -1,189 +1,237 @@
 <div class="event-container">
   <!-- Hero Section -->
-  <div class="hero-section">
+  <section class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">Découvrez nos <span class="accent">Événements</span></h1>
-      <p class="hero-description">Participez à des événements professionnels, conférences et ateliers</p>
+      <p class="hero-subtitle">Dépassez vos attentes professionnelles</p>
+      <h1 class="hero-title">
+        Créer le meilleur. Jour. <span class="accent">Toujours.</span>
+      </h1>
+      <p class="hero-description">Participez à des événements professionnels, conférences et ateliers qui transformeront votre carrière</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+              <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+              <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">20k+</div>
+            <div class="stat-label">Événements planifiés</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">260</div>
+            <div class="stat-label">Organisateurs d'événements</div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Events by Categories -->
-  <div class="categories-section">
+  <section class="categories-section">
     <app-loader [isLoading]="loadingCategories">
-      <div class="category-block" *ngFor="let category of categoriesWithEvents; let isLast = last">
-        <div class="category-header">
-          <h2 class="category-title">
-            <span class="category-icon">
-              <!-- Night icon -->
-              <svg *ngIf="category.slug === 'night'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-              <!-- Day icon -->
-              <svg *ngIf="category.slug === 'day'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
-              <!-- Conférences icon -->
-              <svg *ngIf="category.slug === 'conferences'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-              <!-- Ateliers icon -->
-              <svg *ngIf="category.slug === 'ateliers'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-              </svg>
-              <!-- Networking icon -->
-              <svg *ngIf="category.slug === 'networking'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-              <!-- Webinaires icon -->
-              <svg *ngIf="category.slug === 'webinaires'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              <!-- Default icon for other categories -->
-              <svg *ngIf="category.slug !== 'night' && category.slug !== 'day' && category.slug !== 'conferences' && category.slug !== 'ateliers' && category.slug !== 'networking' && category.slug !== 'webinaires'" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-            </span>
-            {{ category.name }}
-          </h2>
-          <button 
-            class="view-more-btn" 
-            (click)="viewMoreCategory(category.id)"
-            *ngIf="category.totalEvents > 6"
-          >
-            Voir plus ({{ category.totalEvents }})
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        </div>
-        
-        <div class="events-grid">
-          <div class="event-card" *ngFor="let event of category.events">
-            <a [routerLink]="['/event/detail', event.slug]" class="card-link">
-              <div class="card-content">
-                <div class="event-date">
-                  <div class="date-day">{{ event.date | date: 'dd' }}</div>
-                  <div class="date-month">{{ event.date | date: 'MMM' }}</div>
-                </div>
-                <div class="event-info">
-                  <h3 class="event-title">{{ event.title }}</h3>
-                  <p class="event-excerpt" *ngIf="event.content" [innerHTML]="event.content | slice:0:120"></p>
-                  <div class="event-meta">
-                    <span class="meta-item">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                      </svg>
-                      {{ event.date | date: 'dd/MM/yyyy' }}
-                    </span>
-                  </div>
-                </div>
+      <!-- Categories Grid -->
+      <div class="categories-grid" *ngIf="categoriesWithEvents.length > 0">
+        <div class="category-column" *ngFor="let category of categoriesWithEvents">
+          <!-- Category Card -->
+          <div class="category-card">
+            <!-- Category Header with Image -->
+            <a [routerLink]="['/event/category', category.slug]" class="category-header-link">
+              <div class="category-image" *ngIf="category.image">
+                <img [src]="category.image" [alt]="category.name" />
+                <div class="category-overlay"></div>
+              </div>
+              <div class="category-image placeholder" *ngIf="!category.image">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                  <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <div class="category-overlay"></div>
+              </div>
+              <div class="category-header-content">
+                <h2 class="category-title">{{ category.name }}</h2>
+                <p class="category-subtitle" *ngIf="category.subtitle">{{ category.subtitle }}</p>
               </div>
             </a>
+
+            <!-- Events List -->
+            <div class="category-events">
+              <div class="event-item" *ngFor="let event of getDisplayedEvents(category)" [routerLink]="['/event/detail', event.slug]">
+                <div class="event-date-mini">
+                  <span class="date-day">{{ event.date | date: 'dd' }}</span>
+                  <span class="date-month">{{ event.date | date: 'MMM' }}</span>
+                </div>
+                <div class="event-info">
+                  <h4 class="event-title-mini">{{ event.title }}</h4>
+                  <span class="event-time">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                    </svg>
+                    {{ event.date | date: 'dd/MM/yyyy' }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- No events message -->
+              <div class="no-events-mini" *ngIf="category.events.length === 0">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+                <p>Aucun événement disponible</p>
+              </div>
+            </div>
+
+            <!-- Load More Button (within card) -->
+            <button 
+              class="load-more-btn" 
+              (click)="loadMoreEventsInCategory(category.id)"
+              *ngIf="hasMoreEventsToShow(category) && category.displayedEventsCount < 6"
+            >
+              Voir plus d'événements
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <!-- View All Button (goes to category page) -->
+            <button 
+              class="view-more-category-btn" 
+              (click)="viewMoreCategory(category.slug)"
+              *ngIf="category.totalEvents > 6 || (category.events.length > 6 && category.displayedEventsCount >= 6)"
+            >
+              Voir tout ({{ category.totalEvents }})
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
       
-      <!-- Message if no categories have events -->
+      <!-- Message if no categories exist -->
       <div class="no-events-message" *ngIf="!loadingCategories && categoriesWithEvents.length === 0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8" y1="2" x2="8" y2="6"></line>
-          <line x1="3" y1="10" x2="21" y2="10"></line>
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+          <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+          <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+          <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
         </svg>
-        <p>Aucun événement disponible pour le moment</p>
+        <p>Aucune catégorie d'événement disponible</p>
       </div>
     </app-loader>
-  </div>
+  </section>
 
   <!-- Company Events Section - Displayed AFTER all categories -->
-  <div class="company-events-section" *ngIf="!loadingCategories && categoriesWithEvents.length > 0">
+  <section class="company-events-section" *ngIf="!loadingCategories && categoriesWithEvents.length > 0">
     <div class="section-header">
       <h2 class="section-title">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-          <polyline points="9 22 9 12 15 12 15 22"></polyline>
-        </svg>
-        Événements des Entreprises
+        Événements des <span class="accent">Entreprises</span>
       </h2>
       <p class="section-description">Découvrez les derniers événements publiés par nos entreprises partenaires</p>
     </div>
     
     <app-loader [isLoading]="loadingCompanyEvents">
-      <div class="events-grid" *ngIf="companyEvents.length > 0">
-        <div class="event-card" *ngFor="let event of companyEvents">
-          <a [routerLink]="['/event/detail', event.slug]" class="card-link">
-            <div class="card-content">
-              <div class="event-date">
-                <div class="date-day">{{ event.date | date: 'dd' }}</div>
-                <div class="date-month">{{ event.date | date: 'MMM' }}</div>
+      <div class="company-events-grid" *ngIf="companyEvents.length > 0">
+        <div class="event-card" *ngFor="let event of companyEvents.slice(0, 6)" [routerLink]="['/event/detail', event.slug]">
+          <!-- Event Image -->
+          <div class="event-image" *ngIf="event.image">
+            <img [src]="event.image" [alt]="event.title" />
+            <div class="event-date-badge">
+              <div class="event-day">{{ event.date | date: 'dd' }}</div>
+              <div class="event-month">{{ event.date | date: 'MMM' }}</div>
+            </div>
+          </div>
+          <div class="event-image placeholder" *ngIf="!event.image">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+              <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+              <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <div class="event-date-badge">
+              <div class="event-day">{{ event.date | date: 'dd' }}</div>
+              <div class="event-month">{{ event.date | date: 'MMM' }}</div>
+            </div>
+          </div>
+          
+          <div class="event-content">
+            <h3 class="event-title">{{ event.title }}</h3>
+            <p class="event-excerpt" *ngIf="event.content" [innerHTML]="event.content | slice:0:120"></p>
+            
+            <!-- Entreprises participantes -->
+            <div class="participating-companies" *ngIf="event.companies && event.companies.length > 0">
+              <div class="companies-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+                Entreprises participantes :
               </div>
-              <div class="event-info">
-                <h3 class="event-title">{{ event.title }}</h3>
-                <p class="event-excerpt" *ngIf="event.content" [innerHTML]="event.content | slice:0:120"></p>
-                <div class="event-meta">
-                  <span class="meta-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    {{ event.date | date: 'dd/MM/yyyy' }}
-                  </span>
-                  <span class="meta-item" *ngIf="event.category">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                      <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                    </svg>
-                    {{ event.category.name }}
-                  </span>
+              <div class="companies-logos">
+                <div class="company-logo-item" *ngFor="let company of event.companies.slice(0, 4)" [title]="company.company_name">
+                  <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name" />
+                  <div *ngIf="!company.logo?.fileUrl" class="company-logo-placeholder">
+                    {{ company.company_name.charAt(0).toUpperCase() }}
+                  </div>
+                </div>
+                <div class="more-companies-badge" *ngIf="event.companies.length > 4">
+                  +{{ event.companies.length - 4 }}
                 </div>
               </div>
             </div>
-          </a>
+            
+            <div class="event-meta">
+              <span class="meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                </svg>
+                {{ event.date | date: 'dd/MM/yyyy' }}
+              </span>
+              <span class="meta-item" *ngIf="event.category">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke="currentColor" stroke-width="2" fill="none"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                {{ event.category.name }}
+              </span>
+            </div>
+          </div>
+          <div class="event-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </div>
       </div>
       
       <div class="no-events-message" *ngIf="!loadingCompanyEvents && companyEvents.length === 0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+          <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
         </svg>
         <p>Aucun événement d'entreprise disponible pour le moment</p>
       </div>
       
-      <div class="view-all-container" *ngIf="companyEvents.length > 0">
+      <div class="view-all-container" *ngIf="companyEvents.length > 6">
         <button class="view-all-btn" [routerLink]="['/event/list']">
-          Voir tous les événements
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
+          Voir plus d'événements
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </div>
     </app-loader>
-  </div>
+  </section>
 </div>

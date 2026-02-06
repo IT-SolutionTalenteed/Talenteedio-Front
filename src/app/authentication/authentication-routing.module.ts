@@ -9,6 +9,8 @@ import { SignUpChoiceRootComponent } from './containers/sign-up-choice-root/sign
 import { CompanyRegisterRootComponent } from './containers/company-register-root/company-register-root.component';
 import { ConsultantRegisterRootComponent } from './containers/consultant-register-root/consultant-register-root.component';
 import { CompanyPlanRootComponent } from './containers/company-plan-root/company-plan-root.component';
+import { CompanyContactRootComponent } from './containers/company-contact-root/company-contact-root.component';
+import { CompanyRegistrationSuccessComponent } from './containers/company-registration-success/company-registration-success.component';
 import { AccountValidationGuard } from './guards/account-validation.guard';
 import { OnlySingleSignInGuard } from './guards/only-single-sign-in.guard';
 
@@ -53,6 +55,17 @@ const routes: Routes = [
         component: CompanyPlanRootComponent,
         canActivate: [OnlySingleSignInGuard],
         data: { title: 'Choisir un plan' },
+      },
+      {
+        path: 'company-contact',
+        component: CompanyContactRootComponent,
+        canActivate: [OnlySingleSignInGuard],
+        data: { title: 'Inscription entreprise' },
+      },
+      {
+        path: 'company-registration-success',
+        component: CompanyRegistrationSuccessComponent,
+        data: { title: 'Inscription réussie' },
       },
       {
         path: 'reinit-password',

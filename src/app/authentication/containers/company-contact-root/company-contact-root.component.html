@@ -1,0 +1,303 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <button class="back-button" (click)="goBack()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour aux plans
+    </button>
+    <p class="hero-subtitle">Inscription entreprise</p>
+    <h1 class="hero-title">
+      Complétez votre <span class="accent">inscription</span>
+    </h1>
+    <p class="hero-description">
+      Remplissez les informations de votre entreprise pour finaliser votre inscription
+    </p>
+  </div>
+</section>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Chargement...</p>
+</div>
+
+<!-- Main Content -->
+<section class="content-section" *ngIf="!loading">
+  <div class="content-wrapper">
+    <!-- Form Section -->
+    <div class="form-section">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <!-- Company Information -->
+        <div class="form-group-section">
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+            </svg>
+            Informations de l'entreprise
+          </h2>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="companyName">Nom de l'entreprise *</label>
+              <input
+                type="text"
+                id="companyName"
+                formControlName="companyName"
+                placeholder="Ex: Talenteed"
+                [class.error]="contactForm.get('companyName')?.invalid && contactForm.get('companyName')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('companyName')?.invalid && contactForm.get('companyName')?.touched">
+                Le nom de l'entreprise est requis (min. 2 caractères)
+              </span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="website">Site web</label>
+              <input
+                type="url"
+                id="website"
+                formControlName="website"
+                placeholder="https://www.exemple.com"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="description">Description de l'entreprise</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                rows="4"
+                placeholder="Décrivez brièvement votre entreprise..."
+                maxlength="500"
+              ></textarea>
+              <span class="char-count">{{ contactForm.get('description')?.value?.length || 0 }}/500</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Person -->
+        <div class="form-group-section">
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+            </svg>
+            Personne de contact
+          </h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Prénom *</label>
+              <input
+                type="text"
+                id="firstName"
+                formControlName="firstName"
+                placeholder="Jean"
+                [class.error]="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched">
+                Le prénom est requis
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Nom *</label>
+              <input
+                type="text"
+                id="lastName"
+                formControlName="lastName"
+                placeholder="Dupont"
+                [class.error]="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched">
+                Le nom est requis
+              </span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="jean.dupont@exemple.com"
+                [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                Email valide requis
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Téléphone *</label>
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                placeholder="+33 6 12 34 56 78"
+                [class.error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
+                Le téléphone est requis
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group-section">
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+            </svg>
+            Adresse
+          </h2>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="address">Adresse *</label>
+              <input
+                type="text"
+                id="address"
+                formControlName="address"
+                placeholder="123 Rue de la République"
+                [class.error]="contactForm.get('address')?.invalid && contactForm.get('address')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('address')?.invalid && contactForm.get('address')?.touched">
+                L'adresse est requise
+              </span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Ville *</label>
+              <input
+                type="text"
+                id="city"
+                formControlName="city"
+                placeholder="Paris"
+                [class.error]="contactForm.get('city')?.invalid && contactForm.get('city')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('city')?.invalid && contactForm.get('city')?.touched">
+                La ville est requise
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="postalCode">Code postal *</label>
+              <input
+                type="text"
+                id="postalCode"
+                formControlName="postalCode"
+                placeholder="75001"
+                [class.error]="contactForm.get('postalCode')?.invalid && contactForm.get('postalCode')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('postalCode')?.invalid && contactForm.get('postalCode')?.touched">
+                Le code postal est requis
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="country">Pays *</label>
+              <input
+                type="text"
+                id="country"
+                formControlName="country"
+                placeholder="France"
+                [class.error]="contactForm.get('country')?.invalid && contactForm.get('country')?.touched"
+              />
+              <span class="error-message" *ngIf="contactForm.get('country')?.invalid && contactForm.get('country')?.touched">
+                Le pays est requis
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="global-error" *ngIf="error">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+          </svg>
+          {{ error }}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button" [disabled]="submitting">
+          <span *ngIf="!submitting">
+            Envoyer ma demande
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span *ngIf="submitting" class="submitting">
+            <div class="spinner-small"></div>
+            Envoi en cours...
+          </span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Plan Summary -->
+    <div class="summary-section" *ngIf="selectedPlan">
+      <div class="summary-card">
+        <h3 class="summary-title">Récapitulatif</h3>
+        
+        <div class="plan-info">
+          <div class="plan-badge">Plan sélectionné</div>
+          <h4 class="plan-name">{{ selectedPlan.title }}</h4>
+          <p class="plan-desc">{{ selectedPlan.description }}</p>
+          
+          <div class="plan-price-box">
+            <div class="price-display">
+              <span class="currency">€</span>
+              <span class="amount">{{ formatPrice(selectedPlan.price) }}</span>
+            </div>
+            <span class="period">/ {{ selectedPlan.billingPeriod === 'month' ? 'mois' : 'an' }}</span>
+          </div>
+        </div>
+
+        <div class="plan-includes">
+          <h5>Ce plan inclut :</h5>
+          <ul>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+              </svg>
+              {{ selectedPlan.maxArticles === -1 ? 'Illimité' : selectedPlan.maxArticles }} articles
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+              </svg>
+              {{ selectedPlan.maxEvents === -1 ? 'Illimité' : selectedPlan.maxEvents }} événements
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+              </svg>
+              {{ selectedPlan.maxJobs === -1 ? 'Illimité' : selectedPlan.maxJobs }} offres d'emploi
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
+          </svg>
+          <div>
+            <strong>Validation requise</strong>
+            <p>Votre compte sera activé après validation par notre équipe. Vous recevrez un email de confirmation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

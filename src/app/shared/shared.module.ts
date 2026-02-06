@@ -11,6 +11,7 @@ import { AutoUpdateStatusComponent } from './components/auto-update-status/auto-
 import { ProfilePictureUploadComponent } from './components/profile-picture-upload/profile-picture-upload.component';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
+import { FaqAccordionComponent } from './components/faq-accordion/faq-accordion.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { ListBoxFilterComponent } from './components/list-box-filter/list-box-filter.component';
 import { ListBoxComponent } from './components/list-box/list-box.component';
@@ -60,6 +61,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     ValidationErrorComponent,
     ChipsComponent,
     CollapsibleChipsComponent,
+    FaqAccordionComponent,
     ListBoxComponent,
     ListBoxFilterComponent,
     SearchBarComponent,
@@ -92,6 +94,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     ValidationErrorComponent,
     ChipsComponent,
     CollapsibleChipsComponent,
+    FaqAccordionComponent,
     ListBoxComponent,
     ListBoxFilterComponent,
     SearchBarComponent,

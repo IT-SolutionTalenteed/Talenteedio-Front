@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventDetailRootComponent } from './containers/event-detail-root/event-detail-root.component';
 import { EventListRootComponent } from './containers/event-list-root/event-list-root.component';
+import { EventCategoryDetailComponent } from './containers/event-category-detail/event-category-detail.component';
 import { EventRootComponent } from './containers/event-root/event-root.component';
 import { EventDetailGuard } from './guards/event-detail.guard';
 
@@ -16,6 +17,11 @@ const routes: Routes = [
         path: 'list',
         component: EventListRootComponent,
         data: { title: 'Event' },
+      },
+      {
+        path: 'category/:slug',
+        component: EventCategoryDetailComponent,
+        data: { title: 'Event Category' },
       },
       {
         path: 'detail/:slug',

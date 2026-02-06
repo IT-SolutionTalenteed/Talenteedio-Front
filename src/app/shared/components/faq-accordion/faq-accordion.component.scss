@@ -1,0 +1,149 @@
+.faq-accordion {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.faq-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+
+  svg {
+    color: #ff6b35;
+    flex-shrink: 0;
+  }
+}
+
+.faq-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.active {
+    border-color: #ff6b35;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
+  }
+}
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  .faq-item.active & {
+    background-color: #fff5f2;
+  }
+}
+
+.faq-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.faq-question {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.5;
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  color: #ff6b35;
+  transition: transform 0.3s ease;
+
+  .faq-item.active & {
+    transform: rotate(180deg);
+  }
+}
+
+.faq-answer-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+
+  &.open {
+    max-height: 500px;
+  }
+}
+
+.faq-answer {
+  padding: 1.25rem;
+  padding-top: 0;
+  color: #5a6c7d;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .faq-accordion {
+    padding: 1.5rem;
+  }
+
+  .faq-title {
+    font-size: 1.25rem;
+  }
+
+  .faq-question-btn {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .faq-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .faq-question {
+    font-size: 0.95rem;
+  }
+
+  .faq-answer {
+    padding: 1rem;
+    padding-top: 0;
+    font-size: 0.9rem;
+  }
+}

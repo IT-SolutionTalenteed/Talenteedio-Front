@@ -24,7 +24,11 @@ export class AuthenticationRootComponent {
     }
 
     private shouldBeFullWidth(url: string): boolean {
-        // Full width for company-plan and sign-in (new design has its own branding)
-        return url.includes('/company-plan') || url.includes('/sign-in');
+        // Full width for company-plan, company-contact, company-registration-success, sign-in, and sign-up (new design has its own branding)
+        return url.includes('/company-plan') || 
+               url.includes('/company-contact') || 
+               url.includes('/company-registration-success') || 
+               url.includes('/sign-in') || 
+               url.includes('/sign-up');
     }
 }
