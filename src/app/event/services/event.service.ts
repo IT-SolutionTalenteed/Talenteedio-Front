@@ -41,6 +41,20 @@ export class EventService {
                   slug
                   date
                   image
+                  admin {
+                    id
+                    user {
+                      id
+                      name
+                    }
+                  }
+                  company {
+                    id
+                    company_name
+                    logo {
+                      fileUrl
+                    }
+                  }
                   category {
                     id
                     name
