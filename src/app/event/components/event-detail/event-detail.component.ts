@@ -78,6 +78,18 @@ export class EventDetailComponent implements OnChanges, OnInit {
       this.content = this.sanitizer.bypassSecurityTrustHtml(
         this.event?.content ?? ''
       );
+      
+      // Debug: Log event data to check company
+      if (this.event) {
+        console.log('Event data:', {
+          id: this.event.id,
+          title: this.event.title,
+          hasAdmin: !!this.event.admin,
+          hasCompany: !!this.event.company,
+          company: this.event.company
+        });
+      }
+      
       if (this.currentUser && this.event) {
         this.loadParticipationStatus();
       }

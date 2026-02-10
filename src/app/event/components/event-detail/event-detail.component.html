@@ -22,6 +22,15 @@
             <span>{{ event.date | date : "EEEE d MMMM yyyy" }}</span>
           </div>
           
+          <!-- Afficher l'organisateur : Talenteed si admin, sinon la company -->
+          <div class="quick-info-item" *ngIf="event.admin">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+              <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span>Par Talenteed</span>
+          </div>
+          
           <div class="quick-info-item" *ngIf="!event.admin && event.company">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
