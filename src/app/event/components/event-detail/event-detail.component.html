@@ -22,11 +22,12 @@
             <span>{{ event.date | date : "EEEE d MMMM yyyy" }}</span>
           </div>
           
-          <div class="quick-info-item" *ngIf="event.admin">
-            <div class="organizer-badge">
-              <img src="assets/img/talenteed-noir-plan-de-travail-1-150.png" alt="Talenteed" class="organizer-logo">
-              <span>Par <strong>Talenteed</strong></span>
-            </div>
+          <div class="quick-info-item" *ngIf="!event.admin && event.company">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+              <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span>Par {{ event.company.company_name }}</span>
           </div>
         </div>
 
@@ -50,8 +51,6 @@
                   </div>
                 </div>
                 <h3 class="company-showcase-name">{{ company.company_name }}</h3>
-                <p class="company-showcase-slogan" *ngIf="company.slogan">{{ company.slogan }}</p>
-                <p class="company-showcase-slogan" *ngIf="!company.slogan">Découvrez nos opportunités</p>
               </div>
             </div>
             <div class="company-showcase-more" *ngIf="event.companies.length > 4">
@@ -80,13 +79,13 @@
 
         <!-- Event Description -->
         <div class="description-card">
-          <h2 class="card-title">À propos de cet <span class="accent">événement</span></h2>
+          <h2 class="card-title-uniform">À propos de cet <span class="accent">événement</span></h2>
           <div class="description-content" [innerHTML]="content"></div>
         </div>
 
         <!-- Quick Info Card -->
         <div class="info-card">
-          <h2 class="card-title">Informations <span class="accent">pratiques</span></h2>
+          <h2 class="card-title-uniform">Informations <span class="accent">pratiques</span></h2>
           <div class="info-grid">
             <div class="info-item">
               <div class="info-icon">
@@ -147,67 +146,52 @@
           </div>
         </div>
 
-        <!-- Participating Companies or Event Creator -->
-        <div class="companies-card" *ngIf="(event.companies && event.companies.length > 0) || event.admin?.user?.company">
-          <h2 class="card-title">
-            <span *ngIf="event.companies && event.companies.length > 0">Entreprises <span class="accent">participantes</span></span>
-            <span *ngIf="!event.companies || event.companies.length === 0">Entreprise <span class="accent">organisatrice</span></span>
-          </h2>
-          <p class="card-subtitle" *ngIf="event.companies && event.companies.length > 0">Découvrez les entreprises qui seront présentes à cet événement</p>
-          <p class="card-subtitle" *ngIf="!event.companies || event.companies.length === 0">Découvrez l'entreprise qui organise cet événement</p>
-          <div class="companies-grid">
-            <!-- Show participating companies if available -->
-            <div *ngFor="let company of event.companies" 
-               class="company-item">
-              <div class="company-logo">
-                <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name">
-                <div *ngIf="!company.logo?.fileUrl" class="company-logo-placeholder">
-                  {{ company.company_name.charAt(0).toUpperCase() }}
+        <!-- Participating Companies -->
+        <div class="companies-section-card" *ngIf="event.companies && event.companies.length > 0">
+          <h2 class="card-title-uniform">Entreprises <span class="accent">participantes</span></h2>
+          <p class="card-subtitle-uniform">Découvrez les {{ event.companies.length }} entreprise{{ event.companies.length > 1 ? 's' : '' }} qui seront présentes à cet événement</p>
+          
+          <div class="companies-square-grid">
+            <a *ngFor="let company of event.companies" 
+               [routerLink]="['/companies', company.id]"
+               class="company-square-card">
+              <div class="company-square-bg" [style.background]="'linear-gradient(135deg, ' + getCompanyColor(company) + ' 0%, ' + getCompanyColorDark(company) + ' 100%)'"></div>
+              <div class="company-square-content">
+                <div class="company-square-logo-wrapper">
+                  <div class="company-square-logo">
+                    <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name">
+                    <div *ngIf="!company.logo?.fileUrl" class="company-square-logo-placeholder">
+                      {{ company.company_name.charAt(0).toUpperCase() }}
+                    </div>
+                  </div>
+                </div>
+                <div class="company-square-info">
+                  <h3 class="company-square-name">{{ company.company_name }}</h3>
+                  <p class="company-square-tagline" *ngIf="company.slogan">{{ company.slogan }}</p>
+                  </div>
+                <div class="company-square-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
               </div>
-              <div class="company-info">
-                <h3 class="company-name">{{ company.company_name }}</h3>
-              </div>
-              <div class="company-arrow">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-            <!-- Show event creator's company if no participating companies -->
-            <div *ngIf="(!event.companies || event.companies.length === 0) && event.admin?.user?.company" 
-               class="company-item">
-              <div class="company-logo">
-                <img *ngIf="event.admin.user.company.logo?.fileUrl" [src]="event.admin.user.company.logo.fileUrl" [alt]="event.admin.user.company.company_name">
-                <div *ngIf="!event.admin.user.company.logo?.fileUrl" class="company-logo-placeholder">
-                  {{ event.admin.user.company.company_name.charAt(0).toUpperCase() }}
-                </div>
-              </div>
-              <div class="company-info">
-                <h3 class="company-name">{{ event.admin.user.company.company_name }}</h3>
-              </div>
-              <div class="company-arrow">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
 
         <!-- Share Section -->
         <div class="share-card">
-          <h3 class="share-title">Partager cet événement</h3>
+          <h2 class="card-title-uniform">Partager cet <span class="accent">événement</span></h2>
           <div class="share-buttons">
-            <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-button facebook">
+            <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-button">
               <fa-icon [icon]="fbIcon"></fa-icon>
               <span>Facebook</span>
             </a>
-            <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)" class="share-button twitter">
+            <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)" class="share-button">
               <fa-icon [icon]="twitterIcon"></fa-icon>
               <span>Twitter</span>
             </a>
-            <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)" class="share-button linkedin">
+            <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)" class="share-button">
               <fa-icon [icon]="linkedinIcon"></fa-icon>
               <span>LinkedIn</span>
             </a>
@@ -256,12 +240,26 @@
 
         <div class="sidebar-card organizer-card">
           <h3 class="sidebar-title">Organisateur</h3>
+          <!-- Si admin existe, c'est Talenteed -->
           <div class="organizer-info" *ngIf="event.admin">
             <div class="organizer-avatar organizer-avatar-logo">
               <img src="assets/img/talenteed-noir-plan-de-travail-1-150.png" alt="Talenteed" class="organizer-logo-img">
             </div>
             <div class="organizer-details">
               <div class="organizer-name">Talenteed</div>
+              <div class="organizer-role">Organisateur de l'événement</div>
+            </div>
+          </div>
+          <!-- Sinon, c'est la company -->
+          <div class="organizer-info" *ngIf="!event.admin && event.company">
+            <div class="organizer-avatar">
+              <img *ngIf="event.company.logo?.fileUrl" [src]="event.company.logo.fileUrl" [alt]="event.company.company_name" class="organizer-logo-img">
+              <div *ngIf="!event.company.logo?.fileUrl" class="organizer-avatar-placeholder">
+                {{ event.company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="organizer-details">
+              <div class="organizer-name">{{ event.company.company_name }}</div>
               <div class="organizer-role">Organisateur de l'événement</div>
             </div>
           </div>
