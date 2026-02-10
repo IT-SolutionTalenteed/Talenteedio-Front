@@ -1,0 +1,73 @@
+{
+  "home": {
+    "hero": {
+      "subtitle": "Dépassez vos attentes de carrière",
+      "title": "Créer le meilleur. Jour.",
+      "titleAccent": "Toujours.",
+      "stats": {
+        "events": {
+          "number": "20k+",
+          "label": "Événements planifiés"
+        },
+        "organizers": {
+          "number": "260",
+          "label": "Organisateurs d'événements"
+        }
+      }
+    },
+    "services": {
+      "jobs": {
+        "title": "Trouver un emploi",
+        "description": "Votre porte d'entrée vers des possibilités infinies et des opportunités de carrière passionnantes",
+        "link": "Parcourir les emplois"
+      },
+      "missions": {
+        "title": "Trouver des missions",
+        "description": "Découvrez des opportunités freelance et connectez-vous avec des projets passionnants",
+        "link": "Parcourir les missions"
+      },
+      "events": {
+        "title": "Événements",
+        "description": "Participez aux événements RH et développez votre réseau",
+        "link": "Découvrir"
+      },
+      "articles": {
+        "title": "Articles",
+        "description": "Actualités RH, conseils carrière et tendances du marché",
+        "link": "Lire"
+      }
+    },
+    "featuredJobs": {
+      "title": "Nos opportunités",
+      "titleAccent": "en direct",
+      "description": "Découvrez les dernières offres d'emploi adaptées à vos aspirations professionnelles",
+      "viewAll": "Voir tous les emplois"
+    },
+    "upcomingEvents": {
+      "title": "Événements",
+      "titleAccent": "à venir",
+      "description": "Ne manquez pas nos prochains événements passionnants et opportunités de réseautage",
+      "viewAll": "Voir tous les événements",
+      "noEvents": "Aucun événement à venir pour le moment. Revenez bientôt !",
+      "maxParticipants": "Max",
+      "participants": "participants",
+      "companiesLabel": "Entreprises participantes :"
+    },
+    "companies": {
+      "title": "La confiance des",
+      "titleAccent": "entreprises leaders",
+      "description": "Rejoignez le réseau d'entreprises innovantes qui nous font confiance pour leurs besoins en talents"
+    },
+    "media": {
+      "title": "Votre entreprise locale",
+      "titleAccent1": "connectée",
+      "titleAccent2": "ressources",
+      "titleText": "et vos",
+      "titleEnd": "ultimes",
+      "description": "Restez informé avec les dernières actualités RH, articles et interviews d'experts"
+    }
+  },
+  "common": {
+    "language": "Langue"
+  }
+}

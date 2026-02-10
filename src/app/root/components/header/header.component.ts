@@ -22,6 +22,7 @@ import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
 import { Menu } from '../../types/menu.interface';
 import { CategoryService } from 'src/app/shared/services/category.service';
+import { TranslationService, Language } from 'src/app/services/translation.service';
 
 @Component({
   selector: 'app-header',
@@ -43,10 +44,12 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
   connexionTime: string;
   currentRoute: string;
   showUserDropdown = false;
+  showLanguageDropdown = false;
   menusCopy: Menu[];
   isShowingMobileNav = false;
   hoveredMenu: Menu | null = null;
   activeMobileSubmenu: Menu | null = null;
+  currentLanguage: Language = 'fr';
 
   backOfficeRoute = environment.backOfficeBaseUrl;
 
@@ -66,7 +69,8 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
     private authenticationStore: Store<AuthenticationState>,
     router: Router,
     private elementRef: ElementRef,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private translationService: TranslationService
   ) {
     this.currentRoute = router.url.slice(0, nthOccurenceOf('/', 3, router.url));
     this.subs.sink = router.events
@@ -82,6 +86,11 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit(): void {
     this.loadEventCategories();
+    
+    // Initialiser la langue
+    this.subs.sink = this.translationService.getCurrentLanguage().subscribe(lang => {
+      this.currentLanguage = lang;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -146,6 +155,18 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
     }
   }
 
+  toggleLanguageDropdown() {
+    this.showLanguageDropdown = !this.showLanguageDropdown;
+    if (this.showLanguageDropdown) {
+      this.showUserDropdown = false;
+    }
+  }
+
+  changeLanguage(lang: Language) {
+    this.translationService.setLanguage(lang);
+    this.showLanguageDropdown = false;
+  }
+
   logout() {
     if (this.user) {
       this.authenticationStore.dispatch(logOut());
@@ -181,6 +202,9 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
 
   toggleUserDropdown() {
     this.showUserDropdown = !this.showUserDropdown;
+    if (this.showUserDropdown) {
+      this.showLanguageDropdown = false;
+    }
   }
 
   @HostListener('document:click', ['$event'])
@@ -189,6 +213,7 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
     const isInside = this.elementRef.nativeElement.contains(target);
     if (!isInside) {
       this.showUserDropdown = false;
+      this.showLanguageDropdown = false;
       this.hoveredMenu = null;
     }
   }

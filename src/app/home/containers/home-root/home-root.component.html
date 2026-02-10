@@ -6,9 +6,9 @@
   <section class="hero-section">
     <div class="hero-content">
       <div class="hero-text">
-        <p class="hero-subtitle">Dépassez vos attentes de carrière</p>
+        <p class="hero-subtitle">{{ 'home.hero.subtitle' | translate }}</p>
         <h1 class="hero-title">
-          Créer le meilleur. Jour. <span class="accent">Toujours.</span>
+          {{ 'home.hero.title' | translate }} <span class="accent">{{ 'home.hero.titleAccent' | translate }}</span>
         </h1>
         <div class="hero-stats">
           <div class="stat-item">
@@ -18,8 +18,8 @@
               </svg>
             </div>
             <div class="stat-content">
-              <div class="stat-number">20k+</div>
-              <div class="stat-label">Événements planifiés</div>
+              <div class="stat-number">{{ 'home.hero.stats.events.number' | translate }}</div>
+              <div class="stat-label">{{ 'home.hero.stats.events.label' | translate }}</div>
             </div>
           </div>
           <div class="stat-item">
@@ -29,8 +29,8 @@
               </svg>
             </div>
             <div class="stat-content">
-              <div class="stat-number">260</div>
-              <div class="stat-label">Organisateurs d'événements</div>
+              <div class="stat-number">{{ 'home.hero.stats.organizers.number' | translate }}</div>
+              <div class="stat-label">{{ 'home.hero.stats.organizers.label' | translate }}</div>
             </div>
           </div>
         </div>
@@ -52,9 +52,9 @@
             <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM14 6H10V4H14V6Z" fill="currentColor"/>
           </svg>
         </div>
-        <h3 class="card-title">Trouver un emploi</h3>
-        <p class="card-description">Votre porte d'entrée vers des possibilités infinies et des opportunités de carrière passionnantes</p>
-        <span class="card-link">Parcourir les emplois →</span>
+        <h3 class="card-title">{{ 'home.services.jobs.title' | translate }}</h3>
+        <p class="card-description">{{ 'home.services.jobs.description' | translate }}</p>
+        <span class="card-link">{{ 'home.services.jobs.link' | translate }} →</span>
       </a>
 
       <a [routerLink]="['/freelance']" class="service-card card-missions">
@@ -64,9 +64,9 @@
             <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
           </svg>
         </div>
-        <h3 class="card-title">Trouver des missions</h3>
-        <p class="card-description">Découvrez des opportunités freelance et connectez-vous avec des projets passionnants</p>
-        <span class="card-link">Parcourir les missions →</span>
+        <h3 class="card-title">{{ 'home.services.missions.title' | translate }}</h3>
+        <p class="card-description">{{ 'home.services.missions.description' | translate }}</p>
+        <span class="card-link">{{ 'home.services.missions.link' | translate }} →</span>
       </a>
 
       <a [routerLink]="['/event']" class="service-card card-voice">
@@ -75,9 +75,9 @@
             <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8ZM12 13H17V18H12V13Z" fill="currentColor"/>
           </svg>
         </div>
-        <h3 class="card-title">Événements</h3>
-        <p class="card-description">Participez aux événements RH et développez votre réseau</p>
-        <span class="card-link">Découvrir →</span>
+        <h3 class="card-title">{{ 'home.services.events.title' | translate }}</h3>
+        <p class="card-description">{{ 'home.services.events.description' | translate }}</p>
+        <span class="card-link">{{ 'home.services.events.link' | translate }} →</span>
       </a>
 
       <a [routerLink]="['/blog']" class="service-card card-coaching">
@@ -86,9 +86,9 @@
             <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM14 17H7V15H14V17ZM17 13H7V11H17V13ZM17 9H7V7H17V9Z" fill="currentColor"/>
           </svg>
         </div>
-        <h3 class="card-title">Articles</h3>
-        <p class="card-description">Actualités RH, conseils carrière et tendances du marché</p>
-        <span class="card-link">Lire →</span>
+        <h3 class="card-title">{{ 'home.services.articles.title' | translate }}</h3>
+        <p class="card-description">{{ 'home.services.articles.description' | translate }}</p>
+        <span class="card-link">{{ 'home.services.articles.link' | translate }} →</span>
       </a>
     </div>
   </section>
@@ -96,8 +96,8 @@
   <!-- Featured Jobs Section -->
   <section class="featured-jobs-section">
     <div class="section-header">
-      <h2 class="section-title">Nos opportunités <span class="accent">en direct</span></h2>
-      <p class="section-description">Découvrez les dernières offres d'emploi adaptées à vos aspirations professionnelles</p>
+      <h2 class="section-title">{{ 'home.featuredJobs.title' | translate }} <span class="accent">{{ 'home.featuredJobs.titleAccent' | translate }}</span></h2>
+      <p class="section-description">{{ 'home.featuredJobs.description' | translate }}</p>
     </div>
     <app-featured-job
       [jobs]="jobs$ | async"
@@ -108,7 +108,7 @@
     <div class="section-footer">
       <a [routerLink]="['/job']">
         <button class="view-more-button">
-          Voir tous les emplois
+          {{ 'home.featuredJobs.viewAll' | translate }}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -120,8 +120,8 @@
   <!-- Upcoming Events Section -->
   <section class="upcoming-events-section">
     <div class="section-header">
-      <h2 class="section-title">Événements <span class="accent">à venir</span></h2>
-      <p class="section-description">Ne manquez pas nos prochains événements passionnants et opportunités de réseautage</p>
+      <h2 class="section-title">{{ 'home.upcomingEvents.title' | translate }} <span class="accent">{{ 'home.upcomingEvents.titleAccent' | translate }}</span></h2>
+      <p class="section-description">{{ 'home.upcomingEvents.description' | translate }}</p>
     </div>
     <app-loader [isLoading]="upcomingEventsLoading$ | async">
       <div class="events-grid" *ngIf="upcomingEvents$ | async as events">
@@ -157,11 +157,11 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
                 </svg>
-                <span>Max {{ event.maxParticipants }} participants</span>
+                <span>{{ 'home.upcomingEvents.maxParticipants' | translate }} {{ event.maxParticipants }} {{ 'home.upcomingEvents.participants' | translate }}</span>
               </div>
             </div>
             <div class="event-companies" *ngIf="event.companies && event.companies.length > 0">
-              <div class="companies-label">Entreprises participantes :</div>
+              <div class="companies-label">{{ 'home.upcomingEvents.companiesLabel' | translate }}</div>
               <div class="companies-logos">
                 <div class="company-logo-small" *ngFor="let company of event.companies.slice(0, 3)" [title]="company.company_name">
                   <img [src]="company.logo?.fileUrl || 'assets/img/favicon.png'" [alt]="company.company_name" />
@@ -182,14 +182,14 @@
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
             <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor" opacity="0.3"/>
           </svg>
-          <p>Aucun événement à venir pour le moment. Revenez bientôt !</p>
+          <p>{{ 'home.upcomingEvents.noEvents' | translate }}</p>
         </div>
       </div>
     </app-loader>
     <div class="section-footer" *ngIf="(upcomingEvents$ | async)?.length > 0">
       <a [routerLink]="['/event']">
         <button class="view-more-button">
-          Voir tous les événements
+          {{ 'home.upcomingEvents.viewAll' | translate }}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -201,8 +201,8 @@
   <!-- Companies Section -->
   <section class="companies-section">
     <div class="section-header">
-      <h2 class="section-title">La confiance des <span class="accent">entreprises leaders</span></h2>
-      <p class="section-description">Rejoignez le réseau d'entreprises innovantes qui nous font confiance pour leurs besoins en talents</p>
+      <h2 class="section-title">{{ 'home.companies.title' | translate }} <span class="accent">{{ 'home.companies.titleAccent' | translate }}</span></h2>
+      <p class="section-description">{{ 'home.companies.description' | translate }}</p>
     </div>
     <app-loader [isLoading]="companiesLoading$ | async">
       <div class="companies-grid" *ngIf="companies$ | async as companies">
@@ -226,10 +226,10 @@
   <section class="media-section">
     <div class="section-header">
       <h2 class="section-title">
-        Votre entreprise locale <span class="accent">connectée</span> et vos
-        <span class="accent">ressources</span> ultimes
+        {{ 'home.media.title' | translate }} <span class="accent">{{ 'home.media.titleAccent1' | translate }}</span> {{ 'home.media.titleText' | translate }}
+        <span class="accent">{{ 'home.media.titleAccent2' | translate }}</span> {{ 'home.media.titleEnd' | translate }}
       </h2>
-      <p class="section-description">Restez informé avec les dernières actualités RH, articles et interviews d'experts</p>
+      <p class="section-description">{{ 'home.media.description' | translate }}</p>
     </div>
     <app-news [news]="articles$ | async"></app-news>
   </section>
