@@ -281,4 +281,22 @@ export class EventDetailComponent implements OnChanges, OnInit {
     event.preventDefault(); // Prevent the default link behavior
     window.open(link, '_blank');
   }
+
+  getCompanyColor(company: any): string {
+    const colors = [
+      '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8',
+      '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'
+    ];
+    const index = company.company_name.charCodeAt(0) % colors.length;
+    return colors[index];
+  }
+
+  getCompanyColorDark(company: any): string {
+    const colorsDark = [
+      '#EE5A6F', '#44B8AC', '#3FA5BD', '#FF8E5A', '#7FC4B0',
+      '#E5CA5D', '#A87DB8', '#6FAFD0', '#E6A527', '#3FA070'
+    ];
+    const index = company.company_name.charCodeAt(0) % colorsDark.length;
+    return colorsDark[index];
+  }
 }

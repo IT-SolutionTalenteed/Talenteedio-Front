@@ -97,11 +97,29 @@ export class EventService {
                 content
                 createdAt
                 date
+                startTime
+                endTime
+                location
+                maxParticipants
+                status
                 image
+                metaDescription
                 admin {
                   user {
                     name
+                    company {
+                      id
+                      company_name
+                      logo {
+                        fileUrl
+                      }
+                    }
                   }
+                }
+                category {
+                  id
+                  name
+                  slug
                 }
                 slug
                 companies {
