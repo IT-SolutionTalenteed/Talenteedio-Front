@@ -221,11 +221,11 @@
   }
 
   .content-card {
-    background: white;
+    background: transparent;
     border-radius: 20px;
     padding: 60px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid #E8EAED;
+    box-shadow: none;
+    border: none;
 
     @media screen and (max-width: 768px) {
       padding: 40px 24px;
@@ -297,10 +297,10 @@
 
     ul, ol {
       margin: 24px 0;
-      padding-left: 28px;
+      padding-left: 0;
 
       li {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
         line-height: 1.8;
         color: #3c4043;
       }
@@ -311,17 +311,47 @@
 
       li {
         position: relative;
-        padding-left: 8px;
+        padding-left: 32px;
 
         &::before {
-          content: '';
+          content: '✓';
           position: absolute;
-          left: -20px;
-          top: 12px;
-          width: 6px;
-          height: 6px;
-          background: $secondary;
+          left: 0;
+          top: 2px;
+          color: $secondary;
+          font-weight: 700;
+          font-size: 20px;
+        }
+      }
+    }
+
+    ol {
+      counter-reset: item;
+      list-style-type: none;
+
+      li {
+        position: relative;
+        padding-left: 60px;
+        margin-bottom: 24px;
+
+        &::before {
+          content: counter(item);
+          counter-increment: item;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 36px;
+          height: 36px;
+          background: linear-gradient(135deg, #000 0%, $secondary 100%);
+          color: white;
           border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 36px;
+          text-align: center;
         }
       }
     }
@@ -504,7 +534,9 @@
   font-weight: 600;
   text-decoration: none !important;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(241, 117, 90, 0.2);
+  background: $secondary;
+  color: white;
 
   @media screen and (max-width: 480px) {
     padding: 10px 20px;
@@ -517,33 +549,34 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(241, 117, 90, 0.35);
+    background: darken($secondary, 5%);
   }
 }
 
 .facebook-btn {
-  background: $facebook-color;
+  background: $secondary;
   color: white;
 
   &:hover {
-    background: darken($facebook-color, 5%);
+    background: darken($secondary, 5%);
   }
 }
 
 .twitter-btn {
-  background: #000000;
+  background: $secondary;
   color: white;
 
   &:hover {
-    background: #1a1a1a;
+    background: darken($secondary, 5%);
   }
 }
 
 .linkedin-btn {
-  background: $linkedin-color;
+  background: $secondary;
   color: white;
 
   &:hover {
-    background: darken($linkedin-color, 5%);
+    background: darken($secondary, 5%);
   }
 }
