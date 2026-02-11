@@ -1,260 +1,310 @@
-<div class="company-detail-container">
-  <app-loader [isLoading]="loading">
-    <div *ngIf="error" class="error-message">
-      <p>{{ error }}</p>
-      <button class="action-button secondary" [routerLink]="['/companies']">
-        Retour à la liste
-      </button>
+<!-- Hero Section -->
+<section class="hero-section" *ngIf="company$ | async as company">
+  <div class="hero-content">
+    <div class="company-header">
+      <div class="company-logo">
+        <img 
+          [src]="company?.logo?.fileUrl || 'assets/img/favicon.png'" 
+          [alt]="company.company_name"
+        />
+      </div>
+      <div class="company-info">
+        <h1 class="company-name">{{ company.company_name }}</h1>
+        <div class="company-meta" *ngIf="company?.contact?.address">
+          <fa-icon [icon]="faMapMarker" class="icon"></fa-icon>
+          <span>{{ company.contact.address.city }}, {{ company.contact.address.country }}</span>
+        </div>
+      </div>
     </div>
-    <ng-container *ngIf="company$ | async as company">
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero-content">
-          <div class="company-header">
-            <div class="company-logo">
-              <img 
-                [src]="company?.logo?.fileUrl || 'assets/img/favicon.png'" 
-                [alt]="company.company_name"
-              />
+  </div>
+</section>
+
+<div class="company-detail-container" *ngIf="company$ | async as company">
+  <!-- Main Content -->
+  <div class="company-main-content">
+    <div class="content-wrapper">
+      <!-- Left Column: Company Details -->
+      <div class="company-details-column">
+
+        <!-- About Section -->
+        <div class="description-card" *ngIf="company.about">
+          <h2 class="card-title-uniform">À propos de <span class="accent">{{ company.company_name }}</span></h2>
+          <div class="description-content" [innerHTML]="company.about"></div>
+        </div>
+
+        <!-- Jobs Section -->
+        <div class="jobs-section-card" *ngIf="(jobs$ | async) as jobs">
+          <ng-container *ngIf="freelanceJobs$ | async as freelanceJobs">
+            <div *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
+              <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
+              <p class="card-subtitle-uniform">Découvrez les {{ jobs.length + freelanceJobs.length }} offre{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }} disponible{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }}</p>
+              
+              <div class="jobs-list">
+                <!-- Regular Jobs -->
+                <a *ngFor="let job of jobs" 
+                   [routerLink]="['/job/detail', job.slug]"
+                   class="job-card-horizontal">
+                  <div class="job-image" *ngIf="job.featuredImage?.fileUrl">
+                    <img [src]="job.featuredImage.fileUrl" [alt]="job.title">
+                    <div class="job-badge-overlay">Emploi</div>
+                  </div>
+                  <div class="job-content">
+                    <div class="job-header">
+                      <h3 class="job-title">{{ job.title }}</h3>
+                      <div class="job-type" *ngIf="job.jobType">{{ job.jobType.name }}</div>
+                    </div>
+                    <div class="job-meta">
+                      <span class="meta-item" *ngIf="job.location?.address">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
+                        </svg>
+                        {{ job.location.address.city }}
+                      </span>
+                      <span class="meta-item" *ngIf="job.createdAt">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
+                        </svg>
+                        {{ job.createdAt | date : "d MMM yyyy" }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="job-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </a>
+                
+                <!-- Freelance Jobs -->
+                <a *ngFor="let freelanceJob of freelanceJobs" 
+                   [routerLink]="['/freelance/detail', freelanceJob.slug]"
+                   class="job-card-horizontal">
+                  <div class="job-image" *ngIf="freelanceJob.featuredImage?.fileUrl">
+                    <img [src]="freelanceJob.featuredImage.fileUrl" [alt]="freelanceJob.title">
+                    <div class="job-badge-overlay freelance">Freelance</div>
+                  </div>
+                  <div class="job-content">
+                    <div class="job-header">
+                      <h3 class="job-title">{{ freelanceJob.title }}</h3>
+                      <div class="job-type" *ngIf="freelanceJob.jobType">{{ freelanceJob.jobType.name }}</div>
+                    </div>
+                    <div class="job-meta">
+                      <span class="meta-item" *ngIf="freelanceJob.location?.address">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
+                        </svg>
+                        {{ freelanceJob.location.address.city }}
+                      </span>
+                      <span class="meta-item" *ngIf="freelanceJob.createdAt">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
+                        </svg>
+                        {{ freelanceJob.createdAt | date : "d MMM yyyy" }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="job-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </a>
+              </div>
             </div>
-            <div class="company-info">
-              <h1 class="company-name">{{ company.company_name }}</h1>
-              <div class="company-meta" *ngIf="company?.contact?.address">
-                <fa-icon [icon]="faMapMarker" class="icon"></fa-icon>
-                <span>{{ company.contact.address.city }}, {{ company.contact.address.country }}</span>
+          </ng-container>
+        </div>
+
+        <!-- Events Section -->
+        <div class="events-section-card" *ngIf="(events$ | async) as events">
+          <div *ngIf="events.length > 0">
+            <h2 class="card-title-uniform">Événements <span class="accent">à venir</span></h2>
+            <p class="card-subtitle-uniform">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }} organisé{{ events.length > 1 ? 's' : '' }} ou participé{{ events.length > 1 ? 's' : '' }}</p>
+            
+            <div class="events-grid">
+              <a *ngFor="let event of events" 
+                 [routerLink]="['/event/detail', event.slug]"
+                 class="event-card">
+                <div class="event-image" *ngIf="event.image">
+                  <img [src]="event.image" [alt]="event.title">
+                  <div class="event-date-overlay">
+                    <div class="date-day">{{ event.date | date : "d" }}</div>
+                    <div class="date-month">{{ event.date | date : "MMM" }}</div>
+                  </div>
+                </div>
+                <div class="event-content">
+                  <h3 class="event-title">{{ event.title }}</h3>
+                  <p class="event-description" *ngIf="event.metaDescription">{{ event.metaDescription }}</p>
+                  <div class="event-meta">
+                    <span class="meta-item" *ngIf="event.location">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
+                      </svg>
+                      {{ event.location }}
+                    </span>
+                    <span class="meta-item" *ngIf="event.startTime">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                      </svg>
+                      {{ event.startTime }}
+                    </span>
+                  </div>
+                  
+                  <!-- Companies participating -->
+                  <div class="event-companies" *ngIf="event.companies && event.companies.length > 0">
+                    <div class="companies-label">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                        <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+                      </svg>
+                      {{ event.companies.length }} entreprise{{ event.companies.length > 1 ? 's' : '' }}
+                    </div>
+                    <div class="companies-logos">
+                      <div class="company-logo-mini" *ngFor="let company of event.companies.slice(0, 3)">
+                        <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name" [title]="company.company_name">
+                        <div *ngIf="!company.logo?.fileUrl" class="company-logo-mini-placeholder" [title]="company.company_name">
+                          {{ company.company_name.charAt(0).toUpperCase() }}
+                        </div>
+                      </div>
+                      <div class="company-logo-more" *ngIf="event.companies.length > 3">
+                        +{{ event.companies.length - 3 }}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="event-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Articles Section -->
+        <div class="articles-section-card" *ngIf="(articles$ | async) as articles">
+          <div *ngIf="articles.length > 0">
+            <h2 class="card-title-uniform">Articles & <span class="accent">Actualités</span></h2>
+            <p class="card-subtitle-uniform">{{ articles.length }} article{{ articles.length > 1 ? 's' : '' }} publié{{ articles.length > 1 ? 's' : '' }}</p>
+            
+            <div class="articles-grid">
+              <a *ngFor="let article of articles" 
+                 [routerLink]="['/blog/detail', article.slug]"
+                 class="article-card">
+                <div class="article-image" *ngIf="article.image?.fileUrl">
+                  <img [src]="article.image.fileUrl" [alt]="article.title">
+                </div>
+                <div class="article-content">
+                  <h3 class="article-title">{{ article.title }}</h3>
+                  <p class="article-description" *ngIf="article.metaDescription">{{ article.metaDescription }}</p>
+                  <div class="article-meta">
+                    <span class="meta-item" *ngIf="article.createdAt">
+                      {{ article.createdAt | date : "d MMMM yyyy" }}
+                    </span>
+                    <span class="meta-item" *ngIf="article.admin">
+                      Par {{ article.admin.user.firstname }} {{ article.admin.user.lastname }}
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <div class="company-sidebar">
+        <div class="sidebar-card contact-card" *ngIf="company.contact?.address || company.contact?.phoneNumber || company.contact?.email">
+          <h3 class="sidebar-title">Contact</h3>
+          <div class="sidebar-info-list">
+            <div class="sidebar-info-item" *ngIf="company.contact?.address">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
+                </svg>
+                Adresse
+              </div>
+              <div class="sidebar-info-value">
+                <span *ngIf="company.contact.address.line">{{ company.contact.address.line }}<br></span>
+                <span *ngIf="company.contact.address.postalCode || company.contact.address.city">
+                  {{ company.contact.address.postalCode }} {{ company.contact.address.city }}<br>
+                </span>
+                <span *ngIf="company.contact.address.country">{{ company.contact.address.country }}</span>
+              </div>
+            </div>
+            
+            <div class="sidebar-info-item" *ngIf="company.contact?.phoneNumber">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                </svg>
+                Téléphone
+              </div>
+              <div class="sidebar-info-value">
+                <a [href]="'tel:' + company.contact.phoneNumber">{{ company.contact.phoneNumber }}</a>
+              </div>
+            </div>
+            
+            <div class="sidebar-info-item" *ngIf="company.contact?.email">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                </svg>
+                Email
+              </div>
+              <div class="sidebar-info-value">
+                <a [href]="'mailto:' + company.contact.email">{{ company.contact.email }}</a>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- Main Content -->
-      <section class="content-section">
-        <div class="content-wrapper">
-          <!-- About Section -->
-          <div class="main-content">
-            <div class="section-card">
-              <h2 class="section-title">
-                <fa-icon [icon]="faBuilding" class="title-icon"></fa-icon>
-                À propos de l'entreprise
-              </h2>
-              <div class="section-content">
-                <div class="company-stats">
-                  <div class="stat-item" *ngIf="company.jobs && company.jobs.length > 0">
-                    <div class="stat-value">{{ company.jobs.length }}</div>
-                    <div class="stat-label">Offres d'emploi</div>
-                  </div>
-                  <div class="stat-item" *ngIf="company.category">
-                    <div class="stat-value">{{ company.category.name }}</div>
-                    <div class="stat-label">Secteur d'activité</div>
-                  </div>
-                </div>
-                <p *ngIf="!company.jobs || company.jobs.length === 0" class="no-data">
-                  Cette entreprise n'a pas encore publié d'offres d'emploi.
-                </p>
-              </div>
-            </div>
-
-            <!-- Events Section -->
-            <div class="section-card" *ngIf="events$ | async as events">
-              <h2 class="section-title">
-                <fa-icon [icon]="faCalendar" class="title-icon"></fa-icon>
-                Événements
-              </h2>
-              <div class="section-content">
-                <div class="cards-grid" *ngIf="events.length > 0">
-                  <div class="content-card" *ngFor="let event of events">
-                    <a [routerLink]="['/event/detail', event.slug]" class="card-link">
-                      <div class="card-body">
-                        <h3 class="card-title">{{ event.title }}</h3>
-                        <p class="card-description" *ngIf="event.metaDescription">{{ event.metaDescription }}</p>
-                        <div class="card-meta">
-                          <span class="meta-item" *ngIf="event.date">
-                            <fa-icon [icon]="faCalendar"></fa-icon>
-                            {{ event.date | date: 'dd/MM/yyyy' }}
-                          </span>
-                          <span class="meta-item" *ngIf="event.startTime">
-                            {{ event.startTime }}
-                          </span>
-                          <span class="meta-item" *ngIf="event.location">
-                            <fa-icon [icon]="faMapMarker"></fa-icon>
-                            {{ event.location }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <p *ngIf="events.length === 0" class="no-data">
-                  Aucun événement publié par cette entreprise.
-                </p>
-              </div>
-            </div>
-
-            <!-- Articles Section -->
-            <div class="section-card" *ngIf="articles$ | async as articles">
-              <h2 class="section-title">
-                <fa-icon [icon]="faNewspaper" class="title-icon"></fa-icon>
-                Articles
-              </h2>
-              <div class="section-content">
-                <div class="cards-grid" *ngIf="articles.length > 0">
-                  <div class="content-card" *ngFor="let article of articles">
-                    <a [routerLink]="['/blog/detail', article.slug]" class="card-link">
-                      <div class="card-image" *ngIf="article.image?.fileUrl">
-                        <img [src]="article.image.fileUrl" [alt]="article.title" />
-                      </div>
-                      <div class="card-body">
-                        <h3 class="card-title">{{ article.title }}</h3>
-                        <p class="card-description" *ngIf="article.metaDescription">{{ article.metaDescription }}</p>
-                        <div class="card-meta">
-                          <span class="meta-item" *ngIf="article.createdAt">
-                            {{ article.createdAt | date: 'dd/MM/yyyy' }}
-                          </span>
-                          <span class="meta-item" *ngIf="article.admin">
-                            Par {{ article.admin.firstname }} {{ article.admin.lastname }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <p *ngIf="articles.length === 0" class="no-data">
-                  Aucun article publié par cette entreprise.
-                </p>
-              </div>
-            </div>
-
-            <!-- Jobs Section -->
-            <div class="section-card" *ngIf="(jobs$ | async) as jobs">
-              <h2 class="section-title">
-                <fa-icon [icon]="faJobIcon" class="title-icon"></fa-icon>
-                Annonces
-              </h2>
-              <div class="section-content">
-                <ng-container *ngIf="freelanceJobs$ | async as freelanceJobs">
-                  <div class="cards-grid" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
-                    <!-- Regular Jobs -->
-                    <div class="content-card" *ngFor="let job of jobs">
-                      <a [routerLink]="['/job/detail', job.slug]" class="card-link">
-                        <div class="card-image" *ngIf="job.featuredImage?.fileUrl">
-                          <img [src]="job.featuredImage.fileUrl" [alt]="job.title" />
-                        </div>
-                        <div class="card-body">
-                          <div class="job-badge">Emploi</div>
-                          <h3 class="card-title">{{ job.title }}</h3>
-                          <div class="card-meta">
-                            <span class="meta-item" *ngIf="job.jobType">
-                              <fa-icon [icon]="faBriefcase"></fa-icon>
-                              {{ job.jobType.name }}
-                            </span>
-                            <span class="meta-item" *ngIf="job.location?.address">
-                              <fa-icon [icon]="faMapMarker"></fa-icon>
-                              {{ job.location.address.city }}, {{ job.location.address.country }}
-                            </span>
-                            <span class="meta-item" *ngIf="job.createdAt">
-                              <fa-icon [icon]="faCalendar"></fa-icon>
-                              {{ job.createdAt | date: 'dd/MM/yyyy' }}
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    
-                    <!-- Freelance Jobs -->
-                    <div class="content-card" *ngFor="let freelanceJob of freelanceJobs">
-                      <a [routerLink]="['/freelance/detail', freelanceJob.slug]" class="card-link">
-                        <div class="card-image" *ngIf="freelanceJob.featuredImage?.fileUrl">
-                          <img [src]="freelanceJob.featuredImage.fileUrl" [alt]="freelanceJob.title" />
-                        </div>
-                        <div class="card-body">
-                          <div class="job-badge freelance">Freelance</div>
-                          <h3 class="card-title">{{ freelanceJob.title }}</h3>
-                          <div class="card-meta">
-                            <span class="meta-item" *ngIf="freelanceJob.jobType">
-                              <fa-icon [icon]="faBriefcase"></fa-icon>
-                              {{ freelanceJob.jobType.name }}
-                            </span>
-                            <span class="meta-item" *ngIf="freelanceJob.location?.address">
-                              <fa-icon [icon]="faMapMarker"></fa-icon>
-                              {{ freelanceJob.location.address.city }}, {{ freelanceJob.location.address.country }}
-                            </span>
-                            <span class="meta-item" *ngIf="freelanceJob.createdAt">
-                              <fa-icon [icon]="faCalendar"></fa-icon>
-                              {{ freelanceJob.createdAt | date: 'dd/MM/yyyy' }}
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <p *ngIf="jobs.length === 0 && freelanceJobs.length === 0" class="no-data">
-                    Aucune annonce publiée par cette entreprise.
-                  </p>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sidebar -->
-          <div class="sidebar">
-            <!-- Contact Card -->
-            <div class="info-card">
-              <h3 class="card-title">Informations de contact</h3>
-              <div class="info-list">
-                <div class="info-item" *ngIf="company?.contact?.address">
-                  <div class="info-icon">
-                    <fa-icon [icon]="faMapMarker"></fa-icon>
-                  </div>
-                  <div class="info-content">
-                    <div class="info-label">Adresse</div>
-                    <div class="info-value">
-                      {{ company.contact.address.line }}<br>
-                      {{ company.contact.address.postalCode }} {{ company.contact.address.city }}<br>
-                      {{ company.contact.address.country }}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="info-item" *ngIf="company?.contact?.phoneNumber">
-                  <div class="info-icon">
-                    <fa-icon [icon]="faPhone"></fa-icon>
-                  </div>
-                  <div class="info-content">
-                    <div class="info-label">Téléphone</div>
-                    <div class="info-value">
-                      <a [href]="'tel:' + company.contact.phoneNumber">{{ company.contact.phoneNumber }}</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="info-item" *ngIf="company?.contact?.email">
-                  <div class="info-icon">
-                    <fa-icon [icon]="faEnvelope"></fa-icon>
-                  </div>
-                  <div class="info-content">
-                    <div class="info-label">Email</div>
-                    <div class="info-value">
-                      <a [href]="'mailto:' + company.contact.email">{{ company.contact.email }}</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Actions Card -->
-            <div class="actions-card">
-              <button class="action-button primary" [routerLink]="['/job']">
-                <fa-icon [icon]="faBriefcase"></fa-icon>
-                Voir les offres
-              </button>
-              <button class="action-button secondary" [routerLink]="['/companies']">
-                Retour à la liste
-              </button>
-            </div>
+        <!-- Empty state for contact -->
+        <div class="sidebar-card contact-card" *ngIf="!company.contact?.address && !company.contact?.phoneNumber && !company.contact?.email">
+          <h3 class="sidebar-title">Contact</h3>
+          <div class="empty-contact">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor" opacity="0.3"/>
+            </svg>
+            <p>Les informations de contact ne sont pas encore disponibles pour cette entreprise.</p>
           </div>
         </div>
-      </section>
-    </ng-container>
-  </app-loader>
+
+        <div class="sidebar-card cta-card">
+          <div class="cta-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM14 6H10V4H14V6Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="cta-title">Intéressé ?</h3>
+          <p class="cta-text">Découvrez toutes les opportunités proposées par {{ company.company_name }}</p>
+          <button class="cta-button" [routerLink]="['/job']">
+            Voir les offres
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <div class="loading-spinner"></div>
+  <p>Chargement des informations...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error && !loading">
+  <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DC2626"/>
+  </svg>
+  <h3>Entreprise introuvable</h3>
+  <p>{{ error }}</p>
+  <button class="error-button" [routerLink]="['/companies']">
+    Retour à la liste
+  </button>
 </div>

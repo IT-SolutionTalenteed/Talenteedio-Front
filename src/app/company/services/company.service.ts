@@ -20,6 +20,11 @@ const GET_COMPANIES = gql`
             country
           }
         }
+        category {
+          id
+          name
+          slug
+        }
       }
       total
     }
@@ -68,8 +73,13 @@ const GET_COMPANY_EVENTS = gql`
         startTime
         endTime
         location
+        image
         companies {
           id
+          company_name
+          logo {
+            fileUrl
+          }
         }
         createdAt
       }
