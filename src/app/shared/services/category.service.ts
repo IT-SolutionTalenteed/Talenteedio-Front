@@ -11,6 +11,10 @@ export interface Category {
   description?: string;
   image?: string;
   faq?: { question: string; answer: string }[];
+  gallery?: string[];
+  testimonials?: { avatar: string; fullname: string; job: string; avis: string }[];
+  video?: string;
+  detailList?: string[];
   model: string;
   status: string;
 }
@@ -40,6 +44,15 @@ export class CategoryService {
                   question
                   answer
                 }
+                gallery
+                testimonials {
+                  avatar
+                  fullname
+                  job
+                  avis
+                }
+                video
+                detailList
                 model
                 status
               }

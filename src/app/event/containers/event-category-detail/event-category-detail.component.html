@@ -1,46 +1,137 @@
 <div class="category-detail-container">
   <app-loader [isLoading]="loading">
     <div *ngIf="category">
-      <!-- Hero Section - Clean and minimal -->
+      <!-- Hero Section -->
       <div class="category-hero">
         <div class="hero-content">
           <div class="breadcrumb">
             <a routerLink="/event/list">Événements</a>
-            <span class="separator">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
+            <span class="separator">›</span>
             <span class="current">{{ category.name }}</span>
           </div>
           <h1 class="category-title">{{ category.name }}</h1>
           <p class="category-subtitle" *ngIf="category.subtitle">{{ category.subtitle }}</p>
-          <div class="category-stats">
-            <span class="stat-badge">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-              </svg>
-              {{ totalEvents }} événement{{ totalEvents > 1 ? 's' : '' }}
-            </span>
+        </div>
+      </div>
+
+      <!-- Category Main Image Section -->
+      <div class="category-image-section" *ngIf="category.image">
+        <div class="section-container">
+          <div class="main-image-container">
+            <img [src]="category.image" [alt]="category.name" />
           </div>
         </div>
       </div>
 
-      <!-- Category Image Section - Large display below hero -->
-      <div class="category-image-section" *ngIf="category.image">
-        <div class="image-container">
-          <img [src]="category.image" [alt]="category.name" />
+      <!-- Gallery Slider Section -->
+      <div class="gallery-section" *ngIf="category.gallery && category.gallery.length > 0">
+        <div class="section-container">
+          <div class="gallery-slider">
+            <div class="slider-main">
+              <img 
+                [src]="category.gallery[currentGalleryIndex]" 
+                [alt]="category.name + ' - Image ' + (currentGalleryIndex + 1)"
+                class="slider-image"
+              />
+              <button class="slider-btn prev" (click)="prevGalleryImage()" *ngIf="category.gallery.length > 1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="slider-btn next" (click)="nextGalleryImage()" *ngIf="category.gallery.length > 1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="slider-dots" *ngIf="category.gallery.length > 1">
+              <button 
+                *ngFor="let img of category.gallery; let i = index"
+                class="dot"
+                [class.active]="i === currentGalleryIndex"
+                (click)="goToGalleryImage(i)"
+              ></button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Description Section - Clean card -->
-      <div class="content-section" *ngIf="category.description">
+      <!-- Video Section -->
+      <div class="video-section" *ngIf="category.video">
+        <div class="section-container">
+          <h2 class="section-title">Découvrez en vidéo</h2>
+          <div class="video-container">
+            <iframe 
+              *ngIf="isVideoUrl(category.video)"
+              [src]="safeVideoUrl" 
+              frameborder="0" 
+              allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+            <video *ngIf="!isVideoUrl(category.video)" controls class="video-player">
+              <source [src]="category.video" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture de vidéos.
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div class="description-section" *ngIf="category.description">
         <div class="section-container">
           <div class="description-card">
             <p class="description-text">{{ category.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Checklist Section -->
+      <div class="details-section" *ngIf="category.detailList && category.detailList.length > 0">
+        <div class="section-container">
+          <h2 class="section-title">Ce qui est inclus</h2>
+          <div class="details-grid">
+            <div class="detail-item" *ngFor="let detail of category.detailList">
+              <div class="check-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="detail-text">{{ detail }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Section -->
+      <div class="testimonials-section" *ngIf="category.testimonials && category.testimonials.length > 0">
+        <div class="section-container">
+          <h2 class="section-title">Ce qu'ils en disent</h2>
+          <div class="testimonials-grid">
+            <div class="testimonial-card" *ngFor="let testimonial of category.testimonials">
+              <div class="testimonial-content">
+                <div class="quote-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                  </svg>
+                </div>
+                <p class="testimonial-text">"{{ testimonial.avis }}"</p>
+              </div>
+              <div class="testimonial-author">
+                <img 
+                  [src]="testimonial.avatar" 
+                  [alt]="testimonial.fullname"
+                  class="author-avatar"
+                  *ngIf="testimonial.avatar"
+                />
+                <div class="author-avatar-placeholder" *ngIf="!testimonial.avatar">
+                  {{ testimonial.fullname.charAt(0) }}
+                </div>
+                <div class="author-info">
+                  <strong class="author-name">{{ testimonial.fullname }}</strong>
+                  <em class="author-job">{{ testimonial.job }}</em>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,40 +149,28 @@
           <app-loader [isLoading]="eventsLoading">
             <div class="events-grid" *ngIf="events.length > 0">
               <a [routerLink]="['/event/detail', event.slug]" class="event-card" *ngFor="let event of events">
-                <div class="event-date">
-                  <div class="date-day">{{ event.date | date: 'dd' }}</div>
-                  <div class="date-month">{{ event.date | date: 'MMM' }}</div>
+                <div class="event-image" *ngIf="event.image">
+                  <img [src]="event.image" [alt]="event.title" />
                 </div>
                 <div class="event-content">
-                  <h3 class="event-title">{{ event.title }}</h3>
-                  <p class="event-excerpt" *ngIf="event.content" [innerHTML]="event.content | slice:0:150"></p>
-                  <div class="event-meta">
-                    <span class="meta-item">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
-                      </svg>
-                      {{ event.date | date: 'dd MMMM yyyy' }}
-                    </span>
-                    <span class="meta-item" *ngIf="event.companies && event.companies.length > 0">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
-                      </svg>
-                      {{ event.companies[0].company_name }}
-                    </span>
+                  <div class="event-date-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                      <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                      <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    {{ event.date | date: 'dd MMM yyyy' }}
                   </div>
-                </div>
-                <div class="event-arrow">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <h3 class="event-title">{{ event.title }}</h3>
+                  <p class="event-excerpt" *ngIf="event.content" [innerHTML]="event.content | slice:0:120"></p>
                 </div>
               </a>
             </div>
 
             <div class="no-events-message" *ngIf="!eventsLoading && events.length === 0">
               <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
                 <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
                 <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
                 <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
