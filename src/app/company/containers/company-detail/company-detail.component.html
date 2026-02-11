@@ -35,11 +35,15 @@
         <!-- Jobs Section -->
         <div class="jobs-section-card" *ngIf="(jobs$ | async) as jobs">
           <ng-container *ngIf="freelanceJobs$ | async as freelanceJobs">
-            <div *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
-              <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
-              <p class="card-subtitle-uniform">Découvrez les {{ jobs.length + freelanceJobs.length }} offre{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }} disponible{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }}</p>
-              
-              <div class="jobs-list">
+            <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
+            <p class="card-subtitle-uniform" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
+              Découvrez les {{ jobs.length + freelanceJobs.length }} offre{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }} disponible{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }}
+            </p>
+            <p class="card-subtitle-uniform" *ngIf="jobs.length === 0 && freelanceJobs.length === 0">
+              Aucune offre d'emploi disponible pour le moment
+            </p>
+            
+            <div class="jobs-list" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
                 <!-- Regular Jobs -->
                 <a *ngFor="let job of jobs" 
                    [routerLink]="['/job/detail', job.slug]"
@@ -110,17 +114,20 @@
                   </div>
                 </a>
               </div>
-            </div>
           </ng-container>
         </div>
 
         <!-- Events Section -->
         <div class="events-section-card" *ngIf="(events$ | async) as events">
-          <div *ngIf="events.length > 0">
-            <h2 class="card-title-uniform">Événements <span class="accent">à venir</span></h2>
-            <p class="card-subtitle-uniform">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }} organisé{{ events.length > 1 ? 's' : '' }} ou participé{{ events.length > 1 ? 's' : '' }}</p>
-            
-            <div class="events-grid">
+          <h2 class="card-title-uniform">Événements <span class="accent">à venir</span></h2>
+          <p class="card-subtitle-uniform" *ngIf="events.length > 0">
+            {{ events.length }} événement{{ events.length > 1 ? 's' : '' }} organisé{{ events.length > 1 ? 's' : '' }} ou participé{{ events.length > 1 ? 's' : '' }}
+          </p>
+          <p class="card-subtitle-uniform" *ngIf="events.length === 0">
+            Aucun événement à venir pour le moment
+          </p>
+          
+          <div class="events-grid" *ngIf="events.length > 0">
               <a *ngFor="let event of events" 
                  [routerLink]="['/event/detail', event.slug]"
                  class="event-card">
@@ -179,16 +186,19 @@
                 </div>
               </a>
             </div>
-          </div>
         </div>
 
         <!-- Articles Section -->
         <div class="articles-section-card" *ngIf="(articles$ | async) as articles">
-          <div *ngIf="articles.length > 0">
-            <h2 class="card-title-uniform">Articles & <span class="accent">Actualités</span></h2>
-            <p class="card-subtitle-uniform">{{ articles.length }} article{{ articles.length > 1 ? 's' : '' }} publié{{ articles.length > 1 ? 's' : '' }}</p>
-            
-            <div class="articles-grid">
+          <h2 class="card-title-uniform">Articles & <span class="accent">Actualités</span></h2>
+          <p class="card-subtitle-uniform" *ngIf="articles.length > 0">
+            {{ articles.length }} article{{ articles.length > 1 ? 's' : '' }} publié{{ articles.length > 1 ? 's' : '' }}
+          </p>
+          <p class="card-subtitle-uniform" *ngIf="articles.length === 0">
+            Aucun article publié pour le moment
+          </p>
+          
+          <div class="articles-grid" *ngIf="articles.length > 0">
               <a *ngFor="let article of articles" 
                  [routerLink]="['/blog/detail', article.slug]"
                  class="article-card">
@@ -209,7 +219,6 @@
                 </div>
               </a>
             </div>
-          </div>
         </div>
       </div>
 
