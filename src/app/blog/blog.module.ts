@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -39,6 +39,7 @@ import { blogReducer } from './store/reducers/blog.reducers';
     CommonModule,
     BlogRoutingModule,
     SharedModule,
+    FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     StoreModule.forFeature('blog', blogReducer),
