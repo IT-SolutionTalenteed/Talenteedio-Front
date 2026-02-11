@@ -1,0 +1,73 @@
+{
+  "home": {
+    "hero": {
+      "subtitle": "Exceed your career expectations",
+      "title": "Create the best. Day.",
+      "titleAccent": "Always.",
+      "stats": {
+        "events": {
+          "number": "20k+",
+          "label": "Planned Events"
+        },
+        "organizers": {
+          "number": "260",
+          "label": "Event Organizers"
+        }
+      }
+    },
+    "services": {
+      "jobs": {
+        "title": "Find a Job",
+        "description": "Your gateway to infinite possibilities and exciting career opportunities",
+        "link": "Browse Jobs"
+      },
+      "missions": {
+        "title": "Find Missions",
+        "description": "Discover freelance opportunities and connect with exciting projects",
+        "link": "Browse Missions"
+      },
+      "events": {
+        "title": "Events",
+        "description": "Participate in HR events and expand your network",
+        "link": "Discover"
+      },
+      "articles": {
+        "title": "Articles",
+        "description": "HR news, career advice and market trends",
+        "link": "Read"
+      }
+    },
+    "featuredJobs": {
+      "title": "Our opportunities",
+      "titleAccent": "live",
+      "description": "Discover the latest job offers tailored to your professional aspirations",
+      "viewAll": "View all jobs"
+    },
+    "upcomingEvents": {
+      "title": "Upcoming",
+      "titleAccent": "Events",
+      "description": "Don't miss our upcoming exciting events and networking opportunities",
+      "viewAll": "View all events",
+      "noEvents": "No upcoming events at the moment. Check back soon!",
+      "maxParticipants": "Max",
+      "participants": "participants",
+      "companiesLabel": "Participating companies:"
+    },
+    "companies": {
+      "title": "Trusted by",
+      "titleAccent": "leading companies",
+      "description": "Join the network of innovative companies that trust us for their talent needs"
+    },
+    "media": {
+      "title": "Your local business",
+      "titleAccent1": "connected",
+      "titleAccent2": "resources",
+      "titleText": "and your",
+      "titleEnd": "ultimate",
+      "description": "Stay informed with the latest HR news, articles and expert interviews"
+    }
+  },
+  "common": {
+    "language": "Language"
+  }
+}

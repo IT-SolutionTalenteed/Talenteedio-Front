@@ -416,39 +416,27 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
       font-size: 15px;
       transition: all 0.3s ease;
       border: 1.5px solid;
+      background: $secondary;
+      border-color: $secondary;
+      color: white;
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+        background: $secondary-hover;
+        border-color: $secondary-hover;
       }
       
-      &.facebook {
-        background: #1877F2;
-        border-color: #1877F2;
-        color: white;
-        
-        &:hover {
-          background: darken(#1877F2, 5%);
-        }
-      }
-      
-      &.twitter {
-        background: #1DA1F2;
-        border-color: #1DA1F2;
-        color: white;
-        
-        &:hover {
-          background: darken(#1DA1F2, 5%);
-        }
-      }
-      
+      &.facebook,
+      &.twitter,
       &.linkedin {
-        background: #0A66C2;
-        border-color: #0A66C2;
+        background: $secondary;
+        border-color: $secondary;
         color: white;
         
         &:hover {
-          background: darken(#0A66C2, 5%);
+          background: $secondary-hover;
+          border-color: $secondary-hover;
         }
       }
     }

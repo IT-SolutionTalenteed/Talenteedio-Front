@@ -156,14 +156,16 @@ export class EventListRootComponent implements OnInit, OnDestroy {
   loadCompanyEvents() {
     this.loadingCompanyEvents = true;
     
-    // Load events from companies sorted by creation date
-    // These are events that may not have a specific category or are company-specific
+    // Load all events and filter those created by companies (not by admin)
     this.eventService.loadEvents({
-      page: { page: 1, pageSize: 6 },
+      page: { page: 1, pageSize: 100 }, // Load more to filter
       sort: { by: 'createdAt', direction: SortDirection.desc },
       filter: { search: '' }
     }).subscribe(result => {
-      this.companyEvents = result.items;
+      // Filter to keep only events created by companies (company exists and no admin)
+      this.companyEvents = result.items
+        .filter(event => event.company && !event.admin)
+        .slice(0, 6); // Keep only first 6
       this.loadingCompanyEvents = false;
     });
   }
