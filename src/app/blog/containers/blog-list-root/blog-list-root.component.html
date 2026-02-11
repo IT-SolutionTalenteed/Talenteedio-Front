@@ -1,27 +1,81 @@
 <div class="blog-container">
-  <div class="banner-container"></div>
-  <div class="header">
-    <h1 class="title">All <span>News</span></h1>
-  </div>
-  <div class="filtered-list">
-    <div class="filter">
-      <app-blog-list-box-filter
-        (saveFilter)="onSaveFilter($event)"
-      ></app-blog-list-box-filter>
+  <!-- Static Header Section -->
+  <section class="blog-header">
+    <div class="header-content">
+      <div class="breadcrumb">
+        <span class="breadcrumb-item" routerLink="/">Accueil</span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-item active">Blog</span>
+      </div>
+      <h1 class="header-title">
+        Découvrez nos dernières actualités et conseils
+      </h1>
+      <div class="search-bar">
+        <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Rechercher des articles..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+        />
+      </div>
     </div>
-    <div class="list">
-      <div class="list-container">
+  </section>
+
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <div class="content-wrapper">
+      <!-- Featured Articles (3 cards) -->
+      <section class="featured-section" *ngIf="(articles$ | async) as articles">
+        <div class="featured-grid" *ngIf="articles.length > 0">
+          <a
+            *ngFor="let article of articles.slice(0, 3)"
+            [routerLink]="'/blog/detail/' + article.slug"
+            class="featured-card"
+          >
+            <div class="featured-image">
+              <img
+                [src]="article?.image?.fileUrl ?? '/assets/img/hr_voice.jpg'"
+                [alt]="article.title"
+              />
+              <div class="premium-badge" *ngIf="article.isPremium">
+                <fa-icon [icon]="premiumIcon"></fa-icon>
+              </div>
+            </div>
+            <div class="featured-content">
+              <span class="featured-date">{{ article.createdAt | date : "dd MMM yyyy" }}</span>
+              <h3 class="featured-title">{{ article.title }}</h3>
+              <span class="featured-link">
+                Lire la suite
+                <fa-icon [icon]="arrowIcon" class="arrow-icon"></fa-icon>
+              </span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- All Articles Section -->
+      <section class="all-articles-section">
+        <div class="section-header">
+          <h2 class="section-title">Tous les articles</h2>
+          <div class="articles-count" *ngIf="(totalItems$ | async) as total">
+            {{ total }} article{{ total > 1 ? 's' : '' }}
+          </div>
+        </div>
+
         <app-loader [isLoading]="articlesLoading$ | async">
-          <app-blog-list [articles]="articles$ | async"></app-blog-list>
+          <app-blog-list [articles]="(articles$ | async)?.slice(3)"></app-blog-list>
         </app-loader>
-      </div>
-      <div class="pagination">
-        <app-pagination
-          [totalItems]="totalItems$ | async"
-          [initialValue]="articleCriteria?.page"
-          (paginate)="onPaginate($event)"
-        ></app-pagination>
-      </div>
+
+        <div class="pagination-wrapper">
+          <app-pagination
+            [totalItems]="totalItems$ | async"
+            [initialValue]="articleCriteria?.page"
+            (paginate)="onPaginate($event)"
+          ></app-pagination>
+        </div>
+      </section>
     </div>
   </div>
 </div>

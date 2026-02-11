@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Article } from 'src/app/shared/models/article.interface';
 import { SubSink } from 'subsink';
 import { loadArticles } from '../../store/actions/blog.actions';
@@ -13,6 +14,7 @@ import {
   getArticlesLoading,
 } from '../../store/selectors/blog.selectors';
 import { ArticleListCriteria } from '../../types/article-list-criteria.interface';
+import { faCrown, faSearch, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-blog-list-root',
@@ -24,6 +26,11 @@ export class BlogListRootComponent implements OnInit, OnDestroy {
   articles$: Observable<Article[]>;
   articleCriteria: ArticleListCriteria;
   totalItems$: Observable<number>;
+  premiumIcon = faCrown;
+  searchIcon = faSearch;
+  arrowIcon = faArrowRight;
+  searchQuery = '';
+  private searchSubject = new Subject<string>();
 
   subs = new SubSink();
 
@@ -36,7 +43,25 @@ export class BlogListRootComponent implements OnInit, OnDestroy {
     this.subs.sink = this.blogStore
       .select(getArticleListCriteria)
       .subscribe((criteria) => (this.articleCriteria = cloneDeep(criteria)));
+
+    // Setup search with debounce
+    this.subs.sink = this.searchSubject
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((searchTerm) => {
+        this.performSearch(searchTerm);
+      });
   }
+
+  onSearch() {
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  performSearch(searchTerm: string) {
+    // Implement search logic here
+    // You can dispatch an action to filter articles based on searchTerm
+    console.log('Searching for:', searchTerm);
+  }
+
   onSaveFilter(filter) {
     this.articleCriteria.filter = filter;
     this.blogStore.dispatch(
@@ -46,9 +71,11 @@ export class BlogListRootComponent implements OnInit, OnDestroy {
       })
     );
   }
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
+
   onPaginate(page) {
     this.articleCriteria.page = page;
     this.blogStore.dispatch(loadArticles(this.articleCriteria));
