@@ -1,85 +1,119 @@
-<div class="blog-detail-container">
-  <div class="header" *ngIf="article">
-    <div class="title-section">
-      <h1 class="title">
-        {{ article.title }}
-      </h1>
-    </div>
-
-    <div class="creation-info">
-      <div class="icon">
-        <fa-icon [icon]="icon"></fa-icon>
+<div class="blog-detail-container" *ngIf="article">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-section">
+    <div class="container">
+      <div class="breadcrumb">
+        <span class="breadcrumb-item" routerLink="/">Accueil</span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-item" routerLink="/blog">Blog</span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-item active">{{ article.title }}</span>
       </div>
-      {{ article.company?.user.name || article.admin?.user.name }}
-      <span>{{ article.createdAt | date : "dd/MM/yyyy" }}</span>
     </div>
-    <div class="premium-icon" *ngIf="article.isPremium">
-      <fa-icon class="icon" [icon]="premiumIcon"></fa-icon>
-      <div class="premium-label">Premium</div>
-    </div>
-  </div>
-  <div class="banner" *ngIf="article?.image?.fileUrl">
-    <img [src]="article.image.fileUrl" alt="banner" />
-  </div>
-  <div class="content detail-content" *ngIf="content">
-    <ng-container *ngIf="!article.isPremium">
-      <div class="content-text" [innerHTML]="publicContent"></div>
-      <div class="content-text" [innerHTML]="content"></div>
-    </ng-container>
-    <ng-container *ngIf="article.isPremium">
-      <ng-container
-        *ngIf="
-          content && (isHrFirstClub$ | async);
-          then privateContent;
-          else readMore
-        "
-      ></ng-container>
-    </ng-container>
   </div>
 
-  <ng-template #privateContent>
-    <div class="content">
-      <div class="content-text" [innerHTML]="publicContent"></div>
-      <div class="content-text" [innerHTML]="content"></div>
-    </div>
-  </ng-template>
-  <ng-template #readMore>
-    <div class="content">
-      <div class="content-text" [innerHTML]="publicContent"></div>
-      <div class="read-more" (click)="onReadMore()">
-        Read more
-        <div class="icon">
-          <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
+  <!-- Article Header -->
+  <div class="article-header">
+    <div class="container">
+      <div class="header-content">
+        <!-- Premium Badge -->
+        <div class="premium-badge" *ngIf="article.isPremium">
+          <fa-icon [icon]="premiumIcon"></fa-icon>
+          <span>Premium</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="article-title">{{ article.title }}</h1>
+
+        <!-- Meta Info -->
+        <div class="article-meta">
+          <div class="author-info">
+            <div class="author-avatar">
+              <fa-icon [icon]="icon"></fa-icon>
+            </div>
+            <div class="author-details">
+              <span class="author-name">{{ article.company?.user.name || article.admin?.user.name }}</span>
+              <span class="publish-date">{{ article.createdAt | date : "dd MMMM yyyy" }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </ng-template>
-  <div class="content">
-    <hr />
-    <div class="social-media">
-      <div class="share-this-post">Share this post</div>
-      <div class="button-container">
-        <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
-          ><button class="facebook">
-            <fa-icon [icon]="fbIcon"></fa-icon> Facebook
-          </button></a
-        >
-      </div>
-      <div class="button-container">
-        <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
-          ><button class="twitter">
-            <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
-          </button></a
-        >
-      </div>
-      <div class="button-container">
-        <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
-          ><button class="linkedin">
-            <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
-          </button></a
-        >
+  </div>
+
+  <!-- Featured Image -->
+  <div class="featured-image-section" *ngIf="article?.image?.fileUrl">
+    <div class="container">
+      <div class="featured-image">
+        <img [src]="article.image.fileUrl" [alt]="article.title" />
       </div>
     </div>
-    <hr />
+  </div>
+
+  <!-- Article Content -->
+  <div class="article-body">
+    <div class="container">
+      <div class="content-card">
+        <div class="content-wrapper" *ngIf="content">
+          <ng-container *ngIf="!article.isPremium">
+            <div class="article-content" [innerHTML]="publicContent"></div>
+            <div class="article-content" [innerHTML]="content"></div>
+          </ng-container>
+          
+          <ng-container *ngIf="article.isPremium">
+            <ng-container
+              *ngIf="
+                content && (isHrFirstClub$ | async);
+                then privateContent;
+                else readMore
+              "
+            ></ng-container>
+          </ng-container>
+        </div>
+
+        <ng-template #privateContent>
+          <div class="article-content" [innerHTML]="publicContent"></div>
+          <div class="article-content" [innerHTML]="content"></div>
+        </ng-template>
+
+        <ng-template #readMore>
+          <div class="article-content" [innerHTML]="publicContent"></div>
+          <div class="premium-cta">
+            <div class="premium-cta-icon">
+              <fa-icon [icon]="premiumIcon"></fa-icon>
+            </div>
+            <h3 class="premium-cta-title">Contenu Premium</h3>
+            <p class="premium-cta-text">Devenez membre pour accéder à l'intégralité de cet article et profiter de tous nos contenus exclusifs.</p>
+            <button class="premium-cta-button" (click)="onReadMore()">
+              Devenir membre
+              <fa-icon [icon]="readMoreIcon"></fa-icon>
+            </button>
+          </div>
+        </ng-template>
+
+        <!-- Social Share Section -->
+        <div class="share-section">
+          <div class="share-divider"></div>
+          <div class="share-content">
+            <h3 class="share-title">Partager cet article</h3>
+            <div class="share-buttons">
+              <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-btn facebook-btn">
+                <fa-icon [icon]="fbIcon"></fa-icon>
+                <span>Facebook</span>
+              </a>
+              <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)" class="share-btn twitter-btn">
+                <fa-icon [icon]="twitterIcon"></fa-icon>
+                <span>Twitter</span>
+              </a>
+              <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)" class="share-btn linkedin-btn">
+                <fa-icon [icon]="linkedinIcon"></fa-icon>
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+          <div class="share-divider"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
