@@ -136,6 +136,161 @@ $border-radius-md: 12px;
     }
   }
 
+  // Filter Tabs Section
+  .filter-tabs-section {
+    background: white;
+    border-bottom: 1px solid #E5E7EB;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .filter-tabs-container {
+      max-width: $max-width;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .scroll-button {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #E5E7EB;
+        background: white;
+        color: #6B7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 2;
+
+        &:hover {
+          border-color: #f1755a;
+          color: #f1755a;
+          box-shadow: 0 4px 12px rgba(241, 117, 90, 0.15);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+          width: 36px;
+          height: 36px;
+
+          svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      .tabs-wrapper {
+        flex: 1;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 16px 0;
+        scroll-behavior: smooth;
+        
+        // Améliorer le scroll sur mobile
+        -webkit-overflow-scrolling: touch;
+        
+        // Masquer la scrollbar mais garder la fonctionnalité
+        scrollbar-width: thin;
+        scrollbar-color: #E5E7EB transparent;
+        
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+        
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+          background: #E5E7EB;
+          border-radius: 3px;
+          
+          &:hover {
+            background: #D1D5DB;
+          }
+        }
+
+        .tab-button {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 20px;
+          border: 2px solid #E5E7EB;
+          border-radius: 50px;
+          background: white;
+          color: #6B7280;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          white-space: nowrap;
+          flex-shrink: 0;
+
+          .tab-label {
+            line-height: 1;
+          }
+
+          .tab-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 8px;
+            background: #F3F4F6;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #6B7280;
+            line-height: 1;
+          }
+
+          &:hover {
+            border-color: #f1755a;
+            color: #f1755a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(241, 117, 90, 0.15);
+          }
+
+          &.active {
+            background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+            border-color: #f1755a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+
+            .tab-count {
+              background: rgba(255, 255, 255, 0.25);
+              color: white;
+            }
+          }
+
+          @media screen and (max-width: 768px) {
+            padding: 10px 16px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
   // Companies Section
   .companies-section {
     padding: 80px 20px;

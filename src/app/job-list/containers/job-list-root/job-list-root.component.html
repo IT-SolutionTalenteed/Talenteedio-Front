@@ -34,13 +34,6 @@
       </div>
       <div class="content">
         <div class="list-content">
-          <div class="sort">
-            <app-job-sort
-              [totalItems]="totalItems$ | async"
-              [page]="jobListCriteria?.page"
-              [jobLength]="jobLength"
-            ></app-job-sort>
-          </div>
           <div class="list">
             <app-loader [isLoading]="jobsLoading$ | async">
               <app-job-list

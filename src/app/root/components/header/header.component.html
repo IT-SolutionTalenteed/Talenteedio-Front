@@ -79,6 +79,9 @@
 
       <!-- Right Section -->
       <div class="header-actions">
+        <!-- Favorites Menu (Logged In) -->
+        <app-favorite-menu *ngIf="user"></app-favorite-menu>
+
         <!-- Language Selector -->
         <div class="language-dropdown" (click)="toggleLanguageDropdown()">
           <button class="language-button">
@@ -123,9 +126,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Favorites Menu (Logged In) -->
-        <app-favorite-menu *ngIf="user"></app-favorite-menu>
 
         <!-- Auth Buttons (Not Logged In) -->
         <div *ngIf="!user" class="auth-buttons">
@@ -210,6 +210,9 @@
 
       <!-- Mobile Actions -->
       <div class="mobile-actions">
+        <!-- Favorites Menu (Mobile) -->
+        <app-favorite-menu *ngIf="user" class="mobile-favorite-menu"></app-favorite-menu>
+
         <!-- Language Selector Mobile -->
         <div class="mobile-language-selector" (click)="toggleLanguageDropdown()">
           <button class="mobile-language-button">
@@ -236,9 +239,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Favorites Menu (Mobile) -->
-        <app-favorite-menu *ngIf="user" class="mobile-favorite-menu"></app-favorite-menu>
 
         <!-- User Avatar -->
         <button *ngIf="user" class="mobile-user-btn" (click)="toggleUserDropdown()">

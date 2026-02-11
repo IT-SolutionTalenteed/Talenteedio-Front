@@ -1,6 +1,5 @@
 <div class="container">
-  <div class="job-box" [style.background-image]="job?.featuredImage?.fileUrl ? 'url(' + job.featuredImage.fileUrl + ')' : 'none'">
-    <div class="job-box-overlay"></div>
+  <div class="job-box">
     <div class="favorite-action" *ngIf="user$ | async">
       <app-favorite-button
         [itemId]="job.id"
@@ -9,7 +8,7 @@
       ></app-favorite-button>
     </div>
     <div class="content">
-      <div class="company-logo">
+      <div class="company-logo" [style.background-image]="'url(' + (job?.featuredImage?.fileUrl || 'assets/img/favicon.png') + ')'">
         <img
           [src]="job?.company?.logo?.fileUrl || 'assets/img/favicon.png'"
           [alt]="job?.company?.company_name || 'Company logo'"

@@ -101,11 +101,12 @@
   <div class="detail" *ngIf="job">
     <div class="detail-content">
       <!-- Featured Image Section -->
-      <div class="featured-image-section" *ngIf="job.featuredImage?.fileUrl">
+      <div *ngIf="job.featuredImage?.fileUrl">
         <img 
           [src]="job.featuredImage.fileUrl" 
           [alt]="job.title"
           class="featured-image"
+          width="100%"
         />
       </div>
       
