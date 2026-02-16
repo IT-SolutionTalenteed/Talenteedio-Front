@@ -177,9 +177,16 @@ export class AuthenticationEffects {
     () =>
       this.action$.pipe(
         ofType(logOutSuccess),
-        tap(() => {
+        withLatestFrom(this.routerStore.pipe(select(getRouterState))),
+        tap(([action, routerState]) => {
           if (typeof window !== 'undefined') {
             localStorage.removeItem('auth-admin');
+            
+            // Si on est sur la page matching-profile, recharger la page
+            const currentUrl = routerState.state.url;
+            if (currentUrl && currentUrl.includes('/matching-profile')) {
+              window.location.reload();
+            }
           }
         })
       ),
