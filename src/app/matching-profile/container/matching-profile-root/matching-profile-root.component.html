@@ -1,0 +1,128 @@
+<div class="matching-profile-wrapper">
+  <!-- Auth Modal Overlay -->
+  <app-auth-modal-inline *ngIf="showAuthModal"></app-auth-modal-inline>
+
+  <!-- Main Content (blurred when modal is shown) -->
+  <div class="matching-profile-content" [class.blurred]="showAuthModal">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+            <span>Matching Intelligent</span>
+          </div>
+          <h1 class="hero-title">
+            Trouvez les entreprises qui <span class="accent">correspondent</span> à votre profil
+          </h1>
+          <p class="hero-description">
+            Notre algorithme d'IA analyse votre profil et vos compétences pour vous mettre en relation avec les meilleures opportunités.
+          </p>
+          <button *ngIf="currentStep > 1" class="new-matching-button" (click)="startNewMatching()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4.01 7.58 4.01 12C4.01 16.42 7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12C6 8.69 8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z" fill="currentColor"/>
+            </svg>
+            Nouveau Matching
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress Steps -->
+    <section class="steps-section">
+      <div class="steps-container">
+        <div class="step-item" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 1" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+            </svg>
+            <span *ngIf="currentStep <= 1">1</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">Votre Profil</div>
+            <div class="step-subtitle">Complétez vos informations</div>
+          </div>
+        </div>
+        
+        <div class="step-line" [class.completed]="currentStep > 1"></div>
+        
+        <div class="step-item" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+          <div class="step-circle">
+            <svg *ngIf="currentStep > 2" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+            </svg>
+            <span *ngIf="currentStep <= 2">2</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">Résultats</div>
+            <div class="step-subtitle">Découvrez vos matchs</div>
+          </div>
+        </div>
+        
+        <div class="step-line" [class.completed]="currentStep > 2"></div>
+        
+        <div class="step-item" [class.active]="currentStep === 3">
+          <div class="step-circle">
+            <span>3</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">Rendez-vous</div>
+            <div class="step-subtitle">Planifiez vos entretiens</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Alert -->
+    <div class="alert-container" *ngIf="error">
+      <div class="alert alert-error">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+        </svg>
+        <span>{{ error }}</span>
+        <button class="alert-close" (click)="error = null">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-container" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Chargement en cours...</p>
+    </div>
+
+    <!-- Step Content -->
+    <div class="content-section" *ngIf="!loading">
+      <!-- Étape 1: Formulaire de profil -->
+      <div *ngIf="currentStep === 1">
+        <app-profile-form 
+          [profile]="currentProfile"
+          (save)="handleSaveProfile($event)"
+          (next)="goToStep(2)">
+        </app-profile-form>
+      </div>
+
+      <!-- Étape 2: Entreprises matchées -->
+      <div *ngIf="currentStep === 2 && currentProfile?.id">
+        <app-company-matches 
+          [profileId]="currentProfile.id"
+          (back)="goToStep(1)"
+          (next)="goToStep(3)">
+        </app-company-matches>
+      </div>
+
+      <!-- Étape 3: Rendez-vous -->
+      <div *ngIf="currentStep === 3 && currentProfile?.id">
+        <app-appointment-scheduler 
+          [profileId]="currentProfile.id"
+          (back)="goToStep(2)">
+        </app-appointment-scheduler>
+      </div>
+    </div>
+  </div>
+</div>

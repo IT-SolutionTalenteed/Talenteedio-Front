@@ -7,13 +7,15 @@ import { AngularIntlPhoneModule } from 'angular-intl-phone';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardRootComponent } from './container/dashboard-root/dashboard-root.component';
 import { CompanyProfileFormComponent } from './components/company-profile-form/company-profile-form.component';
+import { MatchingHistoryComponent } from './components/matching-history/matching-history.component';
 import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     DashboardRootComponent,
-    CompanyProfileFormComponent
+    CompanyProfileFormComponent,
+    MatchingHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,9 @@ import { SharedModule } from '../shared/shared.module';
     NgSelectModule,
     AngularIntlPhoneModule,
     SharedModule
+  ],
+  exports: [
+    MatchingHistoryComponent
   ]
 })
 export class DashboardModule { }

@@ -12,4 +12,5 @@ export class FooterComponent {
   footerLinks = FOOTER_LINKS;
   termsAndConditionsRoute = TERMS_AND_CONDITIONS_BASE_ROUTE;
   privacyPolicyRoute = PRIVACY_POLICY_BASE_ROUTE;
+  currentYear = new Date().getFullYear();
 }

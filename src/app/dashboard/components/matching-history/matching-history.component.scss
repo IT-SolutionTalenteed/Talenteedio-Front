@@ -1,0 +1,129 @@
+.matching-history-container {
+  padding: 1rem;
+
+  .card-header {
+    background-color: #fff;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 1.5rem;
+
+    h3 {
+      color: #1f2937;
+      font-weight: 600;
+    }
+  }
+
+  .nav-tabs {
+    border-bottom: 2px solid #e5e7eb;
+
+    .nav-link {
+      color: #6b7280;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        color: #3b82f6;
+        background-color: #f3f4f6;
+      }
+
+      &.active {
+        color: #3b82f6;
+        background-color: transparent;
+        border-bottom: 2px solid #3b82f6;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .empty-state {
+    i {
+      opacity: 0.5;
+    }
+
+    h4 {
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .matching-item,
+  .appointment-item {
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+
+    &:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    h5 {
+      color: #1f2937;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .matching-meta,
+    .appointment-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+      }
+
+      .text-muted {
+        font-size: 0.875rem;
+      }
+    }
+
+    .badge-secondary {
+      background-color: #6b7280;
+    }
+
+    .badge-primary {
+      background-color: #3b82f6;
+    }
+
+    .badge-success {
+      background-color: #10b981;
+    }
+
+    .badge-warning {
+      background-color: #f59e0b;
+    }
+
+    .badge-danger {
+      background-color: #ef4444;
+    }
+
+    .badge-info {
+      background-color: #06b6d4;
+    }
+
+    .badge.bg-light {
+      border: 1px solid #e5e7eb;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .matching-history-container {
+    .matching-item,
+    .appointment-item {
+      .row {
+        .col-md-4 {
+          margin-top: 1rem;
+          text-align: left !important;
+        }
+      }
+    }
+  }
+}

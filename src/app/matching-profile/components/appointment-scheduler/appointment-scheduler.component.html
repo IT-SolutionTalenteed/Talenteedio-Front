@@ -1,0 +1,271 @@
+<div class="appointment-scheduler-container">
+  <!-- Header Section -->
+  <div class="scheduler-header">
+    <button class="btn-back" (click)="back.emit()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
+    <div class="header-text">
+      <h2 class="header-title">
+        <span class="title-icon">📅</span>
+        Planifiez vos entretiens
+      </h2>
+      <p class="header-subtitle">Prenez rendez-vous avec les entreprises sélectionnées</p>
+    </div>
+  </div>
+
+  <!-- Selected Companies Section -->
+  <div class="companies-section" *ngIf="selectedCompanies.length > 0">
+    <h3 class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 21H21M3 7L12 3L21 7M5 21V10M19 21V10M9 21V14H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Entreprises sélectionnées
+    </h3>
+    <div class="companies-grid">
+      <div class="company-card" *ngFor="let match of selectedCompanies">
+        <div class="company-logo" *ngIf="match.company.logo">
+          <img [src]="match.company.logo.fileUrl" [alt]="match.company.company_name">
+        </div>
+        <div class="company-logo placeholder" *ngIf="!match.company.logo">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="M3 21H21M3 7L12 3L21 7M5 21V10M19 21V10M9 21V14H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h4 class="company-name">{{ match.company.company_name }}</h4>
+        <button class="btn-book" (click)="openAppointmentForm(match)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.6947 13.7H15.7037M15.6947 16.7H15.7037M11.9955 13.7H12.0045M11.9955 16.7H12.0045M8.29431 13.7H8.30329M8.29431 16.7H8.30329" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Prendre RDV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointments Section -->
+  <div class="appointments-section">
+    <h3 class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Rendez-vous planifiés
+    </h3>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Chargement des rendez-vous...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && appointments.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg width="100" height="100" viewBox="0 0 24 24" fill="none">
+          <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h4 class="empty-title">Aucun rendez-vous planifié</h4>
+      <p class="empty-text">Commencez par prendre rendez-vous avec les entreprises ci-dessus</p>
+    </div>
+
+    <!-- Appointments List -->
+    <div *ngIf="!loading && appointments.length > 0" class="appointments-list">
+      <div class="appointment-card" *ngFor="let appointment of appointments">
+        <div class="appointment-status" [class.pending]="appointment.status === 'PENDING'" 
+             [class.confirmed]="appointment.status === 'CONFIRMED'"
+             [class.cancelled]="appointment.status === 'CANCELLED'"
+             [class.completed]="appointment.status === 'COMPLETED'">
+          {{ getStatusLabel(appointment.status) }}
+        </div>
+
+        <div class="appointment-header">
+          <div class="company-info">
+            <div class="company-logo-sm" *ngIf="appointment.company.logo">
+              <img [src]="appointment.company.logo.fileUrl" [alt]="appointment.company.company_name">
+            </div>
+            <div class="company-logo-sm placeholder" *ngIf="!appointment.company.logo">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 21H21M3 7L12 3L21 7M5 21V10M19 21V10M9 21V14H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="company-name">{{ appointment.company.company_name }}</h4>
+              <p class="company-location" *ngIf="appointment.company.contact?.address?.city">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ appointment.company.contact.address.city }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="appointment-details">
+          <div class="detail-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ appointment.appointmentDate | date:'fullDate':'':'fr' }}</span>
+          </div>
+          <div class="detail-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ appointment.appointmentTime }}</span>
+          </div>
+          <div class="detail-item" *ngIf="appointment.message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ appointment.message }}</span>
+          </div>
+        </div>
+
+        <div class="appointment-actions" *ngIf="appointment.status === 'PENDING'">
+          <button class="btn-cancel-appointment" (click)="cancelAppointment(appointment.id)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Form Modal -->
+  <div *ngIf="showForm" class="modal-overlay" (click)="closeForm()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Rendez-vous avec {{ selectedCompany?.company?.company_name }}
+        </h3>
+        <button class="btn-close-modal" (click)="closeForm()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <!-- Calendar and Time Slots Row -->
+          <div class="datetime-row">
+            <!-- Calendar Section -->
+            <div class="calendar-column">
+              <label class="form-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 2V5M16 2V5M3.5 9.09H20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Choisissez une date
+              </label>
+              
+              <div class="calendar-navigation">
+                <button type="button" class="btn-nav" (click)="previousMonth()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div class="current-month">{{ currentPeriodLabel }}</div>
+                <button type="button" class="btn-nav" (click)="nextMonth()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="calendar-grid">
+                <div class="calendar-header">Lun</div>
+                <div class="calendar-header">Mar</div>
+                <div class="calendar-header">Mer</div>
+                <div class="calendar-header">Jeu</div>
+                <div class="calendar-header">Ven</div>
+                <div class="calendar-header">Sam</div>
+                <div class="calendar-header">Dim</div>
+                
+                <ng-container *ngFor="let week of monthWeeks">
+                  <div
+                    *ngFor="let day of week"
+                    class="calendar-day"
+                    [class.other-month]="!day.isCurrentMonth"
+                    [class.today]="day.isToday"
+                    [class.selected]="day.isSelected"
+                    [class.has-appointments]="day.appointments.length > 0"
+                    [class.disabled]="day.date < minDate"
+                    (click)="selectDay(day)">
+                    <span class="day-number">{{ day.day }}</span>
+                    <span *ngIf="day.appointments.length > 0" class="appointment-dot"></span>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- Time Slots Section -->
+            <div class="timeslots-column" *ngIf="selectedDate">
+              <label class="form-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Choisissez une heure
+              </label>
+              <div class="time-slots">
+                <button
+                  *ngFor="let timeSlot of availableTimeSlots"
+                  type="button"
+                  class="time-slot"
+                  [class.active]="form.value.appointmentTime === timeSlot"
+                  (click)="selectTimeSlot(timeSlot)">
+                  {{ timeSlot }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message Section -->
+          <div class="form-section" *ngIf="selectedDate && form.value.appointmentTime">
+            <label class="form-label">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Message (optionnel)
+            </label>
+            <textarea 
+              class="form-textarea" 
+              formControlName="message"
+              rows="4"
+              placeholder="Ajoutez un message pour l'entreprise..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" (click)="closeForm()">
+            Annuler
+          </button>
+          <button 
+            type="submit" 
+            class="btn-primary"
+            [disabled]="form.invalid || submitting">
+            <span *ngIf="!submitting">Confirmer le rendez-vous</span>
+            <span *ngIf="submitting">
+              <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
+                <path d="M12 2C6.47715 2 2 6.47715 2 12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+              Confirmation...
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

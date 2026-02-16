@@ -31,5 +31,6 @@ export const PHONE_CONFIG: AngularIntlPhoneConfig = {
     allowDropdown: true,
     autoPlaceholder: 'polite',
     formatOnDisplay: true,
+    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js',
   },
 };

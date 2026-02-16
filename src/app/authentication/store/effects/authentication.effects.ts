@@ -132,10 +132,18 @@ export class AuthenticationEffects {
         this.gaService.event('login', 'user_login_form', props.user.email)
       ),
       withLatestFrom(this.routerStore.pipe(select(getRouterState))),
-      map(([action, routerState]) => routerState.state.queryParams['redirect']),
-      map((redirect: string) =>
-        redirect ? go({ path: [`${redirect}`] }) : go({ path: ['/home'] })
-      )
+      map(([action, routerState]) => {
+        const currentUrl = routerState.state.url;
+        const redirect = routerState.state.queryParams['redirect'];
+        
+        // Si on est sur la page matching-profile, ne pas rediriger
+        if (currentUrl && currentUrl.includes('/matching-profile')) {
+          return { type: 'NO_ACTION' }; // Action vide pour ne rien faire
+        }
+        
+        // Sinon, rediriger normalement
+        return redirect ? go({ path: [`${redirect}`] }) : go({ path: ['/home'] });
+      })
     )
   );
 
@@ -259,10 +267,18 @@ export class AuthenticationEffects {
         this.gaService.event('login', 'google_login', props.user.email)
       ),
       withLatestFrom(this.routerStore.pipe(select(getRouterState))),
-      map(([action, routerState]) => routerState.state.queryParams['redirect']),
-      map((redirect: string) =>
-        redirect ? go({ path: [`${redirect}`] }) : go({ path: ['/home'] })
-      )
+      map(([action, routerState]) => {
+        const currentUrl = routerState.state.url;
+        const redirect = routerState.state.queryParams['redirect'];
+        
+        // Si on est sur la page matching-profile, ne pas rediriger
+        if (currentUrl && currentUrl.includes('/matching-profile')) {
+          return { type: 'NO_ACTION' }; // Action vide pour ne rien faire
+        }
+        
+        // Sinon, rediriger normalement
+        return redirect ? go({ path: [`${redirect}`] }) : go({ path: ['/home'] });
+      })
     )
   );
 

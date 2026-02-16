@@ -111,6 +111,14 @@ const routes: Routes = [
           ),
         data: { title: 'Coaching' },
       },
+      {
+        path: 'matching-profile',
+        loadChildren: () =>
+          import('../matching-profile/matching-profile.module').then(
+            (m) => m.MatchingProfileModule
+          ),
+        data: { title: 'Matching Profile' },
+      },
     ],
   },
 ];

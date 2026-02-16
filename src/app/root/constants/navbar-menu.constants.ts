@@ -1,4 +1,5 @@
 import { Menu } from '../types/menu.interface';
+import { RoleName } from 'src/app/shared/models/role.interface';
 
 export const NAVAR_MENUS: Menu[] = [
   {
@@ -60,6 +61,14 @@ export const NAVAR_MENUS: Menu[] = [
     routerLink: '/blog',
     parentRouterLink: '/blog',
     accessRight: 'ALL',
+    color: '#696969',
+    colorActive: '#6bbee3',
+  },
+  {
+    title: 'Matching Profile',
+    routerLink: '/matching-profile',
+    parentRouterLink: '/matching-profile',
+    accessRight: [RoleName.TALENT],
     color: '#696969',
     colorActive: '#6bbee3',
   },
