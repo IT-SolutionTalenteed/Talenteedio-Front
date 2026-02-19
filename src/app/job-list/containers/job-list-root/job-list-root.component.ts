@@ -57,7 +57,7 @@ export class JobListRootComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.totalItems$ = this.jobListStore.pipe(select(getJobsTotalItems));
     this.jobs$ = this.jobListStore.pipe(select(getJobs));
-    // Filtrer les jobTypes pour exclure "Freelance"
+    // Filtrer les jobTypes pour exclure "Freelance" et autres types non désirés
     this.jobTypes$ = this.jobListStore.pipe(
       select(getJobTypes),
       map((jobTypes) => jobTypes.filter((jobType) => jobType.name !== 'Freelance'))

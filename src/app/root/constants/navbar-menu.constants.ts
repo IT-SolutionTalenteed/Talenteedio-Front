@@ -26,12 +26,6 @@ export const NAVAR_MENUS: Menu[] = [
         description: 'Plus de 1000 opportunités à saisir !'
       },
       {
-        title: 'Missions Freelance',
-        routerLink: '/freelance',
-        icon: 'laptop',
-        description: 'Trouvez votre prochaine mission'
-      },
-      {
         title: 'Recherchez une entreprise',
         routerLink: '/companies',
         icon: 'building',

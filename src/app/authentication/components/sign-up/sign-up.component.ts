@@ -77,7 +77,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   consentLink = CONSENT_LINK;
 
   roleNameTalent = RoleName.TALENT;
-  roleNameFreelance = RoleName.FREELANCE;
 
   workModes = [
     { value: 'remote', label: 'Remote' },
@@ -102,11 +101,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       id: null,
       name: RoleName.REFERRAL,
       title: 'Referral',
-    },
-    {
-      id: null,
-      name: RoleName.FREELANCE,
-      title: 'Freelance',
     },
     {
       id: null,
@@ -141,16 +135,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
         if (role === this.roleNameTalent) {
           consentControl.setValidators([Validators.required]);
-          valuesControl.setValidators([Validators.required]);
-          cvControl.addValidators([Validators.required]);
-          tjmControl.setValidators([Validators.required]);
-          annualSalaryControl.setValidators([Validators.required]);
-          mobilityControl.setValidators([Validators.required]);
-          availabilityDateControl.setValidators([Validators.required]);
-          desiredLocationControl.setValidators([Validators.required]);
-          workModeControl.setValidators([Validators.required]);
-        } else if (role === this.roleNameFreelance) {
-          consentControl.clearValidators();
           valuesControl.setValidators([Validators.required]);
           cvControl.addValidators([Validators.required]);
           tjmControl.setValidators([Validators.required]);
@@ -212,7 +196,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null
     };
 
-    if (form.value.role === this.roleNameTalent || form.value.role === this.roleNameFreelance) {
+    if (form.value.role === this.roleNameTalent) {
       this.form.valid
         ? this.authenticationService
             .uploadMedia(this.cv, 'pdf')

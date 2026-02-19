@@ -19,7 +19,6 @@ export class GoogleRegisterComponent {
 
   roles = [
     { value: 'talent', label: 'Talent' },
-    { value: 'freelance', label: 'Freelance' },
     { value: 'company', label: 'Entreprise' },
     { value: 'consultant', label: 'Consultant' }
   ];
@@ -53,7 +52,7 @@ export class GoogleRegisterComponent {
     // Ajouter les validateurs selon le rôle
     if (role === 'company') {
       this.registerForm.get('company_name')?.setValidators([Validators.required]);
-    } else if (role === 'talent' || role === 'freelance') {
+    } else if (role === 'talent') {
       this.registerForm.get('values')?.setValidators([Validators.required]);
     }
 

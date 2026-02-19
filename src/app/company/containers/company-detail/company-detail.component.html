@@ -34,87 +34,50 @@
 
         <!-- Jobs Section -->
         <div class="jobs-section-card" *ngIf="(jobs$ | async) as jobs">
-          <ng-container *ngIf="freelanceJobs$ | async as freelanceJobs">
-            <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
-            <p class="card-subtitle-uniform" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
-              Découvrez les {{ jobs.length + freelanceJobs.length }} offre{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }} disponible{{ (jobs.length + freelanceJobs.length) > 1 ? 's' : '' }}
-            </p>
-            <p class="card-subtitle-uniform" *ngIf="jobs.length === 0 && freelanceJobs.length === 0">
-              Aucune offre d'emploi disponible pour le moment
-            </p>
-            
-            <div class="jobs-list" *ngIf="jobs.length > 0 || freelanceJobs.length > 0">
-                <!-- Regular Jobs -->
-                <a *ngFor="let job of jobs" 
-                   [routerLink]="['/job/detail', job.slug]"
-                   class="job-card-horizontal">
-                  <div class="job-image" *ngIf="job.featuredImage?.fileUrl">
-                    <img [src]="job.featuredImage.fileUrl" [alt]="job.title">
-                    <div class="job-badge-overlay">Emploi</div>
+          <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
+          <p class="card-subtitle-uniform" *ngIf="jobs.length > 0">
+            Découvrez les {{ jobs.length }} offre{{ jobs.length > 1 ? 's' : '' }} disponible{{ jobs.length > 1 ? 's' : '' }}
+          </p>
+          <p class="card-subtitle-uniform" *ngIf="jobs.length === 0">
+            Aucune offre d'emploi disponible pour le moment
+          </p>
+          
+          <div class="jobs-list" *ngIf="jobs.length > 0">
+              <!-- Regular Jobs -->
+              <a *ngFor="let job of jobs" 
+                 [routerLink]="['/job/detail', job.slug]"
+                 class="job-card-horizontal">
+                <div class="job-image" *ngIf="job.featuredImage?.fileUrl">
+                  <img [src]="job.featuredImage.fileUrl" [alt]="job.title">
+                  <div class="job-badge-overlay">Emploi</div>
+                </div>
+                <div class="job-content">
+                  <div class="job-header">
+                    <h3 class="job-title">{{ job.title }}</h3>
+                    <div class="job-type" *ngIf="job.jobType">{{ job.jobType.name }}</div>
                   </div>
-                  <div class="job-content">
-                    <div class="job-header">
-                      <h3 class="job-title">{{ job.title }}</h3>
-                      <div class="job-type" *ngIf="job.jobType">{{ job.jobType.name }}</div>
-                    </div>
-                    <div class="job-meta">
-                      <span class="meta-item" *ngIf="job.location?.address">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
-                        </svg>
-                        {{ job.location.address.city }}
-                      </span>
-                      <span class="meta-item" *ngIf="job.createdAt">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
-                        </svg>
-                        {{ job.createdAt | date : "d MMM yyyy" }}
-                      </span>
-                    </div>
+                  <div class="job-meta">
+                    <span class="meta-item" *ngIf="job.location?.address">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
+                      </svg>
+                      {{ job.location.address.city }}
+                    </span>
+                    <span class="meta-item" *ngIf="job.createdAt">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
+                      </svg>
+                      {{ job.createdAt | date : "d MMM yyyy" }}
+                    </span>
                   </div>
-                  <div class="job-arrow">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                </a>
-                
-                <!-- Freelance Jobs -->
-                <a *ngFor="let freelanceJob of freelanceJobs" 
-                   [routerLink]="['/freelance/detail', freelanceJob.slug]"
-                   class="job-card-horizontal">
-                  <div class="job-image" *ngIf="freelanceJob.featuredImage?.fileUrl">
-                    <img [src]="freelanceJob.featuredImage.fileUrl" [alt]="freelanceJob.title">
-                    <div class="job-badge-overlay freelance">Freelance</div>
-                  </div>
-                  <div class="job-content">
-                    <div class="job-header">
-                      <h3 class="job-title">{{ freelanceJob.title }}</h3>
-                      <div class="job-type" *ngIf="freelanceJob.jobType">{{ freelanceJob.jobType.name }}</div>
-                    </div>
-                    <div class="job-meta">
-                      <span class="meta-item" *ngIf="freelanceJob.location?.address">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
-                        </svg>
-                        {{ freelanceJob.location.address.city }}
-                      </span>
-                      <span class="meta-item" *ngIf="freelanceJob.createdAt">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
-                        </svg>
-                        {{ freelanceJob.createdAt | date : "d MMM yyyy" }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="job-arrow">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                </a>
-              </div>
-          </ng-container>
+                </div>
+                <div class="job-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            </div>
         </div>
 
         <!-- Events Section -->

@@ -82,13 +82,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'freelance',
-        loadChildren: () =>
-          import('../freelance/freelance.module').then(
-            (m) => m.FreelanceModule
-          ),
-      },
-      {
         path: 'companies',
         loadChildren: () =>
           import('../company/company.module').then(

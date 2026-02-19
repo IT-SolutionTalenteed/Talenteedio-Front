@@ -148,8 +148,8 @@
             <app-validation-error [control]="form.controls['role']"></app-validation-error>
           </div>
 
-          <!-- Conditional Fields for Talent/Freelance -->
-          <div *ngIf="form.value.role === roleNameTalent || form.value.role === roleNameFreelance" class="conditional-fields">
+          <!-- Conditional Fields for Talent -->
+          <div *ngIf="form.value.role === roleNameTalent" class="conditional-fields">
             
             <!-- Values -->
             <div class="form-group">

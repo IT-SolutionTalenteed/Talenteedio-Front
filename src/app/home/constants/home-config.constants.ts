@@ -45,8 +45,8 @@ export const SERVICE_CARDS: ServiceCard[] = [
   {
     id: 'missions',
     title: 'Find Missions',
-    description: 'Discover freelance opportunities and connect with exciting projects',
-    route: '/freelance',
+    description: 'Discover opportunities and connect with exciting projects',
+    route: '/job-list',
     linkText: 'Browse missions',
     gradient: 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)',
     icon: 'layers'

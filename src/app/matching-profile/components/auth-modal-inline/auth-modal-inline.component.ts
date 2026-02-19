@@ -40,7 +40,6 @@ export class AuthModalInlineComponent implements OnInit {
   public useGlobalDomain = false;
 
   roleNameTalent = RoleName.TALENT;
-  roleNameFreelance = RoleName.FREELANCE;
   
   config = {
     ...PHONE_CONFIG,
@@ -54,11 +53,6 @@ export class AuthModalInlineComponent implements OnInit {
   };
   
   roles: Role[] = [
-    {
-      id: null,
-      name: RoleName.FREELANCE,
-      title: 'Freelance',
-    },
     {
       id: null,
       name: RoleName.TALENT,
