@@ -30,6 +30,11 @@
         "title": "Articles",
         "description": "Actualités RH, conseils carrière et tendances du marché",
         "link": "Lire"
+      },
+      "matching": {
+        "title": "Matching Profile",
+        "description": "Trouvez les opportunités qui correspondent parfaitement à votre profil et vos compétences",
+        "link": "Découvrir mon match"
       }
     },
     "featuredJobs": {

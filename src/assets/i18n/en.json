@@ -30,6 +30,11 @@
         "title": "Articles",
         "description": "HR news, career advice and market trends",
         "link": "Read"
+      },
+      "matching": {
+        "title": "Matching Profile",
+        "description": "Find opportunities that perfectly match your profile and skills",
+        "link": "Discover my match"
       }
     },
     "featuredJobs": {
