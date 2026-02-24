@@ -22,9 +22,10 @@ export class AuthModalInlineComponent implements OnInit {
   @ViewChild('confirmPassword') confirmPasswordEl: ElementRef;
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
 
-  currentView: 'login' | 'register' = 'login';
+  currentView: 'login' | 'register' | 'choice' = 'login';
   loginForm: FormGroup;
   registerForm: FormGroup;
+  selectedRole: 'talent' | 'company' | null = null;
   emailError$: Observable<string>;
   loading$: Observable<boolean>;
   values$: Observable<Value[]>;
@@ -110,8 +111,15 @@ export class AuthModalInlineComponent implements OnInit {
     );
   }
 
-  switchView(view: 'login' | 'register'): void {
-    this.currentView = view;
+  switchView(view: 'login' | 'register' | 'choice'): void {
+    // Si on clique sur inscription, montrer d'abord le choix
+    if (view === 'register') {
+      this.currentView = 'choice';
+      this.selectedRole = null;
+    } else {
+      this.currentView = view;
+    }
+    
     this.store.dispatch(clearError());
     this.loginForm.reset();
     this.registerForm.reset();
@@ -122,6 +130,24 @@ export class AuthModalInlineComponent implements OnInit {
     if (this.captchaElem) {
       this.captchaElem.resetCaptcha();
     }
+  }
+
+  onChooseTalent(): void {
+    this.selectedRole = 'talent';
+    this.currentView = 'register';
+    this.registerForm.patchValue({ role: RoleName.TALENT });
+  }
+
+  onChooseCompany(): void {
+    this.selectedRole = 'company';
+    // Rediriger vers la page d'inscription entreprise
+    window.location.href = '/authentication/company-plan';
+  }
+
+  backToChoice(): void {
+    this.currentView = 'choice';
+    this.selectedRole = null;
+    this.registerForm.reset();
   }
 
   onLogin(): void {

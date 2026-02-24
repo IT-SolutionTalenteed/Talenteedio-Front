@@ -469,6 +469,188 @@
 }
 
 
+// Choice View Styles
+.choice-view {
+  padding: 20px 0;
+}
+
+.choice-cards-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.choice-card-modal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border: 2px solid #e5e5e5;
+  border-radius: 16px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    border-color: #f1755a;
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(241, 117, 90, 0.15);
+
+    &::before {
+      background: linear-gradient(180deg, #f1755a 0%, #ff8c6b 100%);
+    }
+
+    .card-icon-modal {
+      transform: scale(1.1);
+    }
+
+    .card-arrow-modal {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  &:active {
+    transform: translateX(2px);
+  }
+}
+
+.card-icon-modal {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &.talent {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+  }
+
+  &.company {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+    color: white;
+  }
+}
+
+.card-content-modal {
+  flex: 1;
+  min-width: 0;
+
+  .card-title-modal {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+  }
+
+  .card-description-modal {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.card-arrow-modal {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(241, 117, 90, 0.1);
+  border-radius: 50%;
+  color: #f1755a;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+// Back button
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 2px solid #e5e5e5;
+  border-radius: 10px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: #f1755a;
+    color: #f1755a;
+    background: rgba(241, 117, 90, 0.05);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// Responsive adjustments for choice cards
+@media (max-width: 576px) {
+  .choice-card-modal {
+    padding: 16px;
+    gap: 12px;
+
+    .card-icon-modal {
+      width: 48px;
+      height: 48px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .card-content-modal {
+      .card-title-modal {
+        font-size: 16px;
+      }
+
+      .card-description-modal {
+        font-size: 13px;
+      }
+    }
+
+    .card-arrow-modal {
+      width: 32px;
+      height: 32px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+
 // Profile Picture Group
 .profile-picture-group {
   display: flex;
