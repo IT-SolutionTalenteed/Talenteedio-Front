@@ -1,4 +1,5 @@
 @import "colors.scss";
+@import "colors.scss";
 @import "breakpoints.scss";
 
 // Global Variables
@@ -61,7 +62,7 @@ $border-color: #E8EAED;
 
 // Hero Section
 .hero-section {
-  background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+  background: linear-gradient(135deg, $deep-blue 0%, lighten($deep-blue, 10%) 100%);
   padding: 120px 20px;
   position: relative;
   overflow: hidden;
@@ -242,7 +243,7 @@ $border-color: #E8EAED;
     &:hover {
       transform: translateY(-4px);
       box-shadow: $shadow-lg;
-      border-color: rgba(241, 117, 90, 0.3);
+      border-color: rgba($secondary, 0.3);
 
       .category-image img {
         transform: scale(1.05);
@@ -260,7 +261,7 @@ $border-color: #E8EAED;
       width: 100%;
       height: 200px;
       overflow: hidden;
-      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -339,7 +340,7 @@ $border-color: #E8EAED;
 
         &:hover {
           background: #FFF5F2;
-          border-color: rgba(241, 117, 90, 0.2);
+          border-color: rgba($secondary, 0.2);
           transform: translateX(4px);
 
           .event-title-mini {
@@ -351,14 +352,14 @@ $border-color: #E8EAED;
           flex-shrink: 0;
           width: 48px;
           height: 48px;
-          background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+          background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
           border-radius: $border-radius-sm;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           color: white;
-          box-shadow: 0 2px 8px rgba(241, 117, 90, 0.25);
+          box-shadow: 0 2px 8px rgba($secondary, 0.25);
 
           .date-day {
             font-size: 18px;
@@ -453,7 +454,7 @@ $border-color: #E8EAED;
 
       &:hover {
         background: #FFF5F2;
-        border-color: rgba(241, 117, 90, 0.3);
+        border-color: rgba($secondary, 0.3);
         color: $secondary;
 
         svg {
@@ -486,7 +487,7 @@ $border-color: #E8EAED;
         background: $secondary;
         color: white;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+        box-shadow: 0 4px 12px rgba($secondary, 0.3);
 
         svg {
           transform: translateX(4px);
@@ -536,14 +537,14 @@ $border-color: #E8EAED;
       flex-shrink: 0;
       width: 70px;
       height: 80px;
-      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
       border-radius: $border-radius-sm;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       color: white;
-      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+      box-shadow: 0 4px 12px rgba($secondary, 0.3);
 
       .event-day {
         font-size: 32px;
@@ -692,7 +693,7 @@ $border-color: #E8EAED;
         width: 100%;
         height: 200px;
         overflow: hidden;
-        background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+        background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -842,7 +843,7 @@ $border-color: #E8EAED;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+                background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
                 color: white;
                 font-size: 20px;
                 font-weight: 700;
@@ -853,14 +854,14 @@ $border-color: #E8EAED;
               width: 48px;
               height: 48px;
               border-radius: 8px;
-              background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+              background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
               color: white;
               display: flex;
               align-items: center;
               justify-content: center;
               font-size: 12px;
               font-weight: 700;
-              box-shadow: 0 2px 8px rgba(241, 117, 90, 0.3);
+              box-shadow: 0 2px 8px rgba($secondary, 0.3);
             }
           }
         }

@@ -1,3 +1,4 @@
+@import "colors.scss";
 .appointment-scheduler-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -24,10 +25,10 @@
     margin-bottom: 1.5rem;
 
     &:hover {
-      border-color: #f1755a;
-      color: #f1755a;
+      border-color: $secondary;
+      color: $secondary;
       transform: translateX(-4px);
-      box-shadow: 0 4px 12px rgba(241, 117, 90, 0.15);
+      box-shadow: 0 4px 12px rgba($secondary, 0.15);
     }
 
     svg {
@@ -80,7 +81,7 @@
   margin: 0 0 1.5rem 0;
 
   svg {
-    stroke: #f1755a;
+    stroke: $secondary;
     stroke-width: 2;
   }
 }
@@ -100,9 +101,9 @@
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: #f1755a;
+    border-color: $secondary;
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(241, 117, 90, 0.15);
+    box-shadow: 0 12px 24px rgba($secondary, 0.15);
   }
 
   .company-logo {
@@ -154,7 +155,7 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.875rem 1.5rem;
-    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
     border: none;
     border-radius: 12px;
     color: white;
@@ -162,7 +163,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
+    box-shadow: 0 4px 12px rgba($secondary, 0.3);
 
     svg {
       stroke-width: 2;
@@ -170,7 +171,7 @@
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(241, 117, 90, 0.4);
+      box-shadow: 0 6px 16px rgba($secondary, 0.4);
     }
   }
 }
@@ -189,7 +190,7 @@
     width: 60px;
     height: 60px;
     border: 4px solid #f3f4f6;
-    border-top-color: #f1755a;
+    border-top-color: $secondary;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 1rem;
@@ -253,9 +254,9 @@
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: #f1755a;
+    border-color: $secondary;
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(241, 117, 90, 0.15);
+    box-shadow: 0 8px 16px rgba($secondary, 0.15);
   }
 
   .appointment-status {
@@ -343,7 +344,7 @@
         margin: 0;
 
         svg {
-          stroke: #f1755a;
+          stroke: $secondary;
           stroke-width: 2;
         }
       }
@@ -367,7 +368,7 @@
       color: #374151;
 
       svg {
-        stroke: #f1755a;
+        stroke: $secondary;
         stroke-width: 2;
         flex-shrink: 0;
       }
@@ -477,7 +478,7 @@
     margin: 0;
 
     svg {
-      stroke: #f1755a;
+      stroke: $secondary;
       stroke-width: 2;
     }
   }
@@ -589,7 +590,7 @@
   margin-bottom: 1rem;
 
   svg {
-    stroke: #f1755a;
+    stroke: $secondary;
     stroke-width: 2;
   }
 }
@@ -622,8 +623,8 @@
     }
 
     &:hover {
-      border-color: #f1755a;
-      color: #f1755a;
+      border-color: $secondary;
+      color: $secondary;
       transform: scale(1.1);
     }
   }
@@ -682,12 +683,12 @@
       bottom: 3px;
       width: 5px;
       height: 5px;
-      background: #f1755a;
+      background: $secondary;
       border-radius: 50%;
     }
 
     &:hover:not(.disabled):not(.other-month) {
-      border-color: #f1755a;
+      border-color: $secondary;
       background: #fff5f3;
       transform: translateY(-1px);
     }
@@ -714,9 +715,9 @@
     }
 
     &.selected {
-      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
-      border-color: #f1755a;
-      box-shadow: 0 2px 8px rgba(241, 117, 90, 0.4);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+      border-color: $secondary;
+      box-shadow: 0 2px 8px rgba($secondary, 0.4);
 
       .day-number {
         color: white;
@@ -729,7 +730,7 @@
     }
 
     &.has-appointments:not(.selected) {
-      border-color: #f1755a;
+      border-color: $secondary;
       border-width: 2px;
     }
   }
@@ -778,21 +779,21 @@
     text-align: center;
 
     &:hover {
-      border-color: #f1755a;
-      color: #f1755a;
+      border-color: $secondary;
+      color: $secondary;
       transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba(241, 117, 90, 0.15);
+      box-shadow: 0 2px 6px rgba($secondary, 0.15);
     }
 
     &.active {
-      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
-      border-color: #f1755a;
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+      border-color: $secondary;
       color: white;
-      box-shadow: 0 2px 8px rgba(241, 117, 90, 0.3);
+      box-shadow: 0 2px 8px rgba($secondary, 0.3);
 
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 3px 10px rgba(241, 117, 90, 0.4);
+        box-shadow: 0 3px 10px rgba($secondary, 0.4);
       }
     }
   }
@@ -812,8 +813,8 @@
 
   &:focus {
     outline: none;
-    border-color: #f1755a;
-    box-shadow: 0 0 0 4px rgba(241, 117, 90, 0.1);
+    border-color: $secondary;
+    box-shadow: 0 0 0 4px rgba($secondary, 0.1);
   }
 
   &::placeholder {
@@ -852,7 +853,7 @@
 
   .btn-primary {
     padding: 0.875rem 2rem;
-    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
     border: none;
     border-radius: 12px;
     color: white;
@@ -860,7 +861,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(241, 117, 90, 0.3);
+    box-shadow: 0 4px 16px rgba($secondary, 0.3);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -871,7 +872,7 @@
 
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(241, 117, 90, 0.4);
+      box-shadow: 0 6px 20px rgba($secondary, 0.4);
     }
 
     &:disabled {

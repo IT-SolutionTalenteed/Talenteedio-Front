@@ -12,7 +12,7 @@ $border-radius-md: 12px;
 
   // Hero Section
   .hero-section {
-    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+    background: linear-gradient(135deg, $deep-blue 0%, lighten($deep-blue, 10%) 100%);
     padding: 100px 20px 80px;
     position: relative;
     overflow: hidden;
@@ -170,8 +170,8 @@ $border-radius-md: 12px;
         z-index: 2;
 
         &:hover {
-          border-color: #f1755a;
-          color: #f1755a;
+          border-color: $secondary;
+          color: $secondary;
           box-shadow: 0 4px 12px rgba(241, 117, 90, 0.15);
         }
 
@@ -264,15 +264,15 @@ $border-radius-md: 12px;
           }
 
           &:hover {
-            border-color: #f1755a;
-            color: #f1755a;
+            border-color: $secondary;
+            color: $secondary;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(241, 117, 90, 0.15);
           }
 
           &.active {
-            background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
-            border-color: #f1755a;
+            background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+            border-color: $secondary;
             color: white;
             box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);
 

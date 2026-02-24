@@ -59,9 +59,11 @@
   }
 }
 
+@import "colors.scss";
+
 // Left Column - Branding Section
 .branding-section {
-  background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+  background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
   padding: 60px 50px;
   display: flex;
   flex-direction: column;
@@ -226,7 +228,7 @@
 
     &.active {
       background: white;
-      color: #f1755a;
+      color: $secondary;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
   }
@@ -284,7 +286,7 @@
   margin-bottom: 8px;
 
   svg {
-    color: #f1755a;
+    color: $secondary;
   }
 }
 
@@ -300,8 +302,8 @@
 
   &:focus {
     outline: none;
-    border-color: #f1755a;
-    box-shadow: 0 0 0 4px rgba(241, 117, 90, 0.1);
+    border-color: $secondary;
+    box-shadow: 0 0 0 4px rgba($secondary, 0.1);
   }
 
   &::placeholder {
@@ -356,7 +358,7 @@
       width: 18px;
       height: 18px;
       cursor: pointer;
-      accent-color: #f1755a;
+      accent-color: $secondary;
     }
 
     .checkbox-text {
@@ -400,7 +402,7 @@
 .submit-button {
   width: 100%;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+  background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -412,11 +414,11 @@
   justify-content: center;
   gap: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(241, 117, 90, 0.3);
+  box-shadow: 0 4px 16px rgba($secondary, 0.3);
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(241, 117, 90, 0.4);
+    box-shadow: 0 6px 24px rgba($secondary, 0.4);
   }
 
   &:active:not(:disabled) {
@@ -505,12 +507,12 @@
   }
 
   &:hover {
-    border-color: #f1755a;
+    border-color: $secondary;
     transform: translateX(4px);
-    box-shadow: 0 8px 24px rgba(241, 117, 90, 0.15);
+    box-shadow: 0 8px 24px rgba($secondary, 0.15);
 
     &::before {
-      background: linear-gradient(180deg, #f1755a 0%, #ff8c6b 100%);
+      background: linear-gradient(180deg, $secondary 0%, lighten($secondary, 10%) 100%);
     }
 
     .card-icon-modal {
@@ -576,9 +578,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(241, 117, 90, 0.1);
+  background: rgba($secondary, 0.1);
   border-radius: 50%;
-  color: #f1755a;
+  color: $secondary;
   flex-shrink: 0;
   opacity: 0;
   transform: translateX(-10px);
@@ -602,9 +604,9 @@
   margin-bottom: 24px;
 
   &:hover {
-    border-color: #f1755a;
-    color: #f1755a;
-    background: rgba(241, 117, 90, 0.05);
+    border-color: $secondary;
+    color: $secondary;
+    background: rgba($secondary, 0.05);
   }
 
   svg {
@@ -704,8 +706,8 @@
 
       &:focus {
         outline: none;
-        border-color: #f1755a !important;
-        box-shadow: 0 0 0 4px rgba(241, 117, 90, 0.1) !important;
+        border-color: $secondary !important;
+        box-shadow: 0 0 0 4px rgba($secondary, 0.1) !important;
       }
 
       &::placeholder {
@@ -732,7 +734,7 @@
 
         &:hover,
         &:focus {
-          background: rgba(241, 117, 90, 0.05) !important;
+          background: rgba($secondary, 0.05) !important;
         }
 
         .iti__flag {
@@ -763,7 +765,7 @@
 
         &:hover,
         &.iti__highlight {
-          background: rgba(241, 117, 90, 0.1) !important;
+          background: rgba($secondary, 0.1) !important;
         }
 
         .iti__flag {

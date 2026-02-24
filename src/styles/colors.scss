@@ -1,11 +1,19 @@
-$primary-selected: #155dc2;
-$primary: #1967d2;
-$secondary: #f1755a;
+// Nouvelle palette de couleurs
+$dark-navy: #050822;
+$deep-blue: #040a5d;
+$bright-blue: #192bc2;
+$sky-blue: #2687e9;
+$accent-orange: #f49f0a;
+
+// Couleurs principales
+$primary-selected: $bright-blue;
+$primary: $sky-blue;
+$secondary: $accent-orange; // Couleur d'accentuation principale (orange)
 $third: #dc3545;
 $fourth: #99c1b9;
 $background: #f5f7fc;
-$primary-hover: #0146a6;
-$secondary-hover: #ec4c28;
+$primary-hover: $deep-blue;
+$secondary-hover: darken($accent-orange, 10%);
 $border: #ecedf2;
 $success: #34a853;
 $success-hover: #2f994b;

@@ -5,8 +5,8 @@
 // Variables
 $modal-border-radius: 16px;
 $modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-$primary-color: #f1755a;
-$primary-gradient: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+$primary-color: $secondary;
+$primary-gradient: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
 
 .job-form-root {
   min-height: 50vh;

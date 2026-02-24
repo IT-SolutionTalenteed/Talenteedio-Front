@@ -1,3 +1,4 @@
+@import "colors.scss";
 .profile-form-container {
   .card {
     border: none;
@@ -14,7 +15,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: #f1755a;
+      background: $secondary;
     }
   }
 
@@ -29,7 +30,7 @@
     margin-bottom: 2rem;
     
     i {
-      color: #f1755a;
+      color: $secondary;
       margin-right: 0.75rem;
     }
   }
@@ -57,8 +58,8 @@
     background: #f0f5f7;
     
     &:focus {
-      border-color: #f1755a;
-      box-shadow: 0 0 0 0.2rem rgba(241, 117, 90, 0.25);
+      border-color: $secondary;
+      box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
       background: white;
       outline: none;
     }
@@ -119,31 +120,31 @@
     }
 
     &:hover {
-      border-color: #f1755a;
+      border-color: $secondary;
       background: white;
       transform: translateY(-2px);
-      box-shadow: 0px 0px 15px 5px rgba(241, 117, 90, 0.1);
+      box-shadow: 0px 0px 15px 5px rgba($secondary, 0.1);
 
       i {
         transform: scale(1.1);
-        color: #f1755a;
+        color: $secondary;
       }
     }
 
     &.drag-over {
-      border-color: #f1755a;
-      background: linear-gradient(135deg, rgba(241, 117, 90, 0.05) 0%, rgba(241, 117, 90, 0.1) 100%);
+      border-color: $secondary;
+      background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($secondary, 0.1) 100%);
       border-style: solid;
-      box-shadow: 0px 0px 20px 5px rgba(241, 117, 90, 0.2);
+      box-shadow: 0px 0px 20px 5px rgba($secondary, 0.2);
 
       i {
         transform: scale(1.2);
-        color: #f1755a;
+        color: $secondary;
         animation: bounce 0.6s ease infinite;
       }
 
       .upload-content p {
-        color: #f1755a;
+        color: $secondary;
         font-weight: 600;
       }
     }
@@ -155,7 +156,7 @@
 
       i {
         transition: all 0.3s ease;
-        color: #f1755a;
+        color: $secondary;
       }
 
       p {
@@ -213,14 +214,14 @@
     font-weight: 600;
     font-size: 1.05rem;
     transition: all 0.3s ease;
-    background: #f1755a;
+    background: $secondary;
     border: none;
-    box-shadow: 0 4px 15px rgba(241, 117, 90, 0.3);
+    box-shadow: 0 4px 15px rgba($secondary, 0.3);
 
     &:hover:not(:disabled) {
-      background: #ec4c28;
+      background: $secondary-hover;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(241, 117, 90, 0.4);
+      box-shadow: 0 6px 20px rgba($secondary, 0.4);
     }
 
     &:active:not(:disabled) {
@@ -288,7 +289,7 @@
         transition: all 0.3s ease;
 
         &:hover {
-          border-color: #f1755a;
+          border-color: $secondary;
         }
 
         .ng-value-container {
@@ -301,20 +302,20 @@
           }
 
           .ng-value {
-            background: linear-gradient(135deg, #f1755a 0%, #ec4c28 100%);
+            background: linear-gradient(135deg, $secondary 0%, $secondary-hover 100%);
             color: white;
             border-radius: 6px;
             padding: 0.35rem 0.85rem;
             margin: 0.25rem 0.25rem 0.25rem 0;
             font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 2px 4px rgba(241, 117, 90, 0.2);
+            box-shadow: 0 2px 4px rgba($secondary, 0.2);
             transition: all 0.2s ease;
             animation: tagAppear 0.3s ease;
 
             &:hover {
               transform: translateY(-1px);
-              box-shadow: 0 3px 6px rgba(241, 117, 90, 0.3);
+              box-shadow: 0 3px 6px rgba($secondary, 0.3);
             }
 
             .ng-value-icon {
@@ -352,19 +353,19 @@
           padding-right: 1rem;
 
           .ng-arrow {
-            border-color: #f1755a transparent transparent;
+            border-color: $secondary transparent transparent;
             border-width: 6px 6px 2.5px;
             transition: all 0.2s ease;
           }
         }
 
         .ng-clear-wrapper {
-          color: #f1755a;
+          color: $secondary;
           padding-right: 0.5rem;
           transition: all 0.2s ease;
 
           &:hover {
-            color: #ec4c28;
+            color: $secondary-hover;
             transform: scale(1.1);
           }
 
@@ -376,12 +377,12 @@
 
       &.ng-select-opened {
         .ng-select-container {
-          border-color: #f1755a;
-          box-shadow: 0 0 0 0.2rem rgba(241, 117, 90, 0.25);
+          border-color: $secondary;
+          box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
           background: white;
 
           .ng-arrow {
-            border-color: transparent transparent #f1755a;
+            border-color: transparent transparent $secondary;
             border-width: 0 6px 6px;
           }
         }
@@ -389,8 +390,8 @@
 
       &.ng-select-focused {
         .ng-select-container {
-          border-color: #f1755a;
-          box-shadow: 0 0 0 0.2rem rgba(241, 117, 90, 0.25);
+          border-color: $secondary;
+          box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
           background: white;
         }
       }
@@ -421,12 +422,12 @@
             font-size: 0.95rem;
 
             &.ng-option-marked {
-              background: rgba(241, 117, 90, 0.1);
+              background: rgba($secondary, 0.1);
               color: #1b2032;
             }
 
             &.ng-option-selected {
-              background: linear-gradient(135deg, #f1755a 0%, #ec4c28 100%);
+              background: linear-gradient(135deg, $secondary 0%, $secondary-hover 100%);
               color: white;
               font-weight: 500;
               position: relative;
@@ -439,7 +440,7 @@
               }
 
               &.ng-option-marked {
-                background: linear-gradient(135deg, #ec4c28 0%, #d93d1f 100%);
+                background: linear-gradient(135deg, $secondary-hover 0%, #d93d1f 100%);
                 color: white;
               }
             }

@@ -1,3 +1,4 @@
+@import "colors.scss";
 .faq-accordion {
   margin-top: 2rem;
   padding: 2rem;
@@ -15,7 +16,7 @@
   border-bottom: 2px solid #f0f0f0;
 
   svg {
-    color: #ff6b35;
+    color: $secondary;
     flex-shrink: 0;
   }
 }
@@ -40,7 +41,7 @@
   transition: all 0.3s ease;
 
   &.active {
-    border-color: #ff6b35;
+    border-color: $secondary;
     box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
   }
 }
@@ -72,7 +73,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
   color: white;
   border-radius: 50%;
   font-weight: 600;
@@ -90,7 +91,7 @@
 
 .faq-icon {
   flex-shrink: 0;
-  color: #ff6b35;
+  color: $secondary;
   transition: transform 0.3s ease;
 
   .faq-item.active & {
