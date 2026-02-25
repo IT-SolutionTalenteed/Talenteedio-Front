@@ -178,8 +178,8 @@
                   </svg>
                 </div>
                 <div class="card-content-modal">
-                  <h3 class="card-title-modal">Je cherche un emploi</h3>
-                  <p class="card-description-modal">Trouvez votre emploi de rêve et connectez-vous avec les meilleures entreprises</p>
+                  <h3 class="card-title-modal">Je suis un talent</h3>
+                  <p class="card-description-modal">Créez votre profil et trouvez les meilleures opportunités</p>
                 </div>
                 <div class="card-arrow-modal">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -196,8 +196,8 @@
                   </svg>
                 </div>
                 <div class="card-content-modal">
-                  <h3 class="card-title-modal">Je suis une entreprise</h3>
-                  <p class="card-description-modal">Trouvez les meilleurs talents et développez votre équipe</p>
+                  <h3 class="card-title-modal">Je suis une company</h3>
+                  <p class="card-description-modal">Recrutez les meilleurs talents pour votre équipe</p>
                 </div>
                 <div class="card-arrow-modal">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -208,7 +208,7 @@
             </div>
           </div>
 
-          <!-- Register Form -->
+          <!-- Register Form Multi-Steps -->
           <div class="auth-form-content" *ngIf="currentView === 'register'">
             <!-- Back button -->
             <button type="button" class="back-button" (click)="backToChoice()">
@@ -217,17 +217,34 @@
               </svg>
               Retour au choix
             </button>
+
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+              <div class="step" [class.active]="registrationStep === 1" [class.completed]="registrationStep > 1">
+                <div class="step-number">1</div>
+                <div class="step-label">{{ selectedRole === 'talent' ? 'Qui je suis' : 'Qui sommes-nous' }}</div>
+              </div>
+              <div class="step-line" [class.completed]="registrationStep > 1"></div>
+              <div class="step" [class.active]="registrationStep === 2">
+                <div class="step-number">2</div>
+                <div class="step-label">{{ selectedRole === 'talent' ? 'Ce que je veux' : 'Ce que nous voulons' }}</div>
+              </div>
+            </div>
             
             <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
               
-              <!-- Profile Picture -->
-              <div class="form-group profile-picture-group">
-                <app-profile-picture-upload
-                  [currentPictureUrl]="profilePictureUrl"
-                  (pictureChanged)="onProfilePictureChanged($event)"
-                  (pictureRemoved)="onProfilePictureRemoved()"
-                ></app-profile-picture-upload>
-              </div>
+              <!-- TALENT - STEP 1: Qui je suis -->
+              <div *ngIf="selectedRole === 'talent' && registrationStep === 1" class="step-content">
+                <h3 class="step-title">Parlez-nous de vous</h3>
+                
+                <!-- Profile Picture -->
+                <div class="form-group profile-picture-group">
+                  <app-profile-picture-upload
+                    [currentPictureUrl]="profilePictureUrl"
+                    (pictureChanged)="onProfilePictureChanged($event)"
+                    (pictureRemoved)="onProfilePictureRemoved()"
+                  ></app-profile-picture-upload>
+                </div>
 
               <!-- First Name & Last Name -->
               <div class="form-row">
@@ -397,8 +414,336 @@
                   Les mots de passe ne correspondent pas
                 </div>
               </div>
+              
+              </div>
+              <!-- End of TALENT - STEP 1 -->
 
-              <!-- Terms Checkbox - Removed, not needed for quick signup -->
+              <!-- TALENT - STEP 2: Ce que je veux -->
+              <div *ngIf="selectedRole === 'talent' && registrationStep === 2" class="step-content">
+                <h3 class="step-title">Ce que je recherche</h3>
+                
+                <!-- Desired Location -->
+                <div class="form-group">
+                  <label for="desiredLocation" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                    Où souhaitez-vous travailler ?
+                  </label>
+                  <input
+                    id="desiredLocation"
+                    type="text"
+                    formControlName="desiredLocation"
+                    placeholder="Ville, région ou pays"
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Desired Sector -->
+                <div class="form-group">
+                  <label for="desiredSector" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z" fill="currentColor"/>
+                    </svg>
+                    Secteur d'activité visé
+                  </label>
+                  <input
+                    id="desiredSector"
+                    type="text"
+                    formControlName="desiredSector"
+                    placeholder="Ex: Technologie, Finance, Santé..."
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Interests -->
+                <div class="form-group">
+                  <label for="interests" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="currentColor"/>
+                    </svg>
+                    Centres d'intérêt professionnels
+                  </label>
+                  <textarea
+                    id="interests"
+                    formControlName="interests"
+                    placeholder="Décrivez vos centres d'intérêt professionnels..."
+                    class="form-input"
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <!-- Desired Position -->
+                <div class="form-group">
+                  <label for="desiredPosition" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM14 6H10V4H14V6Z" fill="currentColor"/>
+                    </svg>
+                    Poste visé
+                  </label>
+                  <input
+                    id="desiredPosition"
+                    type="text"
+                    formControlName="desiredPosition"
+                    placeholder="Ex: Développeur Full Stack, Chef de projet..."
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Desired Salary -->
+                <div class="form-group">
+                  <label for="desiredSalary" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M11.8 10.9C9.53 10.31 8.8 9.7 8.8 8.75C8.8 7.66 9.81 6.9 11.5 6.9C13.28 6.9 13.94 7.75 14 9H16.21C16.14 7.28 15.09 5.7 13 5.19V3H10V5.16C8.06 5.58 6.5 6.84 6.5 8.77C6.5 11.08 8.41 12.23 11.2 12.9C13.7 13.5 14.2 14.38 14.2 15.31C14.2 16 13.71 17.1 11.5 17.1C9.44 17.1 8.63 16.18 8.52 15H6.32C6.44 17.19 8.08 18.42 10 18.83V21H13V18.85C14.95 18.48 16.5 17.35 16.5 15.3C16.5 12.46 14.07 11.49 11.8 10.9Z" fill="currentColor"/>
+                    </svg>
+                    Salaire souhaité (annuel)
+                  </label>
+                  <input
+                    id="desiredSalary"
+                    type="text"
+                    formControlName="desiredSalary"
+                    placeholder="Ex: 45000€"
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Availability -->
+                <div class="form-group">
+                  <label for="availability" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor"/>
+                    </svg>
+                    Disponibilité
+                  </label>
+                  <input
+                    id="availability"
+                    type="text"
+                    formControlName="availability"
+                    placeholder="Ex: Immédiate, Dans 1 mois, Préavis de 3 mois..."
+                    class="form-input"
+                  />
+                </div>
+              </div>
+              <!-- End of TALENT - STEP 2 -->
+
+              <!-- COMPANY - STEP 1: Qui sommes-nous -->
+              <div *ngIf="selectedRole === 'company' && registrationStep === 1" class="step-content">
+                <h3 class="step-title">Présentez votre entreprise</h3>
+                
+                <!-- Company Name -->
+                <div class="form-group">
+                  <label for="companyName" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+                    </svg>
+                    Nom de l'entreprise
+                  </label>
+                  <input
+                    id="companyName"
+                    type="text"
+                    formControlName="companyName"
+                    placeholder="Nom de votre entreprise"
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Email & Phone -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="company-email" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                      </svg>
+                      Email
+                    </label>
+                    <input
+                      id="company-email"
+                      type="email"
+                      formControlName="email"
+                      placeholder="contact@entreprise.com"
+                      class="form-input"
+                      [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="company-phone" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                      </svg>
+                      Téléphone
+                    </label>
+                    <angular-intl-phone formControlName="phone" [config]="config" />
+                  </div>
+                </div>
+
+                <!-- Password & Confirm -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="company-password" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+                      </svg>
+                      Mot de passe
+                    </label>
+                    <div class="password-wrapper">
+                      <input
+                        id="company-password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        formControlName="password"
+                        placeholder="Minimum 6 caractères"
+                        class="form-input"
+                        [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                      />
+                      <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+                        <svg *ngIf="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+                        </svg>
+                        <svg *ngIf="showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="company-confirmPassword" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+                      </svg>
+                      Confirmer
+                    </label>
+                    <div class="password-wrapper">
+                      <input
+                        id="company-confirmPassword"
+                        [type]="showConfirmPassword ? 'text' : 'password'"
+                        formControlName="confirmationPassword"
+                        placeholder="Confirmez"
+                        class="form-input"
+                        [class.error]="registerForm.get('confirmationPassword')?.invalid && registerForm.get('confirmationPassword')?.touched"
+                      />
+                      <button type="button" class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
+                        <svg *ngIf="!showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+                        </svg>
+                        <svg *ngIf="showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sector & Employee Count -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="sector" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6H12L10 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z" fill="currentColor"/>
+                      </svg>
+                      Secteur d'activité
+                    </label>
+                    <input
+                      id="sector"
+                      type="text"
+                      formControlName="sector"
+                      placeholder="Ex: Technologie, Finance..."
+                      class="form-input"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="employeeCount" class="form-label">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                      </svg>
+                      Nombre d'employés
+                    </label>
+                    <input
+                      id="employeeCount"
+                      type="text"
+                      formControlName="employeeCount"
+                      placeholder="Ex: 1-10, 50-100..."
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- End of COMPANY - STEP 1 -->
+
+              <!-- COMPANY - STEP 2: Ce que nous voulons -->
+              <div *ngIf="selectedRole === 'company' && registrationStep === 2" class="step-content">
+                <h3 class="step-title">Vos besoins en recrutement</h3>
+                
+                <!-- Profile Sought -->
+                <div class="form-group">
+                  <label for="profileSought" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                    </svg>
+                    Profil(s) recherché(s)
+                  </label>
+                  <textarea
+                    id="profileSought"
+                    formControlName="profileSought"
+                    placeholder="Décrivez le type de profil que vous recherchez..."
+                    class="form-input"
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <!-- Positions to Fill -->
+                <div class="form-group">
+                  <label for="positionsToFill" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM14 6H10V4H14V6Z" fill="currentColor"/>
+                    </svg>
+                    Postes à pourvoir
+                  </label>
+                  <input
+                    id="positionsToFill"
+                    type="text"
+                    formControlName="positionsToFill"
+                    placeholder="Ex: Développeur, Chef de projet, Designer..."
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Required Skills -->
+                <div class="form-group">
+                  <label for="requiredSkills" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M22.7 19L13.6 9.9C14.5 7.6 14 4.9 12.1 3C9.6 0.5 5.6 0.5 3.1 3C0.6 5.5 0.6 9.5 3.1 12C5 13.9 7.7 14.4 10 13.5L19.1 22.6C19.5 23 20.1 23 20.5 22.6L22.6 20.5C23.1 20.1 23.1 19.5 22.7 19ZM5.2 10.9C3.5 9.2 3.5 6.5 5.2 4.8C6.9 3.1 9.6 3.1 11.3 4.8C13 6.5 13 9.2 11.3 10.9C9.6 12.6 6.9 12.6 5.2 10.9Z" fill="currentColor"/>
+                    </svg>
+                    Compétences recherchées
+                  </label>
+                  <input
+                    id="requiredSkills"
+                    type="text"
+                    formControlName="requiredSkills"
+                    placeholder="Ex: JavaScript, React, Node.js..."
+                    class="form-input"
+                  />
+                </div>
+
+                <!-- Required Experience -->
+                <div class="form-group">
+                  <label for="requiredExperience" class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="currentColor"/>
+                    </svg>
+                    Expérience requise
+                  </label>
+                  <input
+                    id="requiredExperience"
+                    type="text"
+                    formControlName="requiredExperience"
+                    placeholder="Ex: 2-5 ans, Débutant accepté..."
+                    class="form-input"
+                  />
+                </div>
+              </div>
+              <!-- End of COMPANY - STEP 2 -->
 
               <!-- Error from server -->
               <div class="server-error" *ngIf="emailError$ | async as error">
@@ -408,14 +753,37 @@
                 <span>{{ error }}</span>
               </div>
 
-              <!-- Submit Button -->
-              <button type="submit" class="submit-button" [disabled]="registerForm.invalid || (loading$ | async)">
-                <span *ngIf="!(loading$ | async)">Créer un compte</span>
-                <span *ngIf="loading$ | async">Création...</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M15 12C17.21 12 19 10.21 19 8C19 5.79 17.21 4 15 4C12.79 4 11 5.79 11 8C11 10.21 12.79 12 15 12ZM6 10V7H4V10H1V12H4V15H6V12H9V10H6ZM15 14C12.33 14 7 15.34 7 18V20H23V18C23 15.34 17.67 14 15 14Z" fill="currentColor"/>
-                </svg>
-              </button>
+              <!-- Navigation Buttons -->
+              <div class="step-navigation">
+                <button type="button" class="nav-button btn-secondary" 
+                        *ngIf="registrationStep > 1" 
+                        (click)="previousStep()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Précédent
+                </button>
+                
+                <button type="button" class="nav-button btn-primary" 
+                        *ngIf="registrationStep < maxSteps" 
+                        [disabled]="!isStep1Valid()"
+                        (click)="nextStep()">
+                  Suivant
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                
+                <button type="submit" class="nav-button btn-primary" 
+                        *ngIf="registrationStep === maxSteps"
+                        [disabled]="registerForm.invalid || (loading$ | async)">
+                  <span *ngIf="!(loading$ | async)">Créer mon compte</span>
+                  <span *ngIf="(loading$ | async)">Création...</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 12C17.21 12 19 10.21 19 8C19 5.79 17.21 4 15 4C12.79 4 11 5.79 11 8C11 10.21 12.79 12 15 12ZM6 10V7H4V10H1V12H4V15H6V12H9V10H6ZM15 14C12.33 14 7 15.34 7 18V20H23V18C23 15.34 17.67 14 15 14Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
             </form>
           </div>
         </div>
