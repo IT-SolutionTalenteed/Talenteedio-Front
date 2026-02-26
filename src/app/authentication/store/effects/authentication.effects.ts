@@ -101,7 +101,7 @@ export class AuthenticationEffects {
           mergeMap((response: AuthenticationResponse) => [
             showSuccess({ message: '' }),
             signupUserSuccess(response),
-            // logInSuccess(response),
+            logInSuccess(response),
           ]),
           catchError((error) => of(signupUserFail(error)))
         )
