@@ -46,7 +46,10 @@ export class MatchingProfileRootComponent implements OnInit {
     this.isLoggedIn$.subscribe(isLoggedIn => {
       if (isLoggedIn && this.showAuthModal) {
         this.showAuthModal = false;
-        this.loadExistingProfiles();
+        // After registration/login, ensure we're on step 1 to start the matching profile
+        this.currentStep = 1;
+        this.currentProfile = null;
+        // Don't load existing profiles - let user start fresh
       }
     });
 
