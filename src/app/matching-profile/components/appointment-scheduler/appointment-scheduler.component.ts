@@ -60,13 +60,15 @@ export class AppointmentSchedulerComponent implements OnInit {
 
   generateTimeSlots(): void {
     const slots = [];
+    // Créneaux de 15 minutes de 9h à 18h
     for (let hour = 9; hour <= 17; hour++) {
       slots.push(`${hour.toString().padStart(2, '0')}:00`);
-      if (hour < 17) {
-        slots.push(`${hour.toString().padStart(2, '0')}:30`);
-      }
+      slots.push(`${hour.toString().padStart(2, '0')}:15`);
+      slots.push(`${hour.toString().padStart(2, '0')}:30`);
+      slots.push(`${hour.toString().padStart(2, '0')}:45`);
     }
-    slots.push('17:30');
+    // Ajouter les derniers créneaux de 18h
+    slots.push('18:00');
     this.availableTimeSlots = slots;
   }
 
@@ -147,6 +149,32 @@ export class AppointmentSchedulerComponent implements OnInit {
     this.form.patchValue({ appointmentTime: time });
   }
 
+  getAvailableTimeSlotsForDate(): string[] {
+    if (!this.selectedDate) {
+      return this.availableTimeSlots;
+    }
+
+    // Filtrer les créneaux déjà réservés pour cette date
+    const bookedSlots = this.appointments
+      .filter(apt => apt.appointmentDate === this.selectedDate && apt.status !== 'CANCELLED')
+      .map(apt => apt.appointmentTime);
+
+    return this.availableTimeSlots.filter(slot => !bookedSlots.includes(slot));
+  }
+
+  isTimeSlotAvailable(time: string): boolean {
+    if (!this.selectedDate) {
+      return true;
+    }
+
+    // Vérifier si ce créneau est déjà réservé
+    return !this.appointments.some(
+      apt => apt.appointmentDate === this.selectedDate && 
+             apt.appointmentTime === time && 
+             apt.status !== 'CANCELLED'
+    );
+  }
+
   loadAppointments(): void {
     if (!this.profileId) return;
 
@@ -178,6 +206,16 @@ export class AppointmentSchedulerComponent implements OnInit {
   }
 
   openAppointmentForm(company: any): void {
+    // Vérifier si l'utilisateur a déjà un rendez-vous avec cette entreprise
+    const existingAppointment = this.appointments.find(
+      apt => apt.company.id === company.companyId && apt.status !== 'CANCELLED'
+    );
+    
+    if (existingAppointment) {
+      alert('Vous avez déjà un rendez-vous avec cette entreprise.');
+      return;
+    }
+
     this.selectedCompany = company;
     this.showForm = true;
     this.selectedDate = null;
@@ -220,6 +258,19 @@ export class AppointmentSchedulerComponent implements OnInit {
       error: (err) => {
         this.submitting = false;
         console.error('Error creating appointment:', err);
+        
+        // Afficher un message d'erreur approprié
+        const errorMessage = err.error?.errors?.[0]?.message || err.message || 'Erreur lors de la création du rendez-vous';
+        
+        if (errorMessage.includes('déjà un rendez-vous')) {
+          alert('Vous avez déjà un rendez-vous avec cette entreprise.');
+        } else if (errorMessage.includes('créneau') || errorMessage.includes('réservé')) {
+          alert('Ce créneau horaire est déjà réservé. Veuillez en choisir un autre.');
+          // Recharger les rendez-vous pour mettre à jour les créneaux disponibles
+          this.loadAppointments();
+        } else {
+          alert(errorMessage);
+        }
       }
     });
   }
