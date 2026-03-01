@@ -36,6 +36,21 @@ const GET_COMPANY = gql`
     getOneCompany(input: { id: $id }) {
       id
       company_name
+      slogan
+      description
+      about
+      website
+      industry
+      sector
+      companySize
+      numberOfEmployees
+      foundedYear
+      profileSought
+      positionsToFill
+      requiredSkills
+      requiredExperience
+      contractTypes
+      workingHours
       logo {
         fileUrl
       }
@@ -46,8 +61,14 @@ const GET_COMPANY = gql`
           line
           city
           postalCode
+          state
           country
         }
+      }
+      socialNetworks {
+        linkedin
+        twitter
+        facebook
       }
       category {
         id
