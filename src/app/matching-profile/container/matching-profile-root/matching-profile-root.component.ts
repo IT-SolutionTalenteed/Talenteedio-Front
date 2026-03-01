@@ -16,7 +16,7 @@ export class MatchingProfileRootComponent implements OnInit {
   currentUser$: Observable<User>;
   isLoggedIn$: Observable<boolean>;
   currentUser: User | null = null;
-  currentStep = 1;
+  currentStep = 2;
   currentProfile: any = null;
   loading = false;
   error: string | null = null;
@@ -27,7 +27,7 @@ export class MatchingProfileRootComponent implements OnInit {
     private store: Store,
     private matchingProfileService: MatchingProfileService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser$ = this.store.pipe(select(getLoggedUser));
@@ -46,10 +46,10 @@ export class MatchingProfileRootComponent implements OnInit {
     this.isLoggedIn$.subscribe(isLoggedIn => {
       if (isLoggedIn && this.showAuthModal) {
         this.showAuthModal = false;
-        // After registration/login, ensure we're on step 1 to start the matching profile
-        this.currentStep = 1;
-        this.currentProfile = null;
-        // Don't load existing profiles - let user start fresh
+        // After registration/login, ensure we're on step 2 to start the matching profile
+        this.currentStep = 2;
+        // Don't load existing profiles yet, or do so if needed
+        this.loadExistingProfiles();
       }
     });
 
@@ -103,13 +103,13 @@ export class MatchingProfileRootComponent implements OnInit {
       this.error = 'Veuillez d\'abord créer votre profil';
       return;
     }
-    
+
     // Prevent going to step 3 without matches
     if (step === 3 && (!this.currentProfile || !this.currentProfile.id)) {
       this.error = 'Veuillez d\'abord compléter les étapes précédentes';
       return;
     }
-    
+
     this.currentStep = step;
     this.error = null;
   }
