@@ -901,3 +901,43 @@ form {
     box-shadow: 0 0 0 4px rgba(235, 84, 50, 0.1) !important;
   }
 }
+
+// Section Titles for Form Organization
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 32px 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #E8EAED;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:first-child {
+    margin-top: 24px;
+  }
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #eb5432 0%, $secondary-hover 100%);
+    border-radius: 2px;
+  }
+}
+
+// Conditional Fields Styling
+.conditional-fields {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid #E8EAED;
+}
+
+// Textarea Styling
+textarea.form-input {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  line-height: 1.5;
+}

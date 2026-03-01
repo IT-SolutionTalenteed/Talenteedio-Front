@@ -18,6 +18,7 @@ import {
 } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha-ssr';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Observable } from 'rxjs';
 import { UNIVERSAL_PHONE_REGEX } from 'src/app/shared/constants/shared.constant';
 import { Role, RoleName } from 'src/app/shared/models/role.interface';
 import { User } from 'src/app/shared/models/user.interface';
@@ -78,11 +79,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   roleNameTalent = RoleName.TALENT;
 
-  workModes = [
-    { value: 'remote', label: 'Remote' },
-    { value: 'hybrid', label: 'Hybride' },
-    { value: 'onsite', label: 'Sur site' }
-  ];
+  workModes$: Observable<any[]>;
+  jobTypes$: Observable<any[]>;
+  categories$: Observable<any[]>;
 
   config = PHONE_CONFIG;
 
@@ -96,18 +95,6 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   today = new Date();
   countries = ALL_COUNTRIES.map((it) => it.name);
-  roles: Role[] = [
-    {
-      id: null,
-      name: RoleName.REFERRAL,
-      title: 'Referral',
-    },
-    {
-      id: null,
-      name: RoleName.TALENT,
-      title: 'Talent',
-    },
-  ];
   cv: File;
   profilePictureId: string | null = null;
   profilePictureUrl: string | null = null;
@@ -120,51 +107,19 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    // Charger les données dynamiques
+    this.loadDynamicData();
+
     if (!this.form) {
       this.form = this.initForm(EMPTY_USER);
-      this.form.get('role').valueChanges.subscribe((role) => {
-        const consentControl = this.form.get('consent');
-        const valuesControl = this.form.get('values');
-        const cvControl = this.form.get('cv');
-        const tjmControl = this.form.get('tjm');
-        const annualSalaryControl = this.form.get('annualSalary');
-        const mobilityControl = this.form.get('mobility');
-        const availabilityDateControl = this.form.get('availabilityDate');
-        const desiredLocationControl = this.form.get('desiredLocation');
-        const workModeControl = this.form.get('workMode');
-
-        if (role === this.roleNameTalent) {
-          consentControl.setValidators([Validators.required]);
-          valuesControl.setValidators([Validators.required]);
-          cvControl.addValidators([Validators.required]);
-          tjmControl.setValidators([Validators.required]);
-          annualSalaryControl.setValidators([Validators.required]);
-          mobilityControl.setValidators([Validators.required]);
-          availabilityDateControl.setValidators([Validators.required]);
-          desiredLocationControl.setValidators([Validators.required]);
-          workModeControl.setValidators([Validators.required]);
-        } else {
-          consentControl.clearValidators();
-          valuesControl.clearValidators();
-          cvControl.clearValidators();
-          tjmControl.clearValidators();
-          annualSalaryControl.clearValidators();
-          mobilityControl.clearValidators();
-          availabilityDateControl.clearValidators();
-          desiredLocationControl.clearValidators();
-          workModeControl.clearValidators();
-        }
-        // Update all controls validation status
-        consentControl.updateValueAndValidity();
-        valuesControl.updateValueAndValidity();
-        cvControl.updateValueAndValidity();
-        tjmControl.updateValueAndValidity();
-        annualSalaryControl.updateValueAndValidity();
-        mobilityControl.updateValueAndValidity();
-        availabilityDateControl.updateValueAndValidity();
-        desiredLocationControl.updateValueAndValidity();
-        workModeControl.updateValueAndValidity();
-      });
+      
+      // Définir le rôle par défaut à "talent"
+      this.form.patchValue({ role: this.roleNameTalent });
+      
+      // Le consentement est obligatoire pour les talents
+      const consentControl = this.form.get('consent');
+      consentControl.setValidators([Validators.required]);
+      consentControl.updateValueAndValidity();
     }
   }
 
@@ -193,10 +148,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       ...user,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       phone: (user.phone as any).internationalNumber,
-      profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null
+      profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null,
+      role: RoleName.TALENT // Forcer le rôle à "talent"
     };
 
-    if (form.value.role === this.roleNameTalent) {
+    // Si un CV est fourni, l'uploader d'abord
+    if (this.cv) {
       this.form.valid
         ? this.authenticationService
             .uploadMedia(this.cv, 'pdf')
@@ -208,6 +165,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
             })
         : this.showErrors();
     } else {
+      // Pas de CV, envoyer directement
       this.form.valid
         ? this.save.emit(userData)
         : this.showErrors();
@@ -250,7 +208,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           user.email,
           Validators.compose([Validators.required, Validators.email]),
         ],
-        role: [user.role, Validators.required],
+        role: [RoleName.TALENT], // Toujours "talent" par défaut
         values: [user.values],
         cv: [null, this.cvValidator],
         firstname: [user.firstname, Validators.required],
@@ -258,14 +216,31 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         password: [user.password, Validators.required],
         confirmationPassword: [''],
         recaptcha: [undefined, Validators.required],
-        consent: [false],
+        consent: [false, Validators.required], // Obligatoire pour les talents
         phone: [user.phone, Validators.compose([Validators.required])],
+        // Champs existants
         tjm: [null],
         annualSalary: [null],
         mobility: [null],
         availabilityDate: [null],
         desiredLocation: [null],
         workMode: [null],
+        // Nouveaux champs pour l'inscription
+        yearsOfExperience: [null],
+        competences: [null],
+        languages: [null],
+        country: [null],
+        city: [null],
+        address: [null],
+        postalCode: [null],
+        formations: [null],
+        salaryRange: [null],
+        interests: [null],
+        desiredWorkLocation: [null],
+        desiredContractType: [null],
+        desiredPosition: [null],
+        desiredCompanyType: [null],
+        desiredSector: [null],
       },
       {
         validator: this.confirmationPasswordValidator(
@@ -319,6 +294,26 @@ export class SignUpComponent implements OnInit, AfterViewInit {
       : control.value.trim().length >= PASSWORD_MIN_LENGTH
       ? null
       : { minLength: { value: control.value } };
+
+  private loadDynamicData(): void {
+    // Charger les work modes (depuis JobType avec filtre)
+    this.workModes$ = this.authenticationService.getJobTypes({
+      input: { limit: 100, page: 1 },
+      filter: { status: 'public' }
+    });
+
+    // Charger les job types (types de contrat)
+    this.jobTypes$ = this.authenticationService.getJobTypes({
+      input: { limit: 100, page: 1 },
+      filter: { status: 'public' }
+    });
+
+    // Charger les catégories
+    this.categories$ = this.authenticationService.getCategories({
+      input: { limit: 100, page: 1 },
+      filter: { status: 'public' }
+    });
+  }
 
   // captcha method
 

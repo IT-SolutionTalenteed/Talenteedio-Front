@@ -5,4 +5,6 @@ import { Credentials } from '../types/credentials.interface';
 export interface AuthenticationServiceInterface {
     logIn(credentials: Credentials): Observable<AuthenticationResponse>;
     refreshToken(credentials: string): Observable<AuthenticationResponse>;
+    getJobTypes(props: any): Observable<any[]>;
+    getCategories(props: any): Observable<any[]>;
 }
