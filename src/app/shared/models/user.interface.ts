@@ -23,7 +23,6 @@ export interface User {
   referral?: Referral;
   recruiter?: Recruiter;
   company?: Company;
-  freelance?: any;
   consultant?: any;
   articles: Article[];
   isVerified: boolean;

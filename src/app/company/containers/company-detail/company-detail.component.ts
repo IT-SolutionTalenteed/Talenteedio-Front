@@ -16,7 +16,6 @@ export class CompanyDetailComponent implements OnInit {
   events$: Observable<any[]>;
   articles$: Observable<any[]>;
   jobs$: Observable<any[]>;
-  freelanceJobs$: Observable<any[]>;
   
   loading = true;
   error: string = null;
@@ -90,6 +89,5 @@ export class CompanyDetailComponent implements OnInit {
     this.events$ = this.companyService.loadCompanyEvents(companyId);
     this.articles$ = this.companyService.loadCompanyArticles(companyId);
     this.jobs$ = this.companyService.loadCompanyJobs(companyId);
-    this.freelanceJobs$ = this.companyService.loadCompanyFreelanceJobs(companyId);
   }
 }

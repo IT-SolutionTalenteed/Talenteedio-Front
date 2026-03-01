@@ -1,6 +1,14 @@
 <div class="dashboard-container">
-  <app-company-profile-form
-    [user]="currentUser$ | async"
-    (save)="onSave($event)"
-  ></app-company-profile-form>
+  <div class="row">
+    <div class="col-12 mb-4">
+      <app-company-profile-form
+        [user]="currentUser$ | async"
+        (save)="onSave($event)"
+      ></app-company-profile-form>
+    </div>
+    
+    <div class="col-12">
+      <app-matching-history></app-matching-history>
+    </div>
+  </div>
 </div>

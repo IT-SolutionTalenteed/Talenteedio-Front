@@ -2,7 +2,6 @@ import { Job } from '../../shared/models/job.interface';
 
 export enum FavoriteType {
   JOB = 'job',
-  FREELANCE = 'freelance',
 }
 
 export interface Favorite {

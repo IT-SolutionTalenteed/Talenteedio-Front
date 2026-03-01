@@ -22,15 +22,6 @@
       <fa-icon [icon]="faBriefcase"></fa-icon>
       Emplois
     </button>
-    <button
-      class="tab"
-      [class.active]="selectedType === FavoriteType.FREELANCE"
-      (click)="filterByType(FavoriteType.FREELANCE)"
-      type="button"
-    >
-      <fa-icon [icon]="faLaptop"></fa-icon>
-      Freelance
-    </button>
   </div>
 
   <div class="favorites-content">
@@ -57,7 +48,7 @@
             size="small"
           ></app-favorite-button>
           <span class="type-badge" [class.job]="favorite.type === FavoriteType.JOB">
-            {{ favorite.type === FavoriteType.JOB ? 'Emploi' : 'Freelance' }}
+            Emploi
           </span>
         </div>
 

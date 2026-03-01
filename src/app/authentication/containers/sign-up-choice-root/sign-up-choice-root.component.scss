@@ -75,7 +75,7 @@ $border-color: #E8EAED;
     .logo-circle {
       width: 56px;
       height: 56px;
-      background: linear-gradient(135deg, #eb5432 0%, #ec4c28 100%);
+      background: linear-gradient(135deg, #eb5432 0%, $secondary-hover 100%);
       border-radius: $border-radius-md;
       display: flex;
       align-items: center;
@@ -88,7 +88,7 @@ $border-color: #E8EAED;
       font-size: 32px;
       font-weight: 700;
       margin: 0;
-      background: linear-gradient(135deg, #eb5432 0%, #ec4c28 100%);
+      background: linear-gradient(135deg, #eb5432 0%, $secondary-hover 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -159,7 +159,7 @@ $border-color: #E8EAED;
     box-shadow: $shadow-lg;
 
     &::before {
-      background: linear-gradient(90deg, #eb5432, #ec4c28);
+      background: linear-gradient(90deg, #eb5432, $secondary-hover);
     }
 
     .card-icon {
@@ -386,7 +386,7 @@ $border-color: #E8EAED;
   .stat-number {
     font-size: 36px;
     font-weight: 700;
-    background: linear-gradient(135deg, #eb5432 0%, #ec4c28 100%);
+    background: linear-gradient(135deg, #eb5432 0%, $secondary-hover 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

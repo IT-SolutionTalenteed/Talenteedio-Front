@@ -26,4 +26,16 @@ export interface Company {
   city?: string;
   state?: string;
   country?: string;
+  // Nouveaux champs
+  industry?: string;
+  sector?: string;
+  companySize?: string;
+  numberOfEmployees?: number;
+  foundedYear?: number;
+  profileSought?: string;
+  positionsToFill?: string;
+  requiredSkills?: string;
+  requiredExperience?: string;
+  contractTypes?: string;
+  workingHours?: string;
 }

@@ -1,0 +1,67 @@
+// Hero Sections - Style global avec fond personnalisé
+// Ce fichier définit le style commun pour toutes les hero-sections du site
+
+@import './colors.scss';
+
+// Mixin pour les hero-sections avec le fond personnalisé
+@mixin hero-section-background {
+  position: relative;
+  background-image: url('/assets/img/hero.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  // S'assurer que le contenu est au-dessus
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Style de base pour toutes les hero-sections
+.hero-section {
+  @include hero-section-background;
+  padding: 100px 20px 80px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // Responsive
+  @media screen and (max-width: 768px) {
+    padding: 60px 20px 40px;
+    min-height: 300px;
+  }
+}
+
+// Variantes pour différents types de hero-sections
+.hero-section--home {
+  // Pas de background image pour la page home
+  background-image: none !important;
+  background: linear-gradient(135deg, $deep-blue 0%, lighten($deep-blue, 10%) 100%);
+  
+  min-height: 500px;
+  padding-top: 60px;
+  
+  @media screen and (max-width: 768px) {
+    min-height: 400px;
+  }
+}
+
+.hero-section--compact {
+  min-height: 300px;
+  padding: 60px 20px 40px;
+  
+  @media screen and (max-width: 768px) {
+    min-height: 250px;
+    padding: 40px 20px 30px;
+  }
+}
+
+.hero-section--full {
+  min-height: 600px;
+  
+  @media screen and (max-width: 768px) {
+    min-height: 450px;
+  }
+}

@@ -184,6 +184,61 @@ export class AuthenticationService implements AuthenticationServiceInterface {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getJobTypes(props: any): Observable<any[]> {
+    return (
+      this.apollo
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .query<any>({
+          query: gql`
+            query GetJobTypes($input: PaginationInput, $filter: JobTypeFilter) {
+              getJobTypes(input: $input, filter: $filter) {
+                rows {
+                  id
+                  name
+                  status
+                }
+              }
+            }
+          `,
+          variables: props,
+          fetchPolicy: 'network-only',
+          context: {
+            uri: `${environment.apiBaseUrl}/job-type`,
+          },
+        })
+        .pipe(map((response) => response.data.getJobTypes.rows))
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getCategories(props: any): Observable<any[]> {
+    return (
+      this.apollo
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .query<any>({
+          query: gql`
+            query GetCategories($input: PaginationInput, $filter: CategoryFilter) {
+              getCategories(input: $input, filter: $filter) {
+                rows {
+                  id
+                  name
+                  slug
+                  status
+                }
+              }
+            }
+          `,
+          variables: props,
+          fetchPolicy: 'network-only',
+          context: {
+            uri: `${environment.apiBaseUrl}/category`,
+          },
+        })
+        .pipe(map((response) => response.data.getCategories.rows))
+    );
+  }
+
   // eslint-disable-next-line max-lines-per-function, @typescript-eslint/no-explicit-any
   uploadMedia(file: any, type = 'image'): Observable<any> {
     const method = type === 'image' ? 'uploadImage' : 'uploadPdf';

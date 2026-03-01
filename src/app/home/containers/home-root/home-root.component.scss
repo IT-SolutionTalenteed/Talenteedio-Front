@@ -324,20 +324,21 @@ $border-color: #E8EAED;
       transition: $transition;
     }
 
+    // Couleurs assignées aux service-cards selon la palette
     &.card-jobs {
-      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-    }
-
-    &.card-missions {
-      background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+      background: linear-gradient(135deg, #040a5d 0%, #192bc2 100%);
     }
 
     &.card-voice {
-      background: linear-gradient(135deg, #F7B731 0%, #F79F1F 100%);
+      background: linear-gradient(135deg, #192bc2 0%, #2687e9 100%);
     }
 
     &.card-coaching {
-      background: linear-gradient(135deg, #A8E6CF 0%, #7FB069 100%);
+      background: linear-gradient(135deg, #2687e9 0%, #5ba3f0 100%);
+    }
+
+    &.card-matching {
+      background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
     }
   }
 }
@@ -859,7 +860,7 @@ $border-color: #E8EAED;
     padding: 0 20px;
 
     .view-more-button {
-      background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
       color: white;
       border: none;
       padding: 16px 40px;

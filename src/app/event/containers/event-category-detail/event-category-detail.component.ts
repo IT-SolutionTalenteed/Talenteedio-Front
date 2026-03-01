@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { SubSink } from 'subsink';
 import { Event } from 'src/app/shared/models/event.interface';
@@ -21,13 +22,16 @@ export class EventCategoryDetailComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSize = 12;
   totalEvents = 0;
+  safeVideoUrl: SafeResourceUrl | null = null;
+  currentGalleryIndex = 0;
   
   subs = new SubSink();
 
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private eventService: EventService
+    private eventService: EventService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -49,6 +53,10 @@ export class EventCategoryDetailComponent implements OnInit, OnDestroy {
         this.loading = false;
         
         if (this.category) {
+          // Sanitize video URL if exists
+          if (this.category.video) {
+            this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.category.video);
+          }
           this.loadEvents();
         }
       },
@@ -92,6 +100,28 @@ export class EventCategoryDetailComponent implements OnInit, OnDestroy {
     this.pageSize = page.pageSize;
     this.loadEvents();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  isVideoUrl(url: string): boolean {
+    return url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com');
+  }
+
+  nextGalleryImage() {
+    if (this.category?.gallery && this.category.gallery.length > 0) {
+      this.currentGalleryIndex = (this.currentGalleryIndex + 1) % this.category.gallery.length;
+    }
+  }
+
+  prevGalleryImage() {
+    if (this.category?.gallery && this.category.gallery.length > 0) {
+      this.currentGalleryIndex = this.currentGalleryIndex === 0 
+        ? this.category.gallery.length - 1 
+        : this.currentGalleryIndex - 1;
+    }
+  }
+
+  goToGalleryImage(index: number) {
+    this.currentGalleryIndex = index;
   }
 
   ngOnDestroy() {

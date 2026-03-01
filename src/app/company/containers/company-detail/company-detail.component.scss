@@ -71,7 +71,7 @@ $max-width: 1200px;
 
   .error-button {
     padding: 14px 28px;
-    background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
     color: white;
     border: none;
     border-radius: $border-radius-md;
@@ -90,7 +90,7 @@ $max-width: 1200px;
 
 // Hero Section (Original Style)
 .hero-section {
-  background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+  background: linear-gradient(135deg, $deep-blue 0%, lighten($deep-blue, 10%) 100%);
   padding: 60px 20px;
   position: relative;
   overflow: hidden;
@@ -361,7 +361,7 @@ $max-width: 1200px;
         top: 12px;
         left: 12px;
         padding: 6px 12px;
-        background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+        background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
         color: white;
         border-radius: 20px;
         font-size: 11px;
@@ -519,7 +519,7 @@ $max-width: 1200px;
         left: 16px;
         width: 64px;
         height: 64px;
-        background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+        background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
         border-radius: $border-radius-sm;
         display: flex;
         flex-direction: column;
@@ -646,7 +646,7 @@ $max-width: 1200px;
             width: 36px;
             height: 36px;
             border-radius: 8px;
-            background: linear-gradient(135deg, rgba($secondary, 0.1) 0%, rgba(#ff8c6b, 0.1) 100%);
+            background: linear-gradient(135deg, rgba($secondary, 0.1) 0%, rgba(lighten($secondary, 10%), 0.1) 100%);
             border: 2px solid white;
             display: flex;
             align-items: center;
@@ -860,7 +860,7 @@ $max-width: 1200px;
       width: 80px;
       height: 80px;
       margin: 0 auto 20px;
-      background: linear-gradient(135deg, rgba($secondary, 0.1) 0%, rgba(#ff8c6b, 0.1) 100%);
+      background: linear-gradient(135deg, rgba($secondary, 0.1) 0%, rgba(lighten($secondary, 10%), 0.1) 100%);
       border-radius: $border-radius-md;
       display: flex;
       align-items: center;
@@ -885,7 +885,7 @@ $max-width: 1200px;
     .cta-button {
       width: 100%;
       padding: 16px 24px;
-      background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
       color: white;
       border: none;
       border-radius: $border-radius-md;
@@ -903,6 +903,178 @@ $max-width: 1200px;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba($secondary, 0.4);
       }
+    }
+  }
+}
+
+// Company Slogan
+.company-slogan {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 12px 0 16px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+// Info Card (Sidebar)
+.info-card {
+  .sidebar-info-value {
+    &.social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        transition: $transition;
+        
+        &.linkedin {
+          background: #0077B5;
+          color: white;
+          
+          &:hover {
+            background: darken(#0077B5, 10%);
+            transform: translateY(-2px);
+          }
+        }
+        
+        &.twitter {
+          background: #1DA1F2;
+          color: white;
+          
+          &:hover {
+            background: darken(#1DA1F2, 10%);
+            transform: translateY(-2px);
+          }
+        }
+        
+        &.facebook {
+          background: #1877F2;
+          color: white;
+          
+          &:hover {
+            background: darken(#1877F2, 10%);
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Recruitment Card
+.recruitment-card {
+  background: white;
+  border-radius: $border-radius-lg;
+  padding: 32px;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-color;
+  margin-bottom: 32px;
+  transition: $transition;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  .recruitment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .recruitment-item {
+    padding: 20px;
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+    border-radius: $border-radius-md;
+    border: 1px solid $border-color;
+    transition: $transition;
+
+    &:hover {
+      border-color: $secondary;
+      box-shadow: 0 4px 12px rgba($secondary, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .recruitment-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-color;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      svg {
+        color: $secondary;
+        flex-shrink: 0;
+      }
+    }
+
+    .recruitment-value {
+      font-size: 16px;
+      color: $black;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .company-slogan {
+    font-size: 16px;
+  }
+
+  .recruitment-card {
+    padding: 24px;
+
+    .recruitment-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .recruitment-item {
+      padding: 16px;
+    }
+  }
+
+  .info-card {
+    .sidebar-info-value.social-links {
+      justify-content: flex-start;
+    }
+  }
+}
+
+// Contract Types Badges
+.contract-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+
+  .contract-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba($secondary, 0.2);
+    transition: $transition;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($secondary, 0.3);
     }
   }
 }

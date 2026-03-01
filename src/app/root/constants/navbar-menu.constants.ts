@@ -1,4 +1,5 @@
 import { Menu } from '../types/menu.interface';
+import { RoleName } from 'src/app/shared/models/role.interface';
 
 export const NAVAR_MENUS: Menu[] = [
   {
@@ -23,12 +24,6 @@ export const NAVAR_MENUS: Menu[] = [
         routerLink: '/job',
         icon: 'briefcase',
         description: 'Plus de 1000 opportunités à saisir !'
-      },
-      {
-        title: 'Missions Freelance',
-        routerLink: '/freelance',
-        icon: 'laptop',
-        description: 'Trouvez votre prochaine mission'
       },
       {
         title: 'Recherchez une entreprise',
@@ -60,6 +55,14 @@ export const NAVAR_MENUS: Menu[] = [
     routerLink: '/blog',
     parentRouterLink: '/blog',
     accessRight: 'ALL',
+    color: '#696969',
+    colorActive: '#6bbee3',
+  },
+  {
+    title: 'Matching Profile',
+    routerLink: '/matching-profile',
+    parentRouterLink: '/matching-profile',
+    accessRight: [RoleName.TALENT],
     color: '#696969',
     colorActive: '#6bbee3',
   },

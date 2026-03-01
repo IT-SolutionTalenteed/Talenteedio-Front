@@ -46,7 +46,7 @@
             placeholder="Nom de votre entreprise">
         </div>
 
-        <div class="form-group" *ngIf="registerForm.get('role')?.value === 'talent' || registerForm.get('role')?.value === 'freelance'">
+        <div class="form-group" *ngIf="registerForm.get('role')?.value === 'talent'">
           <label>Compétences *</label>
           <p class="help-text">Vous pourrez sélectionner vos compétences après l'inscription</p>
         </div>

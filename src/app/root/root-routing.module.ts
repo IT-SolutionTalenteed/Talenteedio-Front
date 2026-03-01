@@ -82,13 +82,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'freelance',
-        loadChildren: () =>
-          import('../freelance/freelance.module').then(
-            (m) => m.FreelanceModule
-          ),
-      },
-      {
         path: 'companies',
         loadChildren: () =>
           import('../company/company.module').then(
@@ -110,6 +103,14 @@ const routes: Routes = [
             (m) => m.CoachingEmploiModule
           ),
         data: { title: 'Coaching' },
+      },
+      {
+        path: 'matching-profile',
+        loadChildren: () =>
+          import('../matching-profile/matching-profile.module').then(
+            (m) => m.MatchingProfileModule
+          ),
+        data: { title: 'Matching Profile' },
       },
     ],
   },

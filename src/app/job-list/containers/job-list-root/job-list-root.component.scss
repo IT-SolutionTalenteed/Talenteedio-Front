@@ -37,7 +37,7 @@ $border-color: #E8EAED;
     line-height: 1.2;
 
     .accent {
-      background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -65,32 +65,10 @@ $border-color: #E8EAED;
 
   // Hero Section
   .hero-section {
-    background: linear-gradient(135deg, #f1755a 0%, #ff8c6b 100%);
+    // Les styles de background sont définis globalement dans hero-sections.scss
     padding: 100px 20px 80px;
     position: relative;
     overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -5%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-      border-radius: 50%;
-    }
 
     @media screen and (max-width: 768px) {
       padding: 80px 20px 60px;

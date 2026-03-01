@@ -19,7 +19,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, $secondary 0%, #ff8c6b 100%);
+    background: linear-gradient(90deg, $secondary 0%, lighten($secondary, 10%) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -129,7 +129,7 @@
           transition: all 0.3s ease;
           
           &:hover {
-            background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+            background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(241, 117, 90, 0.3);

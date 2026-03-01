@@ -39,7 +39,7 @@
         content: '';
         width: 3px;
         height: 16px;
-        background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+        background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
         border-radius: 2px;
       }
     }
@@ -139,7 +139,7 @@
           }
           
           input[type="radio"]:checked + label::before {
-            background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+            background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
             border-color: $secondary;
             box-shadow: 0 2px 8px rgba(241, 117, 90, 0.3);
           }
@@ -288,7 +288,7 @@
         button {
           width: 100%;
           padding: 16px 24px;
-          background: linear-gradient(135deg, $secondary 0%, #ff8c6b 100%);
+          background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
           border: none;
           border-radius: 12px;
           color: white;

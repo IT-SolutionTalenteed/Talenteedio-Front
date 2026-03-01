@@ -1,0 +1,140 @@
+<div class="matching-history-container">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Mon Historique</h3>
+        <button class="btn btn-primary" (click)="startNewMatching()">
+          <i class="fas fa-plus me-2"></i>Nouveau Matching
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+          <a 
+            class="nav-link" 
+            [class.active]="activeTab === 'matchings'"
+            (click)="activeTab = 'matchings'">
+            <i class="fas fa-users me-2"></i>Matchings ({{ matchingProfiles.length }})
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link" 
+            [class.active]="activeTab === 'appointments'"
+            (click)="activeTab = 'appointments'">
+            <i class="fas fa-calendar me-2"></i>Rendez-vous ({{ appointments.length }})
+          </a>
+        </li>
+      </ul>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+      </div>
+
+      <!-- Matchings Tab -->
+      <div *ngIf="activeTab === 'matchings' && !loading">
+        <div *ngIf="matchingProfiles.length === 0" class="empty-state text-center py-5">
+          <i class="fas fa-search fa-3x text-muted mb-3"></i>
+          <h4>Aucun matching pour le moment</h4>
+          <p class="text-muted">Commencez votre premier matching pour découvrir les entreprises qui correspondent à votre profil.</p>
+          <button class="btn btn-primary mt-3" (click)="startNewMatching()">
+            Démarrer un matching
+          </button>
+        </div>
+
+        <div *ngIf="matchingProfiles.length > 0" class="matching-list">
+          <div *ngFor="let profile of matchingProfiles" class="matching-item card mb-3">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h5 class="mb-2">{{ profile.title }}</h5>
+                  <div class="matching-meta">
+                    <span class="badge me-2" [ngClass]="getStatusClass(profile.status)">
+                      {{ getStatusLabel(profile.status) }}
+                    </span>
+                    <span class="text-muted">
+                      <i class="fas fa-calendar me-1"></i>
+                      {{ profile.createdAt | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <span class="text-muted ms-3" *ngIf="profile.matchCount">
+                      <i class="fas fa-building me-1"></i>
+                      {{ profile.matchCount }} entreprise(s) matchée(s)
+                    </span>
+                  </div>
+                  <div class="mt-2" *ngIf="profile.skills && profile.skills.length > 0">
+                    <span *ngFor="let skill of profile.skills.slice(0, 5)" class="badge bg-light text-dark me-1">
+                      {{ skill }}
+                    </span>
+                    <span *ngIf="profile.skills.length > 5" class="text-muted">
+                      +{{ profile.skills.length - 5 }} autres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-4 text-end">
+                  <button class="btn btn-outline-primary" (click)="viewMatching(profile.id)">
+                    <i class="fas fa-eye me-2"></i>Voir les résultats
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointments Tab -->
+      <div *ngIf="activeTab === 'appointments' && !loading">
+        <div *ngIf="appointments.length === 0" class="empty-state text-center py-5">
+          <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+          <h4>Aucun rendez-vous planifié</h4>
+          <p class="text-muted">Vos rendez-vous avec les entreprises apparaîtront ici.</p>
+        </div>
+
+        <div *ngIf="appointments.length > 0" class="appointments-list">
+          <div *ngFor="let appointment of appointments" class="appointment-item card mb-3">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h5 class="mb-2">{{ appointment.company?.name || 'Entreprise' }}</h5>
+                  <div class="appointment-meta">
+                    <span class="badge me-2" [ngClass]="getAppointmentStatusClass(appointment.status)">
+                      {{ getAppointmentStatusLabel(appointment.status) }}
+                    </span>
+                    <span class="text-muted">
+                      <i class="fas fa-calendar me-1"></i>
+                      {{ appointment.scheduledAt | date: 'dd/MM/yyyy à HH:mm' }}
+                    </span>
+                  </div>
+                  <p class="mt-2 mb-0 text-muted" *ngIf="appointment.notes">
+                    {{ appointment.notes }}
+                  </p>
+                </div>
+                <div class="col-md-4 text-end">
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-primary" *ngIf="appointment.meetingLink" 
+                            [attr.href]="appointment.meetingLink" target="_blank">
+                      <i class="fas fa-video me-1"></i>Rejoindre
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ import { FavoriteType } from '../../types/favorite.interface';
 })
 export class FavoriteButtonComponent implements OnInit, OnDestroy {
   @Input() itemId!: string;
-  @Input() type!: FavoriteType | 'job' | 'freelance';
+  @Input() type!: FavoriteType | 'job';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   isFavorite = false;
