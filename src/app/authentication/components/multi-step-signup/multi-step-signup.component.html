@@ -1,0 +1,653 @@
+<div class="multi-step-signup-container">
+  
+  <!-- STEP 1: Formulaire d'inscription -->
+  <div class="step-content" *ngIf="currentStep === 'form'">
+    <div class="signup-header">
+      <h1 class="signup-title">Créer un compte</h1>
+      <p class="signup-subtitle">Rejoignez notre communauté</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegistration()">
+      
+      <!-- Profile Picture -->
+      <div class="profile-picture-section">
+        <label class="section-label">Ajouter la photo</label>
+        <p class="section-hint">Formats acceptés: JPG, PNG, GIF (max 5MB)</p>
+        <app-profile-picture-upload
+          [currentPictureUrl]="profilePictureUrl"
+          (pictureChanged)="onProfilePictureChanged($event)"
+          (pictureRemoved)="onProfilePictureRemoved()"
+        ></app-profile-picture-upload>
+      </div>
+
+      <!-- Name Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstname" class="form-label">First Name</label>
+          <input
+            id="firstname"
+            formControlName="firstname"
+            placeholder="Enter your first name"
+            type="text"
+            class="form-input"
+            [class.error]="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched"
+          />
+          <div class="error-message" *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched">
+            <span>First name is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastname" class="form-label">Last Name</label>
+          <input
+            id="lastname"
+            formControlName="lastname"
+            placeholder="Enter your last name"
+            type="text"
+            class="form-input"
+            [class.error]="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched"
+          />
+          <div class="error-message" *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched">
+            <span>Last name is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email & Phone -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          id="email"
+          formControlName="email"
+          placeholder="your.email@example.com"
+          type="email"
+          class="form-input"
+          [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+        />
+        <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone Number</label>
+        <angular-intl-phone formControlName="phone" [config]="config" />
+        <div class="error-message" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+          <span>Phone number is required</span>
+        </div>
+      </div>
+
+      <!-- Professional Information -->
+      <div class="section-title">Professional Information (Optional)</div>
+      
+      <div class="form-group">
+        <label for="values" class="form-label">Values (Optional)</label>
+        <ng-select
+          formControlName="values"
+          [items]="values$ | async"
+          bindLabel="title"
+          bindValue="id"
+          placeholder="Select values"
+          [multiple]="true"
+          class="custom-select"
+        ></ng-select>
+      </div>
+
+      <div class="form-group">
+        <label for="cv" class="form-label">CV (PDF) - Optional</label>
+        <div class="file-upload-wrapper">
+          <label for="cv" class="file-upload-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M9 16H15V10H19L12 3L5 10H9V16ZM5 18H19V20H5V18Z" fill="currentColor"/>
+            </svg>
+            Choose File
+          </label>
+          <span class="file-upload-text">{{ registerForm.controls["cv"].value ?? "No file chosen" }}</span>
+          <input
+            type="file"
+            id="cv"
+            (change)="onCvChange($event)"
+            accept=".pdf"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="yearsOfExperience" class="form-label">Years of Experience</label>
+          <input
+            id="yearsOfExperience"
+            formControlName="yearsOfExperience"
+            type="number"
+            placeholder="e.g., 5"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="competences" class="form-label">Skills</label>
+          <input
+            id="competences"
+            formControlName="competences"
+            type="text"
+            placeholder="JavaScript, React, Node.js..."
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="languages" class="form-label">Languages</label>
+          <input
+            id="languages"
+            formControlName="languages"
+            type="text"
+            placeholder="French (native), English (fluent)..."
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="formations" class="form-label">Education</label>
+          <input
+            id="formations"
+            formControlName="formations"
+            type="text"
+            placeholder="Master in Computer Science..."
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="interests" class="form-label">Interests</label>
+        <textarea
+          id="interests"
+          formControlName="interests"
+          placeholder="Open source, AI, Blockchain..."
+          class="form-input"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <!-- Salary & Compensation -->
+      <div class="section-title">Salary & Compensation (Optional)</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tjm" class="form-label">TJM (€)</label>
+          <input
+            id="tjm"
+            formControlName="tjm"
+            type="number"
+            placeholder="Daily rate"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="annualSalary" class="form-label">Annual Salary/12</label>
+          <input
+            id="annualSalary"
+            formControlName="annualSalary"
+            type="number"
+            placeholder="Monthly salary"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="salaryRange" class="form-label">Desired Salary Range</label>
+        <input
+          id="salaryRange"
+          formControlName="salaryRange"
+          type="text"
+          placeholder="45000-55000 €"
+          class="form-input"
+        />
+      </div>
+
+      <!-- Location -->
+      <div class="section-title">Location (Optional)</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="country" class="form-label">Country</label>
+          <input
+            id="country"
+            formControlName="country"
+            type="text"
+            placeholder="France"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="city" class="form-label">City</label>
+          <input
+            id="city"
+            formControlName="city"
+            type="text"
+            placeholder="Paris"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address" class="form-label">Address</label>
+          <input
+            id="address"
+            formControlName="address"
+            type="text"
+            placeholder="123 Rue de la Paix"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="postalCode" class="form-label">Postal Code</label>
+          <input
+            id="postalCode"
+            formControlName="postalCode"
+            type="text"
+            placeholder="75001"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <!-- Job Preferences -->
+      <div class="section-title">Job Preferences (Optional)</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="desiredPosition" class="form-label">Desired Position</label>
+          <input
+            id="desiredPosition"
+            formControlName="desiredPosition"
+            type="text"
+            placeholder="Full Stack Developer Senior"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="desiredContractType" class="form-label">Contract Type</label>
+          <ng-select
+            formControlName="desiredContractType"
+            [items]="jobTypes$ | async"
+            bindLabel="name"
+            bindValue="name"
+            placeholder="Select contract type"
+            class="custom-select"
+          ></ng-select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="desiredCompanyType" class="form-label">Company Type</label>
+          <input
+            id="desiredCompanyType"
+            formControlName="desiredCompanyType"
+            type="text"
+            placeholder="Startup, Scale-up..."
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="desiredSector" class="form-label">Sector</label>
+          <input
+            id="desiredSector"
+            formControlName="desiredSector"
+            type="text"
+            placeholder="Tech, FinTech..."
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mobility" class="form-label">Mobility</label>
+          <input
+            id="mobility"
+            formControlName="mobility"
+            type="text"
+            placeholder="France, Europe..."
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="desiredWorkLocation" class="form-label">Desired Work Location</label>
+          <input
+            id="desiredWorkLocation"
+            formControlName="desiredWorkLocation"
+            type="text"
+            placeholder="Paris or Remote..."
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="availabilityDate" class="form-label">Availability Date</label>
+          <input
+            id="availabilityDate"
+            formControlName="availabilityDate"
+            type="date"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="workMode" class="form-label">Work Mode</label>
+          <ng-select
+            formControlName="workMode"
+            [items]="workModes$ | async"
+            bindLabel="name"
+            bindValue="name"
+            placeholder="Select work mode"
+            class="custom-select"
+          ></ng-select>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="password-wrapper">
+          <input
+            #password
+            id="password"
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter your password"
+            class="form-input"
+            [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          />
+          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+            <svg *ngIf="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+            </svg>
+            <svg *ngIf="showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 6 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="password-wrapper">
+          <input
+            #confirmPassword
+            id="confirmPassword"
+            formControlName="confirmationPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            placeholder="Confirm your password"
+            class="form-input"
+            [class.error]="registerForm.get('confirmationPassword')?.invalid && registerForm.get('confirmationPassword')?.touched"
+          />
+          <button type="button" class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
+            <svg *ngIf="!showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
+            </svg>
+            <svg *ngIf="showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('confirmationPassword')?.invalid && registerForm.get('confirmationPassword')?.touched">
+          <span *ngIf="registerForm.get('confirmationPassword')?.errors?.['required']">Please confirm your password</span>
+          <span *ngIf="registerForm.get('confirmationPassword')?.errors?.['mustMatch']">Passwords must match</span>
+        </div>
+      </div>
+
+      <!-- Consent -->
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="consent" class="checkbox-input" />
+          <span class="checkbox-text">
+            J'accepte les <a [href]="consentLink" target="_blank">conditions d'utilisation</a>
+          </span>
+        </label>
+        <div class="error-message" *ngIf="registerForm.get('consent')?.invalid && registerForm.get('consent')?.touched">
+          <span>Vous devez accepter les conditions</span>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-button" [disabled]="registerForm.invalid || (loading$ | async)">
+        <span *ngIf="!(loading$ | async)">Créer mon compte et trouver des opportunités</span>
+        <span *ngIf="loading$ | async">Création en cours...</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- STEP 2: Introduction au matching -->
+  <div class="step-content intro-step" *ngIf="currentStep === 'intro'">
+    <div class="intro-container">
+      <div class="intro-icon">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+          <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      
+      <h1 class="intro-title">Trouvez les entreprises qui correspondent à votre profil</h1>
+      <p class="intro-description">
+        Notre algorithme d'IA analyse votre profil et vos compétences pour vous mettre en relation avec les meilleures opportunités.
+      </p>
+
+      <div class="intro-steps">
+        <div class="intro-step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Nouveau Matching</h3>
+            <p>Résultats</p>
+            <span class="step-subtitle">Découvrez vos matchs</span>
+          </div>
+        </div>
+
+        <div class="intro-step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Rendez-vous</h3>
+            <span class="step-subtitle">Planifiez vos entretiens</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-loader">
+        <div class="loader-spinner"></div>
+        <p>Préparation du matching...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Matching en cours -->
+  <div class="step-content matching-step" *ngIf="currentStep === 'matching'">
+    <div class="matching-container">
+      <div class="matching-icon">
+        <svg class="spinner" width="80" height="80" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="60" stroke-dashoffset="15"/>
+        </svg>
+      </div>
+      
+      <h2 class="matching-title">Analyse de votre profil</h2>
+      <p class="matching-message">{{ matchingMessage }}</p>
+      
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="matchingProgress"></div>
+      </div>
+      <p class="progress-text">{{ matchingProgress }}%</p>
+    </div>
+  </div>
+
+  <!-- STEP 4: Résultats du matching -->
+  <div class="step-content results-step" *ngIf="currentStep === 'results'">
+    <button class="back-button-top" (click)="skipMatching()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
+
+    <div class="results-header-new">
+      <div class="sparkle-icon">✨</div>
+      <h1 class="results-title-new">Vos entreprises matchées</h1>
+      <p class="results-subtitle-new">Découvrez les entreprises qui correspondent le mieux à votre profil</p>
+      
+      <div class="results-stats">
+        <div class="stat-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M19 21V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V21M19 21H21M19 21H14M5 21H3M5 21H10M10 21V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V21M10 21H14M9 7H10M9 11H10M14 7H15M14 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>🏢 {{ matchingResults.length }} Entreprises trouvées</span>
+        </div>
+        <div class="stat-badge selected" *ngIf="selectedCompanies.size > 0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>✓ {{ selectedCompanies.size }} Sélectionnée{{ selectedCompanies.size > 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-list-new">
+      <div 
+        class="company-card-new" 
+        *ngFor="let company of matchingResults"
+        [class.selected]="isCompanySelected(company.companyId)"
+        (click)="toggleCompanySelection(company.companyId)"
+      >
+        <div class="company-card-header">
+          <div class="company-logo-wrapper">
+            <img *ngIf="company.companyLogo" [src]="company.companyLogo" [alt]="company.companyName" class="company-logo-img" />
+            <div *ngIf="!company.companyLogo" class="company-logo-placeholder-new">
+              {{ company.companyName.charAt(0) }}
+            </div>
+          </div>
+
+          <div class="company-info-wrapper">
+            <h3 class="company-name-new">{{ company.companyName }}</h3>
+            <p class="company-sector-new">{{ company.companySector }}</p>
+          </div>
+
+          <div class="selection-indicator" *ngIf="isCompanySelected(company.companyId)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
+            </svg>
+            <span>Sélectionnée</span>
+          </div>
+        </div>
+
+        <div class="match-score-new" [class.high-match]="company.matchPercentage >= 70" [class.medium-match]="company.matchPercentage >= 50 && company.matchPercentage < 70">
+          <span class="match-percentage-new">{{ company.matchPercentage }}%</span>
+          <span class="match-label-new">Match</span>
+        </div>
+
+        <button 
+          class="select-button" 
+          [class.selected]="isCompanySelected(company.companyId)"
+          (click)="toggleCompanySelection(company.companyId); $event.stopPropagation()"
+        >
+          {{ isCompanySelected(company.companyId) ? 'Sélectionnée' : 'Sélectionner' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="results-actions-new">
+      <button class="secondary-button-new" (click)="restartMatching()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4V9H4.58152M19.9381 11C19.446 7.05369 16.0796 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9M4.58152 9H9M20 20V15H19.4185M19.4185 15C18.2317 17.9318 15.3574 20 12 20C7.92038 20 4.55399 16.9463 4.06189 13M19.4185 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Relancer le matching
+      </button>
+      
+      <button 
+        class="primary-button-new" 
+        [disabled]="selectedCompanies.size === 0"
+        (click)="continueToAppointments()"
+      >
+        Continuer vers les rendez-vous
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Réservation d'entretien -->
+  <div class="step-content appointment-step" *ngIf="currentStep === 'appointment' && selectedCompany">
+    <button class="back-button" (click)="backToResults()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour aux résultats
+    </button>
+
+    <div class="appointment-header">
+      <div class="company-logo-large">
+        <img *ngIf="selectedCompany.companyLogo" [src]="selectedCompany.companyLogo" [alt]="selectedCompany.companyName" />
+        <div *ngIf="!selectedCompany.companyLogo" class="company-logo-placeholder-large">
+          {{ selectedCompany.companyName.charAt(0) }}
+        </div>
+      </div>
+      <h1 class="appointment-title">{{ selectedCompany.companyName }}</h1>
+      <div class="match-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ selectedCompany.matchPercentage }}% de compatibilité
+      </div>
+    </div>
+
+    <div class="appointment-content">
+      <div class="recommendation-box">
+        <h3>Pourquoi cette entreprise ?</h3>
+        <p>{{ selectedCompany.recommendation }}</p>
+      </div>
+
+      <div class="jobs-list">
+        <h3>Postes disponibles</h3>
+        <div class="job-item" *ngFor="let job of selectedCompany.matchingJobs">
+          <div class="job-item-header">
+            <h4>{{ job.jobTitle }}</h4>
+            <span class="job-match-badge">{{ job.matchPercentage }}% match</span>
+          </div>
+          
+          <div class="job-strengths" *ngIf="job.strengths.length > 0">
+            <p><strong>Vos atouts pour ce poste :</strong></p>
+            <ul>
+              <li *ngFor="let strength of job.strengths.slice(0, 3)">{{ strength }}</li>
+            </ul>
+          </div>
+
+          <button class="book-button" (click)="bookAppointment(job.jobId)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Réserver un entretien
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
