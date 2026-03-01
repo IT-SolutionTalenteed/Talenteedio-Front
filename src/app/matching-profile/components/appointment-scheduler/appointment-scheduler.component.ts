@@ -146,20 +146,10 @@ export class AppointmentSchedulerComponent implements OnInit {
   }
 
   selectTimeSlot(time: string): void {
-    this.form.patchValue({ appointmentTime: time });
-  }
-
-  getAvailableTimeSlotsForDate(): string[] {
-    if (!this.selectedDate) {
-      return this.availableTimeSlots;
+    // Ne permettre la sélection que si le créneau est disponible
+    if (this.isTimeSlotAvailable(time)) {
+      this.form.patchValue({ appointmentTime: time });
     }
-
-    // Filtrer les créneaux déjà réservés pour cette date
-    const bookedSlots = this.appointments
-      .filter(apt => apt.appointmentDate === this.selectedDate && apt.status !== 'CANCELLED')
-      .map(apt => apt.appointmentTime);
-
-    return this.availableTimeSlots.filter(slot => !bookedSlots.includes(slot));
   }
 
   isTimeSlotAvailable(time: string): boolean {

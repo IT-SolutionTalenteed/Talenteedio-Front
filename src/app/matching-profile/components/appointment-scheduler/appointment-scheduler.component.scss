@@ -908,11 +908,20 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+    position: relative;
 
     .slot-duration {
       font-size: 0.625rem;
       color: #9ca3af;
       font-weight: 500;
+    }
+
+    .slot-booked {
+      font-size: 0.625rem;
+      color: #ef4444;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     &:hover:not(:disabled) {
@@ -940,16 +949,31 @@
 
     &.disabled,
     &:disabled {
-      opacity: 0.4;
+      opacity: 0.5;
       cursor: not-allowed;
-      background: #f9fafb;
+      background: repeating-linear-gradient(
+        45deg,
+        #f9fafb,
+        #f9fafb 10px,
+        #f3f4f6 10px,
+        #f3f4f6 20px
+      );
       border-color: #e5e7eb;
       color: #9ca3af;
+
+      .slot-duration {
+        display: none;
+      }
+
+      .slot-booked {
+        color: #ef4444;
+      }
 
       &:hover {
         transform: none;
         box-shadow: none;
         border-color: #e5e7eb;
+        color: #9ca3af;
       }
     }
   }
