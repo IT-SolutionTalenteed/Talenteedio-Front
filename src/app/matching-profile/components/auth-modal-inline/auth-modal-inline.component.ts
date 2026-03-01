@@ -10,6 +10,7 @@ import { Value } from 'src/app/shared/models/value.interface';
 import { PHONE_CONFIG } from 'src/app/authentication/constants/authentication.constant';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { environment } from 'src/environments/environment';
+import { JobType } from 'src/app/shared/models/job.interface';
 
 @Component({
   selector: 'app-auth-modal-inline',
@@ -26,13 +27,16 @@ export class AuthModalInlineComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
   selectedRole: 'talent' | 'company' | null = null;
-  registrationStep: number = 1;
-  maxSteps: number = 2;
+  registrationStep = 1;
+  maxSteps = 2;
   emailError$: Observable<string>;
   loading$: Observable<boolean>;
   values$: Observable<Value[]>;
+  jobTypes$: Observable<JobType[]>;
+  workModes$: Observable<JobType[]>;
   showPassword = false;
   showConfirmPassword = false;
+  consentLink = '/assets/talent_consent.pdf';
 
   // Captcha configuration
   public siteKey = environment.siteKey;
@@ -74,6 +78,8 @@ export class AuthModalInlineComponent implements OnInit {
     this.emailError$ = this.store.select(getEmailErrorMessage);
     this.loading$ = this.store.select(getAuthenticationLoading);
     this.values$ = this.store.select(getValues);
+    this.jobTypes$ = this.authenticationService.getJobTypes({});
+    this.workModes$ = this.authenticationService.getJobTypes({});
   }
 
   ngOnInit(): void {
@@ -89,48 +95,47 @@ export class AuthModalInlineComponent implements OnInit {
     });
 
     this.registerForm = this.fb.group({
-      // Étape 1 - Qui je suis / Qui sommes-nous
+      // Champs de base
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmationPassword: ['', [Validators.required]],
+      role: ['talent'], // Toujours talent par défaut
       
-      // Talent - Qui je suis
-      currentSalary: [''],
-      experience: [''],
-      skills: [''],
-      cv: [''],
+      // Champs professionnels (optionnels)
+      values: [[]],
+      cv: [null],
+      yearsOfExperience: [''],
+      competences: [''],
       languages: [''],
+      formations: [''],
+      interests: [''],
+      
+      // Salaire & Compensation (optionnels)
+      tjm: [''],
+      annualSalary: [''],
+      salaryRange: [''],
+      
+      // Localisation (optionnels)
       country: [''],
       city: [''],
-      education: [''],
+      address: [''],
+      postalCode: [''],
       
-      // Company - Qui sommes-nous
-      companyName: [''],
-      companyLogo: [''],
-      foundedDate: [''],
-      companyCountry: [''],
-      sector: [''],
-      employeeCount: [''],
-      
-      // Étape 2 - Ce que je veux / Ce que nous voulons
-      // Talent - Ce que je veux
-      desiredLocation: [''],
-      desiredSector: [''],
-      interests: [''],
+      // Préférences de poste (optionnels)
       desiredPosition: [''],
-      desiredSalary: [''],
-      availability: [''],
+      desiredContractType: [''],
+      desiredCompanyType: [''],
+      desiredSector: [''],
+      mobility: [''],
+      desiredWorkLocation: [''],
+      availabilityDate: [''],
+      workMode: [''],
       
-      // Company - Ce que nous voulons
-      profileSought: [''],
-      positionsToFill: [''],
-      requiredSkills: [''],
-      requiredExperience: [''],
-      
-      role: ['', [Validators.required]],
+      // Consentement et captcha
+      consent: [false, [Validators.requiredTrue]],
       recaptcha: ['bypass'],
     }, { validators: this.passwordMatchValidator });
   }
@@ -157,6 +162,7 @@ export class AuthModalInlineComponent implements OnInit {
       this.currentView = view;
     }
     
+    this.registrationStep = 1;
     this.store.dispatch(clearError());
     this.loginForm.reset();
     this.registerForm.reset();
@@ -172,17 +178,13 @@ export class AuthModalInlineComponent implements OnInit {
   onChooseTalent(): void {
     this.selectedRole = 'talent';
     this.currentView = 'register';
-    this.registrationStep = 1;
-    this.maxSteps = 2;
     this.registerForm.patchValue({ role: RoleName.TALENT });
   }
 
   onChooseCompany(): void {
-    this.selectedRole = 'company';
-    this.currentView = 'register';
-    this.registrationStep = 1;
-    this.maxSteps = 2;
-    this.registerForm.patchValue({ role: 'company' });
+    // Pour l'instant, on redirige vers la page d'inscription principale pour les entreprises
+    // ou on peut afficher un message
+    alert('L\'inscription entreprise sera bientôt disponible. Veuillez utiliser la page d\'inscription principale.');
   }
 
   backToChoice(): void {
@@ -190,10 +192,11 @@ export class AuthModalInlineComponent implements OnInit {
     this.selectedRole = null;
     this.registrationStep = 1;
     this.registerForm.reset();
+    this.registerForm.patchValue({ role: 'talent' });
   }
 
   nextStep(): void {
-    if (this.registrationStep < this.maxSteps) {
+    if (this.registrationStep < this.maxSteps && this.isStep1Valid()) {
       this.registrationStep++;
     }
   }
@@ -205,24 +208,11 @@ export class AuthModalInlineComponent implements OnInit {
   }
 
   isStep1Valid(): boolean {
-    if (this.selectedRole === 'talent') {
-      return !!(
-        this.registerForm.get('firstname')?.valid &&
-        this.registerForm.get('lastname')?.valid &&
-        this.registerForm.get('email')?.valid &&
-        this.registerForm.get('phone')?.valid &&
-        this.registerForm.get('password')?.valid &&
-        this.registerForm.get('confirmationPassword')?.valid
-      );
-    } else {
-      return !!(
-        this.registerForm.get('companyName')?.valid &&
-        this.registerForm.get('email')?.valid &&
-        this.registerForm.get('phone')?.valid &&
-        this.registerForm.get('password')?.valid &&
-        this.registerForm.get('confirmationPassword')?.valid
-      );
-    }
+    const step1Fields = ['firstname', 'lastname', 'email', 'phone', 'password', 'confirmationPassword'];
+    return step1Fields.every(field => {
+      const control = this.registerForm.get(field);
+      return control && control.valid;
+    });
   }
 
   onLogin(): void {
@@ -245,7 +235,7 @@ export class AuthModalInlineComponent implements OnInit {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
       
-      // Données de base communes à tous les rôles
+      // Construire l'objet userData avec tous les champs
       const userData: any = {
         firstname: formValue.firstname,
         lastname: formValue.lastname,
@@ -253,48 +243,40 @@ export class AuthModalInlineComponent implements OnInit {
         password: formValue.password,
         confirmationPassword: formValue.password,
         phone: (formValue.phone as any).internationalNumber,
-        role: this.selectedRole === 'talent' ? RoleName.TALENT : 'company',
+        role: RoleName.TALENT,
         recaptcha: 'bypass',
-        profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null
+        profilePicture: this.profilePictureId ? { id: this.profilePictureId } : null,
+        values: formValue.values || [],
       };
 
-      // Ajouter les champs spécifiques selon le rôle
-      if (this.selectedRole === 'talent') {
-        // Étape 1 - Qui je suis
-        if (formValue.currentSalary) userData.currentSalary = formValue.currentSalary;
-        if (formValue.experience) userData.experience = formValue.experience;
-        if (formValue.skills) userData.skills = formValue.skills;
-        if (formValue.cv) userData.cvId = formValue.cv;
-        if (formValue.languages) userData.languages = formValue.languages;
-        if (formValue.country) userData.country = formValue.country;
-        if (formValue.city) userData.city = formValue.city;
-        if (formValue.education) userData.education = formValue.education;
-        
-        // Étape 2 - Ce que je veux
-        if (formValue.desiredLocation) userData.desiredLocation = formValue.desiredLocation;
-        if (formValue.desiredSector) userData.desiredSector = formValue.desiredSector;
-        if (formValue.interests) userData.interests = formValue.interests;
-        if (formValue.desiredPosition) userData.desiredPosition = formValue.desiredPosition;
-        if (formValue.desiredSalary) userData.desiredSalary = formValue.desiredSalary;
-        if (formValue.availability) userData.availability = formValue.availability;
-        
-        // Valeurs par défaut pour compatibilité backend
-        userData.values = formValue.values || [];
-      } else if (this.selectedRole === 'company') {
-        // Étape 1 - Qui sommes-nous
-        userData.company_name = formValue.companyName;
-        if (formValue.companyLogo) userData.logoId = formValue.companyLogo;
-        if (formValue.foundedDate) userData.foundedDate = formValue.foundedDate;
-        if (formValue.companyCountry) userData.country = formValue.companyCountry;
-        if (formValue.sector) userData.categoryId = formValue.sector; // Le backend utilise categoryId
-        if (formValue.employeeCount) userData.employeeCount = formValue.employeeCount;
-        
-        // Étape 2 - Ce que nous voulons
-        if (formValue.profileSought) userData.profileSought = formValue.profileSought;
-        if (formValue.positionsToFill) userData.positionsToFill = formValue.positionsToFill;
-        if (formValue.requiredSkills) userData.requiredSkills = formValue.requiredSkills;
-        if (formValue.requiredExperience) userData.requiredExperience = formValue.requiredExperience;
-      }
+      // Ajouter les champs optionnels s'ils sont remplis
+      if (formValue.cv) userData.cv = formValue.cv;
+      if (formValue.yearsOfExperience) userData.yearsOfExperience = formValue.yearsOfExperience;
+      if (formValue.competences) userData.competences = formValue.competences;
+      if (formValue.languages) userData.languages = formValue.languages;
+      if (formValue.formations) userData.formations = formValue.formations;
+      if (formValue.interests) userData.interests = formValue.interests;
+      
+      // Salaire & Compensation
+      if (formValue.tjm) userData.tjm = formValue.tjm;
+      if (formValue.annualSalary) userData.annualSalary = formValue.annualSalary;
+      if (formValue.salaryRange) userData.salaryRange = formValue.salaryRange;
+      
+      // Localisation
+      if (formValue.country) userData.country = formValue.country;
+      if (formValue.city) userData.city = formValue.city;
+      if (formValue.address) userData.address = formValue.address;
+      if (formValue.postalCode) userData.postalCode = formValue.postalCode;
+      
+      // Préférences de poste
+      if (formValue.desiredPosition) userData.desiredPosition = formValue.desiredPosition;
+      if (formValue.desiredContractType) userData.desiredContractType = formValue.desiredContractType;
+      if (formValue.desiredCompanyType) userData.desiredCompanyType = formValue.desiredCompanyType;
+      if (formValue.desiredSector) userData.desiredSector = formValue.desiredSector;
+      if (formValue.mobility) userData.mobility = formValue.mobility;
+      if (formValue.desiredWorkLocation) userData.desiredWorkLocation = formValue.desiredWorkLocation;
+      if (formValue.availabilityDate) userData.availabilityDate = formValue.availabilityDate;
+      if (formValue.workMode) userData.workMode = formValue.workMode;
       
       console.log('Données envoyées au backend:', userData);
       this.store.dispatch(signupUser({ payload: userData }));
@@ -302,6 +284,13 @@ export class AuthModalInlineComponent implements OnInit {
       Object.keys(this.registerForm.controls).forEach(key => {
         this.registerForm.get(key)?.markAsTouched();
       });
+    }
+  }
+
+  onCvChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.registerForm.patchValue({ cv: file.name });
     }
   }
 

@@ -660,6 +660,83 @@
   margin-bottom: 24px;
 }
 
+// Profile Picture Section
+.profile-picture-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+// Section Title
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 32px 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e5e5;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, $secondary 0%, lighten($secondary, 10%) 100%);
+  }
+}
+
+// File Upload Wrapper
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+
+  input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .file-upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+    color: white;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba($secondary, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($secondary, 0.3);
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .file-upload-text {
+    flex: 1;
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 // Captcha styling
 ::ng-deep {
   .form-group {
@@ -995,6 +1072,140 @@
 
       .step-label {
         font-size: 11px;
+      }
+    }
+  }
+}
+
+// Footer Text
+.footer-text {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 14px;
+  color: #666;
+
+  .link {
+    color: $secondary;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: darken($secondary, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+// ng-select Custom Styles
+::ng-deep {
+  .custom-select {
+    .ng-select-container {
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      min-height: 50px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: lighten($secondary, 20%);
+      }
+
+      .ng-value-container {
+        padding: 8px 16px;
+
+        .ng-placeholder {
+          color: #999;
+        }
+
+        .ng-value {
+          background: rgba($secondary, 0.1);
+          color: $secondary;
+          border-radius: 6px;
+          padding: 4px 8px;
+          margin: 2px;
+          font-size: 14px;
+
+          .ng-value-icon {
+            &:hover {
+              background: rgba($secondary, 0.2);
+            }
+          }
+        }
+
+        .ng-input {
+          input {
+            font-size: 15px;
+            color: #333;
+          }
+        }
+      }
+
+      .ng-arrow-wrapper {
+        padding-right: 12px;
+
+        .ng-arrow {
+          border-color: #999 transparent transparent;
+          border-width: 6px 6px 2.5px;
+        }
+      }
+
+      .ng-clear-wrapper {
+        color: #999;
+
+        &:hover {
+          color: #666;
+        }
+      }
+    }
+
+    &.ng-select-focused {
+      .ng-select-container {
+        border-color: $secondary;
+        box-shadow: 0 0 0 4px rgba($secondary, 0.1);
+      }
+    }
+
+    &.ng-select-opened {
+      .ng-select-container {
+        .ng-arrow-wrapper .ng-arrow {
+          border-color: transparent transparent #999;
+          border-width: 0 6px 6px;
+        }
+      }
+    }
+
+    .ng-dropdown-panel {
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      margin-top: 4px;
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          padding: 12px 16px;
+          font-size: 14px;
+          color: #333;
+          transition: all 0.2s ease;
+
+          &.ng-option-marked {
+            background: rgba($secondary, 0.1);
+            color: $secondary;
+          }
+
+          &.ng-option-selected {
+            background: $secondary;
+            color: white;
+
+            &.ng-option-marked {
+              background: darken($secondary, 5%);
+            }
+          }
+
+          &.ng-option-disabled {
+            color: #ccc;
+          }
+        }
       }
     }
   }
