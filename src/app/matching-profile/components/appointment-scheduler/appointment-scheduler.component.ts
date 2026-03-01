@@ -321,4 +321,17 @@ export class AppointmentSchedulerComponent implements OnInit {
     
     return false;
   }
+
+  hasAppointmentWithCompany(companyId: string): boolean {
+    return this.appointments.some(
+      apt => apt.company.id === companyId && apt.status !== 'CANCELLED'
+    );
+  }
+
+  getAppointmentStatusWithCompany(companyId: string): string | null {
+    const appointment = this.appointments.find(
+      apt => apt.company.id === companyId && apt.status !== 'CANCELLED'
+    );
+    return appointment ? appointment.status : null;
+  }
 }
