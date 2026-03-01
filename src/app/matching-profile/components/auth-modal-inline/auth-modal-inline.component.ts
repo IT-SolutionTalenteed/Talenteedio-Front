@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ReCaptcha2Component } from 'ngx-captcha-ssr';
-import { logIn, signupUser, clearError } from 'src/app/authentication/store/actions/authentication.actions';
+import { logIn, signupUser, clearError, loadValues } from 'src/app/authentication/store/actions/authentication.actions';
 import { getEmailErrorMessage, getAuthenticationLoading, getValues } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { Role, RoleName } from 'src/app/shared/models/role.interface';
 import { Value } from 'src/app/shared/models/value.interface';
@@ -27,8 +27,6 @@ export class AuthModalInlineComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
   selectedRole: 'talent' | 'company' | null = null;
-  registrationStep = 1;
-  maxSteps = 2;
   emailError$: Observable<string>;
   loading$: Observable<boolean>;
   values$: Observable<Value[]>;
@@ -47,7 +45,7 @@ export class AuthModalInlineComponent implements OnInit {
   public useGlobalDomain = false;
 
   roleNameTalent = RoleName.TALENT;
-  
+
   config = {
     ...PHONE_CONFIG,
     options: {
@@ -58,7 +56,7 @@ export class AuthModalInlineComponent implements OnInit {
       flagsPath: '/assets/img/flags/',
     }
   };
-  
+
   roles: Role[] = [
     {
       id: null,
@@ -79,11 +77,19 @@ export class AuthModalInlineComponent implements OnInit {
     this.loading$ = this.store.select(getAuthenticationLoading);
     this.values$ = this.store.select(getValues);
     this.jobTypes$ = this.authenticationService.getJobTypes({});
-    this.workModes$ = this.authenticationService.getJobTypes({});
+    this.workModes$ = new Observable(subscriber => {
+      subscriber.next([
+        { name: 'remote' },
+        { name: 'hybrid' },
+        { name: 'onsite' }
+      ] as any);
+      subscriber.complete();
+    });
   }
 
   ngOnInit(): void {
     this.initForms();
+    this.store.dispatch(loadValues());
   }
 
   private initForms(): void {
@@ -103,7 +109,7 @@ export class AuthModalInlineComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmationPassword: ['', [Validators.required]],
       role: ['talent'], // Toujours talent par défaut
-      
+
       // Champs professionnels (optionnels)
       values: [[]],
       cv: [null],
@@ -112,18 +118,18 @@ export class AuthModalInlineComponent implements OnInit {
       languages: [''],
       formations: [''],
       interests: [''],
-      
+
       // Salaire & Compensation (optionnels)
       tjm: [''],
       annualSalary: [''],
       salaryRange: [''],
-      
+
       // Localisation (optionnels)
       country: [''],
       city: [''],
       address: [''],
       postalCode: [''],
-      
+
       // Préférences de poste (optionnels)
       desiredPosition: [''],
       desiredContractType: [''],
@@ -133,7 +139,7 @@ export class AuthModalInlineComponent implements OnInit {
       desiredWorkLocation: [''],
       availabilityDate: [''],
       workMode: [''],
-      
+
       // Consentement et captcha
       consent: [false, [Validators.requiredTrue]],
       recaptcha: ['bypass'],
@@ -143,7 +149,7 @@ export class AuthModalInlineComponent implements OnInit {
   passwordMatchValidator(g: FormGroup) {
     const password = g.get('password');
     const confirmPassword = g.get('confirmationPassword');
-    
+
     if (confirmPassword?.errors && !confirmPassword?.errors['mustMatch']) {
       return;
     }
@@ -161,14 +167,13 @@ export class AuthModalInlineComponent implements OnInit {
     } else {
       this.currentView = view;
     }
-    
-    this.registrationStep = 1;
+
     this.store.dispatch(clearError());
     this.loginForm.reset();
     this.registerForm.reset();
     this.profilePictureId = null;
     this.profilePictureUrl = null;
-    
+
     // Reset captcha when switching views
     if (this.captchaElem) {
       this.captchaElem.resetCaptcha();
@@ -190,29 +195,24 @@ export class AuthModalInlineComponent implements OnInit {
   backToChoice(): void {
     this.currentView = 'choice';
     this.selectedRole = null;
-    this.registrationStep = 1;
     this.registerForm.reset();
     this.registerForm.patchValue({ role: 'talent' });
   }
 
-  nextStep(): void {
-    if (this.registrationStep < this.maxSteps && this.isStep1Valid()) {
-      this.registrationStep++;
-    }
-  }
 
-  previousStep(): void {
-    if (this.registrationStep > 1) {
-      this.registrationStep--;
-    }
-  }
 
-  isStep1Valid(): boolean {
-    const step1Fields = ['firstname', 'lastname', 'email', 'phone', 'password', 'confirmationPassword'];
-    return step1Fields.every(field => {
+  isFormValidForSubmission(): boolean {
+    // Vérifier uniquement les champs obligatoires
+    const requiredFields = ['firstname', 'lastname', 'email', 'phone', 'password', 'confirmationPassword', 'consent'];
+    const allRequiredValid = requiredFields.every(field => {
       const control = this.registerForm.get(field);
       return control && control.valid;
     });
+
+    // Vérifier que les mots de passe correspondent
+    const passwordsMatch = this.registerForm.get('password')?.value === this.registerForm.get('confirmationPassword')?.value;
+
+    return allRequiredValid && passwordsMatch;
   }
 
   onLogin(): void {
@@ -234,7 +234,7 @@ export class AuthModalInlineComponent implements OnInit {
   onRegister(): void {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
-      
+
       // Construire l'objet userData avec tous les champs
       const userData: any = {
         firstname: formValue.firstname,
@@ -256,18 +256,18 @@ export class AuthModalInlineComponent implements OnInit {
       if (formValue.languages) userData.languages = formValue.languages;
       if (formValue.formations) userData.formations = formValue.formations;
       if (formValue.interests) userData.interests = formValue.interests;
-      
+
       // Salaire & Compensation
       if (formValue.tjm) userData.tjm = formValue.tjm;
       if (formValue.annualSalary) userData.annualSalary = formValue.annualSalary;
       if (formValue.salaryRange) userData.salaryRange = formValue.salaryRange;
-      
+
       // Localisation
       if (formValue.country) userData.country = formValue.country;
       if (formValue.city) userData.city = formValue.city;
       if (formValue.address) userData.address = formValue.address;
       if (formValue.postalCode) userData.postalCode = formValue.postalCode;
-      
+
       // Préférences de poste
       if (formValue.desiredPosition) userData.desiredPosition = formValue.desiredPosition;
       if (formValue.desiredContractType) userData.desiredContractType = formValue.desiredContractType;
@@ -277,7 +277,7 @@ export class AuthModalInlineComponent implements OnInit {
       if (formValue.desiredWorkLocation) userData.desiredWorkLocation = formValue.desiredWorkLocation;
       if (formValue.availabilityDate) userData.availabilityDate = formValue.availabilityDate;
       if (formValue.workMode) userData.workMode = formValue.workMode;
-      
+
       console.log('Données envoyées au backend:', userData);
       this.store.dispatch(signupUser({ payload: userData }));
     } else {

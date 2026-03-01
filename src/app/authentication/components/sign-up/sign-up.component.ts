@@ -104,7 +104,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private gaService: GoogleAnalyticsService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Charger les données dynamiques
@@ -112,10 +112,10 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
     if (!this.form) {
       this.form = this.initForm(EMPTY_USER);
-      
+
       // Définir le rôle par défaut à "talent"
       this.form.patchValue({ role: this.roleNameTalent });
-      
+
       // Le consentement est obligatoire pour les talents
       const consentControl = this.form.get('consent');
       consentControl.setValidators([Validators.required]);
@@ -156,13 +156,13 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     if (this.cv) {
       this.form.valid
         ? this.authenticationService
-            .uploadMedia(this.cv, 'pdf')
-            .subscribe((res) => {
-              this.save.emit({
-                ...userData,
-                cvId: res.data.result.id,
-              });
-            })
+          .uploadMedia(this.cv, 'pdf')
+          .subscribe((res) => {
+            this.save.emit({
+              ...userData,
+              cvId: res.data.result.id,
+            });
+          })
         : this.showErrors();
     } else {
       // Pas de CV, envoyer directement
@@ -267,24 +267,24 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   private confirmationPasswordValidator =
     (passwordKey: string, confirmationPasswordKey: string) =>
-    (formGroup: FormGroup) => {
-      const passwordControl = formGroup.controls[passwordKey];
-      const confirmationPasswordControl =
-        formGroup.controls[confirmationPasswordKey];
+      (formGroup: FormGroup) => {
+        const passwordControl = formGroup.controls[passwordKey];
+        const confirmationPasswordControl =
+          formGroup.controls[confirmationPasswordKey];
 
-      if (
-        confirmationPasswordControl?.errors &&
-        !confirmationPasswordControl?.errors['mustMatch']
-      ) {
-        return;
-      }
+        if (
+          confirmationPasswordControl?.errors &&
+          !confirmationPasswordControl?.errors['mustMatch']
+        ) {
+          return;
+        }
 
-      confirmationPasswordControl?.setErrors(
-        passwordControl?.value !== confirmationPasswordControl?.value
-          ? { mustMatch: true }
-          : null
-      );
-    };
+        confirmationPasswordControl?.setErrors(
+          passwordControl?.value !== confirmationPasswordControl?.value
+            ? { mustMatch: true }
+            : null
+        );
+      };
 
   private editionPasswordValidator = (
     control: AbstractControl
@@ -292,14 +292,18 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     !control.value
       ? null
       : control.value.trim().length >= PASSWORD_MIN_LENGTH
-      ? null
-      : { minLength: { value: control.value } };
+        ? null
+        : { minLength: { value: control.value } };
 
   private loadDynamicData(): void {
-    // Charger les work modes (depuis JobType avec filtre)
-    this.workModes$ = this.authenticationService.getJobTypes({
-      input: { limit: 100, page: 1 },
-      filter: { status: 'public' }
+    // Charger les work modes (statique selon l'enum du backend)
+    this.workModes$ = new Observable(subscriber => {
+      subscriber.next([
+        { name: 'remote' },
+        { name: 'hybrid' },
+        { name: 'onsite' }
+      ] as any);
+      subscriber.complete();
     });
 
     // Charger les job types (types de contrat)
