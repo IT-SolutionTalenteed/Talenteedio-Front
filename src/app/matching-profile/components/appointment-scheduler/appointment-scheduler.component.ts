@@ -297,4 +297,28 @@ export class AppointmentSchedulerComponent implements OnInit {
       default: return status;
     }
   }
+
+  isAppointmentExpired(appointment: any): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const appointmentDate = new Date(appointment.appointmentDate);
+    appointmentDate.setHours(0, 0, 0, 0);
+    
+    // Si la date est passée, le rendez-vous est expiré
+    if (appointmentDate < today) {
+      return true;
+    }
+    
+    // Si c'est aujourd'hui, vérifier l'heure
+    if (appointmentDate.getTime() === today.getTime()) {
+      const [hours, minutes] = appointment.appointmentTime.split(':').map(Number);
+      const appointmentDateTime = new Date();
+      appointmentDateTime.setHours(hours, minutes, 0, 0);
+      
+      return appointmentDateTime < new Date();
+    }
+    
+    return false;
+  }
 }

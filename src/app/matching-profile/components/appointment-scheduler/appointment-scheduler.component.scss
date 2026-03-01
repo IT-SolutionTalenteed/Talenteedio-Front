@@ -242,7 +242,16 @@
 // Appointments List
 .appointments-list {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .appointment-card {
@@ -253,11 +262,30 @@
   position: relative;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &:hover {
     border-color: $secondary;
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba($secondary, 0.15);
+  }
+
+  &.expired {
+    opacity: 0.6;
+    background: #f9fafb;
+    border-color: #d1d5db;
+
+    &:hover {
+      border-color: #9ca3af;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .appointment-content {
+      filter: grayscale(0.3);
+    }
   }
 
   .appointment-status-badge {
@@ -327,18 +355,35 @@
         stroke: #2563eb;
       }
     }
+
+    &.expired {
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      color: #6b7280;
+      border: 2px solid #9ca3af;
+      border-top: none;
+      border-right: none;
+
+      svg {
+        stroke: #6b7280;
+      }
+    }
   }
 
   .appointment-content {
     padding: 2rem;
     padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .appointment-company {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    text-align: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 2px solid #f3f4f6;
 
@@ -347,8 +392,8 @@
     }
 
     .company-logo-sm {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -381,18 +426,20 @@
     }
 
     .company-name {
-      font-size: 1.375rem;
+      font-size: 1.125rem;
       font-weight: 800;
       color: #1a1a1a;
       margin: 0 0 0.5rem 0;
       line-height: 1.3;
+      word-break: break-word;
     }
 
     .company-location {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       color: #6b7280;
       margin: 0;
       font-weight: 500;
@@ -409,21 +456,22 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    flex: 1;
 
     .info-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
     }
 
     .info-item {
       display: flex;
       align-items: flex-start;
-      gap: 0.875rem;
-      padding: 1.125rem 1.25rem;
+      gap: 0.75rem;
+      padding: 1rem;
       background: #f9fafb;
       border: 2px solid #e5e7eb;
-      border-radius: 14px;
+      border-radius: 12px;
       transition: all 0.3s ease;
 
       svg {
@@ -450,7 +498,7 @@
       }
 
       .info-value {
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         font-weight: 600;
         color: #1a1a1a;
         line-height: 1.4;
@@ -458,6 +506,7 @@
         align-items: center;
         gap: 0.5rem;
         flex-wrap: wrap;
+        word-break: break-word;
       }
 
       .duration-badge {
@@ -503,25 +552,27 @@
 
   .appointment-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     padding-top: 1.5rem;
-    margin-top: 1.5rem;
+    margin-top: auto;
     border-top: 2px solid #f3f4f6;
 
     .btn-cancel-appointment {
       display: inline-flex;
       align-items: center;
-      gap: 0.625rem;
-      padding: 0.875rem 1.75rem;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
       background: white;
       border: 2px solid #ef4444;
       border-radius: 12px;
       color: #ef4444;
       font-weight: 700;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+      width: 100%;
 
       svg {
         stroke-width: 2.5;
@@ -1121,38 +1172,23 @@
     }
 
     .appointment-company {
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-
       .company-logo-sm {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
       }
 
       .company-name {
-        font-size: 1.125rem;
+        font-size: 1rem;
       }
     }
 
     .appointment-info {
-      .info-row {
-        grid-template-columns: 1fr;
-      }
-
       .info-item {
-        padding: 1rem;
+        padding: 0.875rem;
 
         .info-value {
-          font-size: 0.875rem;
+          font-size: 0.8125rem;
         }
-      }
-    }
-
-    .appointment-actions {
-      .btn-cancel-appointment {
-        width: 100%;
-        justify-content: center;
       }
     }
   }
