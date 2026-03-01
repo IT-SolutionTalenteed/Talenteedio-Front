@@ -284,16 +284,26 @@ export class MatchingProfileService {
       query GetMyAppointments {
         getMyAppointments {
           id
-          scheduledAt
+          appointmentDate
+          appointmentTime
+          timezone
+          message
+          companyNotes
+          rejectionReason
           status
-          notes
-          meetingLink
+          createdAt
           company {
             id
             company_name
             logo {
               id
               fileUrl
+            }
+            contact {
+              email
+              address {
+                city
+              }
             }
           }
           matchingProfile {
