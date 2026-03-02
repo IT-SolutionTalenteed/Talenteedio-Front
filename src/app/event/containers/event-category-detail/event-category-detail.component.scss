@@ -24,7 +24,7 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
   position: relative;
   overflow: hidden;
 
-  // Background pattern overlay
+  // Background pattern overlay (Hero image)
   &::before {
     content: '';
     position: absolute;
@@ -37,6 +37,12 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
     background-position: center;
     opacity: 0.15;
     z-index: 0;
+  }
+
+  // Category image overlay (will be set via inline style in component)
+  &.has-category-image::before {
+    opacity: 0.25;
+    z-index: 1;
   }
 
   // Decorative animated line

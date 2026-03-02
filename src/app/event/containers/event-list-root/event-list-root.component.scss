@@ -1038,3 +1038,26 @@ $border-color: #E8EAED;
     opacity: 0;
   }
 }
+
+
+// Override for category titles
+.category-title {
+  font-family: "Archivo", Sans-serif !important;
+  font-size: 48px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+  line-height: 1.4em !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0em !important;
+  color: #1C244B !important;
+  
+  @media screen and (max-width: 768px) {
+    font-size: 32px !important;
+  }
+  
+  @media screen and (max-width: 480px) {
+    font-size: 24px !important;
+  }
+}

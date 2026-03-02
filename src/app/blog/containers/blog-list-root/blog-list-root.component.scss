@@ -9,10 +9,39 @@
 
   // Hero Section - Style cohérent avec job-list et event-list
   .blog-header {
-    // Les styles de background sont définis globalement dans hero-sections.scss
+    // Background avec thème bleu sombre
+    background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
     padding: 100px 20px 80px;
     position: relative;
     overflow: hidden;
+
+    // Background pattern overlay
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('/assets/img/backgrounds/Hero26.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    // Decorative animated line
+    &::after {
+      content: '';
+      position: absolute;
+      top: 35%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
+      animation: moveLine 8s linear infinite;
+      z-index: 0;
+    }
 
     @media screen and (max-width: 768px) {
       padding: 80px 20px 60px;
@@ -320,5 +349,43 @@
         }
       }
     }
+  }
+}
+
+
+// Animation for decorative lines
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Override for section titles
+.section-title {
+  font-family: "Archivo", Sans-serif !important;
+  font-size: 65px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+  line-height: 1.2em !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0em !important;
+  color: #1C244B !important;
+  
+  @media screen and (max-width: 1024px) {
+    font-size: 48px !important;
+  }
+  
+  @media screen and (max-width: 768px) {
+    font-size: 36px !important;
   }
 }
