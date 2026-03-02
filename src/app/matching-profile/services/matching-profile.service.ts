@@ -215,6 +215,11 @@ export class MatchingProfileService {
           timezone
           message
           status
+          feedbackSubmitted
+          candidateFeedback
+          candidateDecision
+          candidateRating
+          feedbackSubmittedAt
           company {
             id
             company_name
@@ -292,6 +297,11 @@ export class MatchingProfileService {
           rejectionReason
           status
           createdAt
+          feedbackSubmitted
+          candidateFeedback
+          candidateDecision
+          candidateRating
+          feedbackSubmittedAt
           company {
             id
             company_name
@@ -315,6 +325,32 @@ export class MatchingProfileService {
     `;
     return this.graphqlRequest(query).pipe(
       map((response: any) => response.data.getMyAppointments || [])
+    );
+  }
+
+  submitAppointmentFeedback(appointmentId: string, feedback: string, decision: string, rating?: number): Observable<any> {
+    const query = `
+      mutation SubmitAppointmentFeedback($appointmentId: ID!, $feedback: String!, $decision: String!, $rating: Int) {
+        submitAppointmentFeedback(appointmentId: $appointmentId, feedback: $feedback, decision: $decision, rating: $rating) {
+          id
+          feedbackSubmitted
+          candidateFeedback
+          candidateDecision
+          candidateRating
+          feedbackSubmittedAt
+        }
+      }
+    `;
+    return this.graphqlRequest(query, { appointmentId, feedback, decision, rating }).pipe(
+      map((response: any) => {
+        if (response.errors && response.errors.length > 0) {
+          throw new Error(response.errors[0].message);
+        }
+        if (!response.data || !response.data.submitAppointmentFeedback) {
+          throw new Error('Impossible de soumettre le feedback');
+        }
+        return response.data.submitAppointmentFeedback;
+      })
     );
   }
 }
