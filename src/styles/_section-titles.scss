@@ -1,6 +1,27 @@
 // Section Titles - Global Styles
 // Style uniforme pour tous les titres de sections du site
 
+// Exclusions pour les pages qui ont leur propre design
+.matching-profile-wrapper,
+.matching-profile-content,
+.auth-modal-inline {
+  .section-title,
+  .card-title-uniform,
+  h2.section-title,
+  h2.card-title-uniform {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    font-style: inherit !important;
+    text-decoration: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+    word-spacing: inherit !important;
+    color: inherit !important;
+  }
+}
+
 .section-title,
 .card-title-uniform,
 h2.section-title,
