@@ -1,0 +1,361 @@
+// New Hero Sections with Dark Blue Theme
+// Inspired by "Bridging Competencies, Accelerating Performance" design
+
+// Color Palette
+$dark-navy: #0a1128;
+$deep-blue: #001f54;
+$royal-blue: #034078;
+$bright-blue: #1282a2;
+$accent-gold: #f49f0a;
+$light-bg: #f8f9ff;
+
+// Hero Section with Background Image
+.hero-section-with-bg {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  
+  // Dark overlay for better text readability
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(10, 17, 40, 0.85) 0%, rgba(0, 31, 84, 0.75) 100%);
+    z-index: 1;
+  }
+  
+  .hero-content-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    text-align: center;
+    
+    .hero-badge {
+      display: inline-block;
+      background: rgba(244, 159, 10, 0.15);
+      border: 1px solid rgba(244, 159, 10, 0.3);
+      color: $accent-gold;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+    
+    h1 {
+      font-size: 56px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      
+      @media screen and (max-width: 768px) {
+        font-size: 36px;
+      }
+      
+      .accent {
+        color: $accent-gold;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, transparent 0%, $accent-gold 50%, transparent 100%);
+        }
+      }
+    }
+    
+    p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 700px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: $accent-gold;
+      color: $dark-navy;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(244, 159, 10, 0.3);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(244, 159, 10, 0.5);
+        background: lighten($accent-gold, 5%);
+      }
+      
+      svg {
+        transition: transform 0.3s ease;
+      }
+      
+      &:hover svg {
+        transform: translateX(4px);
+      }
+    }
+  }
+  
+  // Decorative elements
+  .hero-decoration {
+    position: absolute;
+    z-index: 1;
+    
+    &.decoration-1 {
+      top: 10%;
+      left: 5%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(244, 159, 10, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    
+    &.decoration-2 {
+      bottom: 15%;
+      right: 8%;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(18, 130, 162, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  }
+}
+
+// Page Header Component
+.page-header-dark {
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $dark-navy 0%, $deep-blue 50%, $royal-blue 100%);
+  overflow: hidden;
+  
+  // Background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/img/backgrounds/Hero22.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 0;
+  }
+  
+  .page-header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+    
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      
+      a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: $accent-gold;
+        }
+      }
+      
+      .separator {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+      line-height: 1.2;
+      
+      @media screen and (max-width: 768px) {
+        font-size: 32px;
+      }
+    }
+    
+    p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 16px auto 0;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+  }
+  
+  // Animated lines decoration
+  .animated-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow: hidden;
+    
+    .line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
+      height: 2px;
+      width: 100%;
+      animation: moveLine 8s linear infinite;
+      
+      &:nth-child(1) {
+        top: 20%;
+        animation-delay: 0s;
+      }
+      
+      &:nth-child(2) {
+        top: 50%;
+        animation-delay: 2s;
+      }
+      
+      &:nth-child(3) {
+        top: 80%;
+        animation-delay: 4s;
+      }
+    }
+  }
+}
+
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Section with Dark Background
+.section-dark-bg {
+  background: linear-gradient(135deg, $dark-navy 0%, $deep-blue 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/img/backgrounds/Hero23.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 0;
+  }
+  
+  .section-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px;
+    
+    @media screen and (max-width: 768px) {
+      padding: 60px 20px;
+    }
+  }
+  
+  h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    
+    @media screen and (max-width: 768px) {
+      font-size: 32px;
+    }
+    
+    .accent {
+      color: $accent-gold;
+    }
+  }
+  
+  p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+}
+
+// Replace light pink background with dark blue
+.bg-light-pink-replaced {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%) !important;
+}
+
+// Utility classes for the new theme
+.text-gold {
+  color: $accent-gold;
+}
+
+.bg-dark-navy {
+  background: $dark-navy;
+}
+
+.bg-deep-blue {
+  background: $deep-blue;
+}
+
+.bg-royal-blue {
+  background: $royal-blue;
+}
+
+.bg-bright-blue {
+  background: $bright-blue;
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(135deg, $dark-navy 0%, $deep-blue 50%, $royal-blue 100%);
+}

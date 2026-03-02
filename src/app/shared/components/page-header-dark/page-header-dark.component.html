@@ -1,0 +1,32 @@
+<div class="page-header-dark" [style.background-image]="'url(' + backgroundImage + ')'">
+  <!-- Background overlay -->
+  <div class="header-overlay"></div>
+  
+  <!-- Animated lines decoration -->
+  <div class="animated-lines" *ngIf="showAnimatedLines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="page-header-content">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumb" *ngIf="breadcrumbs && breadcrumbs.length > 0">
+      <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+        <a *ngIf="crumb.link && !last" [routerLink]="crumb.link">{{ crumb.label }}</a>
+        <span *ngIf="!crumb.link || last">{{ crumb.label }}</span>
+        <span class="separator" *ngIf="!last">/</span>
+      </ng-container>
+    </nav>
+    
+    <!-- Title -->
+    <h1 *ngIf="title">{{ title }}</h1>
+    
+    <!-- Description -->
+    <p *ngIf="description">{{ description }}</p>
+    
+    <!-- Slot for custom content -->
+    <ng-content></ng-content>
+  </div>
+</div>
