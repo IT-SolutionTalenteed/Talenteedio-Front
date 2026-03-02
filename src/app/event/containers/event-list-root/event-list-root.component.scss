@@ -1043,7 +1043,7 @@ $border-color: #E8EAED;
 // Override for category titles
 .category-title {
   font-family: "Archivo", Sans-serif !important;
-  font-size: 48px !important;
+  font-size: 32px !important;
   font-weight: 600 !important;
   text-transform: none !important;
   font-style: normal !important;
@@ -1054,10 +1054,10 @@ $border-color: #E8EAED;
   color: #1C244B !important;
   
   @media screen and (max-width: 768px) {
-    font-size: 32px !important;
+    font-size: 24px !important;
   }
   
   @media screen and (max-width: 480px) {
-    font-size: 24px !important;
+    font-size: 20px !important;
   }
 }
