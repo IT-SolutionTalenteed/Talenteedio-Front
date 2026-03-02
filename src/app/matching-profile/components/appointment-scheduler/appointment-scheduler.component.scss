@@ -128,9 +128,9 @@
     }
 
     &.high {
-      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-      color: #065f46;
-      border: 2px solid #10b981;
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      color: #1e40af;
+      border: 2px solid #3b82f6;
     }
 
     &.medium {
@@ -400,14 +400,14 @@
     }
 
     &.confirmed {
-      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-      color: #065f46;
-      border: 2px solid #10b981;
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      color: #1e40af;
+      border: 2px solid #3b82f6;
       border-top: none;
       border-right: none;
 
       svg {
-        fill: #059669;
+        fill: #2563eb;
       }
     }
 
