@@ -15,6 +15,7 @@ import { MatchingProfileService } from './services/matching-profile.service';
 import { AppointmentFeedbackFormComponent } from './components/appointment-feedback-form.component';
 import { AppointmentFeedbackDisplayComponent } from './components/appointment-feedback-display.component';
 import { AppointmentsListComponent } from './components/appointments-list/appointments-list.component';
+import { AppointmentFeedbackPageComponent } from './containers/appointment-feedback-page/appointment-feedback-page.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AppointmentsListComponent } from './components/appointments-list/appoin
     AppointmentFeedbackFormComponent,
     AppointmentFeedbackDisplayComponent,
     AppointmentsListComponent,
+    AppointmentFeedbackPageComponent,
   ],
   imports: [
     CommonModule,

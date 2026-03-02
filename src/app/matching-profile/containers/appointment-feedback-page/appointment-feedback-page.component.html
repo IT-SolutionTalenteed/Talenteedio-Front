@@ -1,0 +1,82 @@
+<div class="feedback-page">
+  <div class="feedback-page-container">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!loading && error" class="error-state">
+      <div class="error-icon">
+        <i class="bi bi-exclamation-circle"></i>
+      </div>
+      <h2>Oups !</h2>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="goToAppointments()">
+        Retour à mes entretiens
+      </button>
+    </div>
+
+    <!-- Feedback Already Submitted -->
+    <div *ngIf="!loading && !error && feedbackSubmitted && appointment" class="success-state">
+      <div class="success-icon">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <h2>Merci pour votre feedback !</h2>
+      <p class="success-message">
+        Votre retour sur l'entretien avec <strong>{{ appointment.company?.company_name }}</strong> a bien été enregistré.
+      </p>
+      
+      <div class="feedback-summary">
+        <div class="summary-item">
+          <span class="label">Votre décision :</span>
+          <span class="value" [class.interested]="appointment.candidateDecision === 'go'" [class.not-interested]="appointment.candidateDecision === 'not'">
+            {{ appointment.candidateDecision === 'go' ? 'Intéressé(e)' : 'Pas intéressé(e)' }}
+          </span>
+        </div>
+        
+        <div class="summary-item" *ngIf="appointment.candidateRating">
+          <span class="label">Note :</span>
+          <span class="value rating">
+            <i *ngFor="let star of [1, 2, 3, 4, 5]" 
+               class="bi" 
+               [class.bi-star-fill]="star <= appointment.candidateRating"
+               [class.bi-star]="star > appointment.candidateRating">
+            </i>
+          </span>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" (click)="goToAppointments()">
+        Voir tous mes entretiens
+      </button>
+    </div>
+
+    <!-- Feedback Form -->
+    <div *ngIf="!loading && !error && !feedbackSubmitted && appointment" class="feedback-form-state">
+      <div class="page-header">
+        <div class="company-info">
+          <img 
+            *ngIf="appointment.company?.logo?.fileUrl" 
+            [src]="appointment.company.logo.fileUrl" 
+            [alt]="appointment.company.company_name"
+            class="company-logo"
+          />
+          <div class="company-details">
+            <h1>{{ appointment.company?.company_name }}</h1>
+            <p class="appointment-date">
+              Entretien du {{ formatDate(appointment.appointmentDate) }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <app-appointment-feedback-form
+        [appointmentId]="appointmentId!"
+        [companyName]="appointment.company?.company_name"
+        (feedbackSubmitted)="onFeedbackSubmitted($event)"
+      ></app-appointment-feedback-form>
+    </div>
+  </div>
+</div>
