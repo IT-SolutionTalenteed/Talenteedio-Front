@@ -342,7 +342,15 @@ export class MatchingProfileService {
       }
     `;
     return this.graphqlRequest(query, { appointmentId, feedback, decision, rating }).pipe(
-      map((response: any) => response.data.submitAppointmentFeedback)
+      map((response: any) => {
+        if (response.errors && response.errors.length > 0) {
+          throw new Error(response.errors[0].message);
+        }
+        if (!response.data || !response.data.submitAppointmentFeedback) {
+          throw new Error('Impossible de soumettre le feedback');
+        }
+        return response.data.submitAppointmentFeedback;
+      })
     );
   }
 }

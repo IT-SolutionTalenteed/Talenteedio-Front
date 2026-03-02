@@ -355,8 +355,25 @@ export class AppointmentFeedbackFormComponent {
         },
         error: (error) => {
           this.loading = false;
-          this.error =
-            error.message || 'Une erreur est survenue lors de l\'envoi du feedback';
+          
+          // Gérer les différents types d'erreurs
+          let errorMessage = 'Une erreur est survenue lors de l\'envoi du feedback';
+          
+          if (error.message) {
+            if (error.message.includes('not found')) {
+              errorMessage = 'Entretien introuvable. Veuillez rafraîchir la page.';
+            } else if (error.message.includes('Unauthorized')) {
+              errorMessage = 'Vous devez être connecté pour soumettre un feedback.';
+            } else if (error.message.includes('Invalid decision')) {
+              errorMessage = 'Décision invalide. Veuillez sélectionner "Intéressé" ou "Pas intéressé".';
+            } else if (error.message.includes('Invalid rating')) {
+              errorMessage = 'Note invalide. La note doit être entre 1 et 5 étoiles.';
+            } else {
+              errorMessage = error.message;
+            }
+          }
+          
+          this.error = errorMessage;
           console.error('Error submitting feedback:', error);
         },
       });

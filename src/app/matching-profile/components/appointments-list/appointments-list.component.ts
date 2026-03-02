@@ -82,8 +82,21 @@ export class AppointmentsListComponent implements OnInit {
       );
     });
 
+    // Les entretiens terminés sont soit :
+    // 1. Marqués explicitement comme 'completed'
+    // 2. Confirmés mais dont la date est passée
     this.completedAppointments = this.appointments.filter((apt) => {
-      return apt.status === 'completed';
+      if (apt.status === 'completed') {
+        return true;
+      }
+      
+      // Si l'entretien est confirmé et que la date est passée
+      if (apt.status === 'confirmed') {
+        const aptDate = new Date(apt.appointmentDate);
+        return aptDate < now;
+      }
+      
+      return false;
     });
   }
 
