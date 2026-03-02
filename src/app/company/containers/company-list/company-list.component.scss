@@ -12,10 +12,39 @@ $border-radius-md: 12px;
 
   // Hero Section
   .hero-section {
-    // Les styles de background sont définis globalement dans hero-sections.scss
+    // Background avec thème bleu sombre
+    background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
     padding: 100px 20px 80px;
     position: relative;
     overflow: hidden;
+
+    // Background pattern overlay
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('/assets/img/backgrounds/Hero25.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    // Decorative animated line
+    &::after {
+      content: '';
+      position: absolute;
+      top: 35%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
+      animation: moveLine 8s linear infinite;
+      z-index: 0;
+    }
 
     @media screen and (max-width: 768px) {
       padding: 80px 20px 60px;
@@ -36,15 +65,15 @@ $border-radius-md: 12px;
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          background: rgba(255, 255, 255, 0.2);
+          background: rgba(244, 159, 10, 0.15);
           backdrop-filter: blur(10px);
           padding: 10px 20px;
           border-radius: 50px;
-          color: white;
+          color: #f49f0a;
           font-size: 14px;
           font-weight: 600;
           margin-bottom: 24px;
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          border: 1px solid rgba(244, 159, 10, 0.3);
 
           svg {
             width: 20px;
@@ -60,7 +89,7 @@ $border-radius-md: 12px;
           line-height: 1.2;
 
           .accent {
-            color: #FFF5E6;
+            color: #f49f0a;
           }
 
           @media screen and (max-width: 768px) {
@@ -323,5 +352,21 @@ $border-radius-md: 12px;
         }
       }
     }
+  }
+}
+
+
+// Animation for decorative lines
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
   }
 }

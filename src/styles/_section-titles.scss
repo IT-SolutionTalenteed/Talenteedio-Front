@@ -1,0 +1,80 @@
+// Section Titles - Global Styles
+// Style uniforme pour tous les titres de sections du site
+
+// Exclusions pour les pages qui ont leur propre design
+.matching-profile-wrapper,
+.matching-profile-content,
+.auth-modal-inline {
+  .section-title,
+  .card-title-uniform,
+  h2.section-title,
+  h2.card-title-uniform {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    font-style: inherit !important;
+    text-decoration: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+    word-spacing: inherit !important;
+    color: inherit !important;
+  }
+}
+
+.section-title,
+.card-title-uniform,
+h2.section-title,
+h2.card-title-uniform {
+  font-family: "Archivo", Sans-serif !important;
+  font-size: 65px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+  line-height: 1.2em !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0em !important;
+  color: #1C244B !important;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 48px !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 36px !important;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 28px !important;
+  }
+
+  // Accent color override
+  .accent {
+    color: #f49f0a !important;
+  }
+}
+
+// Specific overrides for job detail sections
+.job-detail-section-title,
+.company-detail-section-title,
+.event-category-section-title {
+  font-family: "Archivo", Sans-serif !important;
+  font-size: 48px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+  line-height: 1.4em !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0em !important;
+  color: #1C244B !important;
+
+  @media screen and (max-width: 768px) {
+    font-size: 32px !important;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 24px !important;
+  }
+}

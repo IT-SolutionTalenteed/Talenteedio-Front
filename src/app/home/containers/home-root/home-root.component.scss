@@ -579,9 +579,39 @@ $border-color: #E8EAED;
 
 // Upcoming Events Section
 .upcoming-events-section {
-  background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
+  background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
+  position: relative;
   padding: 100px 0;
   margin: 80px 0;
+  overflow: hidden;
+
+  // Background pattern overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/img/backgrounds/Hero22.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
+  // Decorative animated lines
+  &::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
+    animation: moveLine 8s linear infinite;
+    z-index: 0;
+  }
 
   @media screen and (max-width: 768px) {
     padding: 60px 0;
@@ -593,6 +623,16 @@ $border-color: #E8EAED;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 1;
+
+    .section-title {
+      color: white !important;
+    }
+
+    .section-description {
+      color: rgba(255, 255, 255, 0.85);
+    }
   }
 
   .events-grid {
@@ -604,6 +644,8 @@ $border-color: #E8EAED;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 1;
 
     @media screen and (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -858,10 +900,12 @@ $border-color: #E8EAED;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 1;
 
     .view-more-button {
-      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
-      color: white;
+      background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
+      color: #0a1128;
       border: none;
       padding: 16px 40px;
       border-radius: 50px;
@@ -872,11 +916,12 @@ $border-color: #E8EAED;
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 4px 16px rgba(241, 117, 90, 0.3);
+      box-shadow: 0 4px 20px rgba(244, 159, 10, 0.4);
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(241, 117, 90, 0.4);
+        box-shadow: 0 8px 30px rgba(244, 159, 10, 0.6);
+        background: linear-gradient(135deg, #ffb52e 0%, #f49f0a 100%);
 
         svg {
           transform: translateX(4px);
@@ -889,3 +934,18 @@ $border-color: #E8EAED;
     }
   }
 }
+
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+

@@ -22,22 +22,39 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
   background: #FAFBFC;
   
   .header {
-    background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
+    background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
     display: flex;
     justify-content: center;
     width: 100%;
     position: relative;
     overflow: hidden;
     
+    // Background pattern overlay
     &::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      border-radius: 50%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('/assets/img/backgrounds/Hero28.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    // Decorative animated line
+    &::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
+      animation: moveLine 8s linear infinite;
+      z-index: 0;
     }
     
     .job-box {
@@ -483,6 +500,48 @@ ul {
       
       .detail-info {
         width: 32% !important;
+      }
+    }
+  }
+}
+
+
+// Animation for decorative lines
+@keyframes moveLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Override for section titles in job content
+.detail-content {
+  ::ng-deep {
+    h2 {
+      font-family: "Archivo", Sans-serif !important;
+      font-size: 32px !important;
+      font-weight: 600 !important;
+      text-transform: none !important;
+      font-style: normal !important;
+      text-decoration: none !important;
+      line-height: 1.4em !important;
+      letter-spacing: 0 !important;
+      word-spacing: 0em !important;
+      color: #1C244B !important;
+      
+      @media screen and (max-width: 768px) {
+        font-size: 24px !important;
+      }
+      
+      @media screen and (max-width: 480px) {
+        font-size: 20px !important;
       }
     }
   }
