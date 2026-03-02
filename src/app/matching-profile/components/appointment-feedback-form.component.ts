@@ -1,29 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Apollo, gql } from 'apollo-angular';
-
-const SUBMIT_FEEDBACK_MUTATION = gql`
-  mutation SubmitAppointmentFeedback(
-    $appointmentId: ID!
-    $feedback: String!
-    $decision: String!
-    $rating: Int
-  ) {
-    submitAppointmentFeedback(
-      appointmentId: $appointmentId
-      feedback: $feedback
-      decision: $decision
-      rating: $rating
-    ) {
-      id
-      feedbackSubmitted
-      candidateFeedback
-      candidateDecision
-      candidateRating
-      feedbackSubmittedAt
-    }
-  }
-`;
+import { MatchingProfileService } from '../services/matching-profile.service';
 
 @Component({
   selector: 'app-appointment-feedback-form',
@@ -335,7 +312,10 @@ export class AppointmentFeedbackFormComponent {
   loading = false;
   error: string | null = null;
 
-  constructor(private fb: FormBuilder, private apollo: Apollo) {
+  constructor(
+    private fb: FormBuilder,
+    private matchingProfileService: MatchingProfileService
+  ) {
     this.feedbackForm = this.fb.group({
       decision: ['', Validators.required],
       rating: [null],
@@ -366,20 +346,12 @@ export class AppointmentFeedbackFormComponent {
 
     const { decision, rating, feedback } = this.feedbackForm.value;
 
-    this.apollo
-      .mutate({
-        mutation: SUBMIT_FEEDBACK_MUTATION,
-        variables: {
-          appointmentId: this.appointmentId,
-          feedback,
-          decision,
-          rating,
-        },
-      })
+    this.matchingProfileService
+      .submitAppointmentFeedback(this.appointmentId, feedback, decision, rating)
       .subscribe({
-        next: (result: any) => {
+        next: (result) => {
           this.loading = false;
-          this.feedbackSubmitted.emit(result.data.submitAppointmentFeedback);
+          this.feedbackSubmitted.emit(result);
         },
         error: (error) => {
           this.loading = false;

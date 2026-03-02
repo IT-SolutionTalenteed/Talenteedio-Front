@@ -334,4 +334,23 @@ export class AppointmentSchedulerComponent implements OnInit {
     );
     return appointment ? appointment.status : null;
   }
+
+  // Feedback Modal Management
+  showFeedbackModal = false;
+  selectedAppointmentForFeedback: any = null;
+
+  openFeedbackModal(appointment: any): void {
+    this.selectedAppointmentForFeedback = appointment;
+    this.showFeedbackModal = true;
+  }
+
+  closeFeedbackModal(): void {
+    this.showFeedbackModal = false;
+    this.selectedAppointmentForFeedback = null;
+  }
+
+  onFeedbackSubmitted(feedback: any): void {
+    this.closeFeedbackModal();
+    this.loadAppointments(); // Recharger pour afficher le feedback
+  }
 }

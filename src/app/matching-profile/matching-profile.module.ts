@@ -12,6 +12,9 @@ import { CompanyMatchesComponent } from './components/company-matches/company-ma
 import { AppointmentSchedulerComponent } from './components/appointment-scheduler/appointment-scheduler.component';
 import { AuthModalInlineComponent } from './components/auth-modal-inline/auth-modal-inline.component';
 import { MatchingProfileService } from './services/matching-profile.service';
+import { AppointmentFeedbackFormComponent } from './components/appointment-feedback-form.component';
+import { AppointmentFeedbackDisplayComponent } from './components/appointment-feedback-display.component';
+import { AppointmentsListComponent } from './components/appointments-list/appointments-list.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { MatchingProfileService } from './services/matching-profile.service';
     CompanyMatchesComponent,
     AppointmentSchedulerComponent,
     AuthModalInlineComponent,
+    AppointmentFeedbackFormComponent,
+    AppointmentFeedbackDisplayComponent,
+    AppointmentsListComponent,
   ],
   imports: [
     CommonModule,

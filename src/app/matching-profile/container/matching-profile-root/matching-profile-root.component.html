@@ -45,13 +45,28 @@
 
         <div class="step-line" [class.completed]="currentStep > 2"></div>
 
-        <div class="step-item" [class.active]="currentStep === 3">
+        <div class="step-item" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
           <div class="step-circle">
-            <span>2</span>
+            <svg *ngIf="currentStep > 3" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor" />
+            </svg>
+            <span *ngIf="currentStep <= 3">2</span>
           </div>
           <div class="step-content">
             <div class="step-title">Rendez-vous</div>
             <div class="step-subtitle">Planifiez vos entretiens</div>
+          </div>
+        </div>
+
+        <div class="step-line" [class.completed]="currentStep > 3"></div>
+
+        <div class="step-item" [class.active]="currentStep === 4">
+          <div class="step-circle">
+            <span>3</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">Mes Entretiens</div>
+            <div class="step-subtitle">Suivez vos rendez-vous</div>
           </div>
         </div>
       </div>
@@ -98,8 +113,22 @@
 
       <!-- Étape 3: Rendez-vous -->
       <div *ngIf="currentStep === 3 && currentProfile?.id">
-        <app-appointment-scheduler [profileId]="currentProfile.id" (back)="goToStep(2)">
+        <app-appointment-scheduler [profileId]="currentProfile.id" (back)="goToStep(2)" (next)="goToStep(4)">
         </app-appointment-scheduler>
+      </div>
+
+      <!-- Étape 4: Mes Entretiens avec Feedback -->
+      <div *ngIf="currentStep === 4">
+        <div class="section-header">
+          <button class="btn-back" (click)="goToStep(3)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="currentColor" />
+            </svg>
+            Retour
+          </button>
+          <h2>Mes Entretiens</h2>
+        </div>
+        <app-appointments-list></app-appointments-list>
       </div>
     </div>
   </div>

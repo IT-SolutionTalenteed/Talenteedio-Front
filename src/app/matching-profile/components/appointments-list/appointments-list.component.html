@@ -1,0 +1,123 @@
+<div class="appointments-container">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement des rendez-vous...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error-state">
+    <p>{{ error }}</p>
+    <button class="btn btn-primary" (click)="loadAppointments()">Réessayer</button>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && !error">
+    <!-- Section Rendez-vous à venir -->
+    <div class="appointments-section">
+      <h3>Rendez-vous planifiés</h3>
+
+      <div *ngIf="upcomingAppointments.length === 0" class="no-appointments">
+        <i class="bi bi-calendar-x"></i>
+        <p>Aucun rendez-vous planifié</p>
+      </div>
+
+      <div class="appointments-list">
+        <div
+          *ngFor="let appointment of upcomingAppointments"
+          class="appointment-card"
+        >
+          <div class="appointment-header">
+            <img
+              *ngIf="appointment.company.logo"
+              [src]="appointment.company.logo.fileUrl"
+              [alt]="appointment.company.company_name"
+              class="company-logo"
+            />
+            <div class="appointment-info">
+              <h4>{{ appointment.company.company_name }}</h4>
+              <p class="appointment-date">
+                {{ formatDate(appointment.appointmentDate) }} à
+                {{ appointment.appointmentTime }}
+              </p>
+              <span
+                class="status-badge"
+                [ngClass]="'status-' + appointment.status"
+              >
+                {{ getStatusLabel(appointment.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Rendez-vous terminés -->
+    <div class="appointments-section">
+      <h3>Rendez-vous terminés</h3>
+
+      <div *ngIf="completedAppointments.length === 0" class="no-appointments">
+        <i class="bi bi-check-circle"></i>
+        <p>Aucun rendez-vous terminé</p>
+      </div>
+
+      <div class="appointments-list">
+        <div
+          *ngFor="let appointment of completedAppointments"
+          class="appointment-card"
+        >
+          <div class="appointment-header">
+            <img
+              *ngIf="appointment.company.logo"
+              [src]="appointment.company.logo.fileUrl"
+              [alt]="appointment.company.company_name"
+              class="company-logo"
+            />
+            <div class="appointment-info">
+              <h4>{{ appointment.company.company_name }}</h4>
+              <p class="appointment-date">
+                {{ formatDate(appointment.appointmentDate) }} à
+                {{ appointment.appointmentTime }}
+              </p>
+            </div>
+
+            <!-- Bouton Feedback -->
+            <button
+              *ngIf="!appointment.feedbackSubmitted"
+              class="btn btn-primary btn-feedback"
+              (click)="openFeedbackForm(appointment)"
+            >
+              <i class="bi bi-chat-dots"></i>
+              Donner mon feedback
+            </button>
+          </div>
+
+          <!-- Affichage du feedback si déjà soumis -->
+          <app-appointment-feedback-display
+            *ngIf="appointment.feedbackSubmitted"
+            [feedback]="appointment.candidateFeedback"
+            [decision]="appointment.candidateDecision"
+            [rating]="appointment.candidateRating"
+            [feedbackSubmittedAt]="appointment.feedbackSubmittedAt"
+          ></app-appointment-feedback-display>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Formulaire de Feedback -->
+  <div
+    *ngIf="selectedAppointmentForFeedback"
+    class="feedback-modal"
+    (click)="onFeedbackCancelled()"
+  >
+    <div class="feedback-modal-content" (click)="$event.stopPropagation()">
+      <app-appointment-feedback-form
+        [appointmentId]="selectedAppointmentForFeedback.id"
+        [companyName]="selectedAppointmentForFeedback.company.company_name"
+        (feedbackSubmitted)="onFeedbackSubmitted($event)"
+        (cancelled)="onFeedbackCancelled()"
+      ></app-appointment-feedback-form>
+    </div>
+  </div>
+</div>
