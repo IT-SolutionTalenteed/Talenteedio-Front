@@ -335,35 +335,37 @@
 
 .appointment-card {
   background: white;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #f49f0a;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(244, 159, 10, 0.15);
   display: flex;
   flex-direction: column;
   height: 100%;
 
   &:hover {
-    border-color: $secondary;
+    border-color: #034078;
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba($secondary, 0.15);
+    box-shadow: 0 12px 24px rgba(3, 64, 120, 0.2);
+  }
+
+  &.selected {
+    border-color: #034078;
+    border-width: 3px;
+    box-shadow: 0 8px 20px rgba(3, 64, 120, 0.25);
   }
 
   &.expired {
-    opacity: 0.6;
-    background: #f9fafb;
-    border-color: #d1d5db;
+    opacity: 1;
+    background: white;
+    border-color: #f49f0a;
 
     &:hover {
-      border-color: #9ca3af;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .appointment-content {
-      filter: grayscale(0.3);
+      border-color: #034078;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(3, 64, 120, 0.2);
     }
   }
 
@@ -436,14 +438,16 @@
     }
 
     &.expired {
-      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-      color: #6b7280;
-      border: 2px solid #9ca3af;
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #991b1b;
+      border: 2px solid #ef4444;
       border-top: none;
       border-right: none;
+      font-size: 0.75rem;
+      padding: 0.625rem 1.25rem;
 
       svg {
-        stroke: #6b7280;
+        stroke: #dc2626;
       }
     }
   }
@@ -1341,7 +1345,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.875rem 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -1349,7 +1353,7 @@
     font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(244, 159, 10, 0.3);
 
     svg {
       flex-shrink: 0;
@@ -1357,7 +1361,8 @@
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 6px 16px rgba(244, 159, 10, 0.4);
+      background: linear-gradient(135deg, #ffb52e 0%, #f49f0a 100%);
     }
 
     &:active {
