@@ -36,12 +36,9 @@
 
 // Variantes pour différents types de hero-sections
 .hero-section--home {
-  // Pas de background image pour la page home
-  background-image: none !important;
-  background: linear-gradient(135deg, $deep-blue 0%, lighten($deep-blue, 10%) 100%);
-  
+  // Le style est défini dans le composant home-root
+  // Ne pas écraser ici
   min-height: 500px;
-  padding-top: 60px;
   
   @media screen and (max-width: 768px) {
     min-height: 400px;

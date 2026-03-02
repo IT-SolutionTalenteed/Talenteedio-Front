@@ -374,13 +374,14 @@
 // Match Card
 .match-card {
   background: white;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #f49f0a;
   border-radius: 20px;
   padding: 1.75rem;
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(244, 159, 10, 0.1);
 
   &::before {
     content: '';
@@ -389,33 +390,35 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, $secondary 0%, lighten($secondary, 10%) 100%);
+    background: linear-gradient(90deg, #f49f0a 0%, #ffb52e 100%);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
 
   &:hover {
-    border-color: $secondary;
+    border-color: #034078;
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba($secondary, 0.15);
+    box-shadow: 0 12px 24px rgba(3, 64, 120, 0.15);
 
     &::before {
       transform: scaleX(1);
+      background: linear-gradient(90deg, #034078 0%, #0a1128 100%);
     }
   }
 
   &.selected {
-    border-color: #10b981;
-    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.2);
+    border-color: #034078;
+    border-width: 3px;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    box-shadow: 0 8px 16px rgba(3, 64, 120, 0.2);
 
     &::before {
-      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+      background: linear-gradient(90deg, #034078 0%, #001f54 100%);
       transform: scaleX(1);
     }
 
     .match-badge {
-      background: #10b981;
+      background: #034078;
       color: white;
     }
   }
@@ -573,14 +576,14 @@
   }
 
   &.selected {
-    background: #10b981;
-    border-color: #10b981;
+    background: #034078;
+    border-color: #034078;
     color: white;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(3, 64, 120, 0.3);
 
     &:hover {
-      background: #059669;
-      border-color: #059669;
+      background: #001f54;
+      border-color: #001f54;
     }
   }
 }
