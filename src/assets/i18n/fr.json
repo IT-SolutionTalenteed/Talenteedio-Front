@@ -46,7 +46,44 @@
       "button": "Devenir membre"
     }
   },
-  "home": {
+  "jobList": {
+    "hero": {
+      "badge": "Opportunités de carrière",
+      "title": "Trouvez votre",
+      "titleAccent": "emploi idéal",
+      "description": "Découvrez des milliers d'opportunités adaptées à vos compétences et aspirations professionnelles"
+    },
+    "filter": {
+      "searchLabel": "Rechercher par mots-clés",
+      "searchPlaceholder": "Titre du poste...",
+      "locationLabel": "Localisation",
+      "locationPlaceholder": "Choisir une localisation",
+      "categoryLabel": "Catégorie",
+      "categoryPlaceholder": "Choisir une catégorie",
+      "jobTypeLabel": "Type d'emploi",
+      "jobTypePlaceholder": "Sélectionner les types d'emploi",
+      "featuredJobLabel": "Emploi en vedette",
+      "isFeatured": "Est en vedette",
+      "datePostedLabel": "Date de publication",
+      "experienceLevelLabel": "Niveau d'expérience",
+      "experienceLevelPlaceholder": "Sélectionner les niveaux d'expérience",
+      "findJobsButton": "Trouver des emplois"
+    },
+    "jobItem": {
+      "featured": "En vedette",
+      "urgent": "Urgent",
+      "referable": "Parrainage possible"
+    },
+    "companies": {
+      "title": "Entreprises",
+      "titleAccent": "qui recrutent",
+      "description": "Découvrez les entreprises leaders qui recherchent des talents comme vous"
+    },
+    "didYouKnow": {
+      "title": "Le saviez-vous ?",
+      "bookButton": "Prendre RDV"
+    }
+  },
     "hero": {
       "subtitle": "Dépassez vos attentes de carrière",
       "title": "Créer le meilleur. Jour.",

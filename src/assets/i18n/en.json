@@ -46,7 +46,44 @@
       "button": "Become member"
     }
   },
-  "home": {
+  "jobList": {
+    "hero": {
+      "badge": "Career Opportunities",
+      "title": "Find your",
+      "titleAccent": "ideal job",
+      "description": "Discover thousands of opportunities tailored to your skills and professional aspirations"
+    },
+    "filter": {
+      "searchLabel": "Search by Keywords",
+      "searchPlaceholder": "Job title...",
+      "locationLabel": "Location",
+      "locationPlaceholder": "Choose a location",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "jobTypeLabel": "Job type",
+      "jobTypePlaceholder": "Select job types",
+      "featuredJobLabel": "Featured Job",
+      "isFeatured": "Is featured",
+      "datePostedLabel": "Date posted",
+      "experienceLevelLabel": "Experience level",
+      "experienceLevelPlaceholder": "Select experience levels",
+      "findJobsButton": "Find jobs"
+    },
+    "jobItem": {
+      "featured": "Featured",
+      "urgent": "Urgent",
+      "referable": "Referable"
+    },
+    "companies": {
+      "title": "Companies",
+      "titleAccent": "hiring now",
+      "description": "Discover leading companies looking for talents like you"
+    },
+    "didYouKnow": {
+      "title": "Did you know?",
+      "bookButton": "Book a meeting"
+    }
+  },
     "hero": {
       "subtitle": "Exceed your career expectations",
       "title": "Create the best. Day.",
