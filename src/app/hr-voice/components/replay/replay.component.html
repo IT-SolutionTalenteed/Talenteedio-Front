@@ -6,14 +6,14 @@
     <a
       *ngFor="let interview of replay"
       style="width: 100%"
-      [routerLink]="'/interview/detail/' + interview.slug"
+      [routerLink]="['/interview/detail', interview.slug]"
     >
       <app-replay-item
         style="width: 100%"
         [replay]="interview"
       ></app-replay-item>
     </a>
-    <a class="see-all" [routerLink]="'/interview'">
+    <a class="see-all" [routerLink]="['/interview']">
       <Button class="secondary">See all interviews</Button>
     </a>
   </div>

@@ -156,14 +156,25 @@ export class RequestInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     token: string
   ): HttpRequest<unknown> {
-    let req = request;
-    if (token) {
-      req = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`, // add the bearer token to the request headers
-        },
-      });
+    // Get current language from localStorage
+    let currentLang = 'fr';
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const storedLang = localStorage.getItem('language');
+      if (storedLang) {
+        currentLang = storedLang;
+      }
     }
-    return req;
+
+    const headers: { [key: string]: string } = {
+      'Accept-Language': currentLang
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return request.clone({
+      setHeaders: headers
+    });
   }
 }

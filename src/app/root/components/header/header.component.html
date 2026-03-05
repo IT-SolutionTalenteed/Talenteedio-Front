@@ -4,7 +4,7 @@
     <div class="header-content">
       <!-- Logo -->
       <div class="logo-section">
-        <a routerLink="/home" class="logo-link">
+        <a [routerLink]="['/home']" class="logo-link">
           <img
             [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
             alt="Talenteed.io"
@@ -201,7 +201,7 @@
   <header class="mobile-header">
     <div class="mobile-header-content">
       <!-- Logo -->
-      <a routerLink="/home" class="mobile-logo">
+      <a [routerLink]="['/home']" class="mobile-logo">
         <img
           [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
           alt="Talenteed.io"

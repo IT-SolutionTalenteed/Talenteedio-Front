@@ -4,7 +4,7 @@
   routerLinkActive="menu__item--navigated"
   #menuItem
 >
-  <a (click)="!isSmallScreen && toggle.emit()" [routerLink]="menu.routerLink">
+  <a (click)="!isSmallScreen && toggle.emit()" routerLink="menu.routerLink">
     <img [src]="menu.icon" />
     <span>{{ (menu.title | translate) | uppercase }}</span>
   </a>

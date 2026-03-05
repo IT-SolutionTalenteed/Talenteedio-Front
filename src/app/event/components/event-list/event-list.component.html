@@ -2,7 +2,7 @@
   <a
     *ngFor="let event of events"
     class="event-list-item"
-    [localizedRouterLink]="'/event/detail/' + event.slug"
+    [routerLink]="['/event/detail', event.slug]"
   >
     <app-event-item [event]="event"></app-event-item>
   </a>

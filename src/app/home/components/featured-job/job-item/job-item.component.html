@@ -1,4 +1,4 @@
-<a class="container" [routerLink]="'/job/detail/' + job.slug">
+<a class="container" [routerLink]="['/job/detail', job.slug]">
   <div class="job-box">
     <div class="content">
       <div class="company-logo">
@@ -9,7 +9,7 @@
       </div>
       <div class="job-detail">
         <div class="job-title">
-          <a [routerLink]="'/job/detail/' + job.slug">{{ job.title }}</a>
+          <a [routerLink]="['/job/detail', job.slug]">{{ job.title }}</a>
         </div>
         <ul class="job-info">
           <li>

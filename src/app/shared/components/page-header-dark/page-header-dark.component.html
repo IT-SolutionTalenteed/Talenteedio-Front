@@ -14,7 +14,7 @@
     <!-- Breadcrumbs -->
     <nav class="breadcrumb" *ngIf="breadcrumbs && breadcrumbs.length > 0">
       <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
-        <a *ngIf="crumb.link && !last" [routerLink]="crumb.link">{{ crumb.label }}</a>
+        <a *ngIf="crumb.link && !last" routerLink="crumb.link">{{ crumb.label }}</a>
         <span *ngIf="!crumb.link || last">{{ crumb.label }}</span>
         <span class="separator" *ngIf="!last">/</span>
       </ng-container>

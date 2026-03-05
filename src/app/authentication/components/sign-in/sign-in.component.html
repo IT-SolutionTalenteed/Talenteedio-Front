@@ -81,7 +81,7 @@
               </label>
               <a
                 class="forgot-link"
-                [localizedRouterLink]="['/authentication/reinit-password']"
+                [routerLink]="['/authentication/reinit-password']"
               >{{ 'auth.signIn.forgotPassword' | translate }}</a>
             </div>
             <div class="password-wrapper">
@@ -182,7 +182,7 @@
       <!-- Sign Up Link -->
       <div class="footer-text">
         {{ 'auth.signIn.noAccount' | translate }}
-        <a [localizedRouterLink]="['/authentication/sign-up-choice']" class="signup-link">{{ 'auth.signIn.createAccount' | translate }}</a>
+        <a [routerLink]="['/authentication/sign-up-choice']" class="signup-link">{{ 'auth.signIn.createAccount' | translate }}</a>
       </div>
     </div>
   </div>

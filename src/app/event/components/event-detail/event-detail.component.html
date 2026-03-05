@@ -162,7 +162,7 @@
           
           <div class="companies-square-grid">
             <a *ngFor="let company of event.companies" 
-               [localizedRouterLink]="['/companies', company.id]"
+               [routerLink]="['/companies', company.id]"
                class="company-square-card">
               <div class="company-square-bg" [style.background]="'linear-gradient(135deg, ' + getCompanyColor(company) + ' 0%, ' + getCompanyColorDark(company) + ' 100%)'"></div>
               <div class="company-square-content">
