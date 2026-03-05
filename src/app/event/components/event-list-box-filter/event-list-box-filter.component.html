@@ -7,20 +7,20 @@
   <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
     <!-- <form> -->
     <div class="form-content">
-      <div for="search" class="label">Search by Keywords</div>
+      <div for="search" class="label">{{ 'eventList.filter.searchLabel' | translate }}</div>
       <div class="control">
         <input
           formControlName="search"
           id="search"
           type="text"
-          placeholder="Key words..."
+          [placeholder]="'eventList.filter.searchPlaceholder' | translate"
         />
         <fa-icon class="icon" [icon]="faSearch"></fa-icon>
       </div>
 
       <div class="footer">
         <div class="button-wrapper">
-          <button class="primary">Find item</button>
+          <button class="primary">{{ 'eventList.filter.findButton' | translate }}</button>
         </div>
       </div>
     </div>

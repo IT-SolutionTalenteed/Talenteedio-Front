@@ -3,19 +3,19 @@
   <section class="blog-header hero-section">
     <div class="header-content">
       <div class="breadcrumb">
-        <span class="breadcrumb-item" routerLink="/">Accueil</span>
+        <span class="breadcrumb-item" [localizedRouterLink]="['/']">{{ 'blog.breadcrumb.home' | translate }}</span>
         <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-item active">Blog</span>
+        <span class="breadcrumb-item active">{{ 'blog.breadcrumb.blog' | translate }}</span>
       </div>
       <h1 class="header-title">
-        Découvrez nos dernières actualités et conseils
+        {{ 'blog.list.title' | translate }}
       </h1>
       <div class="search-bar">
         <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon>
         <input
           type="text"
           class="search-input"
-          placeholder="Rechercher des articles..."
+          [placeholder]="'blog.list.searchPlaceholder' | translate"
           [(ngModel)]="searchQuery"
           (input)="onSearch()"
         />
@@ -31,7 +31,7 @@
         <div class="featured-grid" *ngIf="articles.length > 0">
           <a
             *ngFor="let article of articles.slice(0, 3)"
-            [routerLink]="'/blog/detail/' + article.slug"
+            [localizedRouterLink]="['/blog/detail', article.slug]"
             class="featured-card"
           >
             <div class="featured-image">
@@ -47,7 +47,7 @@
               <span class="featured-date">{{ article.createdAt | date : "dd MMM yyyy" }}</span>
               <h3 class="featured-title">{{ article.title }}</h3>
               <span class="featured-link">
-                Lire la suite
+                {{ 'blog.list.readMore' | translate }}
                 <fa-icon [icon]="arrowIcon" class="arrow-icon"></fa-icon>
               </span>
             </div>
@@ -58,9 +58,9 @@
       <!-- All Articles Section -->
       <section class="all-articles-section">
         <div class="section-header">
-          <h2 class="section-title">Tous les articles</h2>
+          <h2 class="section-title">{{ 'blog.list.allArticles' | translate }}</h2>
           <div class="articles-count" *ngIf="(totalItems$ | async) as total">
-            {{ total }} article{{ total > 1 ? 's' : '' }}
+            {{ total }} {{ total > 1 ? ('blog.list.articleCountPlural' | translate) : ('blog.list.articleCount' | translate) }}
           </div>
         </div>
 

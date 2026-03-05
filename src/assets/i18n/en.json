@@ -46,6 +46,95 @@
       "button": "Become member"
     }
   },
+  "jobDetail": {
+    "header": {
+      "featured": "Featured",
+      "urgent": "Urgent",
+      "referable": "Referable",
+      "jobExpired": "Job expired!",
+      "loginToApply": "Login to apply",
+      "applyButton": "Apply",
+      "matchButton": "Match my profile",
+      "validateAccount": "Please validate your account and send signed consent to apply",
+      "validateToRefer": "Please validate your account to refer",
+      "alreadyApplied": "Already applied",
+      "referButton": "Refer"
+    },
+    "sidebar": {
+      "title": "Job viewer",
+      "lastUpdate": "Last update:",
+      "expirationDate": "Expiration date:",
+      "location": "Location:",
+      "hours": "Hours:",
+      "salary": "Salary:"
+    },
+    "share": {
+      "title": "Share this job",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "Linkedin"
+    },
+    "applyModal": {
+      "title": "Apply for",
+      "description": "You can select a CV or a cover letter to apply for the job",
+      "cvLabel": "CV",
+      "cvPlaceholder": "Choose a CV",
+      "lmLabel": "LM",
+      "lmPlaceholder": "Choose a cover letter",
+      "applyButton": "Apply"
+    },
+    "referModal": {
+      "title": "Refer a talent",
+      "talentEmailLabel": "Talent email",
+      "talentEmailPlaceholder": "Enter talent email",
+      "talentFullNameLabel": "Talent Fullname",
+      "talentFullNamePlaceholder": "Enter talent fullname",
+      "talentPhoneLabel": "Talent phone",
+      "referButton": "Refer"
+    },
+    "matchModal": {
+      "title": "Match Profile",
+      "steps": {
+        "cvSelection": "CV Selection",
+        "cvPreview": "CV Preview",
+        "jobPreview": "Job Preview",
+        "results": "Results"
+      },
+      "cvSelectionStep": {
+        "description": "Select your CV to match with this job",
+        "cvLabel": "Select your CV",
+        "cvPlaceholder": "Choose a CV",
+        "continueButton": "Continue"
+      },
+      "cvPreviewStep": {
+        "selectedCV": "Selected CV:",
+        "noPreview": "No PDF available for this CV.",
+        "backButton": "Back",
+        "continueButton": "Continue"
+      },
+      "jobPreviewStep": {
+        "noContent": "This job offer has no detailed description.",
+        "backButton": "Back",
+        "validateButton": "Validate & Get Match",
+        "missingDataTooltip": "CV or job description missing"
+      },
+      "resultsStep": {
+        "matchRate": "Match rate with this job offer",
+        "synthesisTitle": "📋 Match Summary",
+        "evaluationTitle": "📊 Detailed Evaluation Table",
+        "tableHeaders": {
+          "criteria": "Criteria",
+          "score": "Score/10",
+          "reasons": "Reasons",
+          "comments": "Comments"
+        },
+        "gradingLegend": "Grading scale: 1-3 = very insufficient | 4-5 = insufficient | 6-7 = correct | 8-9 = good | 10 = excellent",
+        "interpretationTitle": "🎯 Result Interpretation",
+        "recommendationsTitle": "💡 Recommendations",
+        "closeButton": "Close"
+      }
+    }
+  },
   "jobList": {
     "hero": {
       "badge": "Career Opportunities",
@@ -84,6 +173,7 @@
       "bookButton": "Book a meeting"
     }
   },
+  "home": {
     "hero": {
       "subtitle": "Exceed your career expectations",
       "title": "Create the best. Day.",
@@ -153,6 +243,246 @@
       "viewAllArticles": "View All Articles"
     }
   },
+  "eventList": {
+    "hero": {
+      "badge": "Exceed your professional expectations",
+      "title": "Create the best. Day.",
+      "titleAccent": "Always.",
+      "description": "Participate in professional events, conferences and workshops that will transform your career",
+      "stats": {
+        "events": {
+          "number": "20k+",
+          "label": "Planned Events"
+        },
+        "organizers": {
+          "number": "260",
+          "label": "Event Organizers"
+        }
+      }
+    },
+    "filter": {
+      "searchLabel": "Search by Keywords",
+      "searchPlaceholder": "Key words...",
+      "findButton": "Find item"
+    },
+    "eventItem": {
+      "readMore": "Read more"
+    },
+    "categories": {
+      "noEvents": "No events available",
+      "loadMore": "See more events",
+      "viewAll": "View all",
+      "noCategories": "No event category available"
+    },
+    "companyEvents": {
+      "title": "Events from",
+      "titleAccent": "Companies",
+      "description": "Discover the latest events published by our partner companies",
+      "participatingCompanies": "Participating companies:",
+      "noEvents": "No company events available at the moment",
+      "viewMore": "See more events"
+    }
+  },
+  "eventDetail": {
+    "hero": {
+      "organizedBy": "By",
+      "organizedByTalenteed": "By Talenteed",
+      "companiesParticipating": "participating company",
+      "companiesParticipatingPlural": "participating companies",
+      "moreCompanies": "other companies"
+    },
+    "sections": {
+      "aboutEvent": "About this",
+      "aboutEventAccent": "event",
+      "practicalInfo": "Practical",
+      "practicalInfoAccent": "information",
+      "participatingCompanies": "Participating",
+      "participatingCompaniesAccent": "companies",
+      "participatingCompaniesSubtitle": "Discover the",
+      "participatingCompaniesSubtitleEnd": "that will be present at this event",
+      "shareEvent": "Share this",
+      "shareEventAccent": "event"
+    },
+    "infoLabels": {
+      "eventDate": "Event date",
+      "category": "Category",
+      "publishedOn": "Published on",
+      "status": "Status",
+      "date": "Date"
+    },
+    "status": {
+      "public": "PUBLIC",
+      "draft": "DRAFT",
+      "blocked": "BLOCKED",
+      "inReview": "IN REVIEW"
+    },
+    "share": {
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "sidebar": {
+      "participate": "Participate",
+      "interested": "Interested?",
+      "loginToParticipate": "Log in to participate in this event.",
+      "requestParticipation": "Request to participate in this event as an exhibitor.",
+      "participationPending": "Your participation request is being processed.",
+      "participationRejected": "Your participation request has been rejected.",
+      "reserveSpot": "Reserve your spot at the participating companies' booths.",
+      "reservedStands": "You have reserved",
+      "reservedStandsEnd": "booth",
+      "reservedStandsEndPlural": "booths",
+      "loginButton": "Log in",
+      "requestButton": "Request participation",
+      "reserveButton": "Reserve my spot",
+      "manageReservations": "Manage my reservations",
+      "organizer": "Organizer",
+      "organizerRole": "Event organizer",
+      "details": "Details"
+    },
+    "loading": {
+      "message": "Loading event details..."
+    },
+    "reservationModal": {
+      "title": "Reserve my spot",
+      "description": "Select one or more companies whose booths you wish to visit at this event.",
+      "companiesLabel": "Companies",
+      "required": "*",
+      "alreadyReserved": "(Already reserved)",
+      "selectedCount": "selected company",
+      "selectedCountPlural": "selected companies",
+      "notesLabel": "Notes (optional)",
+      "notesPlaceholder": "Add notes or questions for the companies...",
+      "cancelButton": "Cancel",
+      "confirmButton": "Confirm",
+      "confirmButtonPlural": "Confirm reservations",
+      "confirmButtonSingular": "Confirm reservation",
+      "loading": "Processing..."
+    },
+    "participationModal": {
+      "title": "Request participation",
+      "description": "Send a request to participate in this event as an exhibitor. An administrator will review your request.",
+      "messageLabel": "Message (optional)",
+      "messagePlaceholder": "Introduce your company and explain why you wish to participate...",
+      "cancelButton": "Cancel",
+      "submitButton": "Send request",
+      "loading": "Processing..."
+    }
+  },
+  "blog": {
+    "breadcrumb": {
+      "home": "Home",
+      "blog": "Blog"
+    },
+    "list": {
+      "title": "Discover our latest news and advice",
+      "searchPlaceholder": "Search articles...",
+      "readMore": "Read more",
+      "allArticles": "All articles",
+      "articleCount": "article",
+      "articleCountPlural": "articles",
+      "premium": "Premium"
+    },
+    "detail": {
+      "premium": "Premium",
+      "premiumContent": "Premium Content",
+      "premiumDescription": "Become a member to access the full article and enjoy all our exclusive content.",
+      "becomeMember": "Become a member",
+      "shareArticle": "Share this article",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "filter": {
+      "searchLabel": "Search by Keywords",
+      "searchPlaceholder": "Key words...",
+      "findButton": "Find item"
+    }
+  },
+  "matchingProfile": {
+    "hero": {
+      "badge": "Smart Matching",
+      "title": "Find companies that",
+      "titleAccent": "match",
+      "titleEnd": "your profile",
+      "description": "Our AI algorithm analyzes your profile and skills to connect you with the best opportunities."
+    },
+    "steps": {
+      "results": {
+        "title": "Results",
+        "subtitle": "Discover your matches"
+      },
+      "appointments": {
+        "title": "Appointments",
+        "subtitle": "Schedule your interviews"
+      },
+      "myInterviews": {
+        "title": "My Interviews",
+        "subtitle": "Track your appointments"
+      }
+    },
+    "loading": "Loading...",
+    "back": "Back",
+    "profileForm": {
+      "title": "your matching profile",
+      "create": "Create",
+      "edit": "Edit",
+      "loading": "Loading...",
+      "loadingData": "Loading data...",
+      "titleLabel": "Profile title",
+      "titlePlaceholder": "Ex: Full Stack Developer seeking opportunities",
+      "titleRequired": "Title is required (minimum 3 characters)",
+      "cvLabel": "CV (PDF)",
+      "cvDragDrop": "Drag and drop your CV here",
+      "cvClick": "or click to select a PDF file",
+      "cvSelected": "CV already uploaded",
+      "cvHelp": "Your CV will be analyzed to improve matching with companies",
+      "skillsLabel": "Skills",
+      "skillsPlaceholder": "Select your skills",
+      "skillsHelp": "Select your main skills or add new ones",
+      "skillsAdd": "Add",
+      "skillsNotFound": "No skills found",
+      "interestsLabel": "Professional interests",
+      "interestsPlaceholder": "Select your interests",
+      "interestsHelp": "Your areas of interest to better target companies",
+      "interestsAdd": "Add",
+      "interestsNotFound": "No interests found",
+      "sectorsLabel": "Target sectors (optional)",
+      "sectorsPlaceholder": "Select sectors that interest you",
+      "sectorsHelp": "Sectors that interest you (leave empty for all sectors)",
+      "sectorsAdd": "Add",
+      "sectorsNotFound": "No sectors found",
+      "saveButton": "Save and continue",
+      "saving": "Saving...",
+      "required": "*"
+    },
+    "companyMatches": {
+      "title": "Your matched companies",
+      "subtitle": "Discover companies that best match your profile",
+      "errorTitle": "An error occurred",
+      "retry": "Retry",
+      "emptyTitle": "Ready to discover your matches?",
+      "emptyText": "Launch the analysis to find companies that perfectly match your profile",
+      "startMatching": "Start matching",
+      "matchingTitle": "Analysis in progress...",
+      "matchingText": "Our AI is analyzing your profile and searching for the best opportunities for you",
+      "matchingSteps": {
+        "cvAnalysis": "CV Analysis",
+        "aiMatching": "AI Matching",
+        "results": "Results"
+      },
+      "statsCompanies": "found",
+      "statsCompaniesPlural": "found",
+      "statsCompany": "Company",
+      "statsCompanyPlural": "Companies",
+      "statsSelected": "Selected",
+      "matchBadge": "Match",
+      "selectButton": "Select",
+      "selectedButton": "Selected",
+      "relaunchMatching": "Relaunch matching",
+      "continueButton": "Continue to appointments"
+    }
+  },
   "common": {
     "language": "Language",
     "filter": "Filter",
@@ -170,5 +500,243 @@
     "back": "Back",
     "next": "Next",
     "previous": "Previous"
+  },
+  "auth": {
+    "branding": {
+      "tagline": "Talenteed",
+      "heroSignIn": "Creating the Best.",
+      "heroSignInLine2": "Day.",
+      "heroSignInAccent": "Ever.",
+      "heroSignUp": "Start Your Journey.",
+      "heroSignUpLine2": "Today.",
+      "heroSignUpAccent": "Now.",
+      "heroDescription": "Join thousands of professionals who trust Talenteed to exceed their career expectations",
+      "stats": {
+        "eventsPlanned": "Events Planned",
+        "eventOrganizers": "Event Organizers",
+        "companies": "Companies"
+      }
+    },
+    "signIn": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to continue your journey",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your.email@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot?",
+      "rememberMe": "Keep me signed in",
+      "submitButton": "Sign In",
+      "divider": "or continue with",
+      "googleButton": "Sign in with Google",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create one",
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required"
+      }
+    },
+    "signUp": {
+      "title": "Create Account",
+      "subtitle": "Join our community today",
+      "firstNameLabel": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your.email@example.com",
+      "phoneLabel": "Phone Number",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "sections": {
+        "professionalInfo": "Professional Information (Optional)",
+        "salaryCompensation": "Salary & Compensation (Optional)",
+        "location": "Location (Optional)",
+        "jobPreferences": "Job Preferences (Optional)"
+      },
+      "fields": {
+        "valuesLabel": "Values (Optional)",
+        "valuesPlaceholder": "Select values",
+        "cvLabel": "CV (PDF) - Optional",
+        "cvButton": "Choose File",
+        "cvNoFile": "No file chosen",
+        "cvError": "Must be a PDF file",
+        "yearsOfExperienceLabel": "Years of Experience",
+        "yearsOfExperiencePlaceholder": "e.g., 5",
+        "skillsLabel": "Skills",
+        "skillsPlaceholder": "JavaScript, React, Node.js...",
+        "languagesLabel": "Languages",
+        "languagesPlaceholder": "French (native), English (fluent)...",
+        "educationLabel": "Education",
+        "educationPlaceholder": "Master in Computer Science...",
+        "interestsLabel": "Interests",
+        "interestsPlaceholder": "Open source, AI, Blockchain...",
+        "tjmLabel": "TJM (€)",
+        "tjmPlaceholder": "Daily rate",
+        "annualSalaryLabel": "Annual Salary/12",
+        "annualSalaryPlaceholder": "Monthly salary",
+        "salaryRangeLabel": "Desired Salary Range",
+        "salaryRangePlaceholder": "45000-55000 €",
+        "countryLabel": "Country",
+        "countryPlaceholder": "France",
+        "cityLabel": "City",
+        "cityPlaceholder": "Paris",
+        "addressLabel": "Address",
+        "addressPlaceholder": "123 Rue de la Paix",
+        "postalCodeLabel": "Postal Code",
+        "postalCodePlaceholder": "75001",
+        "desiredPositionLabel": "Desired Position",
+        "desiredPositionPlaceholder": "Full Stack Developer Senior",
+        "contractTypeLabel": "Contract Type",
+        "contractTypePlaceholder": "Select contract type",
+        "companyTypeLabel": "Company Type",
+        "companyTypePlaceholder": "Startup, Scale-up...",
+        "sectorLabel": "Sector",
+        "sectorPlaceholder": "Tech, FinTech...",
+        "mobilityLabel": "Mobility",
+        "mobilityPlaceholder": "France, Europe...",
+        "desiredWorkLocationLabel": "Desired Work Location",
+        "desiredWorkLocationPlaceholder": "Paris or Remote...",
+        "availabilityDateLabel": "Availability Date",
+        "workModeLabel": "Work Mode",
+        "workModePlaceholder": "Select work mode"
+      },
+      "consent": {
+        "text": "I acknowledge having read",
+        "link": "the consent",
+        "textEnd": "and agree to sign it electronically with my name."
+      },
+      "submitButton": "Create Account",
+      "alreadyAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "errors": {
+        "emailDuplicate": "Email already registered",
+        "passwordMismatch": "Password does not match"
+      }
+    },
+    "signUpChoice": {
+      "title": "Create Your Account",
+      "subtitle": "Choose your profile to get started",
+      "talent": {
+        "title": "I'm looking for a job",
+        "description": "Find your dream job and connect with top companies",
+        "feature1": "Access to exclusive job offers",
+        "feature2": "Professional profile showcase",
+        "feature3": "Career development resources"
+      },
+      "company": {
+        "title": "I'm a company",
+        "description": "Find the best talents and grow your team",
+        "feature1": "Post unlimited job offers",
+        "feature2": "Access to talent database",
+        "feature3": "Recruitment management tools"
+      },
+      "consultant": {
+        "title": "I'm a consultant",
+        "description": "Offer your expertise and find consulting missions",
+        "feature1": "Exclusive consulting missions",
+        "feature2": "Professional network expansion",
+        "feature3": "Project management tools",
+        "comingSoon": "Coming Soon"
+      },
+      "alreadyAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "submitButton": "Reset password",
+      "alreadyAccount": "Already have an account ?",
+      "signInLink": "Sign in"
+    }
+  },
+  "company": {
+    "list": {
+      "badge": "Company Directory",
+      "title": "Discover",
+      "titleAccent": "companies",
+      "titleEnd": "that are hiring",
+      "description": "Explore our network of partner companies and find your future employer",
+      "searchPlaceholder": "Search for a company...",
+      "emptyTitle": "No companies found",
+      "emptyDescription": "Try modifying your search or change category"
+    },
+    "card": {
+      "viewButton": "View company"
+    },
+    "detail": {
+      "aboutTitle": "About",
+      "descriptionTitle": "Description",
+      "recruitmentTitle": "Recruitment",
+      "recruitmentTitleAccent": "information",
+      "recruitmentLabels": {
+        "profileSought": "Profile sought",
+        "positionsToFill": "Positions to fill",
+        "requiredSkills": "Required skills",
+        "requiredExperience": "Required experience",
+        "contractTypes": "Contract types",
+        "workingHours": "Working hours",
+        "hoursPerWeek": "hours/week"
+      },
+      "jobsTitle": "Job",
+      "jobsTitleAccent": "offers",
+      "jobsSubtitle": "Discover the",
+      "jobsSubtitleEnd": "offer",
+      "jobsSubtitleEndPlural": "offers",
+      "jobsSubtitleAvailable": "available",
+      "jobsSubtitleAvailablePlural": "available",
+      "jobsEmpty": "No job offers available at the moment",
+      "jobBadge": "Job",
+      "eventsTitle": "Upcoming",
+      "eventsTitleAccent": "events",
+      "eventsSubtitle": "event",
+      "eventsSubtitlePlural": "events",
+      "eventsSubtitleOrganized": "organized",
+      "eventsSubtitleOrganizedPlural": "organized",
+      "eventsSubtitleParticipated": "or participated",
+      "eventsSubtitleParticipatedPlural": "or participated",
+      "eventsEmpty": "No upcoming events at the moment",
+      "eventsCompaniesLabel": "company",
+      "eventsCompaniesLabelPlural": "companies",
+      "articlesTitle": "Articles &",
+      "articlesTitleAccent": "News",
+      "articlesSubtitle": "article",
+      "articlesSubtitlePlural": "articles",
+      "articlesSubtitlePublished": "published",
+      "articlesSubtitlePublishedPlural": "published",
+      "articlesEmpty": "No articles published at the moment",
+      "articlesBy": "By",
+      "sidebar": {
+        "infoTitle": "Information",
+        "infoLabels": {
+          "slogan": "Slogan",
+          "industry": "Industry",
+          "sector": "Sector",
+          "companySize": "Company size",
+          "numberOfEmployees": "Number of employees",
+          "foundedYear": "Founded year",
+          "website": "Website",
+          "websiteLink": "Visit website",
+          "socialNetworks": "Social networks"
+        },
+        "contactTitle": "Contact",
+        "contactLabels": {
+          "address": "Address",
+          "phone": "Phone",
+          "email": "Email"
+        },
+        "contactEmpty": "Contact information is not yet available for this company.",
+        "ctaTitle": "Interested?",
+        "ctaText": "Discover all opportunities offered by",
+        "ctaButton": "View offers"
+      },
+      "loading": "Loading information...",
+      "errorTitle": "Company not found",
+      "errorButton": "Back to list"
+    }
   }
 }

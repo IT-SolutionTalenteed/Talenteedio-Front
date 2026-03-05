@@ -6,7 +6,7 @@
     />
     <div class="premium-icon" *ngIf="article.isPremium">
       <fa-icon class="icon" [icon]="premiumIcon"></fa-icon>
-      <div class="premium-label">Premium</div>
+      <div class="premium-label">{{ 'blog.list.premium' | translate }}</div>
     </div>
   </div>
   <div class="info-box">
@@ -21,7 +21,7 @@
       }}
     </div>
     <div class="read-more">
-      Read more
+      {{ 'blog.list.readMore' | translate }}
       <div class="icon">
         <fa-icon class="icon" [icon]="readMoreIcon"></fa-icon>
       </div>

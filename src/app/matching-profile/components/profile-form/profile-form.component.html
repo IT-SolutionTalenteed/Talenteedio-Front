@@ -3,15 +3,15 @@
     <div class="card-body p-4">
       <h3 class="card-title mb-4">
         <i class="fas fa-user-edit me-2"></i>
-        {{ profile?.id ? 'Modifier' : 'Créer' }} votre profil de matching
+        {{ (profile?.id ? 'matchingProfile.profileForm.edit' : 'matchingProfile.profileForm.create') | translate }} {{ 'matchingProfile.profileForm.title' | translate }}
       </h3>
 
       <!-- Loading Data -->
       <div class="text-center py-5" *ngIf="loadingData">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Chargement...</span>
+          <span class="visually-hidden">{{ 'matchingProfile.profileForm.loading' | translate }}</span>
         </div>
-        <p class="mt-3 text-muted">Chargement des données...</p>
+        <p class="mt-3 text-muted">{{ 'matchingProfile.profileForm.loadingData' | translate }}</p>
       </div>
 
       <!-- Success Alert -->
@@ -31,24 +31,24 @@
         <!-- Titre du profil -->
         <div class="mb-4">
           <label for="title" class="form-label">
-            Titre du profil <span class="text-danger">*</span>
+            {{ 'matchingProfile.profileForm.titleLabel' | translate }} <span class="text-danger">{{ 'matchingProfile.profileForm.required' | translate }}</span>
           </label>
           <input 
             type="text" 
             class="form-control" 
             id="title" 
             formControlName="title"
-            placeholder="Ex: Développeur Full Stack recherche opportunités"
+            [placeholder]="'matchingProfile.profileForm.titlePlaceholder' | translate"
             [class.is-invalid]="form.get('title')?.invalid && form.get('title')?.touched">
           <div class="invalid-feedback" *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
-            Le titre est requis (minimum 3 caractères)
+            {{ 'matchingProfile.profileForm.titleRequired' | translate }}
           </div>
         </div>
 
         <!-- CV Upload -->
         <div class="mb-4">
           <label for="cv" class="form-label">
-            CV (PDF)
+            {{ 'matchingProfile.profileForm.cvLabel' | translate }}
           </label>
           <div 
             class="cv-upload-zone" 
@@ -67,10 +67,10 @@
             <div class="upload-content">
               <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-primary"></i>
               <p class="mb-2" *ngIf="!selectedFile && !profile?.cv">
-                <strong>Glissez-déposez votre CV ici</strong>
+                <strong>{{ 'matchingProfile.profileForm.cvDragDrop' | translate }}</strong>
               </p>
               <p class="mb-0 text-muted" *ngIf="!selectedFile && !profile?.cv">
-                ou cliquez pour sélectionner un fichier PDF
+                {{ 'matchingProfile.profileForm.cvClick' | translate }}
               </p>
               <p class="mb-0 text-success" *ngIf="selectedFile">
                 <i class="fas fa-file-pdf me-2"></i>
@@ -78,19 +78,19 @@
               </p>
               <p class="mb-0" *ngIf="!selectedFile && profile?.cv">
                 <i class="fas fa-file-pdf me-2 text-success"></i>
-                CV déjà téléchargé
+                {{ 'matchingProfile.profileForm.cvSelected' | translate }}
               </p>
             </div>
           </div>
           <small class="form-text text-muted">
-            Votre CV sera analysé pour améliorer le matching avec les entreprises
+            {{ 'matchingProfile.profileForm.cvHelp' | translate }}
           </small>
         </div>
 
         <!-- Compétences -->
         <div class="mb-4">
           <label for="skills" class="form-label">
-            Compétences
+            {{ 'matchingProfile.profileForm.skillsLabel' | translate }}
           </label>
           <ng-select
             [items]="skillsOptions"
@@ -98,22 +98,22 @@
             [closeOnSelect]="false"
             [searchable]="true"
             [clearable]="true"
-            placeholder="Sélectionnez vos compétences"
+            [placeholder]="'matchingProfile.profileForm.skillsPlaceholder' | translate"
             formControlName="skills"
             id="skills"
             [addTag]="true"
-            addTagText="Ajouter"
-            notFoundText="Aucune compétence trouvée">
+            [addTagText]="'matchingProfile.profileForm.skillsAdd' | translate"
+            [notFoundText]="'matchingProfile.profileForm.skillsNotFound' | translate">
           </ng-select>
           <small class="form-text text-muted">
-            Sélectionnez vos compétences principales ou ajoutez-en de nouvelles
+            {{ 'matchingProfile.profileForm.skillsHelp' | translate }}
           </small>
         </div>
 
         <!-- Centres d'intérêt -->
         <div class="mb-4">
           <label for="interests" class="form-label">
-            Centres d'intérêt professionnels
+            {{ 'matchingProfile.profileForm.interestsLabel' | translate }}
           </label>
           <ng-select
             [items]="interestsOptions"
@@ -121,22 +121,22 @@
             [closeOnSelect]="false"
             [searchable]="true"
             [clearable]="true"
-            placeholder="Sélectionnez vos centres d'intérêt"
+            [placeholder]="'matchingProfile.profileForm.interestsPlaceholder' | translate"
             formControlName="interests"
             id="interests"
             [addTag]="true"
-            addTagText="Ajouter"
-            notFoundText="Aucun centre d'intérêt trouvé">
+            [addTagText]="'matchingProfile.profileForm.interestsAdd' | translate"
+            [notFoundText]="'matchingProfile.profileForm.interestsNotFound' | translate">
           </ng-select>
           <small class="form-text text-muted">
-            Vos domaines d'intérêt pour mieux cibler les entreprises
+            {{ 'matchingProfile.profileForm.interestsHelp' | translate }}
           </small>
         </div>
 
         <!-- Secteurs ciblés -->
         <div class="mb-4">
           <label for="targetSectorIds" class="form-label">
-            Secteurs d'activité recherchés (optionnel)
+            {{ 'matchingProfile.profileForm.sectorsLabel' | translate }}
           </label>
           <ng-select
             [items]="sectorsOptions"
@@ -144,15 +144,15 @@
             [closeOnSelect]="false"
             [searchable]="true"
             [clearable]="true"
-            placeholder="Sélectionnez les secteurs qui vous intéressent"
+            [placeholder]="'matchingProfile.profileForm.sectorsPlaceholder' | translate"
             formControlName="targetSectorIds"
             id="targetSectorIds"
             [addTag]="true"
-            addTagText="Ajouter"
-            notFoundText="Aucun secteur trouvé">
+            [addTagText]="'matchingProfile.profileForm.sectorsAdd' | translate"
+            [notFoundText]="'matchingProfile.profileForm.sectorsNotFound' | translate">
           </ng-select>
           <small class="form-text text-muted">
-            Secteurs qui vous intéressent (laissez vide pour tous les secteurs)
+            {{ 'matchingProfile.profileForm.sectorsHelp' | translate }}
           </small>
         </div>
 
@@ -164,7 +164,7 @@
             [disabled]="loading || form.invalid">
             <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
             <i class="fas fa-save me-2" *ngIf="!loading"></i>
-            {{ loading ? 'Sauvegarde...' : 'Sauvegarder et continuer' }}
+            {{ loading ? ('matchingProfile.profileForm.saving' | translate) : ('matchingProfile.profileForm.saveButton' | translate) }}
           </button>
         </div>
       </form>

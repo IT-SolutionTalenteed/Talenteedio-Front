@@ -3,9 +3,9 @@
   <div class="breadcrumb-section">
     <div class="container">
       <div class="breadcrumb">
-        <span class="breadcrumb-item" routerLink="/">Accueil</span>
+        <span class="breadcrumb-item" [localizedRouterLink]="['/']">{{ 'blog.breadcrumb.home' | translate }}</span>
         <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-item" routerLink="/blog">Blog</span>
+        <span class="breadcrumb-item" [localizedRouterLink]="['/blog']">{{ 'blog.breadcrumb.blog' | translate }}</span>
         <span class="breadcrumb-separator">/</span>
         <span class="breadcrumb-item active">{{ article.title }}</span>
       </div>
@@ -19,7 +19,7 @@
         <!-- Premium Badge -->
         <div class="premium-badge" *ngIf="article.isPremium">
           <fa-icon [icon]="premiumIcon"></fa-icon>
-          <span>Premium</span>
+          <span>{{ 'blog.detail.premium' | translate }}</span>
         </div>
 
         <!-- Title -->
@@ -82,10 +82,10 @@
             <div class="premium-cta-icon">
               <fa-icon [icon]="premiumIcon"></fa-icon>
             </div>
-            <h3 class="premium-cta-title">Contenu Premium</h3>
-            <p class="premium-cta-text">Devenez membre pour accéder à l'intégralité de cet article et profiter de tous nos contenus exclusifs.</p>
+            <h3 class="premium-cta-title">{{ 'blog.detail.premiumContent' | translate }}</h3>
+            <p class="premium-cta-text">{{ 'blog.detail.premiumDescription' | translate }}</p>
             <button class="premium-cta-button" (click)="onReadMore()">
-              Devenir membre
+              {{ 'blog.detail.becomeMember' | translate }}
               <fa-icon [icon]="readMoreIcon"></fa-icon>
             </button>
           </div>
@@ -95,19 +95,19 @@
         <div class="share-section">
           <div class="share-divider"></div>
           <div class="share-content">
-            <h3 class="share-title">Partager cet article</h3>
+            <h3 class="share-title">{{ 'blog.detail.shareArticle' | translate }}</h3>
             <div class="share-buttons">
               <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)" class="share-btn facebook-btn">
                 <fa-icon [icon]="fbIcon"></fa-icon>
-                <span>Facebook</span>
+                <span>{{ 'blog.detail.facebook' | translate }}</span>
               </a>
               <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)" class="share-btn twitter-btn">
                 <fa-icon [icon]="twitterIcon"></fa-icon>
-                <span>Twitter</span>
+                <span>{{ 'blog.detail.twitter' | translate }}</span>
               </a>
               <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)" class="share-btn linkedin-btn">
                 <fa-icon [icon]="linkedinIcon"></fa-icon>
-                <span>LinkedIn</span>
+                <span>{{ 'blog.detail.linkedin' | translate }}</span>
               </a>
             </div>
           </div>
