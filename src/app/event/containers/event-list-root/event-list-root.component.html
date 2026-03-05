@@ -3,12 +3,12 @@
   <section class="hero-section">
     <div class="hero-content">
       <div class="hero-badges">
-        <span class="badge">Dépassez vos attentes professionnelles</span>
+        <span class="badge">{{ 'eventList.hero.badge' | translate }}</span>
       </div>
       <h1 class="hero-title">
-        Créer le meilleur. Jour. <span class="accent">Toujours.</span>
+        {{ 'eventList.hero.title' | translate }} <span class="accent">{{ 'eventList.hero.titleAccent' | translate }}</span>
       </h1>
-      <p class="hero-description">Participez à des événements professionnels, conférences et ateliers qui transformeront votre carrière</p>
+      <p class="hero-description">{{ 'eventList.hero.description' | translate }}</p>
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-icon">
@@ -20,8 +20,8 @@
             </svg>
           </div>
           <div class="stat-content">
-            <div class="stat-number">20k+</div>
-            <div class="stat-label">Événements planifiés</div>
+            <div class="stat-number">{{ 'eventList.hero.stats.events.number' | translate }}</div>
+            <div class="stat-label">{{ 'eventList.hero.stats.events.label' | translate }}</div>
           </div>
         </div>
         <div class="stat-item">
@@ -31,8 +31,8 @@
             </svg>
           </div>
           <div class="stat-content">
-            <div class="stat-number">260</div>
-            <div class="stat-label">Organisateurs d'événements</div>
+            <div class="stat-number">{{ 'eventList.hero.stats.organizers.number' | translate }}</div>
+            <div class="stat-label">{{ 'eventList.hero.stats.organizers.label' | translate }}</div>
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                 </svg>
-                <p>Aucun événement disponible</p>
+                <p>{{ 'eventList.categories.noEvents' | translate }}</p>
               </div>
             </div>
 
@@ -101,7 +101,7 @@
               (click)="loadMoreEventsInCategory(category.id)"
               *ngIf="hasMoreEventsToShow(category) && category.displayedEventsCount < 6"
             >
-              Voir plus d'événements
+              {{ 'eventList.categories.loadMore' | translate }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -113,7 +113,7 @@
               (click)="viewMoreCategory(category.slug)"
               *ngIf="category.totalEvents > 6 || (category.events.length > 6 && category.displayedEventsCount >= 6)"
             >
-              Voir tout ({{ category.totalEvents }})
+              {{ 'eventList.categories.viewAll' | translate }} ({{ category.totalEvents }})
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -130,7 +130,7 @@
           <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
           <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
         </svg>
-        <p>Aucune catégorie d'événement disponible</p>
+        <p>{{ 'eventList.categories.noCategories' | translate }}</p>
       </div>
     </app-loader>
   </section>
@@ -139,9 +139,9 @@
   <section class="company-events-section" *ngIf="!loadingCategories && categoriesWithEvents.length > 0">
     <div class="section-header">
       <h2 class="section-title">
-        Événements des <span class="accent">Entreprises</span>
+        {{ 'eventList.companyEvents.title' | translate }} <span class="accent">{{ 'eventList.companyEvents.titleAccent' | translate }}</span>
       </h2>
-      <p class="section-description">Découvrez les derniers événements publiés par nos entreprises partenaires</p>
+      <p class="section-description">{{ 'eventList.companyEvents.description' | translate }}</p>
     </div>
     
     <app-loader [isLoading]="loadingCompanyEvents">
@@ -179,7 +179,7 @@
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
                   <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
                 </svg>
-                Entreprises participantes :
+                {{ 'eventList.companyEvents.participatingCompanies' | translate }}
               </div>
               <div class="companies-logos">
                 <div class="company-logo-item" *ngFor="let company of event.companies.slice(0, 4)" [title]="company.company_name">
@@ -223,12 +223,12 @@
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
           <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
         </svg>
-        <p>Aucun événement d'entreprise disponible pour le moment</p>
+        <p>{{ 'eventList.companyEvents.noEvents' | translate }}</p>
       </div>
       
       <div class="view-all-container" *ngIf="companyEvents.length > 6">
         <button class="view-all-btn" [routerLink]="['/event/list']">
-          Voir plus d'événements
+          {{ 'eventList.companyEvents.viewMore' | translate }}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>

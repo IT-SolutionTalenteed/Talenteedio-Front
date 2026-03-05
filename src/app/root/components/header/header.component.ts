@@ -107,7 +107,7 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
     
     this.subs.sink = this.categoryService.getEventCategories().subscribe({
       next: (categories) => {
-        const eventMenu = this.navbarMenus.find(menu => menu.title === 'Événements');
+        const eventMenu = this.navbarMenus.find(menu => menu.title === 'header.menu.events');
         if (eventMenu && eventMenu.subMenus) {
           // Ajouter les catégories après "Tous nos événements"
           const categoryMenus = categories.map(category => ({

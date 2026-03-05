@@ -2,7 +2,7 @@
   <div class="banner-card" *ngIf="content">
     <div class="content-text" [innerHTML]="content"></div>
     <div class="button">
-      <a [routerLink]="'/initiative'">
+      <a [routerLink]="['/initiative']">
         <button class="secondary">Go initiative</button>
       </a>
     </div>
@@ -62,7 +62,7 @@
             <p>€900 for companies with more than 300 employees</p>
           </div>
           <div class="subscription_action">
-            <a [routerLink]="'/become-member'">
+            <a [routerLink]="['/become-member']">
               <button class="primary">Become member</button>
             </a>
           </div>

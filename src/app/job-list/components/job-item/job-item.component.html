@@ -23,10 +23,10 @@
         </div>
         <ul class="job-chips">
           <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>
-          <li class="featured" *ngIf="job.isFeatured">Featured</li>
-          <li class="urgent" *ngIf="job.isUrgent">Urgent</li>
+          <li class="featured" *ngIf="job.isFeatured">{{ 'jobList.jobItem.featured' | translate }}</li>
+          <li class="urgent" *ngIf="job.isUrgent">{{ 'jobList.jobItem.urgent' | translate }}</li>
           <li class="referable" *ngIf="isReferral && job.isSharable">
-            Referable
+            {{ 'jobList.jobItem.referable' | translate }}
           </li>
         </ul>
         <ul class="job-info">

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CoachingEmploiRoutingModule } from './coaching-emploi-routing.module';
+import { SharedModule } from '../shared/shared.module';
 import { CoachingEmploiComponent } from './coaching-emploi.component';
 import { ConsultantsComponent } from './containers/consultants/consultants.component';
 import { ServicesComponent } from './containers/services/services.component';
@@ -24,6 +25,6 @@ import { BookingValidationComponent } from './containers/booking-validation/book
     CalendarComponent,
     BookingValidationComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, CoachingEmploiRoutingModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, CoachingEmploiRoutingModule, SharedModule],
 })
 export class CoachingEmploiModule {}

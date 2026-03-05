@@ -29,20 +29,20 @@
             ></fa-icon>
           </h4>
         </div>
-        <h4>Apply for {{ (job$ | async)?.title }}</h4>
+        <h4>{{ 'jobDetail.applyModal.title' | translate }} {{ (job$ | async)?.title }}</h4>
       </div>
-      <p class="modal-p">You can select a CV or a LM to apply for the job</p>
+      <p class="modal-p">{{ 'jobDetail.applyModal.description' | translate }}</p>
       <form *ngIf="form" [formGroup]="form" (submit)="onApplyForJob(form)">
         <!-- <form> -->
         <div class="form-content">
-          <label for="cvId"><strong>CV *</strong></label>
+          <label for="cvId"><strong>{{ 'jobDetail.applyModal.cvLabel' | translate }} *</strong></label>
           <div class="control">
             <ng-select
               formControlName="cvId"
               [items]="CVs || []"
               bindLabel="title"
               bindValue="id"
-              placeholder="Choose a CV"
+              [placeholder]="'jobDetail.applyModal.cvPlaceholder' | translate"
               required
             >
             </ng-select>
@@ -50,14 +50,14 @@
               [control]="form.controls['cvId']"
             ></app-validation-error>
           </div>
-          <label for="lmId"><strong>LM</strong></label>
+          <label for="lmId"><strong>{{ 'jobDetail.applyModal.lmLabel' | translate }}</strong></label>
           <div class="control">
             <ng-select
               formControlName="lmId"
               [items]="LMs || []"
               bindLabel="title"
               bindValue="id"
-              placeholder="Choose a cover letter"
+              [placeholder]="'jobDetail.applyModal.lmPlaceholder' | translate"
             >
             </ng-select>
           </div>
@@ -67,7 +67,7 @@
             {{ applyForJobError$ | async }}
           </div>
         </div>
-        <button class="primary" type="submit">Apply</button>
+        <button class="primary" type="submit">{{ 'jobDetail.applyModal.applyButton' | translate }}</button>
       </form>
     </app-loader>
   </ng-template>
@@ -92,7 +92,7 @@
             ></fa-icon>
           </h4>
         </div>
-        <h4>Refer a talent</h4>
+        <h4>{{ 'jobDetail.referModal.title' | translate }}</h4>
       </div>
       <form
         *ngIf="referForm"
@@ -101,34 +101,34 @@
       >
         <!-- <form> -->
         <div class="form-content">
-          <label for="talentEmail"><strong>Talent email *</strong></label>
+          <label for="talentEmail"><strong>{{ 'jobDetail.referModal.talentEmailLabel' | translate }} *</strong></label>
           <div class="control">
             <input
               id="talentEmail"
               appScrollOnFocus
               formControlName="talentEmail"
               type="email"
-              placeholder="Enter talent email"
+              [placeholder]="'jobDetail.referModal.talentEmailPlaceholder' | translate"
               #first
             />
             <app-validation-error
               [control]="referForm.controls['talentEmail']"
             ></app-validation-error>
           </div>
-          <label for="talentFullName"><strong>Talent Fullname *</strong></label>
+          <label for="talentFullName"><strong>{{ 'jobDetail.referModal.talentFullNameLabel' | translate }} *</strong></label>
           <div class="control">
             <input
               id="talentFullName"
               appScrollOnFocus
               formControlName="talentFullName"
               type="text"
-              placeholder="Enter talent fullname"
+              [placeholder]="'jobDetail.referModal.talentFullNamePlaceholder' | translate"
             />
             <app-validation-error
               [control]="referForm.controls['talentFullName']"
             ></app-validation-error>
           </div>
-          <label for="talentNumber"><strong>Talent phone</strong></label>
+          <label for="talentNumber"><strong>{{ 'jobDetail.referModal.talentPhoneLabel' | translate }}</strong></label>
           <div class="control">
             <angular-intl-phone
               formControlName="talentNumber"
@@ -144,7 +144,7 @@
             {{ referJobError$ | async }}
           </div>
         </div>
-        <button class="primary" type="submit">Refer</button>
+        <button class="primary" type="submit">{{ 'jobDetail.referModal.referButton' | translate }}</button>
       </form>
     </app-loader>
   </ng-template>
@@ -158,29 +158,29 @@
       <!-- Fixed Header Section -->
       <div class="match-modal-header">
         <div class="modal-title">
-          <h4>Match Profile</h4>
+          <h4>{{ 'jobDetail.matchModal.title' | translate }}</h4>
         </div>
 
         <!-- Progress indicator -->
         <div class="match-progress">
           <div class="progress-step" [class.active]="matchStep === 'cv-selection'" [class.completed]="matchStep !== 'cv-selection'">
             <span class="step-number">1</span>
-            <span class="step-label">CV Selection</span>
+            <span class="step-label">{{ 'jobDetail.matchModal.steps.cvSelection' | translate }}</span>
           </div>
           <div class="progress-line" [class.completed]="matchStep !== 'cv-selection'"></div>
           <div class="progress-step" [class.active]="matchStep === 'cv-preview'" [class.completed]="['job-preview', 'results'].includes(matchStep)">
             <span class="step-number">2</span>
-            <span class="step-label">CV Preview</span>
+            <span class="step-label">{{ 'jobDetail.matchModal.steps.cvPreview' | translate }}</span>
           </div>
           <div class="progress-line" [class.completed]="['job-preview', 'results'].includes(matchStep)"></div>
           <div class="progress-step" [class.active]="matchStep === 'job-preview'" [class.completed]="matchStep === 'results'">
             <span class="step-number">3</span>
-            <span class="step-label">Job Preview</span>
+            <span class="step-label">{{ 'jobDetail.matchModal.steps.jobPreview' | translate }}</span>
           </div>
           <div class="progress-line" [class.completed]="matchStep === 'results'"></div>
           <div class="progress-step" [class.active]="matchStep === 'results'">
             <span class="step-number">4</span>
-            <span class="step-label">Results</span>
+            <span class="step-label">{{ 'jobDetail.matchModal.steps.results' | translate }}</span>
           </div>
         </div>
       </div>
@@ -195,17 +195,17 @@
         
         <!-- STEP 1: CV Selection -->
         <div *ngIf="matchStep === 'cv-selection'" class="match-step">
-          <p class="modal-p">Select your CV to match with this job</p>
+          <p class="modal-p">{{ 'jobDetail.matchModal.cvSelectionStep.description' | translate }}</p>
           <form *ngIf="matchForm" [formGroup]="matchForm" (submit)="onSelectCV(matchForm); $event.preventDefault()">
             <div class="form-content">
-              <label for="matchCvId"><strong>Select your CV *</strong></label>
+              <label for="matchCvId"><strong>{{ 'jobDetail.matchModal.cvSelectionStep.cvLabel' | translate }} *</strong></label>
               <div class="control">
                 <ng-select
                   formControlName="cvId"
                   [items]="CVs || []"
                   bindLabel="title"
                   bindValue="id"
-                  placeholder="Choose a CV"
+                  [placeholder]="'jobDetail.matchModal.cvSelectionStep.cvPlaceholder' | translate"
                   required
                 >
                 </ng-select>
@@ -220,7 +220,7 @@
               </div>
             </div>
             <div class="button-group">
-              <button class="primary" type="submit">Continue</button>
+              <button class="primary" type="submit">{{ 'jobDetail.matchModal.cvSelectionStep.continueButton' | translate }}</button>
             </div>
           </form>
         </div>
@@ -228,7 +228,7 @@
         <!-- STEP 2: CV Preview -->
         <div *ngIf="matchStep === 'cv-preview'" class="match-step">
           <div style="margin-top: 20px;">
-            <div><strong>CV sélectionné :</strong> {{ selectedCV?.title }}</div>
+            <div><strong>{{ 'jobDetail.matchModal.cvPreviewStep.selectedCV' | translate }}</strong> {{ selectedCV?.title }}</div>
             <div *ngIf="selectedCV?.fileUrl; else noPreview" style="margin-top:16px;">
               <iframe 
                 [src]="selectedCV.fileUrl | safe"
@@ -238,12 +238,12 @@
               ></iframe>
             </div>
             <ng-template #noPreview>
-              <p style="color:#888; margin-top:16px;">Pas de PDF disponible pour ce CV.</p>
+              <p style="color:#888; margin-top:16px;">{{ 'jobDetail.matchModal.cvPreviewStep.noPreview' | translate }}</p>
             </ng-template>
           </div>
           <div class="button-group">
-            <button class="secondary" type="button" (click)="onGoBack()">Back</button>
-            <button class="primary" type="button" (click)="onContinueFromCVPreview()">Continue</button>
+            <button class="secondary" type="button" (click)="onGoBack()">{{ 'jobDetail.matchModal.cvPreviewStep.backButton' | translate }}</button>
+            <button class="primary" type="button" (click)="onContinueFromCVPreview()">{{ 'jobDetail.matchModal.cvPreviewStep.continueButton' | translate }}</button>
           </div>
         </div>
 
@@ -256,7 +256,7 @@
             </ng-container>
             <ng-template #noJobContent>
               <div style="max-height: 500px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 16px; background: #f9f9f9; color: #888; text-align: center;">
-                <p style="font-style: italic;">Cette offre d'emploi n'a pas de description détaillée.</p>
+                <p style="font-style: italic;">{{ 'jobDetail.matchModal.jobPreviewStep.noContent' | translate }}</p>
               </div>
             </ng-template>
           </div>
@@ -266,15 +266,15 @@
             </div>
           </div>
           <div class="button-group">
-            <button class="secondary" type="button" (click)="onGoBack()">Back</button>
+            <button class="secondary" type="button" (click)="onGoBack()">{{ 'jobDetail.matchModal.jobPreviewStep.backButton' | translate }}</button>
             <button 
               class="primary" 
               type="button" 
               (click)="onValidateMatch()"
               [disabled]="!canValidateMatch() || matchLoading"
-              [title]="!canValidateMatch() ? 'CV ou description d\'offre manquant' : ''"
+              [title]="!canValidateMatch() ? ('jobDetail.matchModal.jobPreviewStep.missingDataTooltip' | translate) : ''"
             >
-              Validate & Get Match
+              {{ 'jobDetail.matchModal.jobPreviewStep.validateButton' | translate }}
             </button>
           </div>
         </div>
@@ -286,27 +286,27 @@
               <span id="pourcentage">{{ matchPercentage }}</span>%
             </div>
             <p style="margin-top: 20px; color: #666; font-size: 18px;">
-              Taux de correspondance avec cette offre d'emploi
+              {{ 'jobDetail.matchModal.resultsStep.matchRate' | translate }}
             </p>
           </div>
 
           <!-- Synthèse -->
           <div *ngIf="matchSynthesis" class="result-section synthesis">
-            <h5>📋 Synthèse de l'adéquation</h5>
+            <h5>{{ 'jobDetail.matchModal.resultsStep.synthesisTitle' | translate }}</h5>
             <p>{{ matchSynthesis }}</p>
           </div>
 
           <!-- Tableau d'évaluation -->
           <div *ngIf="matchEvaluationTable && matchEvaluationTable.length > 0" class="evaluation-table-container">
-            <h5>📊 Tableau d'évaluation détaillé</h5>
+            <h5>{{ 'jobDetail.matchModal.resultsStep.evaluationTitle' | translate }}</h5>
             <div class="table-wrapper">
               <table>
                 <thead>
                   <tr>
-                    <th>Critères</th>
-                    <th class="score-col">Note/10</th>
-                    <th>Raisons</th>
-                    <th>Commentaires</th>
+                    <th>{{ 'jobDetail.matchModal.resultsStep.tableHeaders.criteria' | translate }}</th>
+                    <th class="score-col">{{ 'jobDetail.matchModal.resultsStep.tableHeaders.score' | translate }}</th>
+                    <th>{{ 'jobDetail.matchModal.resultsStep.tableHeaders.reasons' | translate }}</th>
+                    <th>{{ 'jobDetail.matchModal.resultsStep.tableHeaders.comments' | translate }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -329,19 +329,19 @@
               </table>
             </div>
             <div class="grading-legend">
-              <strong>Grille de notation :</strong> 1-3 = très insuffisant | 4-5 = insuffisant | 6-7 = correct | 8-9 = bon | 10 = excellent
+              <strong>{{ 'jobDetail.matchModal.resultsStep.gradingLegend' | translate }}</strong>
             </div>
           </div>
 
           <!-- Interprétation -->
           <div *ngIf="matchInterpretation" class="result-section interpretation">
-            <h5>🎯 Interprétation du résultat</h5>
+            <h5>{{ 'jobDetail.matchModal.resultsStep.interpretationTitle' | translate }}</h5>
             <p>{{ matchInterpretation }}</p>
           </div>
 
           <!-- Recommandations -->
           <div *ngIf="matchRecommendations" class="result-section recommendations">
-            <h5>💡 Recommandations</h5>
+            <h5>{{ 'jobDetail.matchModal.resultsStep.recommendationsTitle' | translate }}</h5>
             <p>{{ matchRecommendations }}</p>
           </div>
 
@@ -352,7 +352,7 @@
           </div>
 
           <div class="button-group" style="margin-top: 30px;">
-            <button class="primary" type="button" (click)="closeMatchModal()">Fermer</button>
+            <button class="primary" type="button" (click)="closeMatchModal()">{{ 'jobDetail.matchModal.resultsStep.closeButton' | translate }}</button>
           </div>
         </div>
         

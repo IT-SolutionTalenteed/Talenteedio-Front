@@ -27,6 +27,7 @@ import { SwitchComponent } from './components/switch/switch.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { OverflowTooltipDirective } from './directives/overflow-tooltip.directive';
 import { ThousandSeparatorDirective } from './directives/thousand-separator.directive';
+import { LocalizedRouterLinkDirective } from './directives/localized-router-link.directive';
 import { CastPipe } from './pipes/cast.pipe';
 import { ClientTypePipe } from './pipes/client-type.pipe';
 import { HtmlParserPipePipe } from './pipes/html-parser-pipe.pipe';
@@ -70,6 +71,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     SortableColumnComponent,
     AutoUpdateStatusComponent,
     OverflowTooltipDirective,
+    LocalizedRouterLinkDirective,
     NavbarMenuComponent,
     SwitchComponent,
     CastPipe,
@@ -104,6 +106,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     AutoUpdateStatusComponent,
     NavbarMenuComponent,
     OverflowTooltipDirective,
+    LocalizedRouterLinkDirective,
     SwitchComponent,
     CastPipe,
     TranslatePipe,

@@ -20,12 +20,11 @@
           <!-- Hero Content -->
           <div class="hero-content">
             <h2 class="hero-title">
-              Trouvez votre<br />
-              prochaine <span class="accent">opportunité</span>
+              {{ 'matchingProfile.authModal.branding.heroTitle' | translate }}<br />
+              {{ 'matchingProfile.authModal.branding.heroTitleLine2' | translate }} <span class="accent">{{ 'matchingProfile.authModal.branding.heroTitleAccent' | translate }}</span>
             </h2>
             <p class="hero-description">
-              Rejoignez des milliers de professionnels qui font confiance à Talenteed pour trouver les meilleures
-              opportunités de carrière
+              {{ 'matchingProfile.authModal.branding.heroDescription' | translate }}
             </p>
           </div>
 
@@ -42,23 +41,22 @@
           <!-- Tab Switcher -->
           <div class="auth-tabs">
             <button class="auth-tab" [class.active]="currentView === 'login'" (click)="switchView('login')">
-              Connexion
+              {{ 'matchingProfile.authModal.tabs.login' | translate }}
             </button>
             <button class="auth-tab" [class.active]="currentView === 'register' || currentView === 'choice'"
               (click)="switchView('register')">
-              Inscription
+              {{ 'matchingProfile.authModal.tabs.register' | translate }}
             </button>
           </div>
 
           <!-- Form Header -->
           <div class="form-header">
-            <h2 class="form-title" *ngIf="currentView === 'login'">Bon retour !</h2>
-            <h2 class="form-title" *ngIf="currentView === 'choice'">Choisissez votre profil</h2>
-            <h2 class="form-title" *ngIf="currentView === 'register'">Créer un compte</h2>
-            <p class="form-subtitle" *ngIf="currentView === 'login'">Connectez-vous pour continuer</p>
-            <p class="form-subtitle" *ngIf="currentView === 'choice'">Sélectionnez le type de compte que vous souhaitez
-              créer</p>
-            <p class="form-subtitle" *ngIf="currentView === 'register'">Rejoignez notre communauté</p>
+            <h2 class="form-title" *ngIf="currentView === 'login'">{{ 'matchingProfile.authModal.login.title' | translate }}</h2>
+            <h2 class="form-title" *ngIf="currentView === 'choice'">{{ 'matchingProfile.authModal.choice.title' | translate }}</h2>
+            <h2 class="form-title" *ngIf="currentView === 'register'">{{ 'matchingProfile.authModal.register.title' | translate }}</h2>
+            <p class="form-subtitle" *ngIf="currentView === 'login'">{{ 'matchingProfile.authModal.login.subtitle' | translate }}</p>
+            <p class="form-subtitle" *ngIf="currentView === 'choice'">{{ 'matchingProfile.authModal.choice.subtitle' | translate }}</p>
+            <p class="form-subtitle" *ngIf="currentView === 'register'">{{ 'matchingProfile.authModal.register.subtitle' | translate }}</p>
           </div>
 
           <!-- Login Form -->
@@ -72,14 +70,14 @@
                       d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
                       fill="currentColor" />
                   </svg>
-                  Email
+                  {{ 'matchingProfile.authModal.login.emailLabel' | translate }}
                 </label>
-                <input id="login-email" type="email" formControlName="email" placeholder="votre.email@exemple.com"
+                <input id="login-email" type="email" formControlName="email" [placeholder]="'auth.signIn.emailPlaceholder' | translate"
                   class="form-input"
                   [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" />
                 <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                  <span *ngIf="loginForm.get('email')?.errors?.['required']">L'email est requis</span>
-                  <span *ngIf="loginForm.get('email')?.errors?.['email']">Email invalide</span>
+                  <span *ngIf="loginForm.get('email')?.errors?.['required']">{{ 'matchingProfile.authModal.login.errors.emailRequired' | translate }}</span>
+                  <span *ngIf="loginForm.get('email')?.errors?.['email']">{{ 'matchingProfile.authModal.login.errors.emailInvalid' | translate }}</span>
                 </div>
               </div>
 
@@ -91,11 +89,11 @@
                       d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z"
                       fill="currentColor" />
                   </svg>
-                  Mot de passe
+                  {{ 'matchingProfile.authModal.login.passwordLabel' | translate }}
                 </label>
                 <div class="password-wrapper">
                   <input id="login-password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
-                    placeholder="Entrez votre mot de passe" class="form-input"
+                    [placeholder]="'auth.signIn.passwordPlaceholder' | translate" class="form-input"
                     [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" />
                   <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
                     <svg *ngIf="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -112,8 +110,8 @@
                 </div>
                 <div class="error-message"
                   *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                  <span *ngIf="loginForm.get('password')?.errors?.['required']">Le mot de passe est requis</span>
-                  <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Minimum 6 caractères</span>
+                  <span *ngIf="loginForm.get('password')?.errors?.['required']">{{ 'matchingProfile.authModal.login.errors.passwordRequired' | translate }}</span>
+                  <span *ngIf="loginForm.get('password')?.errors?.['minlength']">{{ 'matchingProfile.authModal.login.errors.passwordMinLength' | translate }}</span>
                 </div>
               </div>
 
@@ -121,7 +119,7 @@
               <div class="checkbox-group">
                 <label class="checkbox-label">
                   <input type="checkbox" formControlName="rememberMe" class="checkbox-input" />
-                  <span class="checkbox-text">Se souvenir de moi</span>
+                  <span class="checkbox-text">{{ 'matchingProfile.authModal.login.rememberMe' | translate }}</span>
                 </label>
               </div>
 
@@ -137,7 +135,7 @@
                       d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
                       fill="currentColor" />
                   </svg>
-                  <span>Veuillez valider le captcha</span>
+                  <span>{{ 'matchingProfile.authModal.login.errors.captchaRequired' | translate }}</span>
                 </div>
               </div>
 
@@ -153,8 +151,8 @@
 
               <!-- Submit Button -->
               <button type="submit" class="submit-button" [disabled]="loginForm.invalid || (loading$ | async)">
-                <span *ngIf="!(loading$ | async)">Se connecter</span>
-                <span *ngIf="loading$ | async">Connexion...</span>
+                <span *ngIf="!(loading$ | async)">{{ 'matchingProfile.authModal.login.submitButton' | translate }}</span>
+                <span *ngIf="loading$ | async">{{ 'matchingProfile.authModal.login.submitting' | translate }}</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M11 7L9.6 8.4L12.2 11H2V13H12.2L9.6 15.6L11 17L16 12L11 7ZM20 19H12V21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3H12V5H20V19Z"
@@ -177,8 +175,8 @@
                   </svg>
                 </div>
                 <div class="card-content-modal">
-                  <h3 class="card-title-modal">Je suis un talent</h3>
-                  <p class="card-description-modal">Créez votre profil et trouvez les meilleures opportunités</p>
+                  <h3 class="card-title-modal">{{ 'matchingProfile.authModal.choice.talent.title' | translate }}</h3>
+                  <p class="card-description-modal">{{ 'matchingProfile.authModal.choice.talent.description' | translate }}</p>
                 </div>
                 <div class="card-arrow-modal">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -198,8 +196,8 @@
                   </svg>
                 </div>
                 <div class="card-content-modal">
-                  <h3 class="card-title-modal">Je suis une company</h3>
-                  <p class="card-description-modal">Recrutez les meilleurs talents pour votre équipe</p>
+                  <h3 class="card-title-modal">{{ 'matchingProfile.authModal.choice.company.title' | translate }}</h3>
+                  <p class="card-description-modal">{{ 'matchingProfile.authModal.choice.company.description' | translate }}</p>
                 </div>
                 <div class="card-arrow-modal">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -219,7 +217,7 @@
                 <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
-              Retour au choix
+              {{ 'matchingProfile.authModal.register.backButton' | translate }}
             </button>
 
             <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
@@ -241,14 +239,14 @@
                           d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
                           fill="currentColor" />
                       </svg>
-                      First Name
+                      {{ 'matchingProfile.authModal.register.firstNameLabel' | translate }}
                     </label>
                     <input id="modal-firstname" type="text" formControlName="firstname"
-                      placeholder="Enter your first name" class="form-input"
+                      [placeholder]="'auth.signUp.firstNamePlaceholder' | translate" class="form-input"
                       [class.error]="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched" />
                     <div class="error-message"
                       *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched">
-                      Le prénom est requis
+                      {{ 'matchingProfile.authModal.register.errors.firstNameRequired' | translate }}
                     </div>
                   </div>
 
@@ -259,14 +257,14 @@
                           d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
                           fill="currentColor" />
                       </svg>
-                      Last Name
+                      {{ 'matchingProfile.authModal.register.lastNameLabel' | translate }}
                     </label>
-                    <input id="modal-lastname" type="text" formControlName="lastname" placeholder="Enter your last name"
+                    <input id="modal-lastname" type="text" formControlName="lastname" [placeholder]="'auth.signUp.lastNamePlaceholder' | translate"
                       class="form-input"
                       [class.error]="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched" />
                     <div class="error-message"
                       *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched">
-                      Le nom est requis
+                      {{ 'matchingProfile.authModal.register.errors.lastNameRequired' | translate }}
                     </div>
                   </div>
                 </div>
@@ -279,15 +277,15 @@
                         d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
                         fill="currentColor" />
                     </svg>
-                    Email Address
+                    {{ 'matchingProfile.authModal.register.emailLabel' | translate }}
                   </label>
-                  <input id="modal-email" type="email" formControlName="email" placeholder="your.email@example.com"
+                  <input id="modal-email" type="email" formControlName="email" [placeholder]="'auth.signUp.emailPlaceholder' | translate"
                     class="form-input"
                     [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" />
                   <div class="error-message"
                     *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-                    <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
-                    <span *ngIf="registerForm.get('email')?.errors?.['email']">Email invalide</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.['required']">{{ 'matchingProfile.authModal.register.errors.emailRequired' | translate }}</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.['email']">{{ 'matchingProfile.authModal.register.errors.emailInvalid' | translate }}</span>
                   </div>
                 </div>
 
@@ -299,17 +297,17 @@
                         d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"
                         fill="currentColor" />
                     </svg>
-                    Phone Number
+                    {{ 'matchingProfile.authModal.register.phoneLabel' | translate }}
                   </label>
                   <angular-intl-phone formControlName="phone" [config]="config" />
                   <div class="error-message"
                     *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-                    Le numéro de téléphone est requis
+                    {{ 'matchingProfile.authModal.register.errors.phoneRequired' | translate }}
                   </div>
                 </div>
 
                 <!-- Section: Professional Information -->
-                <div class="section-title">Professional Information (Optional)</div>
+                <div class="section-title">{{ 'matchingProfile.authModal.register.sections.professionalInfo' | translate }}</div>
 
                 <!-- Values -->
                 <div class="form-group">
@@ -319,10 +317,10 @@
                         d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                         fill="currentColor" />
                     </svg>
-                    Values (Optional)
+                    {{ 'matchingProfile.authModal.register.fields.valuesLabel' | translate }}
                   </label>
                   <ng-select formControlName="values" [items]="values$ | async" bindLabel="title" bindValue="id"
-                    placeholder="Select values" [multiple]="true" class="custom-select"></ng-select>
+                    [placeholder]="'matchingProfile.authModal.register.fields.valuesPlaceholder' | translate" [multiple]="true" class="custom-select"></ng-select>
                 </div>
 
                 <!-- CV Upload -->
@@ -333,16 +331,16 @@
                         d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z"
                         fill="currentColor" />
                     </svg>
-                    CV (PDF) - Optional
+                    {{ 'matchingProfile.authModal.register.fields.cvLabel' | translate }}
                   </label>
                   <div class="file-upload-wrapper">
                     <label for="modal-cv" class="file-upload-button">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16H15V10H19L12 3L5 10H9V16ZM5 18H19V20H5V18Z" fill="currentColor" />
                       </svg>
-                      Choose File
+                      {{ 'matchingProfile.authModal.register.fields.cvButton' | translate }}
                     </label>
-                    <span class="file-upload-text">{{ registerForm.controls['cv'].value ?? 'No file chosen' }}</span>
+                    <span class="file-upload-text">{{ registerForm.controls['cv'].value ?? ('matchingProfile.authModal.register.fields.cvNoFile' | translate) }}</span>
                     <input type="file" id="modal-cv" formControlName="cv" (change)="onCvChange($event)" accept=".pdf" />
                   </div>
                 </div>
@@ -383,7 +381,7 @@
                 </div>
 
                 <!-- Section: Salary & Compensation -->
-                <div class="section-title">Salary &amp; Compensation (Optional)</div>
+                
 
                 <!-- TJM & Annual Salary -->
                 <div class="form-row">
@@ -407,7 +405,7 @@
                 </div>
 
                 <!-- Section: Location -->
-                <div class="section-title">Location (Optional)</div>
+                <div class="section-title">{{ 'matchingProfile.authModal.register.sections.location' | translate }}</div>
 
                 <!-- Country & City -->
                 <div class="form-row">
@@ -437,7 +435,7 @@
                 </div>
 
                 <!-- Section: Job Preferences -->
-                <div class="section-title">Job Preferences (Optional)</div>
+                <div class="section-title">{{ 'matchingProfile.authModal.register.sections.jobPreferences' | translate }}</div>
 
                 <!-- Desired Position & Contract Type -->
                 <div class="form-row">
@@ -572,8 +570,7 @@
                   <label class="checkbox-label">
                     <input type="checkbox" formControlName="consent" class="checkbox-input" />
                     <span class="checkbox-text">
-                      J'accepte d'avoir lu <a [href]="consentLink" target="_blank">le consentement</a> et je consens à
-                      le signer électroniquement avec mon nom.
+                      {{ 'matchingProfile.authModal.register.consent.text' | translate }} <a [href]="consentLink" target="_blank">{{ 'matchingProfile.authModal.register.consent.link' | translate }}</a> {{ 'matchingProfile.authModal.register.consent.textEnd' | translate }}
                     </span>
                   </label>
                 </div>
@@ -591,8 +588,8 @@
                 <!-- Submit -->
                 <button type="submit" class="submit-button"
                   [disabled]="!isFormValidForSubmission() || (loading$ | async)">
-                  <span *ngIf="!(loading$ | async)">Créer mon compte</span>
-                  <span *ngIf="(loading$ | async)">Création...</span>
+                  <span *ngIf="!(loading$ | async)">{{ 'matchingProfile.authModal.register.submitButton' | translate }}</span>
+                  <span *ngIf="(loading$ | async)">{{ 'matchingProfile.authModal.register.submitting' | translate }}</span>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round" />

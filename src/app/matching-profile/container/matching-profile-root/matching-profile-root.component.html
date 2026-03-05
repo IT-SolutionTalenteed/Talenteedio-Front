@@ -13,14 +13,13 @@
               <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                 fill="currentColor" />
             </svg>
-            <span>Matching Intelligent</span>
+            <span>{{ 'matchingProfile.hero.badge' | translate }}</span>
           </div>
           <h1 class="hero-title">
-            Trouvez les entreprises qui <span class="accent">correspondent</span> à votre profil
+            {{ 'matchingProfile.hero.title' | translate }} <span class="accent">{{ 'matchingProfile.hero.titleAccent' | translate }}</span> {{ 'matchingProfile.hero.titleEnd' | translate }}
           </h1>
           <p class="hero-description">
-            Notre algorithme d'IA analyse votre profil et vos compétences pour vous mettre en relation avec les
-            meilleures opportunités.
+            {{ 'matchingProfile.hero.description' | translate }}
           </p>
         </div>
       </div>
@@ -38,8 +37,8 @@
             <span *ngIf="currentStep <= 2">1</span>
           </div>
           <div class="step-content">
-            <div class="step-title">Résultats</div>
-            <div class="step-subtitle">Découvrez vos matchs</div>
+            <div class="step-title">{{ 'matchingProfile.steps.results.title' | translate }}</div>
+            <div class="step-subtitle">{{ 'matchingProfile.steps.results.subtitle' | translate }}</div>
           </div>
         </div>
 
@@ -53,8 +52,8 @@
             <span *ngIf="currentStep <= 3">2</span>
           </div>
           <div class="step-content">
-            <div class="step-title">Rendez-vous</div>
-            <div class="step-subtitle">Planifiez vos entretiens</div>
+            <div class="step-title">{{ 'matchingProfile.steps.appointments.title' | translate }}</div>
+            <div class="step-subtitle">{{ 'matchingProfile.steps.appointments.subtitle' | translate }}</div>
           </div>
         </div>
 
@@ -65,8 +64,8 @@
             <span>3</span>
           </div>
           <div class="step-content">
-            <div class="step-title">Mes Entretiens</div>
-            <div class="step-subtitle">Suivez vos rendez-vous</div>
+            <div class="step-title">{{ 'matchingProfile.steps.myInterviews.title' | translate }}</div>
+            <div class="step-subtitle">{{ 'matchingProfile.steps.myInterviews.subtitle' | translate }}</div>
           </div>
         </div>
       </div>
@@ -94,7 +93,7 @@
     <!-- Loading -->
     <div class="loading-container" *ngIf="loading">
       <div class="spinner"></div>
-      <p>Chargement en cours...</p>
+      <p>{{ 'matchingProfile.loading' | translate }}</p>
     </div>
 
     <!-- Step Content -->
@@ -124,9 +123,9 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="currentColor" />
             </svg>
-            Retour
+            {{ 'matchingProfile.back' | translate }}
           </button>
-          <h2>Mes Entretiens</h2>
+          <h2>{{ 'matchingProfile.steps.myInterviews.title' | translate }}</h2>
         </div>
         <app-appointments-list></app-appointments-list>
       </div>

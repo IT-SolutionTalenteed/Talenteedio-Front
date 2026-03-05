@@ -8,31 +8,31 @@
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
           </svg>
         </div>
-        <h1 class="brand-name">Talenteed</h1>
+        <h1 class="brand-name">{{ 'auth.branding.tagline' | translate }}</h1>
       </div>
       
       <div class="hero-content">
         <h2 class="hero-title">
-          Start Your Journey.<br/>
-          Today. <span class="accent">Now.</span>
+          {{ 'auth.branding.heroSignUp' | translate }}<br/>
+          {{ 'auth.branding.heroSignUpLine2' | translate }} <span class="accent">{{ 'auth.branding.heroSignUpAccent' | translate }}</span>
         </h2>
         <p class="hero-description">
-          Join thousands of professionals who trust Talenteed to exceed their career expectations
+          {{ 'auth.branding.heroDescription' | translate }}
         </p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-number">20k+</div>
-          <div class="stat-label">Events Planned</div>
+          <div class="stat-label">{{ 'auth.branding.stats.eventsPlanned' | translate }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">260+</div>
-          <div class="stat-label">Event Organizers</div>
+          <div class="stat-label">{{ 'auth.branding.stats.eventOrganizers' | translate }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">500+</div>
-          <div class="stat-label">Companies</div>
+          <div class="stat-label">{{ 'auth.branding.stats.companies' | translate }}</div>
         </div>
       </div>
     </div>
@@ -42,8 +42,8 @@
   <div class="form-section">
     <div class="form-wrapper">
       <div class="form-header">
-        <h2 class="form-title">Create Account</h2>
-        <p class="form-subtitle">Join our community today</p>
+        <h2 class="form-title">{{ 'auth.signUp.title' | translate }}</h2>
+        <p class="form-subtitle">{{ 'auth.signUp.subtitle' | translate }}</p>
       </div>
 
       <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
@@ -64,13 +64,13 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
                 </svg>
-                First Name
+                {{ 'auth.signUp.firstNameLabel' | translate }}
               </label>
               <input
                 #first
                 id="firstname"
                 formControlName="firstname"
-                placeholder="Enter your first name"
+                [placeholder]="'auth.signUp.firstNamePlaceholder' | translate"
                 type="text"
                 class="form-input"
               />
@@ -82,12 +82,12 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
                 </svg>
-                Last Name
+                {{ 'auth.signUp.lastNameLabel' | translate }}
               </label>
               <input
                 id="lastname"
                 formControlName="lastname"
-                placeholder="Enter your last name"
+                [placeholder]="'auth.signUp.lastNamePlaceholder' | translate"
                 type="text"
                 class="form-input"
               />
@@ -101,18 +101,18 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
               </svg>
-              Email Address
+              {{ 'auth.signUp.emailLabel' | translate }}
             </label>
             <input
               id="email"
               formControlName="email"
-              placeholder="your.email@example.com"
+              [placeholder]="'auth.signUp.emailPlaceholder' | translate"
               type="email"
               class="form-input"
             />
             <app-validation-error
               [control]="form.controls['email']"
-              [customErrorLabels]="{duplicateEntry: 'Email already registered'}"
+              [customErrorLabels]="{duplicateEntry: ('auth.signUp.errors.emailDuplicate' | translate)}"
             ></app-validation-error>
           </div>
 
@@ -122,7 +122,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
               </svg>
-              Phone Number
+              {{ 'auth.signUp.phoneLabel' | translate }}
             </label>
             <angular-intl-phone formControlName="phone" [config]="config" />
             <app-validation-error [control]="form.controls['phone']"></app-validation-error>
@@ -132,7 +132,7 @@
           <div class="conditional-fields">
             
             <!-- Section: Informations Professionnelles -->
-            <div class="section-title">Professional Information (Optional)</div>
+            <div class="section-title">{{ 'auth.signUp.sections.professionalInfo' | translate }}</div>
             
             <!-- Values -->
             <div class="form-group">
@@ -247,7 +247,7 @@
             </div>
 
             <!-- Section: Salary & Compensation -->
-            <div class="section-title">Salary & Compensation (Optional)</div>
+            <div class="section-title">{{ 'auth.signUp.sections.salaryCompensation' | translate }}</div>
 
             <!-- TJM and Annual Salary Row -->
             <div class="form-row">
@@ -287,7 +287,7 @@
             </div>
 
             <!-- Section: Location -->
-            <div class="section-title">Location (Optional)</div>
+            <div class="section-title">{{ 'auth.signUp.sections.location' | translate }}</div>
 
             <!-- Country and City Row -->
             <div class="form-row">
@@ -340,7 +340,7 @@
             </div>
 
             <!-- Section: Job Preferences -->
-            <div class="section-title">Job Preferences (Optional)</div>
+            <div class="section-title">{{ 'auth.signUp.sections.jobPreferences' | translate }}</div>
 
             <!-- Desired Position and Contract Type -->
             <div class="form-row">
@@ -452,7 +452,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
               </svg>
-              Password
+              {{ 'auth.signUp.passwordLabel' | translate }}
             </label>
             <div class="password-wrapper">
               <input
@@ -460,7 +460,7 @@
                 id="password"
                 formControlName="password"
                 type="password"
-                placeholder="Enter your password"
+                [placeholder]="'auth.signUp.passwordPlaceholder' | translate"
                 class="form-input"
               />
               <button
@@ -485,7 +485,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
               </svg>
-              Confirm Password
+              {{ 'auth.signUp.confirmPasswordLabel' | translate }}
             </label>
             <div class="password-wrapper">
               <input
@@ -493,7 +493,7 @@
                 id="confirmationPassword"
                 formControlName="confirmationPassword"
                 type="password"
-                placeholder="Confirm your password"
+                [placeholder]="'auth.signUp.confirmPasswordPlaceholder' | translate"
                 class="form-input"
               />
               <button
@@ -512,7 +512,7 @@
             </div>
             <app-validation-error
               [control]="form.controls['confirmationPassword']"
-              [customErrorLabels]="{mustMatch: 'Password does not match'}"
+              [customErrorLabels]="{mustMatch: ('auth.signUp.errors.passwordMismatch' | translate)}"
             ></app-validation-error>
           </div>
 
@@ -526,8 +526,8 @@
                 class="checkbox-input"
               />
               <span class="checkbox-text">
-                I acknowledge having read
-                <a [href]="consentLink" target="_blank">the consent</a> and agree to sign it electronically with my name.
+                {{ 'auth.signUp.consent.text' | translate }}
+                <a [href]="consentLink" target="_blank">{{ 'auth.signUp.consent.link' | translate }}</a> {{ 'auth.signUp.consent.textEnd' | translate }}
               </span>
             </label>
             <app-validation-error [control]="form.controls['consent']"></app-validation-error>
@@ -558,7 +558,7 @@
             class="submit-button"
             [disabled]="!form.value.recaptcha || !form.value.consent"
           >
-            <span>Create Account</span>
+            <span>{{ 'auth.signUp.submitButton' | translate }}</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -568,8 +568,8 @@
 
       <!-- Sign In Link -->
       <div class="footer-text">
-        Already have an account?
-        <a routerLink="/authentication/sign-in" class="signin-link">Sign in</a>
+        {{ 'auth.signUp.alreadyAccount' | translate }}
+        <a [routerLink]="['/authentication/sign-in']" class="signin-link">{{ 'auth.signUp.signInLink' | translate }}</a>
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
 <div class="container">
     <div class="title">
         <img src="assets/images/ico-filtre.png" />
-        <h4>FILTRE</h4>
+        <h4>{{ 'common.filter' | translate | uppercase }}</h4>
     </div>
-    <label>Ajouter filtre</label>
+    <label>{{ 'common.addFilter' | translate }}</label>
     <div class="custom-select">
         <ng-select
             [items]="innactiveFilters"

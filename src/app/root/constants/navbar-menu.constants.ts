@@ -3,7 +3,7 @@ import { RoleName } from 'src/app/shared/models/role.interface';
 
 export const NAVAR_MENUS: Menu[] = [
   {
-    title: 'Home',
+    title: 'header.menu.home',
     routerLink: '/home',
     parentRouterLink: '/home',
     accessRight: 'ALL',
@@ -11,7 +11,7 @@ export const NAVAR_MENUS: Menu[] = [
     colorActive: '#6bbee3',
   },
   {
-    title: 'Annonces',
+    title: 'header.menu.jobs',
     routerLink: '/job',
     parentRouterLink: '/job',
     accessRight: 'ALL',
@@ -20,21 +20,21 @@ export const NAVAR_MENUS: Menu[] = [
     megaMenu: true,
     subMenus: [
       {
-        title: 'Offres d\'emploi',
+        title: 'header.megaMenu.jobs.allJobs',
         routerLink: '/job',
         icon: 'briefcase',
-        description: 'Plus de 1000 opportunités à saisir !'
+        description: 'header.megaMenu.jobs.allJobsDesc'
       },
       {
-        title: 'Recherchez une entreprise',
+        title: 'header.megaMenu.jobs.companies',
         routerLink: '/companies',
         icon: 'building',
-        description: 'Suivez et découvrez les entreprises'
+        description: 'header.megaMenu.jobs.companiesDesc'
       },
     ]
   },
   {
-    title: 'Événements',
+    title: 'header.menu.events',
     routerLink: '/event',
     parentRouterLink: '/event',
     accessRight: 'ALL',
@@ -43,15 +43,15 @@ export const NAVAR_MENUS: Menu[] = [
     megaMenu: true,
     subMenus: [
       {
-        title: 'Tous nos événements',
+        title: 'header.megaMenu.events.allEvents',
         routerLink: '/event/list',
         icon: 'calendar',
-        description: 'Participez aux événements RH'
+        description: 'header.megaMenu.events.allEventsDesc'
       }
     ]
   },
   {
-    title: 'Articles',
+    title: 'header.menu.articles',
     routerLink: '/blog',
     parentRouterLink: '/blog',
     accessRight: 'ALL',
@@ -59,7 +59,7 @@ export const NAVAR_MENUS: Menu[] = [
     colorActive: '#6bbee3',
   },
   {
-    title: 'Matching Profile',
+    title: 'header.menu.matchingProfile',
     routerLink: '/matching-profile',
     parentRouterLink: '/matching-profile',
     accessRight: [RoleName.TALENT],

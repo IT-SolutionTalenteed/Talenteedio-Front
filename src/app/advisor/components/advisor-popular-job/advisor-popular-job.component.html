@@ -12,7 +12,7 @@
       </div>
       <div class="job-detail">
         <div class="job-title">
-          <a [routerLink]="'/job/detail/' + popularJob.slug">{{
+          <a [routerLink]="['/job/detail', popularJob.slug]">{{
             popularJob.title
           }}</a>
         </div>
@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <a class="see-all" [routerLink]="'/job'">
+  <a class="see-all" [routerLink]="['/job']">
     <Button class="secondary">See all the jobs</Button>
   </a>
 </div>

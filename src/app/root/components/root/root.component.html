@@ -35,12 +35,12 @@
         <div class="icon">
           <fa-icon style="color: #4fb556" [icon]="userPlus"></fa-icon>
         </div>
-        Join us.
+        {{ 'modal.becomeMember.title' | translate }}
       </div>
-      <p class="modal-text">To access event details, you can join us.</p>
+      <p class="modal-text">{{ 'modal.becomeMember.description' | translate }}</p>
     </div>
     <button class="modal-button primary" (click)="onBecomeMember()">
-      Become member
+      {{ 'modal.becomeMember.button' | translate }}
     </button>
   </ng-template>
 </modal>

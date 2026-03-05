@@ -40,17 +40,17 @@
           </ul>
           <ul class="job-chips">
             <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>
-            <li class="privacy" *ngIf="job.isFeatured">Featured</li>
-            <li class="required" *ngIf="job.isUrgent">Urgent</li>
+            <li class="privacy" *ngIf="job.isFeatured">{{ 'jobDetail.header.featured' | translate }}</li>
+            <li class="required" *ngIf="job.isUrgent">{{ 'jobDetail.header.urgent' | translate }}</li>
             <li class="referable" *ngIf="!!user?.referral && job.isSharable">
-              Referable
+              {{ 'jobDetail.header.referable' | translate }}
             </li>
           </ul>
         </div>
       </div>
-      <div class="job-expired" *ngIf="isExperatedJob">Job expired!</div>
+      <div class="job-expired" *ngIf="isExperatedJob">{{ 'jobDetail.header.jobExpired' | translate }}</div>
       <div class="job-expired" *ngIf="!isExperatedJob && !user">
-        <button class="primary" (click)="login.emit()">Login to apply</button>
+        <button class="primary" (click)="login.emit()">{{ 'jobDetail.header.loginToApply' | translate }}</button>
       </div>
       <div
         class="job-expired"
@@ -62,8 +62,8 @@
         "
         style="display: flex; flex-direction: column; gap: 10px;"
       >
-        <button class="primary" (click)="onApply()">Apply</button>
-        <button class="primary" (click)="onMatch()">Match my profile</button>
+        <button class="primary" (click)="onApply()">{{ 'jobDetail.header.applyButton' | translate }}</button>
+        <button class="primary" (click)="onMatch()">{{ 'jobDetail.header.matchButton' | translate }}</button>
       </div>
       <div
         class="job-expired"
@@ -71,19 +71,19 @@
           !isExperatedJob && user?.talent && !job.hasApplied && !user.isVerified
         "
       >
-        Please validate your account and send signed consent to apply
+        {{ 'jobDetail.header.validateAccount' | translate }}
       </div>
       <div
         class="job-expired"
         *ngIf="!isExperatedJob && user?.referral && !user.isVerified"
       >
-        Please validate your account to refer
+        {{ 'jobDetail.header.validateToRefer' | translate }}
       </div>
       <div
         class="job-expired already-applayed"
         *ngIf="!isExperatedJob && user?.talent && job.hasApplied"
       >
-        Already applied
+        {{ 'jobDetail.header.alreadyApplied' | translate }}
       </div>
       <div
         class="job-expired"
@@ -94,7 +94,7 @@
           job?.isSharable
         "
       >
-        <button class="primary" (click)="refer.emit()">Refer</button>
+        <button class="primary" (click)="refer.emit()">{{ 'jobDetail.header.referButton' | translate }}</button>
       </div>
     </div>
   </div>
@@ -113,13 +113,13 @@
       <div [innerHtml]="content"></div>
     </div>
     <div class="detail-info">
-      <h4>Job viewer</h4>
+      <h4>{{ 'jobDetail.sidebar.title' | translate }}</h4>
       <div class="info-item">
         <div class="info-icon">
           <fa-icon class="icon" [icon]="faCalendar"></fa-icon>
         </div>
         <div class="info-right">
-          <div class="info-label">Last update:</div>
+          <div class="info-label">{{ 'jobDetail.sidebar.lastUpdate' | translate }}</div>
           <div class="info-value">
             {{ job.updatedAt | date : "dd / MM / yyy" }}
           </div>
@@ -130,7 +130,7 @@
           <fa-icon class="icon" [icon]="faHourglass"></fa-icon>
         </div>
         <div class="info-right">
-          <div class="info-label">Expiration date:</div>
+          <div class="info-label">{{ 'jobDetail.sidebar.expirationDate' | translate }}</div>
           <div class="info-value">
             {{ job.expirationDate | date : "dd / MM / yyy" }}
           </div>
@@ -141,7 +141,7 @@
           <fa-icon class="icon" [icon]="faMapMarker"></fa-icon>
         </div>
         <div class="info-right">
-          <div class="info-label">Location:</div>
+          <div class="info-label">{{ 'jobDetail.sidebar.location' | translate }}</div>
           <div class="info-value">
             {{ job?.location?.name || "-" }}
           </div>
@@ -152,7 +152,7 @@
           <fa-icon class="icon" [icon]="faClock"></fa-icon>
         </div>
         <div class="info-right">
-          <div class="info-label">Hours:</div>
+          <div class="info-label">{{ 'jobDetail.sidebar.hours' | translate }}</div>
           <div class="info-value">
             {{ job.hours }} /
             {{ job.hourType }}
@@ -164,7 +164,7 @@
           <fa-icon class="icon" [icon]="faMoney"></fa-icon>
         </div>
         <div class="info-right">
-          <div class="info-label">Salary:</div>
+          <div class="info-label">{{ 'jobDetail.sidebar.salary' | translate }}</div>
           <div class="info-value">
             {{ job.salaryMin }} € - {{ job.salaryMax }} € / {{ job.salaryType }}
           </div>
@@ -176,25 +176,25 @@
 <div class="social-media-content">
   <hr />
   <div class="social-media">
-    <div class="share-this-post">Share this job</div>
+    <div class="share-this-post">{{ 'jobDetail.share.title' | translate }}</div>
     <div class="button-container">
       <a [href]="facebookUrl" (click)="openWindow($event, facebookUrl)"
         ><button class="facebook">
-          <fa-icon [icon]="fbIcon"></fa-icon> Facebook
+          <fa-icon [icon]="fbIcon"></fa-icon> {{ 'jobDetail.share.facebook' | translate }}
         </button></a
       >
     </div>
     <div class="button-container">
       <a [href]="twitterUrl" (click)="openWindow($event, twitterUrl)"
         ><button class="twitter">
-          <fa-icon [icon]="twitterIcon"></fa-icon> Twitter
+          <fa-icon [icon]="twitterIcon"></fa-icon> {{ 'jobDetail.share.twitter' | translate }}
         </button></a
       >
     </div>
     <div class="button-container">
       <a [href]="linkedinUrl" (click)="openWindow($event, linkedinUrl)"
         ><button class="linkedin">
-          <fa-icon [icon]="linkedinIcon"></fa-icon>Linkedin
+          <fa-icon [icon]="linkedinIcon"></fa-icon>{{ 'jobDetail.share.linkedin' | translate }}
         </button></a
       >
     </div>

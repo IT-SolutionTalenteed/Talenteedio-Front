@@ -4,14 +4,14 @@
     <div class="header-content">
       <!-- Logo -->
       <div class="logo-section">
-        <a routerLink="/home" class="logo-link">
+        <a [routerLink]="['/home']" class="logo-link">
           <img
             [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
             alt="Talenteed.io"
             class="logo-image"
           />
         </a>
-        <span class="logo-tagline">The alternative media for HR</span>
+        <span class="logo-tagline">{{ 'header.tagline' | translate }}</span>
       </div>
 
       <!-- Navigation Menu -->
@@ -28,7 +28,7 @@
               [class.active]="currentUrl.includes(menu.parentRouterLink)"
               (mouseenter)="onMenuHover(menu)"
             >
-              {{ menu.title }}
+              {{ menu.title | translate }}
             </a>
 
             <!-- Mega Menu Dropdown -->
@@ -44,10 +44,10 @@
                   <!-- Left Column - Hero Message -->
                   <div class="mega-menu-hero">
                     <h3 class="mega-menu-hero-title">
-                      Ouvrez-vous à un nouveau monde de possibilités
+                      {{ 'header.megaMenu.hero.title' | translate }}
                     </h3>
                     <p class="mega-menu-hero-subtitle">
-                      Découvrez les meilleures opportunités
+                      {{ 'header.megaMenu.hero.subtitle' | translate }}
                     </p>
                   </div>
 
@@ -60,9 +60,9 @@
                       (click)="onMenuLeave()"
                     >
                       <div class="mega-menu-link-content">
-                        <h4 class="mega-menu-link-title">{{ subMenu.title }}</h4>
+                        <h4 class="mega-menu-link-title">{{ subMenu.title | translate }}</h4>
                         <p *ngIf="subMenu.description" class="mega-menu-link-description">
-                          {{ subMenu.description }}
+                          {{ subMenu.description | translate }}
                         </p>
                       </div>
                       <svg class="mega-menu-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -133,14 +133,14 @@
             [routerLink]="['/authentication/sign-up-choice']"
             class="btn btn-outline"
           >
-            Inscription
+            {{ 'header.auth.signUp' | translate }}
           </a>
           <a
             [routerLink]="['/authentication/sign-in']"
             [queryParams]="{ redirect: currentUrl }"
             class="btn btn-primary"
           >
-            Connexion
+            {{ 'header.auth.signIn' | translate }}
           </a>
         </div>
 
@@ -180,16 +180,16 @@
           <div class="user-dropdown" [class.show]="showUserDropdown">
             <a
               *ngFor="let menu of menusCopy"
-              [routerLink]="menu.title === 'Dashboard' ? null : [menu.routerLink]"
-              (click)="menu.title === 'Dashboard' ? goToDashboard($event) : null"
+              [routerLink]="menu.title === 'sideNav.dashboard' ? null : [menu.routerLink]"
+              (click)="menu.title === 'sideNav.dashboard' ? goToDashboard($event) : null"
               class="dropdown-item"
             >
-              {{ menu.title }}
+              {{ menu.title | translate }}
             </a>
             <div class="dropdown-divider"></div>
             <a (click)="logout()" class="dropdown-item logout">
               <i class="fas fa-sign-out-alt"></i>
-              Déconnexion
+              {{ 'header.auth.logout' | translate }}
             </a>
           </div>
         </div>
@@ -201,7 +201,7 @@
   <header class="mobile-header">
     <div class="mobile-header-content">
       <!-- Logo -->
-      <a routerLink="/home" class="mobile-logo">
+      <a [routerLink]="['/home']" class="mobile-logo">
         <img
           [src]="'assets/img/talenteed-noir-plan-de-travail-1-150.png'"
           alt="Talenteed.io"
@@ -278,7 +278,7 @@
               class="mobile-nav-link"
               (click)="onToggleNavbar()"
             >
-              {{ menu.title }}
+              {{ menu.title | translate }}
             </a>
 
             <!-- Menu with submenu -->
@@ -288,7 +288,7 @@
                 (click)="toggleMobileSubmenu(menu)"
                 [class.active]="activeMobileSubmenu === menu"
               >
-                {{ menu.title }}
+                {{ menu.title | translate }}
                 <svg class="mobile-dropdown-icon" width="12" height="8" viewBox="0 0 12 8">
                   <path
                     d="M1 1.5L6 6.5L11 1.5"
@@ -310,7 +310,7 @@
                     (click)="onToggleNavbar()"
                   >
                     <i [class]="'fas fa-' + subMenu.icon"></i>
-                    {{ subMenu.title }}
+                    {{ subMenu.title | translate }}
                   </a>
                 </li>
               </ul>
@@ -325,7 +325,7 @@
             class="mobile-btn mobile-btn-outline"
             (click)="onToggleNavbar()"
           >
-            Inscription
+            {{ 'header.auth.signUp' | translate }}
           </a>
           <a
             [routerLink]="['/authentication/sign-in']"
@@ -333,7 +333,7 @@
             class="mobile-btn mobile-btn-primary"
             (click)="onToggleNavbar()"
           >
-            Connexion
+            {{ 'header.auth.signIn' | translate }}
           </a>
         </div>
 
@@ -356,15 +356,15 @@
           <div class="mobile-user-links">
             <a
               *ngFor="let menu of menusCopy"
-              [routerLink]="menu.title === 'Dashboard' ? null : [menu.routerLink]"
-              (click)="menu.title === 'Dashboard' ? goToDashboard($event) : onToggleNavbar()"
+              [routerLink]="menu.title === 'sideNav.dashboard' ? null : [menu.routerLink]"
+              (click)="menu.title === 'sideNav.dashboard' ? goToDashboard($event) : onToggleNavbar()"
               class="mobile-user-link"
             >
-              {{ menu.title }}
+              {{ menu.title | translate }}
             </a>
             <a (click)="logout()" class="mobile-user-link logout">
               <i class="fas fa-sign-out-alt"></i>
-              Déconnexion
+              {{ 'header.auth.logout' | translate }}
             </a>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <div [formGroup]="form" *ngIf="form" class="container">
-    <input formControlName="search" class="search" type="text" placeholder="Filtrer" />
+    <input formControlName="search" class="search" type="text" [placeholder]="'common.filter' | translate" />
     <ul data-simplebar formArrayName="items">
         <li *ngFor="let item of filter(getFormArray('items').controls); let j = index" [formGroupName]="j">
             <input type="checkbox" formControlName="selected" id="{{ id + j }}" />

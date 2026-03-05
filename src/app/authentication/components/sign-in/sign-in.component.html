@@ -8,31 +8,31 @@
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
           </svg>
         </div>
-        <h1 class="brand-name">Talenteed</h1>
+        <h1 class="brand-name">{{ 'auth.branding.tagline' | translate }}</h1>
       </div>
       
       <div class="hero-content">
         <h2 class="hero-title">
-          Creating the Best.<br/>
-          Day. <span class="accent">Ever.</span>
+          {{ 'auth.branding.heroSignIn' | translate }}<br/>
+          {{ 'auth.branding.heroSignInLine2' | translate }} <span class="accent">{{ 'auth.branding.heroSignInAccent' | translate }}</span>
         </h2>
         <p class="hero-description">
-          Join thousands of professionals who trust Talenteed to exceed their career expectations
+          {{ 'auth.branding.heroDescription' | translate }}
         </p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-number">20k+</div>
-          <div class="stat-label">Events Planned</div>
+          <div class="stat-label">{{ 'auth.branding.stats.eventsPlanned' | translate }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">260+</div>
-          <div class="stat-label">Event Organizers</div>
+          <div class="stat-label">{{ 'auth.branding.stats.eventOrganizers' | translate }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">500+</div>
-          <div class="stat-label">Companies</div>
+          <div class="stat-label">{{ 'auth.branding.stats.companies' | translate }}</div>
         </div>
       </div>
     </div>
@@ -42,8 +42,8 @@
   <div class="form-section">
     <div class="form-wrapper">
       <div class="form-header">
-        <h2 class="form-title">Welcome Back</h2>
-        <p class="form-subtitle">Sign in to continue your journey</p>
+        <h2 class="form-title">{{ 'auth.signIn.title' | translate }}</h2>
+        <p class="form-subtitle">{{ 'auth.signIn.subtitle' | translate }}</p>
       </div>
 
       <form [formGroup]="form" (submit)="onSubmit(form)">
@@ -54,13 +54,13 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
               </svg>
-              Email Address
+              {{ 'auth.signIn.emailLabel' | translate }}
             </label>
             <input
               id="email"
               appScrollOnFocus
               formControlName="email"
-              placeholder="your.email@example.com"
+              [placeholder]="'auth.signIn.emailPlaceholder' | translate"
               type="email"
               class="form-input"
               #first
@@ -77,12 +77,12 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
                 </svg>
-                Password
+                {{ 'auth.signIn.passwordLabel' | translate }}
               </label>
               <a
                 class="forgot-link"
-                routerLink="/authentication/reinit-password"
-              >Forgot?</a>
+                [routerLink]="['/authentication/reinit-password']"
+              >{{ 'auth.signIn.forgotPassword' | translate }}</a>
             </div>
             <div class="password-wrapper">
               <input
@@ -91,7 +91,7 @@
                 appScrollOnFocus
                 formControlName="password"
                 type="password"
-                placeholder="Enter your password"
+                [placeholder]="'auth.signIn.passwordPlaceholder' | translate"
                 autocomplete="current-password"
                 class="form-input"
               />
@@ -123,7 +123,7 @@
                 formControlName="rememberMe"
                 class="checkbox-input"
               />
-              <span class="checkbox-text">Keep me signed in</span>
+              <span class="checkbox-text">{{ 'auth.signIn.rememberMe' | translate }}</span>
             </label>
           </div>
 
@@ -160,7 +160,7 @@
             class="submit-button"
             [disabled]="!form.value.recaptcha"
           >
-            <span>Sign In</span>
+            <span>{{ 'auth.signIn.submitButton' | translate }}</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -168,21 +168,21 @@
 
           <!-- Divider -->
           <div class="divider">
-            <span>or continue with</span>
+            <span>{{ 'auth.signIn.divider' | translate }}</span>
           </div>
 
           <!-- Google Sign-In -->
           <app-google-signin
             (googleSignIn)="onGoogleSignIn($event)"
-            buttonText="Sign in with Google"
+            [buttonText]="'auth.signIn.googleButton' | translate"
           ></app-google-signin>
         </div>
       </form>
 
       <!-- Sign Up Link -->
       <div class="footer-text">
-        Don't have an account?
-        <a routerLink="/authentication/sign-up-choice" class="signup-link">Create one</a>
+        {{ 'auth.signIn.noAccount' | translate }}
+        <a [routerLink]="['/authentication/sign-up-choice']" class="signup-link">{{ 'auth.signIn.createAccount' | translate }}</a>
       </div>
     </div>
   </div>
