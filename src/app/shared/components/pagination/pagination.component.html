@@ -47,7 +47,7 @@
       </ng-container>
     </ul>
     <div class="page-size">
-      <label>Display </label>
+      <label>{{ 'common.display' | translate }} </label>
       <app-input-number
         [min]="pageSizeOptions[0]"
         [max]="max"
@@ -58,7 +58,7 @@
       >
       </app-input-number>
 
-      <label for="pagesize">Page</label>
+      <label for="pagesize">{{ 'common.page' | translate }}</label>
     </div>
   </div>
 </div>

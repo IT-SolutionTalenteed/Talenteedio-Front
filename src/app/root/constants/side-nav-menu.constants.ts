@@ -6,7 +6,7 @@ import { Menu } from '../types/menu.interface';
 
 export const SIDE_NAV_MENU: Menu[] = [
   {
-    title: 'Dashboard',
+    title: 'sideNav.dashboard',
     icon: faChartBar,
     iconActive: faChartBar,
     routerLink: '/back-office/dashboard',
@@ -15,7 +15,7 @@ export const SIDE_NAV_MENU: Menu[] = [
     colorActive: '#6bbee3',
   },
   {
-    title: 'Logout',
+    title: 'sideNav.logout',
     icon: faSignOutAlt,
     iconActive: faSignOutAlt,
     routerLink: '/home',

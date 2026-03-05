@@ -69,6 +69,11 @@ export class TranslationService {
   }
 
   translate(key: string): string {
+    // Si les traductions ne sont pas encore chargées, retourner la clé sans warning
+    if (!this.translationsLoaded$.value) {
+      return key;
+    }
+
     const keys = key.split('.');
     let value = this.translations;
 

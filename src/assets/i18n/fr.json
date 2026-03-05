@@ -1,9 +1,57 @@
 {
+  "header": {
+    "menu": {
+      "home": "Accueil",
+      "jobs": "Annonces",
+      "events": "Événements",
+      "articles": "Articles",
+      "matchingProfile": "Matching Profile"
+    },
+    "megaMenu": {
+      "hero": {
+        "title": "Ouvrez-vous à un nouveau monde de possibilités",
+        "subtitle": "Découvrez les meilleures opportunités"
+      },
+      "jobs": {
+        "allJobs": "Offres d'emploi",
+        "allJobsDesc": "Plus de 1000 opportunités à saisir !",
+        "companies": "Recherchez une entreprise",
+        "companiesDesc": "Suivez et découvrez les entreprises"
+      },
+      "events": {
+        "allEvents": "Tous nos événements",
+        "allEventsDesc": "Participez aux événements RH"
+      }
+    },
+    "auth": {
+      "signUp": "Inscription",
+      "signIn": "Connexion",
+      "logout": "Déconnexion"
+    },
+    "tagline": "Le média alternatif pour les RH"
+  },
+  "sideNav": {
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion"
+  },
+  "footer": {
+    "termsAndConditions": "Conditions générales",
+    "confidentiality": "Confidentialité",
+    "allRightsReserved": "Tous droits réservés"
+  },
+  "modal": {
+    "becomeMember": {
+      "title": "Rejoignez-nous",
+      "description": "Pour accéder aux détails de l'événement, vous pouvez nous rejoindre.",
+      "button": "Devenir membre"
+    }
+  },
   "home": {
     "hero": {
       "subtitle": "Dépassez vos attentes de carrière",
       "title": "Créer le meilleur. Jour.",
       "titleAccent": "Toujours.",
+      "description": "Créer le meilleur. Jour. Toujours.",
       "stats": {
         "events": {
           "number": "20k+",
@@ -64,10 +112,26 @@
       "titleAccent2": "ressources",
       "titleText": "et vos",
       "titleEnd": "ultimes",
-      "description": "Restez informé avec les dernières actualités RH, articles et interviews d'experts"
+      "description": "Restez informé avec les dernières actualités RH, articles et interviews d'experts",
+      "viewAllArticles": "Voir tous les articles"
     }
   },
   "common": {
-    "language": "Langue"
+    "language": "Langue",
+    "filter": "Filtrer",
+    "addFilter": "Ajouter filtre",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "display": "Afficher",
+    "page": "Page",
+    "search": "Rechercher",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent"
   }
 }

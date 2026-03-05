@@ -11,6 +11,7 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
   private loadedSubscription: Subscription;
   private lastKey: string;
   private lastValue: string;
+  private translationsLoaded = false;
 
   constructor(
     private translationService: TranslationService,
@@ -24,6 +25,7 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
 
     // S'abonner au chargement des traductions
     this.loadedSubscription = this.translationService.getTranslationsLoaded().subscribe((loaded) => {
+      this.translationsLoaded = loaded;
       if (loaded) {
         this.lastValue = null;
         this.cdr.markForCheck();
@@ -33,6 +35,11 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
 
   transform(key: string): string {
     if (!key) {
+      return '';
+    }
+
+    // Si les traductions ne sont pas encore chargées, retourner une chaîne vide
+    if (!this.translationsLoaded) {
       return '';
     }
 

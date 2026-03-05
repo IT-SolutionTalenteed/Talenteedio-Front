@@ -4,9 +4,9 @@
         <span class="slider round" [class.disabled]="disabled"></span>
     </label>
     <ng-container *ngIf="showLabel">
-        <p *ngIf="value; else f">Actif</p>
+        <p *ngIf="value; else f">{{ 'common.active' | translate }}</p>
         <ng-template #f>
-            <p>Inactif</p>
+            <p>{{ 'common.inactive' | translate }}</p>
         </ng-template>
     </ng-container>
 </div>

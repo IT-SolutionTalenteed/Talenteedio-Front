@@ -1,9 +1,57 @@
 {
+  "header": {
+    "menu": {
+      "home": "Home",
+      "jobs": "Jobs",
+      "events": "Events",
+      "articles": "Articles",
+      "matchingProfile": "Matching Profile"
+    },
+    "megaMenu": {
+      "hero": {
+        "title": "Open yourself to a new world of possibilities",
+        "subtitle": "Discover the best opportunities"
+      },
+      "jobs": {
+        "allJobs": "Job Offers",
+        "allJobsDesc": "Over 1000 opportunities to seize!",
+        "companies": "Search for a company",
+        "companiesDesc": "Follow and discover companies"
+      },
+      "events": {
+        "allEvents": "All our events",
+        "allEventsDesc": "Participate in HR events"
+      }
+    },
+    "auth": {
+      "signUp": "Sign Up",
+      "signIn": "Sign In",
+      "logout": "Logout"
+    },
+    "tagline": "The alternative media for HR"
+  },
+  "sideNav": {
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "footer": {
+    "termsAndConditions": "Terms and conditions",
+    "confidentiality": "Confidentiality",
+    "allRightsReserved": "All rights reserved"
+  },
+  "modal": {
+    "becomeMember": {
+      "title": "Join us",
+      "description": "To access event details, you can join us.",
+      "button": "Become member"
+    }
+  },
   "home": {
     "hero": {
       "subtitle": "Exceed your career expectations",
       "title": "Create the best. Day.",
       "titleAccent": "Always.",
+      "description": "Create the best. Day. Always.",
       "stats": {
         "events": {
           "number": "20k+",
@@ -64,10 +112,26 @@
       "titleAccent2": "resources",
       "titleText": "and your",
       "titleEnd": "ultimate",
-      "description": "Stay informed with the latest HR news, articles and expert interviews"
+      "description": "Stay informed with the latest HR news, articles and expert interviews",
+      "viewAllArticles": "View All Articles"
     }
   },
   "common": {
-    "language": "Language"
+    "language": "Language",
+    "filter": "Filter",
+    "addFilter": "Add filter",
+    "active": "Active",
+    "inactive": "Inactive",
+    "display": "Display",
+    "page": "Page",
+    "search": "Search",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
   }
 }
