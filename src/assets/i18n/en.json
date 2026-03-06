@@ -476,11 +476,133 @@
       "statsCompany": "Company",
       "statsCompanyPlural": "Companies",
       "statsSelected": "Selected",
+      "statsSelectedPlural": "Selected",
       "matchBadge": "Match",
       "selectButton": "Select",
       "selectedButton": "Selected",
       "relaunchMatching": "Relaunch matching",
       "continueButton": "Continue to appointments"
+    },
+    "authModal": {
+      "branding": {
+        "heroTitle": "Find your",
+        "heroTitleLine2": "next",
+        "heroTitleAccent": "opportunity",
+        "heroDescription": "Join thousands of professionals who trust Talenteed to find the best career opportunities"
+      },
+      "tabs": {
+        "login": "Login",
+        "register": "Register"
+      },
+      "login": {
+        "title": "Welcome back!",
+        "subtitle": "Sign in to continue",
+        "emailLabel": "Email",
+        "passwordLabel": "Password",
+        "rememberMe": "Remember me",
+        "submitButton": "Sign in",
+        "submitting": "Signing in...",
+        "errors": {
+          "emailRequired": "Email is required",
+          "emailInvalid": "Invalid email",
+          "passwordRequired": "Password is required",
+          "passwordMinLength": "Minimum 6 characters",
+          "captchaRequired": "Please validate the captcha"
+        }
+      },
+      "choice": {
+        "title": "Choose your profile",
+        "subtitle": "Select the type of account you want to create",
+        "talent": {
+          "title": "I'm a talent",
+          "description": "Create your profile and find the best opportunities"
+        },
+        "company": {
+          "title": "I'm a company",
+          "description": "Recruit the best talents for your team"
+        }
+      },
+      "register": {
+        "title": "Create an account",
+        "subtitle": "Join our community",
+        "backButton": "Back to choice",
+        "firstNameLabel": "First Name",
+        "lastNameLabel": "Last Name",
+        "emailLabel": "Email Address",
+        "phoneLabel": "Phone Number",
+        "passwordLabel": "Password",
+        "confirmPasswordLabel": "Confirm Password",
+        "sections": {
+          "professionalInfo": "Professional Information (Optional)",
+          "salaryCompensation": "Salary & Compensation (Optional)",
+          "location": "Location (Optional)",
+          "jobPreferences": "Job Preferences (Optional)"
+        },
+        "fields": {
+          "valuesLabel": "Values (Optional)",
+          "valuesPlaceholder": "Select values",
+          "cvLabel": "CV (PDF) - Optional",
+          "cvButton": "Choose File",
+          "cvNoFile": "No file chosen",
+          "yearsOfExperienceLabel": "Years of Experience",
+          "yearsOfExperiencePlaceholder": "e.g., 5",
+          "skillsLabel": "Skills",
+          "skillsPlaceholder": "JavaScript, React, Node.js...",
+          "languagesLabel": "Languages",
+          "languagesPlaceholder": "French (native), English (fluent)...",
+          "educationLabel": "Education",
+          "educationPlaceholder": "Master in Computer Science...",
+          "interestsLabel": "Interests",
+          "interestsPlaceholder": "Open source, AI, Blockchain...",
+          "tjmLabel": "TJM (€)",
+          "tjmPlaceholder": "Daily rate",
+          "annualSalaryLabel": "Annual Salary/12",
+          "annualSalaryPlaceholder": "Monthly salary",
+          "salaryRangeLabel": "Desired Salary Range",
+          "salaryRangePlaceholder": "45000-55000 €",
+          "countryLabel": "Country",
+          "countryPlaceholder": "France",
+          "cityLabel": "City",
+          "cityPlaceholder": "Paris",
+          "addressLabel": "Address",
+          "addressPlaceholder": "123 Rue de la Paix",
+          "postalCodeLabel": "Postal Code",
+          "postalCodePlaceholder": "75001",
+          "desiredPositionLabel": "Desired Position",
+          "desiredPositionPlaceholder": "Full Stack Developer Senior",
+          "contractTypeLabel": "Contract Type",
+          "contractTypePlaceholder": "Select contract type",
+          "companyTypeLabel": "Company Type",
+          "companyTypePlaceholder": "Startup, Scale-up...",
+          "sectorLabel": "Sector",
+          "sectorPlaceholder": "Tech, FinTech...",
+          "mobilityLabel": "Mobility",
+          "mobilityPlaceholder": "France, Europe...",
+          "desiredWorkLocationLabel": "Desired Work Location",
+          "desiredWorkLocationPlaceholder": "Paris or Remote...",
+          "availabilityDateLabel": "Availability Date",
+          "workModeLabel": "Work Mode",
+          "workModePlaceholder": "Select work mode"
+        },
+        "consent": {
+          "text": "I agree to have read",
+          "link": "the consent",
+          "textEnd": "and I consent to sign it electronically with my name."
+        },
+        "submitButton": "Create my account",
+        "submitting": "Creating...",
+        "errors": {
+          "firstNameRequired": "First name is required",
+          "lastNameRequired": "Last name is required",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Invalid email",
+          "phoneRequired": "Phone number is required",
+          "passwordRequired": "Password is required",
+          "passwordMinLength": "Minimum 6 characters",
+          "confirmPasswordRequired": "Confirmation is required",
+          "passwordMismatch": "Passwords do not match"
+        }
+      }
     }
   },
   "common": {

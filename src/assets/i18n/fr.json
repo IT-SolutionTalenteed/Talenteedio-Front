@@ -482,6 +482,127 @@
       "selectedButton": "Sélectionnée",
       "relaunchMatching": "Relancer le matching",
       "continueButton": "Continuer vers les rendez-vous"
+    },
+    "authModal": {
+      "branding": {
+        "heroTitle": "Trouvez votre",
+        "heroTitleLine2": "prochaine",
+        "heroTitleAccent": "opportunité",
+        "heroDescription": "Rejoignez des milliers de professionnels qui font confiance à Talenteed pour trouver les meilleures opportunités de carrière"
+      },
+      "tabs": {
+        "login": "Connexion",
+        "register": "Inscription"
+      },
+      "login": {
+        "title": "Bon retour !",
+        "subtitle": "Connectez-vous pour continuer",
+        "emailLabel": "Email",
+        "passwordLabel": "Mot de passe",
+        "rememberMe": "Se souvenir de moi",
+        "submitButton": "Se connecter",
+        "submitting": "Connexion...",
+        "errors": {
+          "emailRequired": "L'email est requis",
+          "emailInvalid": "Email invalide",
+          "passwordRequired": "Le mot de passe est requis",
+          "passwordMinLength": "Minimum 6 caractères",
+          "captchaRequired": "Veuillez valider le captcha"
+        }
+      },
+      "choice": {
+        "title": "Choisissez votre profil",
+        "subtitle": "Sélectionnez le type de compte que vous souhaitez créer",
+        "talent": {
+          "title": "Je suis un talent",
+          "description": "Créez votre profil et trouvez les meilleures opportunités"
+        },
+        "company": {
+          "title": "Je suis une entreprise",
+          "description": "Recrutez les meilleurs talents pour votre équipe"
+        }
+      },
+      "register": {
+        "title": "Créer un compte",
+        "subtitle": "Rejoignez notre communauté",
+        "backButton": "Retour au choix",
+        "firstNameLabel": "Prénom",
+        "lastNameLabel": "Nom",
+        "emailLabel": "Adresse email",
+        "phoneLabel": "Numéro de téléphone",
+        "passwordLabel": "Mot de passe",
+        "confirmPasswordLabel": "Confirmer le mot de passe",
+        "sections": {
+          "professionalInfo": "Informations Professionnelles (Optionnel)",
+          "salaryCompensation": "Salaire & Rémunération (Optionnel)",
+          "location": "Localisation (Optionnel)",
+          "jobPreferences": "Préférences d'emploi (Optionnel)"
+        },
+        "fields": {
+          "valuesLabel": "Valeurs (Optionnel)",
+          "valuesPlaceholder": "Sélectionnez des valeurs",
+          "cvLabel": "CV (PDF) - Optionnel",
+          "cvButton": "Choisir un fichier",
+          "cvNoFile": "Aucun fichier choisi",
+          "yearsOfExperienceLabel": "Années d'expérience",
+          "yearsOfExperiencePlaceholder": "ex: 5",
+          "skillsLabel": "Compétences",
+          "skillsPlaceholder": "JavaScript, React, Node.js...",
+          "languagesLabel": "Langues",
+          "languagesPlaceholder": "Français (natif), Anglais (courant)...",
+          "educationLabel": "Formation",
+          "educationPlaceholder": "Master en Informatique...",
+          "interestsLabel": "Centres d'intérêt",
+          "interestsPlaceholder": "Open source, IA, Blockchain...",
+          "tjmLabel": "TJM (€)",
+          "tjmPlaceholder": "Taux journalier",
+          "annualSalaryLabel": "Salaire annuel/12",
+          "annualSalaryPlaceholder": "Salaire mensuel",
+          "salaryRangeLabel": "Fourchette salariale souhaitée",
+          "salaryRangePlaceholder": "45000-55000 €",
+          "countryLabel": "Pays",
+          "countryPlaceholder": "France",
+          "cityLabel": "Ville",
+          "cityPlaceholder": "Paris",
+          "addressLabel": "Adresse",
+          "addressPlaceholder": "123 Rue de la Paix",
+          "postalCodeLabel": "Code postal",
+          "postalCodePlaceholder": "75001",
+          "desiredPositionLabel": "Poste souhaité",
+          "desiredPositionPlaceholder": "Développeur Full Stack Senior",
+          "contractTypeLabel": "Type de contrat",
+          "contractTypePlaceholder": "Sélectionner le type de contrat",
+          "companyTypeLabel": "Type d'entreprise",
+          "companyTypePlaceholder": "Startup, Scale-up...",
+          "sectorLabel": "Secteur",
+          "sectorPlaceholder": "Tech, FinTech...",
+          "mobilityLabel": "Mobilité",
+          "mobilityPlaceholder": "France, Europe...",
+          "desiredWorkLocationLabel": "Lieu de travail souhaité",
+          "desiredWorkLocationPlaceholder": "Paris ou Remote...",
+          "availabilityDateLabel": "Date de disponibilité",
+          "workModeLabel": "Mode de travail",
+          "workModePlaceholder": "Sélectionner le mode de travail"
+        },
+        "consent": {
+          "text": "J'accepte d'avoir lu",
+          "link": "le consentement",
+          "textEnd": "et je consens à le signer électroniquement avec mon nom."
+        },
+        "submitButton": "Créer mon compte",
+        "submitting": "Création...",
+        "errors": {
+          "firstNameRequired": "Le prénom est requis",
+          "lastNameRequired": "Le nom est requis",
+          "emailRequired": "L'email est requis",
+          "emailInvalid": "Email invalide",
+          "phoneRequired": "Le numéro de téléphone est requis",
+          "passwordRequired": "Le mot de passe est requis",
+          "passwordMinLength": "Minimum 6 caractères",
+          "confirmPasswordRequired": "La confirmation est requise",
+          "passwordMismatch": "Les mots de passe ne correspondent pas"
+        }
+      }
     }
   },
   "common": {
