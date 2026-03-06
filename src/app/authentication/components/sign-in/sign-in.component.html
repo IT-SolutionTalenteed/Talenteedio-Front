@@ -165,17 +165,6 @@
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-
-          <!-- Divider -->
-          <div class="divider">
-            <span>{{ 'auth.signIn.divider' | translate }}</span>
-          </div>
-
-          <!-- Google Sign-In -->
-          <app-google-signin
-            (googleSignIn)="onGoogleSignIn($event)"
-            [buttonText]="'auth.signIn.googleButton' | translate"
-          ></app-google-signin>
         </div>
       </form>
 

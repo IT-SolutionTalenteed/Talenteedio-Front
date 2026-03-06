@@ -27,7 +27,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
   @ViewChild('first', { static: false }) firstInput: ElementRef;
   @ViewChild('password') passwordEl: ElementRef;
   @Output() signIn: EventEmitter<Credentials> = new EventEmitter<Credentials>();
-  @Output() googleSignIn: EventEmitter<string> = new EventEmitter<string>();
   @Output() clearError: EventEmitter<void> = new EventEmitter<void>();
   @Input() loginErrorMessage: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -132,9 +131,5 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.captchaSuccess = false;
     this.captchaIsExpired = true;
     this.cdr.detectChanges();
-  }
-
-  onGoogleSignIn(credential: string): void {
-    this.googleSignIn.emit(credential);
   }
 }

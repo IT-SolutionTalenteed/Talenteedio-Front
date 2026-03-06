@@ -30,12 +30,6 @@ import {
   accountActivationFail,
   accountActivationSuccess,
   activateAccount,
-  googleSignIn,
-  googleSignInFail,
-  googleSignInSuccess,
-  linkGoogleAccount,
-  linkGoogleAccountFail,
-  linkGoogleAccountSuccess,
   loadValues,
   loadValuesFail,
   loadValuesSuccess,
@@ -239,69 +233,6 @@ export class AuthenticationEffects {
         this.authenticationService.loadValues().pipe(
           map((response: Value[]) => loadValuesSuccess({ payload: response })),
           catchError((error) => of(loadValuesFail(error)))
-        )
-      )
-    )
-  );
-
-  googleSignIn$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(googleSignIn),
-      switchMap((props: { credential: string }) =>
-        this.authenticationService.googleSignIn(props.credential).pipe(
-          mergeMap((response: AuthenticationResponse) => [
-            showSuccess({ message: 'Connexion Google réussie' }),
-            googleSignInSuccess(response)
-          ]),
-          catchError((error) => {
-            console.log('Google sign-in error caught:', error);
-            return of(googleSignInFail(error));
-          }),
-          timeout(10000),
-          catchError((timeoutError) => {
-            console.log('Google sign-in timeout:', timeoutError);
-            return of(googleSignInFail(new Error('Timeout de connexion Google')));
-          })
-        )
-      )
-    )
-  );
-
-  googleSignInSuccess$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(googleSignInSuccess),
-      tap((props: AuthenticationResponse) =>
-        this.gaService.event('login', 'google_login', props.user.email)
-      ),
-      withLatestFrom(this.routerStore.pipe(select(getRouterState))),
-      map(([action, routerState]) => {
-        const currentUrl = routerState.state.url;
-        const redirect = routerState.state.queryParams['redirect'];
-        
-        // Si on est sur la page matching-profile, ne pas rediriger
-        if (currentUrl && currentUrl.includes('/matching-profile')) {
-          return { type: 'NO_ACTION' }; // Action vide pour ne rien faire
-        }
-        
-        // Sinon, rediriger normalement
-        return redirect ? go({ path: [`${redirect}`] }) : go({ path: ['/home'] });
-      })
-    )
-  );
-
-  linkGoogleAccount$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(linkGoogleAccount),
-      switchMap((props: { credential: string }) =>
-        this.authenticationService.linkGoogleAccount(props.credential).pipe(
-          mergeMap(() => [
-            showSuccess({ message: 'Compte Google lié avec succès' }),
-            linkGoogleAccountSuccess()
-          ]),
-          catchError((error) => {
-            console.log('Link Google account error caught:', error);
-            return of(linkGoogleAccountFail(error));
-          })
         )
       )
     )
