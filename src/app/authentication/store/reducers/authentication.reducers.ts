@@ -8,12 +8,6 @@ import {
   accountActivationSuccess,
   activateAccount,
   clearError,
-  googleSignIn,
-  googleSignInFail,
-  googleSignInSuccess,
-  linkGoogleAccount,
-  linkGoogleAccountFail,
-  linkGoogleAccountSuccess,
   loadValues,
   loadValuesFail,
   loadValuesSuccess,
@@ -61,10 +55,6 @@ export interface AuthenticationState {
   values: Value[];
   valuesLoading: boolean;
   valuesLoaded: boolean;
-  googleSignInLoading: boolean;
-  googleSignInError: Error;
-  linkGoogleAccountLoading: boolean;
-  linkGoogleAccountError: Error;
 }
 
 const initialState: AuthenticationState = {
@@ -92,10 +82,6 @@ const initialState: AuthenticationState = {
   values: [],
   valuesLoading: false,
   valuesLoaded: false,
-  googleSignInLoading: false,
-  googleSignInError: undefined,
-  linkGoogleAccountLoading: false,
-  linkGoogleAccountError: undefined,
 };
 
 const logInReducer = (state: AuthenticationState): AuthenticationState => ({
@@ -328,68 +314,6 @@ const clearErrorReducer = (
   signUpError: undefined,
   reinitPasswordError: undefined,
   accountActivationError: undefined,
-  googleSignInError: undefined,
-  linkGoogleAccountError: undefined,
-});
-
-const googleSignInReducer = (
-  state: AuthenticationState
-): AuthenticationState => ({
-  ...state,
-  userLoggedIn: false,
-  userLoggingIn: true,
-  googleSignInLoading: true,
-  googleSignInError: undefined,
-});
-
-const googleSignInSuccessReducer = (
-  state: AuthenticationState,
-  props: AuthenticationResponse
-): AuthenticationState => ({
-  ...state,
-  userLoggedIn: true,
-  userLoggingIn: false,
-  googleSignInLoading: false,
-  user: props.user,
-  token: props.accessToken,
-  refreshToken: props.refreshToken,
-  googleSignInError: undefined,
-});
-
-const googleSignInFailReducer = (
-  state: AuthenticationState,
-  props: Error
-): AuthenticationState => ({
-  ...state,
-  userLoggedIn: false,
-  userLoggingIn: false,
-  googleSignInLoading: false,
-  googleSignInError: props,
-});
-
-const linkGoogleAccountReducer = (
-  state: AuthenticationState
-): AuthenticationState => ({
-  ...state,
-  linkGoogleAccountLoading: true,
-  linkGoogleAccountError: undefined,
-});
-
-const linkGoogleAccountSuccessReducer = (
-  state: AuthenticationState
-): AuthenticationState => ({
-  ...state,
-  linkGoogleAccountLoading: false,
-  linkGoogleAccountError: undefined,
-});
-
-const linkGoogleAccountFailReducer = (
-  state: AuthenticationState,
-  props: Error
-): AuthenticationState => ({
-  ...state,
-  linkGoogleAccountLoading: false,
-  linkGoogleAccountError: props,
 });
 
 const reducer = createReducer(
@@ -417,13 +341,7 @@ const reducer = createReducer(
   on(loadValues, loadValuesReducer),
   on(loadValuesSuccess, loadValuesSuccessReducer),
   on(loadValuesFail, loadValuesFailReducer),
-  on(clearError, clearErrorReducer),
-  on(googleSignIn, googleSignInReducer),
-  on(googleSignInSuccess, googleSignInSuccessReducer),
-  on(googleSignInFail, googleSignInFailReducer),
-  on(linkGoogleAccount, linkGoogleAccountReducer),
-  on(linkGoogleAccountSuccess, linkGoogleAccountSuccessReducer),
-  on(linkGoogleAccountFail, linkGoogleAccountFailReducer)
+  on(clearError, clearErrorReducer)
 );
 
 export function authenticationReducer(

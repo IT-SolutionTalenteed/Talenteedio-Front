@@ -1,18 +1,8 @@
 <app-loader [isLoading]="loading$ | async" style="width: 100%; min-height: 100vh;">
   <app-sign-in
     (signIn)="onLogIn($event)"
-    (googleSignIn)="onGoogleSignIn($event)"
     (clearError)="onClearError()"
     [loginErrorMessage]="emailErrorMessage$ | async"
     [emailError]="emailError$ | async"
   ></app-sign-in>
 </app-loader>
-
-<!-- Google Registration Modal -->
-<app-google-register
-  *ngIf="showGoogleRegisterModal"
-  [googleData]="googleData"
-  [credential]="googleCredential"
-  (registrationComplete)="onGoogleRegistrationComplete($event)"
-  (cancel)="onGoogleRegistrationCancel()">
-</app-google-register>

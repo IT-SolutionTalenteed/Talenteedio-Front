@@ -74,69 +74,6 @@ export class AuthenticationService implements AuthenticationServiceInterface {
       .pipe(map((response: ApiResponse) => response as AuthenticationResponse));
   }
 
-  googleSignIn(credential: string): Observable<AuthenticationResponse> {
-    return this.http
-      .post(`${environment.apiBaseUrl}/auth/google`, { credential })
-      .pipe(
-        map((response: ApiResponse) => {
-          console.log('Google sign-in response:', response);
-          return response as AuthenticationResponse;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          console.log('Google sign-in error:', error);
-          const errorObj = {
-            message: error.error?.msg || error.message || 'Erreur de connexion Google',
-            status: error.status,
-            error: error.error,
-            needsRegistration: error.error?.needsRegistration || false,
-            googleData: error.error?.googleData || null
-          };
-          return throwError(errorObj);
-        })
-      );
-  }
-
-  googleRegister(credential: string, role: string, additionalData?: any): Observable<AuthenticationResponse> {
-    return this.http
-      .post(`${environment.apiBaseUrl}/auth/google/register`, { 
-        credential, 
-        role, 
-        additionalData 
-      })
-      .pipe(
-        map((response: ApiResponse) => {
-          console.log('Google register response:', response);
-          return response as AuthenticationResponse;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          console.log('Google register error:', error);
-          const errorObj = {
-            message: error.error?.msg || error.message || 'Erreur d\'inscription Google',
-            status: error.status,
-            error: error.error
-          };
-          return throwError(errorObj);
-        })
-      );
-  }
-
-  linkGoogleAccount(credential: string): Observable<any> {
-    return this.http
-      .post(`${environment.apiBaseUrl}/auth/link-google`, { credential })
-      .pipe(
-        map((response: ApiResponse) => response),
-        catchError((error: HttpErrorResponse) => {
-          console.log('Link Google account error:', error);
-          const errorObj = {
-            message: error.error?.msg || error.message || 'Erreur de liaison du compte Google',
-            status: error.status,
-            error: error.error
-          };
-          return throwError(errorObj);
-        })
-      );
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   me(): Observable<any> {
     return this.http
