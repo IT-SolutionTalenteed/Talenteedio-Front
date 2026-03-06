@@ -26,20 +26,6 @@
       background-image: url('/assets/img/backgrounds/Hero26.png');
       background-size: cover;
       background-position: center;
-      opacity: 0.15;
-      z-index: 0;
-    }
-
-    // Decorative animated line
-    &::after {
-      content: '';
-      position: absolute;
-      top: 35%;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
-      animation: moveLine 8s linear infinite;
       z-index: 0;
     }
 
