@@ -761,6 +761,11 @@ $border-color: #E8EAED;
 // Featured Jobs Section
 .featured-jobs-section {
   @include section-base;
+  padding-top: 40px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 30px;
+  }
 
   .section-header {
     @include section-header;
@@ -780,6 +785,11 @@ $border-color: #E8EAED;
 // Companies Section
 .companies-section {
   @include section-base;
+  padding-top: 60px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 40px;
+  }
 
   .section-header {
     @include section-header;
@@ -852,6 +862,11 @@ $border-color: #E8EAED;
 // Media Section
 .media-section {
   @include section-base;
+  padding-top: 60px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 40px;
+  }
 
   .section-header {
     @include section-header;
@@ -996,8 +1011,8 @@ $border-color: #E8EAED;
 .upcoming-events-section {
   background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
   position: relative;
-  padding: 100px 0;
-  margin: 80px 0;
+  padding: 80px 0;
+  margin: 60px 0;
   overflow: hidden;
 
   // Background pattern overlay
