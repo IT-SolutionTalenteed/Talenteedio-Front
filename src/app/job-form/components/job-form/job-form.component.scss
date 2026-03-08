@@ -44,23 +44,11 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
       z-index: 0;
     }
     
-    // Decorative animated line
-    &::after {
-      content: '';
-      position: absolute;
-      top: 40%;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
-      animation: moveLine 8s linear infinite;
-      z-index: 0;
-    }
-    
     .job-box {
       flex-direction: column;
       display: flex;
-      padding: 60px 20px;
+      padding: 100px 20px;
+      min-height: 50vh;
       align-items: center;
       justify-content: space-between;
       width: 100%;
@@ -96,6 +84,25 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
         
         .job-detail {
           position: relative;
+          
+          .company-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(244, 159, 10, 0.95);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 4px;
+              height: 16px;
+              background: rgba(244, 159, 10, 0.95);
+              border-radius: 2px;
+            }
+          }
           
           .job-title {
             position: relative;

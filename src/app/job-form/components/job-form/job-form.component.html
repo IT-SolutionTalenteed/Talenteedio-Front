@@ -9,6 +9,9 @@
           />
         </div>
         <div class="job-detail">
+          <div class="company-name" *ngIf="job?.company?.company_name">
+            {{ job.company.company_name }}
+          </div>
           <div class="job-title">
             <h4>{{ job.title }}</h4>
             <app-favorite-button
