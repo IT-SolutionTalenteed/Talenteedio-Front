@@ -95,7 +95,8 @@ export class HeaderComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['user'] || changes['menus']) && this.menus) {
-      this.menusCopy = this.menus.filter((menu) => menu.title !== 'Logout');
+      // Filtrer le menu logout car on a déjà un bouton dédié
+      this.menusCopy = this.menus.filter((menu) => menu.title !== 'sideNav.logout');
     }
     if (changes['navbarMenus'] && this.navbarMenus) {
       this.loadEventCategories();
