@@ -30,26 +30,6 @@
         
         <p class="hero-description">{{ 'home.hero.description' | translate }}</p>
         
-        <!-- Feature Highlights -->
-        <div class="hero-features">
-          <div class="feature-item">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
-              </svg>
-            </div>
-            <span>{{ 'home.hero.features.builder' | translate }}</span>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
-              </svg>
-            </div>
-            <span>{{ 'home.hero.features.easy' | translate }}</span>
-          </div>
-        </div>
-        
         <!-- CTA Buttons -->
         <div class="hero-actions">
           <button class="btn-primary" [routerLink]="['/matching-profile']">
@@ -57,12 +37,6 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-          </button>
-          <button class="btn-secondary" [routerLink]="['/event']">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M8 5v14l11-7z" fill="currentColor"/>
-            </svg>
-            <span>{{ 'home.hero.cta.watchDemo' | translate }}</span>
           </button>
         </div>
         

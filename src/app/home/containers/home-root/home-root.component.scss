@@ -122,7 +122,7 @@ $border-color: #E8EAED;
 // Hero Section
 .hero-section {
   padding: 140px 20px 100px;
-  background: linear-gradient(135deg, #FFF8F0 0%, #FFECD1 50%, #FFE4B5 100%);
+  background: linear-gradient(135deg, #0a1128 0%, #001f54 50%, #034078 100%);
   position: relative;
   overflow: hidden;
   min-height: 90vh;
@@ -152,9 +152,9 @@ $border-color: #E8EAED;
       left: 0;
       right: 0;
       bottom: 0;
-      opacity: 0.03;
+      opacity: 0.05;
       background-image: 
-        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0, 0, 0, 0.05) 35px, rgba(0, 0, 0, 0.05) 70px);
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.05) 35px, rgba(255, 255, 255, 0.05) 70px);
     }
 
     .hero-bg-shapes {
@@ -167,7 +167,7 @@ $border-color: #E8EAED;
       .shape {
         position: absolute;
         border-radius: 50%;
-        opacity: 0.08;
+        opacity: 0.1;
 
         &.shape-1 {
           width: 400px;
@@ -181,7 +181,7 @@ $border-color: #E8EAED;
         &.shape-2 {
           width: 300px;
           height: 300px;
-          background: radial-gradient(circle, #034078 0%, transparent 70%);
+          background: radial-gradient(circle, #2687e9 0%, transparent 70%);
           bottom: -50px;
           left: 5%;
           animation: float 25s ease-in-out infinite reverse;
@@ -190,7 +190,7 @@ $border-color: #E8EAED;
         &.shape-3 {
           width: 200px;
           height: 200px;
-          background: radial-gradient(circle, #192bc2 0%, transparent 70%);
+          background: radial-gradient(circle, #5ba3f0 0%, transparent 70%);
           top: 50%;
           left: 50%;
           animation: float 15s ease-in-out infinite;
@@ -220,13 +220,14 @@ $border-color: #E8EAED;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: white;
+      background: rgba(244, 159, 10, 0.15);
+      backdrop-filter: blur(10px);
       padding: 10px 20px;
       border-radius: 50px;
-      color: #0a1128;
+      color: #f49f0a;
       font-size: 14px;
       font-weight: 600;
-      border: 2px solid #f49f0a;
+      border: 1px solid rgba(244, 159, 10, 0.3);
       margin-bottom: 32px;
       width: fit-content;
       box-shadow: 0 4px 12px rgba(244, 159, 10, 0.2);
@@ -242,12 +243,12 @@ $border-color: #E8EAED;
       font-size: 64px;
       font-weight: 800;
       line-height: 1.1;
-      color: #0a1128;
+      color: white;
       margin-bottom: 24px;
       letter-spacing: -1px;
 
       .accent-underline {
-        color: #0a1128;
+        color: white;
         position: relative;
         display: inline-block;
 
@@ -259,7 +260,7 @@ $border-color: #E8EAED;
           bottom: 8px;
           height: 16px;
           background: #f49f0a;
-          opacity: 0.3;
+          opacity: 0.4;
           border-radius: 8px;
           z-index: -1;
         }
@@ -272,46 +273,13 @@ $border-color: #E8EAED;
 
     .hero-description {
       font-size: 18px;
-      color: #5f6368;
+      color: rgba(255, 255, 255, 0.9);
       line-height: 1.7;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       max-width: 540px;
 
       @media screen and (max-width: 768px) {
         font-size: 16px;
-      }
-    }
-
-    .hero-features {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 40px;
-
-      .feature-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 16px;
-        color: #0a1128;
-        font-weight: 500;
-
-        .feature-icon {
-          width: 28px;
-          height: 28px;
-          background: #f49f0a;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-
-          svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
-          }
-        }
       }
     }
 
@@ -333,7 +301,7 @@ $border-color: #E8EAED;
         align-items: center;
         gap: 10px;
         border: none;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 
         svg {
           transition: transform 0.3s ease;
@@ -341,13 +309,13 @@ $border-color: #E8EAED;
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
       }
 
       .btn-primary {
-        background: #0a1128;
-        color: white;
+        background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
+        color: #0a1128;
 
         &:hover svg {
           transform: translateX(4px);
@@ -355,17 +323,14 @@ $border-color: #E8EAED;
       }
 
       .btn-secondary {
-        background: white;
-        color: #0a1128;
-        border: 2px solid #0a1128;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
 
         &:hover {
-          background: #0a1128;
-          color: white;
-
-          svg path {
-            fill: white;
-          }
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.5);
         }
       }
     }
@@ -386,14 +351,14 @@ $border-color: #E8EAED;
         .stat-number {
           font-size: 32px;
           font-weight: 800;
-          color: #0a1128;
+          color: white;
           line-height: 1;
           margin-bottom: 4px;
         }
 
         .stat-label {
           font-size: 14px;
-          color: #5f6368;
+          color: rgba(255, 255, 255, 0.8);
           line-height: 1;
           font-weight: 500;
         }
@@ -402,7 +367,7 @@ $border-color: #E8EAED;
       .stat-divider {
         width: 1px;
         height: 40px;
-        background: #E8EAED;
+        background: rgba(255, 255, 255, 0.2);
 
         @media screen and (max-width: 768px) {
           display: none;
@@ -426,9 +391,9 @@ $border-color: #E8EAED;
         position: relative;
         border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         background: white;
-        border: 8px solid white;
+        border: 8px solid rgba(255, 255, 255, 0.1);
         transform: rotate(-2deg);
         animation: float 6s ease-in-out infinite;
 
@@ -467,7 +432,7 @@ $border-color: #E8EAED;
         background: white;
         border-radius: 16px;
         padding: 16px 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         z-index: 3;
         animation: floatSlow 8s ease-in-out infinite;
 
@@ -535,7 +500,7 @@ $border-color: #E8EAED;
           width: 120px;
           height: 120px;
           background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
-          opacity: 0.15;
+          opacity: 0.2;
           top: -20px;
           right: -20px;
           animation: pulse 4s ease-in-out infinite;
@@ -544,8 +509,8 @@ $border-color: #E8EAED;
         &.circle-2 {
           width: 80px;
           height: 80px;
-          background: linear-gradient(135deg, #034078 0%, #192bc2 100%);
-          opacity: 0.15;
+          background: linear-gradient(135deg, #2687e9 0%, #5ba3f0 100%);
+          opacity: 0.2;
           bottom: 40px;
           left: -10px;
           animation: pulse 5s ease-in-out infinite;
@@ -562,7 +527,7 @@ $border-color: #E8EAED;
         flex-direction: column;
         align-items: center;
         gap: 8px;
-        color: #5f6368;
+        color: rgba(255, 255, 255, 0.7);
         font-size: 12px;
         font-weight: 600;
         text-transform: uppercase;
