@@ -242,7 +242,13 @@
     "companies": {
       "title": "La confiance des",
       "titleAccent": "entreprises leaders",
-      "description": "Rejoignez le réseau d'entreprises innovantes qui nous font confiance pour leurs besoins en talents"
+      "description": "Rejoignez le réseau d'entreprises innovantes qui nous font confiance pour leurs besoins en talents",
+      "founded": "Fondée en",
+      "visitWebsite": "Visiter le site",
+      "topPartner": "Partenaire Principal",
+      "jobsPublished": "Offres publiées",
+      "employees": "Employés",
+      "industry": "Secteur"
     },
     "media": {
       "title": "Votre entreprise locale",

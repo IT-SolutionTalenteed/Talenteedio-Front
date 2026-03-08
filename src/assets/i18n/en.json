@@ -242,7 +242,13 @@
     "companies": {
       "title": "Trusted by",
       "titleAccent": "leading companies",
-      "description": "Join the network of innovative companies that trust us for their talent needs"
+      "description": "Join the network of innovative companies that trust us for their talent needs",
+      "founded": "Founded in",
+      "visitWebsite": "Visit website",
+      "topPartner": "Top Partner",
+      "jobsPublished": "Jobs Published",
+      "employees": "Employees",
+      "industry": "Industry"
     },
     "media": {
       "title": "Your local business",
