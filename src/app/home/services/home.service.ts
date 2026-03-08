@@ -147,12 +147,20 @@ export class HomeService {
             ) {
               getCompanies(input: $input, filter: $filter) {
                 rows {
+                  id
                   company_name
+                  slogan
+                  description
+                  industry
+                  companySize
+                  foundedYear
+                  website
                   logo {
                     id
                     fileUrl
                   }
                   contact {
+                    email
                     address {
                       line
                       city
@@ -160,17 +168,37 @@ export class HomeService {
                       country
                     }
                   }
+                  socialNetworks {
+                    linkedin
+                    twitter
+                    facebook
+                  }
+                  jobs {
+                    id
+                  }
                 }
               }
             }
           `,
           variables: props,
-          fetchPolicy: 'network-only', // Force Apollo to make a network request instead of using cache
+          fetchPolicy: 'network-only',
           context: {
-            uri: this.userApiUrl, // Use the updated API URL
+            uri: this.userApiUrl,
           },
         })
-        .pipe(map((response) => response.data.getCompanies.rows))
+        .pipe(
+          map((response) => {
+            const companies = response.data.getCompanies.rows;
+            // Create a copy of the array before sorting to avoid read-only error
+            const companiesCopy = [...companies];
+            // Sort to ensure "Solution Talenteed" is always first
+            return companiesCopy.sort((a: Company, b: Company) => {
+              if (a.company_name.toLowerCase().includes('solution talenteed')) return -1;
+              if (b.company_name.toLowerCase().includes('solution talenteed')) return 1;
+              return 0;
+            });
+          })
+        )
     );
   }
 

@@ -47,6 +47,9 @@
             >{{ job.salaryMin }} € - {{ job.salaryMax }} €
           </li>
         </ul>
+        <div class="job-description" *ngIf="getClientDescription()">
+          {{ getClientDescription() }}
+        </div>
       </div>
     </div>
   </div>

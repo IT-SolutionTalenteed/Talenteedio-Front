@@ -795,65 +795,172 @@ $border-color: #E8EAED;
     @include section-header;
   }
 
-  .companies-grid {
+  .companies-showcase {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
 
     @media screen and (max-width: 968px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media screen and (max-width: 640px) {
       grid-template-columns: 1fr;
+      gap: 24px;
     }
   }
 
   .company-card {
-    @include card-base;
-    padding: 40px 32px;
-    text-align: center;
+    background: white;
+    border-radius: $border-radius-lg;
+    border: 2px solid $border-color;
+    transition: $transition;
+    box-shadow: $shadow-sm;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
 
-    .company-logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 24px;
-      border-radius: $border-radius-md;
-      border: 1px solid $border-color;
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: $shadow-lg;
+      border-color: rgba($secondary, 0.3);
+    }
+
+    .company-header {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+      align-items: flex-start;
+      gap: 20px;
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 16px;
+      .company-logo-wrapper {
+        position: relative;
+        flex-shrink: 0;
+
+        .company-logo {
+          width: 80px;
+          height: 80px;
+          border-radius: $border-radius-md;
+          border: 2px solid $border-color;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+          transition: $transition;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+          }
+        }
+      }
+
+      .company-info {
+        flex: 1;
+        min-width: 0;
+
+        .company-name {
+          font-size: 22px;
+          font-weight: 700;
+          color: $black;
+          margin: 0 0 8px 0;
+          line-height: 1.3;
+        }
+
+        .company-slogan {
+          font-size: 14px;
+          color: $text-color;
+          margin: 0;
+          line-height: 1.5;
+          font-style: italic;
+        }
       }
     }
 
-    .company-name {
-      font-size: 20px;
-      font-weight: 700;
-      color: $black;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-
-    .company-location {
-      font-size: 14px;
-      color: $text-color;
+    .company-stats {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 0;
+      justify-content: space-around;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($secondary, 0.02) 100%);
+      border-radius: $border-radius-sm;
+      border: 1px solid rgba($secondary, 0.1);
 
-      svg {
-        color: $secondary;
-        flex-shrink: 0;
+      .stat-box {
+        text-align: center;
+        flex: 1;
+
+        .stat-value {
+          font-size: 28px;
+          font-weight: 700;
+          color: $secondary;
+          line-height: 1.2;
+          margin-bottom: 4px;
+        }
+
+        .stat-label {
+          font-size: 12px;
+          color: $text-color;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .stat-box-full {
+        text-align: center;
+        width: 100%;
+
+        .stat-value {
+          font-size: 28px;
+          font-weight: 700;
+          color: $secondary;
+          line-height: 1.2;
+          margin-bottom: 4px;
+        }
+
+        .stat-label {
+          font-size: 12px;
+          color: $text-color;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .stat-divider {
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(180deg, transparent 0%, rgba($secondary, 0.2) 50%, transparent 100%);
+      }
+    }
+
+    .company-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+      background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+      border-radius: $border-radius-sm;
+      border: 1px solid $border-color;
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: $text-color;
+        font-weight: 500;
+
+        svg {
+          color: $secondary;
+          flex-shrink: 0;
+          opacity: 0.8;
+        }
+
+        span {
+          line-height: 1.4;
+        }
       }
     }
   }
