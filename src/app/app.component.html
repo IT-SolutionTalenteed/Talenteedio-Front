@@ -1,3 +1,6 @@
 <div class="container">
+  <div *ngIf="loadingService.loading$ | async" class="global-loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
   <router-outlet></router-outlet>
 </div>

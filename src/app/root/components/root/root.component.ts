@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
 import { setUser } from 'src/app/authentication/store/actions/authentication.actions';
 
 import { Title } from '@angular/platform-browser';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { go } from 'src/app/routeur/store/actions/router.actions';
 import { AppRouterState } from 'src/app/routeur/store/reducers/router.reducers';
 import {
@@ -37,6 +38,7 @@ import {
 } from 'src/app/shared/store/selectors/shared.selectors';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { SubSink } from 'subsink';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NAVAR_MENUS } from '../../constants/navbar-menu.constants';
 import { SIDE_NAV_MENU } from '../../constants/side-nav-menu.constants';
 import { Menu } from '../../types/menu.interface';
@@ -72,7 +74,9 @@ export class RootComponent implements OnInit, OnDestroy {
     private routerStore: Store<AppRouterState>,
     private sharedStore: Store<SharedState>,
     private titleService: Title,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -83,6 +87,7 @@ export class RootComponent implements OnInit, OnDestroy {
     this.initData();
     this.initToken();
     this.subscribeModals();
+    this.initRouterEvents();
     this.location$ = this.sharedStore.pipe(select(getLocation));
     this.ad$ = this.sharedStore.pipe(select(getAd));
   }
@@ -116,6 +121,21 @@ export class RootComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  initRouterEvents() {
+    this.subs.sink = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loadingService.show();
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.loadingService.hide();
+      }
+    });
+  }
+
   initToken() {
     this.subs.sink = this.authenticationStore
       .pipe(select(getAccessToken))
