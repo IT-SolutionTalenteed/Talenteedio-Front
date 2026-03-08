@@ -620,7 +620,8 @@ $border-color: #E8EAED;
     transition: $transition;
     cursor: pointer;
     text-decoration: none;
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
     overflow: hidden;
 
@@ -674,6 +675,8 @@ $border-color: #E8EAED;
       color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
       margin-bottom: 24px;
+      min-height: 72px;
+      flex-grow: 1;
     }
 
     .card-link {
@@ -685,6 +688,7 @@ $border-color: #E8EAED;
       align-items: center;
       gap: 8px;
       transition: $transition;
+      margin-top: auto;
     }
 
     // Couleurs assignées aux service-cards selon la palette
