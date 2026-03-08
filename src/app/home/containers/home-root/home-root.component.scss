@@ -216,6 +216,60 @@ $border-color: #E8EAED;
   }
 
   .hero-text {
+    @media screen and (max-width: 968px) {
+      order: 2;
+    }
+
+    .hero-header {
+      margin-bottom: 0;
+    }
+
+    .hero-visual-mobile {
+      display: none;
+      margin: 40px 0;
+
+      @media screen and (max-width: 968px) {
+        display: block;
+      }
+
+      .visual-card {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        background: white;
+        border: 8px solid rgba(255, 255, 255, 0.1);
+
+        .card-image {
+          position: relative;
+          width: 100%;
+          border-radius: 16px;
+          overflow: hidden;
+
+          ::ng-deep {
+            #home-interview {
+              .video {
+                box-shadow: none;
+                border: none;
+                border-radius: 16px;
+                
+                &:hover {
+                  transform: none;
+                }
+
+                iframe {
+                  border-radius: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .hero-footer {
+      margin-top: 0;
+    }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -341,12 +395,6 @@ $border-color: #E8EAED;
       gap: 24px;
       flex-wrap: wrap;
 
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
       .stat-item {
         .stat-number {
           font-size: 32px;
@@ -368,10 +416,6 @@ $border-color: #E8EAED;
         width: 1px;
         height: 40px;
         background: rgba(255, 255, 255, 0.2);
-
-        @media screen and (max-width: 768px) {
-          display: none;
-        }
       }
     }
   }
@@ -381,6 +425,16 @@ $border-color: #E8EAED;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media screen and (max-width: 968px) {
+      order: 1;
+    }
+
+    &.hero-visual-desktop {
+      @media screen and (max-width: 968px) {
+        display: none;
+      }
+    }
 
     .visual-container {
       position: relative;
@@ -620,7 +674,8 @@ $border-color: #E8EAED;
     transition: $transition;
     cursor: pointer;
     text-decoration: none;
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
     overflow: hidden;
 
@@ -674,6 +729,8 @@ $border-color: #E8EAED;
       color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
       margin-bottom: 24px;
+      min-height: 72px;
+      flex-grow: 1;
     }
 
     .card-link {
@@ -685,6 +742,7 @@ $border-color: #E8EAED;
       align-items: center;
       gap: 8px;
       transition: $transition;
+      margin-top: auto;
     }
 
     // Couleurs assignées aux service-cards selon la palette

@@ -177,15 +177,10 @@
     "hero": {
       "subtitle": "Exceed your career expectations",
       "title": "Create Your",
-      "titleAccent": "Beautiful",
+      "titleAccent": "Career",
       "description": "Join thousands of professionals who trust Talenteed to exceed their career expectations",
-      "features": {
-        "builder": "Amazing Builder - Let's make things easy with our design system",
-        "easy": "Fast and Easy - We support key shortcut to find the components"
-      },
       "cta": {
-        "getStarted": "Get Started",
-        "watchDemo": "Watch Demo"
+        "getStarted": "Get Started"
       },
       "stats": {
         "events": {
