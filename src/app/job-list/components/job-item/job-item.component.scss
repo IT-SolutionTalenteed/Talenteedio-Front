@@ -23,27 +23,10 @@
       z-index: 10;
     }
     
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 10%) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 3;
-    }
-    
     &:hover {
       border-color: rgba(241, 117, 90, 0.3);
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
       transform: translateY(-4px);
-      
-      &::before {
-        opacity: 1;
-      }
       
       .company-logo {
         transform: scale(1.05);
