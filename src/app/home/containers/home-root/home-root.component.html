@@ -16,51 +16,66 @@
     <div class="hero-content">
       <!-- Left Column: Text Content -->
       <div class="hero-text">
-        <div class="hero-badge">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
-          </svg>
-          <span>{{ 'home.hero.subtitle' | translate }}</span>
-        </div>
-        
-        <h1 class="hero-title">
-          {{ 'home.hero.title' | translate }}
-          <span class="accent-underline">{{ 'home.hero.titleAccent' | translate }}</span>
-        </h1>
-        
-        <p class="hero-description">{{ 'home.hero.description' | translate }}</p>
-        
-        <!-- CTA Buttons -->
-        <div class="hero-actions">
-          <button class="btn-primary" [routerLink]="['/matching-profile']">
-            <span>{{ 'home.hero.cta.getStarted' | translate }}</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Header Section (Badge + Title + Description) -->
+        <div class="hero-header">
+          <div class="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
             </svg>
-          </button>
+            <span>{{ 'home.hero.subtitle' | translate }}</span>
+          </div>
+          
+          <h1 class="hero-title">
+            {{ 'home.hero.title' | translate }}
+            <span class="accent-underline">{{ 'home.hero.titleAccent' | translate }}</span>
+          </h1>
+          
+          <p class="hero-description">{{ 'home.hero.description' | translate }}</p>
+        </div>
+
+        <!-- Video Section (visible only on mobile) -->
+        <div class="hero-visual-mobile">
+          <div class="visual-card main-card">
+            <div class="card-image">
+              <app-interview [interview]="interview$ | async"></app-interview>
+            </div>
+          </div>
         </div>
         
-        <!-- Stats -->
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-number">{{ 'home.hero.stats.events.number' | translate }}</div>
-            <div class="stat-label">{{ 'home.hero.stats.events.label' | translate }}</div>
+        <!-- Footer Section (CTA + Stats) -->
+        <div class="hero-footer">
+          <!-- CTA Buttons -->
+          <div class="hero-actions">
+            <button class="btn-primary" [routerLink]="['/matching-profile']">
+              <span>{{ 'home.hero.cta.getStarted' | translate }}</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-number">{{ 'home.hero.stats.organizers.number' | translate }}</div>
-            <div class="stat-label">{{ 'home.hero.stats.organizers.label' | translate }}</div>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-number">{{ 'home.hero.stats.companies.number' | translate }}</div>
-            <div class="stat-label">{{ 'home.hero.stats.companies.label' | translate }}</div>
+          
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">{{ 'home.hero.stats.events.number' | translate }}</div>
+              <div class="stat-label">{{ 'home.hero.stats.events.label' | translate }}</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">{{ 'home.hero.stats.organizers.number' | translate }}</div>
+              <div class="stat-label">{{ 'home.hero.stats.organizers.label' | translate }}</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">{{ 'home.hero.stats.companies.number' | translate }}</div>
+              <div class="stat-label">{{ 'home.hero.stats.companies.label' | translate }}</div>
+            </div>
           </div>
         </div>
       </div>
       
-      <!-- Right Column: Visual Content -->
-      <div class="hero-visual">
+      <!-- Right Column: Visual Content (visible only on desktop) -->
+      <div class="hero-visual hero-visual-desktop">
         <div class="visual-container">
           <!-- Main Image Card -->
           <div class="visual-card main-card">
