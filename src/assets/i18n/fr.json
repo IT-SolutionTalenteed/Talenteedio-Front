@@ -176,16 +176,11 @@
   "home": {
     "hero": {
       "subtitle": "Dépassez vos attentes de carrière",
-      "title": "Créer le meilleur. Jour.",
-      "titleAccent": "Toujours.",
+      "title": "Créez Votre",
+      "titleAccent": "Carrière",
       "description": "Rejoignez des milliers de professionnels qui font confiance à Talenteed pour dépasser leurs attentes de carrière",
-      "features": {
-        "builder": "Plateforme intuitive et facile à utiliser",
-        "easy": "Accès rapide aux meilleures opportunités"
-      },
       "cta": {
-        "getStarted": "Commencer",
-        "watchDemo": "Voir la démo"
+        "getStarted": "Commencer"
       },
       "stats": {
         "events": {
