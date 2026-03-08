@@ -62,6 +62,7 @@ export class JobListService implements JobListServiceInterface {
                   id
                   slug
                   title
+                  content
                   createdAt
                   updatedAt
                   salaryMin

@@ -430,12 +430,6 @@ $border-color: #E8EAED;
       order: 1;
     }
 
-    &.hero-visual-desktop {
-      @media screen and (max-width: 968px) {
-        display: none;
-      }
-    }
-
     .visual-container {
       position: relative;
       width: 100%;
@@ -1014,7 +1008,7 @@ $border-color: #E8EAED;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('/assets/img/backgrounds/Hero22.png');
+    background-image: url('/assets/img/backgrounds/Hero23.png');
     background-size: cover;
     background-position: center;
     z-index: 0;

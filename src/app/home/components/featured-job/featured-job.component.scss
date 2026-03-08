@@ -10,20 +10,29 @@
     width: 100%;
     margin: auto;
     justify-content: space-between;
-    padding: 0;
+    padding: 0 20px;
 
     .container-our-customer {
       width: 100%;
     }
-  }
-}
 
-::ng-deep {
-  .featured-job {
-    .owl-carousel {
-      .owl-stage-outer {
-        padding: 20px 0;
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      width: 100%;
+
+      @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
+    }
+
+    .no-jobs {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6B7280;
+      font-size: 16px;
     }
   }
 }
