@@ -176,19 +176,35 @@
   "home": {
     "hero": {
       "subtitle": "Exceed your career expectations",
-      "title": "Create the best. Day.",
-      "titleAccent": "Always.",
-      "description": "Create the best. Day. Always.",
+      "title": "Create Your",
+      "titleAccent": "Beautiful",
+      "description": "Join thousands of professionals who trust Talenteed to exceed their career expectations",
+      "features": {
+        "builder": "Amazing Builder - Let's make things easy with our design system",
+        "easy": "Fast and Easy - We support key shortcut to find the components"
+      },
+      "cta": {
+        "getStarted": "Get Started",
+        "watchDemo": "Watch Demo"
+      },
       "stats": {
         "events": {
           "number": "20k+",
-          "label": "Planned Events"
+          "label": "Events Planned"
         },
         "organizers": {
-          "number": "260",
+          "number": "260+",
           "label": "Event Organizers"
+        },
+        "companies": {
+          "number": "500+",
+          "label": "Companies"
         }
-      }
+      },
+      "floating": {
+        "success": "Success Rate"
+      },
+      "scrollDown": "Scroll Down"
     },
     "services": {
       "jobs": {

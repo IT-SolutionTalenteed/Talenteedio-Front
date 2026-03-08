@@ -178,17 +178,33 @@
       "subtitle": "Dépassez vos attentes de carrière",
       "title": "Créer le meilleur. Jour.",
       "titleAccent": "Toujours.",
-      "description": "Créer le meilleur. Jour. Toujours.",
+      "description": "Rejoignez des milliers de professionnels qui font confiance à Talenteed pour dépasser leurs attentes de carrière",
+      "features": {
+        "builder": "Plateforme intuitive et facile à utiliser",
+        "easy": "Accès rapide aux meilleures opportunités"
+      },
+      "cta": {
+        "getStarted": "Commencer",
+        "watchDemo": "Voir la démo"
+      },
       "stats": {
         "events": {
           "number": "20k+",
           "label": "Événements planifiés"
         },
         "organizers": {
-          "number": "260",
-          "label": "Organisateurs d'événements"
+          "number": "260+",
+          "label": "Organisateurs"
+        },
+        "companies": {
+          "number": "500+",
+          "label": "Entreprises"
         }
-      }
+      },
+      "floating": {
+        "success": "Taux de réussite"
+      },
+      "scrollDown": "Défiler"
     },
     "services": {
       "jobs": {
