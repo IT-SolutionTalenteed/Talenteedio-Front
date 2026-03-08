@@ -341,12 +341,6 @@ $border-color: #E8EAED;
       gap: 24px;
       flex-wrap: wrap;
 
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
       .stat-item {
         .stat-number {
           font-size: 32px;
@@ -368,10 +362,6 @@ $border-color: #E8EAED;
         width: 1px;
         height: 40px;
         background: rgba(255, 255, 255, 0.2);
-
-        @media screen and (max-width: 768px) {
-          display: none;
-        }
       }
     }
   }
