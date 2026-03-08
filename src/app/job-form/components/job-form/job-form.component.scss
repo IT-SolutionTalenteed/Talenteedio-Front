@@ -88,7 +88,6 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
           .company-name {
             font-size: 16px;
             font-weight: 600;
-            color: rgba(244, 159, 10, 0.95);
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -101,6 +100,37 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
               height: 16px;
               background: rgba(244, 159, 10, 0.95);
               border-radius: 2px;
+            }
+            
+            .company-label {
+              color: rgba(255, 255, 255, 0.8);
+              font-weight: 500;
+            }
+            
+            .company-link {
+              color: rgba(244, 159, 10, 0.95);
+              text-decoration: none;
+              transition: all 0.3s ease;
+              position: relative;
+              
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: rgba(244, 159, 10, 0.95);
+                transition: width 0.3s ease;
+              }
+              
+              &:hover {
+                color: rgba(244, 159, 10, 1);
+                
+                &::after {
+                  width: 100%;
+                }
+              }
             }
           }
           
