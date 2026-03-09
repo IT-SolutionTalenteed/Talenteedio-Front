@@ -4,6 +4,11 @@ import { Observable, map, switchMap, catchError, throwError, of } from 'rxjs';
 import { Company } from 'src/app/shared/models/company.interface';
 import { environment } from 'src/environments/environment';
 
+export interface PaginatedData<T> {
+  items: T[];
+  total: number;
+}
+
 const GET_COMPANIES = gql`
   query GetCompanies($input: PaginationInput, $filter: CompanyFilter) {
     getCompanies(input: $input, filter: $filter) {
@@ -110,8 +115,8 @@ const GET_COMPANY_EVENTS = gql`
 `;
 
 const GET_COMPANY_ARTICLES = gql`
-  query GetCompanyArticles($companyId: String!) {
-    getArticles(input: { limit: 3, page: 1 }, filter: { companyId: $companyId, status: "public" }) {
+  query GetCompanyArticles($companyId: String!, $input: PaginationInput) {
+    getArticles(input: $input, filter: { companyId: $companyId, status: "public" }) {
       rows {
         id
         title
@@ -135,8 +140,8 @@ const GET_COMPANY_ARTICLES = gql`
 `;
 
 const GET_COMPANY_JOBS = gql`
-  query GetCompanyJobs($companyId: String!) {
-    getJobs(input: { limit: 3, page: 1 }, filter: { companyId: $companyId, status: "public" }) {
+  query GetCompanyJobs($companyId: String!, $input: PaginationInput) {
+    getJobs(input: $input, filter: { companyId: $companyId, status: "public" }) {
       rows {
         id
         title
@@ -370,7 +375,7 @@ export class CompanyService {
     );
   }
 
-  loadCompanyEvents(companyId: string): Observable<any[]> {
+  loadCompanyEvents(companyId: string, page: number = 1, limit: number = 3): Observable<PaginatedData<any>> {
     return this.apollo
       .query<{ getEvents: { rows: any[]; total: number } }>({
         query: GET_COMPANY_EVENTS,
@@ -382,38 +387,52 @@ export class CompanyService {
       .pipe(
         map((response) => {
           // Filtrer les événements qui incluent cette entreprise
-          const events = response.data.getEvents.rows.filter(event => 
+          const allEvents = response.data.getEvents.rows.filter(event => 
             event.companies && event.companies.some(company => company.id === companyId)
           );
-          // Limiter à 3 événements
-          return events.slice(0, 3);
+          
+          const total = allEvents.length;
+          const startIndex = (page - 1) * limit;
+          const endIndex = startIndex + limit;
+          const items = allEvents.slice(startIndex, endIndex);
+          
+          return { items, total };
         }),
-        catchError(() => of([]))
+        catchError(() => of({ items: [], total: 0 }))
       );
   }
 
-  loadCompanyArticles(companyId: string): Observable<any[]> {
+  loadCompanyArticles(companyId: string, page: number = 1, limit: number = 3): Observable<PaginatedData<any>> {
     return this.apollo
       .query<{ getArticles: { rows: any[]; total: number } }>({
         query: GET_COMPANY_ARTICLES,
-        variables: { companyId },
+        variables: { 
+          companyId,
+          input: { limit, page }
+        },
         fetchPolicy: 'network-only',
         context: {
           uri: this.articleApiUrl,
         },
       })
       .pipe(
-        map((response) => response.data.getArticles.rows),
-        catchError(() => of([]))
+        map((response) => ({
+          items: response.data.getArticles.rows,
+          total: response.data.getArticles.total
+        })),
+        catchError(() => of({ items: [], total: 0 }))
       );
   }
 
-  loadCompanyJobs(companyId: string): Observable<any[]> {
-    console.log('[DEBUG] loadCompanyJobs called with companyId:', companyId);
+  loadCompanyJobs(companyId: string, page: number = 1, limit: number = 3): Observable<PaginatedData<any>> {
+    console.log('[DEBUG] loadCompanyJobs called with companyId:', companyId, 'page:', page, 'limit:', limit);
     return this.apollo
       .query<{ getJobs: { rows: any[]; total: number } }>({
         query: GET_COMPANY_JOBS,
-        variables: { companyId },
+        variables: { 
+          companyId,
+          input: { limit, page }
+        },
         fetchPolicy: 'network-only',
         context: {
           uri: this.jobApiUrl,
@@ -422,9 +441,12 @@ export class CompanyService {
       .pipe(
         map((response) => {
           console.log('[DEBUG] loadCompanyJobs response:', response.data.getJobs);
-          return response.data.getJobs.rows;
+          return {
+            items: response.data.getJobs.rows,
+            total: response.data.getJobs.total
+          };
         }),
-        catchError(() => of([]))
+        catchError(() => of({ items: [], total: 0 }))
       );
   }
 }
