@@ -110,64 +110,116 @@
         </div>
 
         <!-- Jobs Section -->
-        <div class="jobs-section-card" *ngIf="(jobs$ | async) as jobs">
+        <div class="jobs-section-card" id="jobs-section">
           <h2 class="card-title-uniform">Offres d'<span class="accent">emploi</span></h2>
-          <p class="card-subtitle-uniform" *ngIf="jobs.length > 0">
-            Découvrez les {{ jobs.length }} offre{{ jobs.length > 1 ? 's' : '' }} disponible{{ jobs.length > 1 ? 's' : '' }}
+          <p class="card-subtitle-uniform" *ngIf="jobsTotal > 0">
+            Découvrez les {{ jobsTotal }} offre{{ jobsTotal > 1 ? 's' : '' }} disponible{{ jobsTotal > 1 ? 's' : '' }}
           </p>
-          <p class="card-subtitle-uniform" *ngIf="jobs.length === 0">
+          <p class="card-subtitle-uniform" *ngIf="jobsTotal === 0 && !jobsLoading">
             Aucune offre d'emploi disponible pour le moment
           </p>
           
-          <div class="jobs-list" *ngIf="jobs.length > 0">
-              <!-- Regular Jobs -->
-              <a *ngFor="let job of jobs" 
-                 [routerLink]="['/job/detail', job.slug]"
-                 class="job-card-horizontal">
-                <div class="job-image" *ngIf="job.featuredImage?.fileUrl">
-                  <img [src]="job.featuredImage.fileUrl" [alt]="job.title">
-                  <div class="job-badge-overlay">Emploi</div>
+          <div class="jobs-grid" *ngIf="jobs.length > 0 && !jobsLoading">
+            <a *ngFor="let job of jobs" 
+               [routerLink]="['/job/detail', job.slug]"
+               class="job-card">
+              <div class="job-box">
+                <!-- Left: Featured Image -->
+                <div class="job-image">
+                  <img
+                    [src]="job?.featuredImage?.fileUrl || 'assets/img/favicon.png'"
+                    [alt]="job.title"
+                  />
                 </div>
-                <div class="job-content">
+                
+                <!-- Right: Job Details -->
+                <div class="job-details">
                   <div class="job-header">
-                    <h3 class="job-title">{{ job.title }}</h3>
-                    <div class="job-type" *ngIf="job.jobType">{{ job.jobType.name }}</div>
+                    <div class="job-title">{{ job.title }}</div>
+                    
+                    <!-- Badges below title -->
+                    <ul class="job-chips">
+                      <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>
+                      <li class="privacy" *ngIf="job.isFeatured">Featured</li>
+                      <li class="required" *ngIf="job.isUrgent">Urgent</li>
+                    </ul>
                   </div>
-                  <div class="job-meta">
-                    <span class="meta-item" *ngIf="job.location?.address">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  
+                  <ul class="job-info">
+                    <li *ngIf="job.location?.address">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="icon">
                         <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="currentColor"/>
                       </svg>
                       {{ job.location.address.city }}
-                    </span>
-                    <span class="meta-item" *ngIf="job.createdAt">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    </li>
+                    <li *ngIf="job.createdAt">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="icon">
                         <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4Z" fill="currentColor"/>
                       </svg>
                       {{ job.createdAt | date : "d MMM yyyy" }}
-                    </span>
+                    </li>
+                  </ul>
+                  
+                  <div class="job-description" *ngIf="job.content">
+                    {{ getJobDescription(job.content) }}
                   </div>
                 </div>
-                <div class="job-arrow">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </a>
+              </div>
+            </a>
+          </div>
+            
+            <!-- Pagination pour les jobs -->
+            <div class="pagination-container" *ngIf="jobsTotalPages > 1 && !jobsLoading">
+              <button 
+                class="pagination-btn" 
+                [disabled]="jobsPage === 1"
+                (click)="onJobsPageChange(jobsPage - 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              
+              <div class="pagination-numbers">
+                <ng-container *ngFor="let page of jobsPages">
+                  <button 
+                    *ngIf="page > 0"
+                    class="pagination-number"
+                    [class.active]="page === jobsPage"
+                    (click)="onJobsPageChange(page)">
+                    {{ page }}
+                  </button>
+                  <span *ngIf="page === -1" class="pagination-ellipsis">...</span>
+                </ng-container>
+              </div>
+              
+              <button 
+                class="pagination-btn" 
+                [disabled]="jobsPage === jobsTotalPages"
+                (click)="onJobsPageChange(jobsPage + 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Loading state pour jobs -->
+            <div class="section-loading" *ngIf="jobsLoading">
+              <div class="loading-spinner-small"></div>
+              <p>Chargement des offres...</p>
             </div>
         </div>
 
         <!-- Events Section -->
-        <div class="events-section-card" *ngIf="(events$ | async) as events">
+        <div class="events-section-card" id="events-section">
           <h2 class="card-title-uniform">Événements <span class="accent">à venir</span></h2>
-          <p class="card-subtitle-uniform" *ngIf="events.length > 0">
-            {{ events.length }} événement{{ events.length > 1 ? 's' : '' }} organisé{{ events.length > 1 ? 's' : '' }} ou participé{{ events.length > 1 ? 's' : '' }}
+          <p class="card-subtitle-uniform" *ngIf="eventsTotal > 0">
+            {{ eventsTotal }} événement{{ eventsTotal > 1 ? 's' : '' }} organisé{{ eventsTotal > 1 ? 's' : '' }} ou participé{{ eventsTotal > 1 ? 's' : '' }}
           </p>
-          <p class="card-subtitle-uniform" *ngIf="events.length === 0">
+          <p class="card-subtitle-uniform" *ngIf="eventsTotal === 0 && !eventsLoading">
             Aucun événement à venir pour le moment
           </p>
           
-          <div class="events-grid" *ngIf="events.length > 0">
+          <div class="events-grid" *ngIf="events.length > 0 && !eventsLoading">
               <a *ngFor="let event of events" 
                  [routerLink]="['/event/detail', event.slug]"
                  class="event-card">
@@ -226,19 +278,59 @@
                 </div>
               </a>
             </div>
+            
+            <!-- Pagination pour les événements -->
+            <div class="pagination-container" *ngIf="eventsTotalPages > 1 && !eventsLoading">
+              <button 
+                class="pagination-btn" 
+                [disabled]="eventsPage === 1"
+                (click)="onEventsPageChange(eventsPage - 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              
+              <div class="pagination-numbers">
+                <ng-container *ngFor="let page of eventsPages">
+                  <button 
+                    *ngIf="page > 0"
+                    class="pagination-number"
+                    [class.active]="page === eventsPage"
+                    (click)="onEventsPageChange(page)">
+                    {{ page }}
+                  </button>
+                  <span *ngIf="page === -1" class="pagination-ellipsis">...</span>
+                </ng-container>
+              </div>
+              
+              <button 
+                class="pagination-btn" 
+                [disabled]="eventsPage === eventsTotalPages"
+                (click)="onEventsPageChange(eventsPage + 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Loading state pour événements -->
+            <div class="section-loading" *ngIf="eventsLoading">
+              <div class="loading-spinner-small"></div>
+              <p>Chargement des événements...</p>
+            </div>
         </div>
 
         <!-- Articles Section -->
-        <div class="articles-section-card" *ngIf="(articles$ | async) as articles">
+        <div class="articles-section-card" id="articles-section">
           <h2 class="card-title-uniform">Articles & <span class="accent">Actualités</span></h2>
-          <p class="card-subtitle-uniform" *ngIf="articles.length > 0">
-            {{ articles.length }} article{{ articles.length > 1 ? 's' : '' }} publié{{ articles.length > 1 ? 's' : '' }}
+          <p class="card-subtitle-uniform" *ngIf="articlesTotal > 0">
+            {{ articlesTotal }} article{{ articlesTotal > 1 ? 's' : '' }} publié{{ articlesTotal > 1 ? 's' : '' }}
           </p>
-          <p class="card-subtitle-uniform" *ngIf="articles.length === 0">
+          <p class="card-subtitle-uniform" *ngIf="articlesTotal === 0 && !articlesLoading">
             Aucun article publié pour le moment
           </p>
           
-          <div class="articles-grid" *ngIf="articles.length > 0">
+          <div class="articles-grid" *ngIf="articles.length > 0 && !articlesLoading">
               <a *ngFor="let article of articles" 
                  [routerLink]="['/blog/detail', article.slug]"
                  class="article-card">
@@ -259,6 +351,46 @@
                 </div>
               </a>
             </div>
+            
+            <!-- Pagination pour les articles -->
+            <div class="pagination-container" *ngIf="articlesTotalPages > 1 && !articlesLoading">
+              <button 
+                class="pagination-btn" 
+                [disabled]="articlesPage === 1"
+                (click)="onArticlesPageChange(articlesPage - 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              
+              <div class="pagination-numbers">
+                <ng-container *ngFor="let page of articlesPages">
+                  <button 
+                    *ngIf="page > 0"
+                    class="pagination-number"
+                    [class.active]="page === articlesPage"
+                    (click)="onArticlesPageChange(page)">
+                    {{ page }}
+                  </button>
+                  <span *ngIf="page === -1" class="pagination-ellipsis">...</span>
+                </ng-container>
+              </div>
+              
+              <button 
+                class="pagination-btn" 
+                [disabled]="articlesPage === articlesTotalPages"
+                (click)="onArticlesPageChange(articlesPage + 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Loading state pour articles -->
+            <div class="section-loading" *ngIf="articlesLoading">
+              <div class="loading-spinner-small"></div>
+              <p>Chargement des articles...</p>
+            </div>
         </div>
       </div>
 
@@ -276,6 +408,19 @@
                 Slogan
               </div>
               <div class="sidebar-info-value">{{ company.slogan }}</div>
+            </div>
+
+            <div class="sidebar-info-item" *ngIf="company.category">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                  <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+                </svg>
+                Catégorie
+              </div>
+              <div class="sidebar-info-value">
+                <span class="category-badge">{{ company.category.name }}</span>
+              </div>
             </div>
 
             <div class="sidebar-info-item" *ngIf="company.industry">
