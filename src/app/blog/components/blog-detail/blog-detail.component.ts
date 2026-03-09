@@ -55,14 +55,17 @@ export class BlogDetailComponent implements OnChanges, OnInit {
     private sanitizer: DomSanitizer,
     private location: Location,
     private authenticationStore: Store<AuthenticationState>
-  ) {
+  ) {}
+
+  /**
+   * Met à jour les URLs de partage avec l'URL actuelle
+   */
+  private updateShareUrls(): void {
     if (typeof window !== 'undefined') {
-      this.facebookUrl =
-        FACEBOOK_SHARE_BASE_URL + window.location.origin + this.location.path();
-      this.twitterUrl =
-        TWITTER_SHARE_BASE_URL + window.location.origin + this.location.path();
-      this.linkedinUrl =
-        LINKEDIN_SHARE_BASE_URL + window.location.origin + this.location.path();
+      const currentUrl = window.location.origin + this.location.path();
+      this.facebookUrl = FACEBOOK_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+      this.twitterUrl = TWITTER_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+      this.linkedinUrl = LINKEDIN_SHARE_BASE_URL + encodeURIComponent(currentUrl);
     }
   }
 
@@ -88,6 +91,9 @@ export class BlogDetailComponent implements OnChanges, OnInit {
       this.publicContent = this.sanitizer.bypassSecurityTrustHtml(
         this.article?.publicContent ?? ''
       );
+      
+      // Mettre à jour les URLs de partage avec l'URL actuelle de l'article
+      this.updateShareUrls();
     }
   }
   openWindow(event: Event, link) {
