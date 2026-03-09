@@ -107,12 +107,12 @@
   <div class="detail" *ngIf="job">
     <div class="detail-content">
       <!-- Featured Image Section -->
-      <div *ngIf="job.featuredImage?.fileUrl">
+      <div *ngIf="job.featuredImage?.fileUrl" class="featured-image-container"></div>
         <img 
           [src]="job.featuredImage.fileUrl" 
           [alt]="job.title"
           class="featured-image"
-          width="100%"
+          width="60%"
         />
       </div>
       
