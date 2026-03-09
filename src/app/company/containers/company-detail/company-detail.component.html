@@ -410,6 +410,19 @@
               <div class="sidebar-info-value">{{ company.slogan }}</div>
             </div>
 
+            <div class="sidebar-info-item" *ngIf="company.category">
+              <div class="sidebar-info-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                  <path d="M2 17L12 22L22 17V11L12 16L2 11V17Z" fill="currentColor" opacity="0.7"/>
+                </svg>
+                Catégorie
+              </div>
+              <div class="sidebar-info-value">
+                <span class="category-badge">{{ company.category.name }}</span>
+              </div>
+            </div>
+
             <div class="sidebar-info-item" *ngIf="company.industry">
               <div class="sidebar-info-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
