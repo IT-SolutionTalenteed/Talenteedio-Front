@@ -11,7 +11,7 @@
         <div class="job-detail">
           <div class="company-name" *ngIf="job?.company?.company_name">
             <span class="company-label">{{ 'jobDetail.header.company' | translate }}:</span>
-            <a [routerLink]="['/companies', job.company.slug]" class="company-link">
+            <a [routerLink]="['/companies', getCompanySlug()]" class="company-link">
               {{ job.company.company_name }}
             </a>
           </div>
