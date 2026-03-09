@@ -70,20 +70,7 @@ export class JobFormComponent implements OnChanges {
     private sanitizer: DomSanitizer,
     private location: Location,
     private gaService: GoogleAnalyticsService
-  ) {
-    if (typeof window !== 'undefined') {
-      this.facebookUrl =
-        FACEBOOK_SHARE_BASE_URL + window.location.origin + this.location.path();
-      this.twitterUrl =
-        TWITTER_SHARE_BASE_URL + window.location.origin + this.location.path();
-      this.pinterestUrl =
-        PINTEREST_SHARE_BASE_URL +
-        window.location.origin +
-        this.location.path();
-      this.linkedinUrl =
-        LINKEDIN_SHARE_BASE_URL + window.location.origin + this.location.path();
-    }
-  }
+  ) {}
 
   /**
    * Décode les entités HTML
@@ -117,12 +104,27 @@ export class JobFormComponent implements OnChanges {
     return `${slug}-${shortId}`;
   }
 
+  /**
+   * Met à jour les URLs de partage avec l'URL actuelle
+   */
+  private updateShareUrls(): void {
+    if (typeof window !== 'undefined') {
+      const currentUrl = window.location.origin + this.location.path();
+      this.facebookUrl = FACEBOOK_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+      this.twitterUrl = TWITTER_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+      this.pinterestUrl = PINTEREST_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+      this.linkedinUrl = LINKEDIN_SHARE_BASE_URL + encodeURIComponent(currentUrl);
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.isExperatedJob = new Date(this.job?.expirationDate) < new Date();
     if (changes['job']) {
       this.content = this.sanitizer.bypassSecurityTrustHtml(
         this.job?.content ?? ''
       );
+      // Mettre à jour les URLs de partage avec l'URL actuelle du job
+      this.updateShareUrls();
       // Déterminer le type basé sur l'URL ou le jobType
       if (typeof window !== 'undefined') {
         const path = window.location.pathname;
