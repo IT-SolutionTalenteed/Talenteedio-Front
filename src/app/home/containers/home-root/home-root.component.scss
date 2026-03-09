@@ -818,6 +818,7 @@ $border-color: #E8EAED;
     gap: 24px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     &:hover {
       transform: translateY(-8px);

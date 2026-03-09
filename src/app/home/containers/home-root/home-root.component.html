@@ -283,7 +283,9 @@
     </div>
     <app-loader [isLoading]="companiesLoading$ | async">
       <div class="companies-showcase" *ngIf="(companies$ | async) as companies">
-        <div class="company-card" *ngFor="let company of companies; let i = index">
+        <div class="company-card" 
+             *ngFor="let company of companies; trackBy: trackByCompanyId" 
+             [routerLink]="['/companies', company | companySlug]">
           <div class="company-header">
             <div class="company-logo-wrapper">
               <div class="company-logo">

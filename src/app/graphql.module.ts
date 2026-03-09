@@ -14,7 +14,20 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
       uri,
       extractFiles: (body) => extractFiles(body, isExtractableFile),
     }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Company: {
+          keyFields: ['id'],
+          fields: {
+            contact: {
+              merge(existing, incoming) {
+                return incoming;
+              },
+            },
+          },
+        },
+      },
+    }),
     defaultOptions: {
       watchQuery: {
         fetchPolicy: 'no-cache',

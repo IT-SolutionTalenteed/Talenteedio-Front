@@ -14,6 +14,7 @@ import { Testimonial } from 'src/app/shared/models/testimonial.interface';
 import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
 import { getLocations } from 'src/app/shared/store/selectors/shared.selectors';
 import { HomeState } from '../../store/reducers/home.reducers';
+import { loadCompanies } from '../../store/actions/home.actions';
 import {
   getArticles,
   getArticlesLoading,
@@ -59,7 +60,11 @@ export class HomeRootComponent implements OnInit {
     private sharedStore: Store<SharedState>,
     private homeStore: Store<HomeState>
   ) {}
+  
   ngOnInit(): void {
+    // Force reload companies when component initializes
+    this.homeStore.dispatch(loadCompanies());
+    
     this.locations$ = this.sharedStore.pipe(select(getLocations));
     this.jobs$ = this.homeStore.pipe(select(getJobs));
     this.jobsLoading$ = this.homeStore.pipe(select(getJobsLoading));
@@ -81,9 +86,15 @@ export class HomeRootComponent implements OnInit {
     this.upcomingEvents$ = this.homeStore.pipe(select(getUpcomingEvents));
     this.upcomingEventsLoading$ = this.homeStore.pipe(select(getUpcomingEventsLoading));
   }
+  
+  trackByCompanyId(index: number, company: Company): string {
+    return company.id || index.toString();
+  }
+  
   onFindJob(jobCriteria) {
     this.go([`${JOB_LIST_BASE_ROUTE}`], { ...jobCriteria });
   }
+  
   private go(path: string[], queryParams) {
     this.sharedStore.dispatch(go({ path, query: queryParams }));
   }

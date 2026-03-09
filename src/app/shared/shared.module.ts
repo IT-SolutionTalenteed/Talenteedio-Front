@@ -37,6 +37,7 @@ import { SafePipe } from './pipes/safe.pipe';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { ValidityNbDayPipe } from './pipes/validity-nb-day.pipe';
+import { CompanySlugPipe } from './pipes/company-slug.pipe';
 import { AdService } from './services/ad.service';
 import { LocationService } from './services/location.service';
 import { RoleAutocompletionService } from './services/role-autocompletion.service';
@@ -87,6 +88,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     SafePipe,
     TimeAgoPipe,
     ProfilePictureUploadComponent,
+    CompanySlugPipe,
   ],
   exports: [
     CommonModule,
@@ -122,6 +124,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
     SafePipe,
     TimeAgoPipe,
     ProfilePictureUploadComponent,
+    CompanySlugPipe,
   ],
   providers: [
     RoleAutocompletionService,
