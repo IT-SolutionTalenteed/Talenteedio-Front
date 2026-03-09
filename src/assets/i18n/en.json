@@ -553,15 +553,15 @@
         "passwordLabel": "Password",
         "confirmPasswordLabel": "Confirm Password",
         "sections": {
-          "professionalInfo": "Professional Information (Optional)",
-          "salaryCompensation": "Salary & Compensation (Optional)",
-          "location": "Location (Optional)",
-          "jobPreferences": "Job Preferences (Optional)"
+          "professionalInfo": "Professional Information",
+          "salaryCompensation": "Salary & Compensation",
+          "location": "Location",
+          "jobPreferences": "Job Preferences"
         },
         "fields": {
-          "valuesLabel": "Values (Optional)",
+          "valuesLabel": "Values",
           "valuesPlaceholder": "Select values",
-          "cvLabel": "CV (PDF) - Optional",
+          "cvLabel": "CV (PDF)",
           "cvButton": "Choose File",
           "cvNoFile": "No file chosen",
           "yearsOfExperienceLabel": "Years of Experience",
@@ -694,15 +694,15 @@
       "confirmPasswordLabel": "Confirm Password",
       "confirmPasswordPlaceholder": "Confirm your password",
       "sections": {
-        "professionalInfo": "Professional Information (Optional)",
-        "salaryCompensation": "Salary & Compensation (Optional)",
-        "location": "Location (Optional)",
-        "jobPreferences": "Job Preferences (Optional)"
+        "professionalInfo": "Professional Information",
+        "salaryCompensation": "Salary & Compensation",
+        "location": "Location",
+        "jobPreferences": "Job Preferences"
       },
       "fields": {
-        "valuesLabel": "Values (Optional)",
+        "valuesLabel": "Values",
         "valuesPlaceholder": "Select values",
-        "cvLabel": "CV (PDF) - Optional",
+        "cvLabel": "CV (PDF)",
         "cvButton": "Choose File",
         "cvNoFile": "No file chosen",
         "cvError": "Must be a PDF file",

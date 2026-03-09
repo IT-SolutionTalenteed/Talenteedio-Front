@@ -927,6 +927,30 @@ form {
   }
 }
 
+// Hide TJM and Salary Range fields
+#tjm,
+#salaryRange,
+label[for="tjm"],
+label[for="salaryRange"] {
+  display: none !important;
+}
+
+// Hide the form-group containing TJM
+.form-group:has(#tjm),
+.form-group:has(#salaryRange) {
+  display: none !important;
+}
+
+// Hide the form-row containing TJM if it only has hidden fields
+.form-row:has(#tjm):not(:has(.form-group:not(:has(#tjm)):not(:has(#annualSalary)))) {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  
+  .form-group:has(#tjm) {
+    display: none !important;
+  }
+}
+
 // Conditional Fields Styling
 .conditional-fields {
   margin-top: 24px;
