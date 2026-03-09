@@ -19,7 +19,10 @@
           <a>{{ job.title }}</a>
         </div>
         <div class="company-name" *ngIf="job?.company?.company_name">
-          {{ job.company.company_name }}
+          <span class="company-label">{{ 'jobList.jobItem.company' | translate }}:</span>
+          <a [routerLink]="['/companies', job.company.slug]" class="company-link">
+            {{ job.company.company_name }}
+          </a>
         </div>
         <ul class="job-chips">
           <li *ngIf="job.jobType" class="time">{{ job.jobType.name }}</li>

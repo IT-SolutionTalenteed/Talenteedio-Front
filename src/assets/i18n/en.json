@@ -48,6 +48,7 @@
   },
   "jobDetail": {
     "header": {
+      "company": "Company",
       "featured": "Featured",
       "urgent": "Urgent",
       "referable": "Referable",
@@ -159,6 +160,7 @@
       "findJobsButton": "Find jobs"
     },
     "jobItem": {
+      "company": "Company",
       "featured": "Featured",
       "urgent": "Urgent",
       "referable": "Referable"

@@ -85,6 +85,38 @@ export class JobFormComponent implements OnChanges {
     }
   }
 
+  /**
+   * Décode les entités HTML
+   */
+  private decodeHtmlEntities(text: string): string {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
+  /**
+   * Génère un slug à partir du nom de l'entreprise et de l'ID
+   */
+  getCompanySlug(): string {
+    if (!this.job?.company?.company_name || !this.job?.company?.id) {
+      return '';
+    }
+    
+    // Décoder les entités HTML d'abord (&#38; -> &, etc.)
+    const decodedName = this.decodeHtmlEntities(this.job.company.company_name);
+    
+    const slug = decodedName
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Retire les accents
+      .replace(/[^a-z0-9]+/g, '-') // Remplace les caractères spéciaux par des tirets
+      .replace(/^-+|-+$/g, ''); // Retire les tirets au début et à la fin
+    
+    // Prend les 8 premiers caractères de l'ID pour garder l'unicité
+    const shortId = this.job.company.id.substring(0, 8);
+    return `${slug}-${shortId}`;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.isExperatedJob = new Date(this.job?.expirationDate) < new Date();
     if (changes['job']) {

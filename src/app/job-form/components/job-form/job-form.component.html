@@ -9,6 +9,12 @@
           />
         </div>
         <div class="job-detail">
+          <div class="company-name" *ngIf="job?.company?.company_name">
+            <span class="company-label">{{ 'jobDetail.header.company' | translate }}:</span>
+            <a [routerLink]="['/companies', getCompanySlug()]" class="company-link">
+              {{ job.company.company_name }}
+            </a>
+          </div>
           <div class="job-title">
             <h4>{{ job.title }}</h4>
             <app-favorite-button
@@ -101,12 +107,12 @@
   <div class="detail" *ngIf="job">
     <div class="detail-content">
       <!-- Featured Image Section -->
-      <div *ngIf="job.featuredImage?.fileUrl">
+      <div *ngIf="job.featuredImage?.fileUrl" class="featured-image-container">
         <img 
           [src]="job.featuredImage.fileUrl" 
           [alt]="job.title"
           class="featured-image"
-          width="100%"
+          width="60%"
         />
       </div>
       

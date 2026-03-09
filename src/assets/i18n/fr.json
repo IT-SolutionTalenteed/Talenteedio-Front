@@ -48,6 +48,7 @@
   },
   "jobDetail": {
     "header": {
+      "company": "Entreprise",
       "featured": "En vedette",
       "urgent": "Urgent",
       "referable": "Parrainage possible",
@@ -159,6 +160,7 @@
       "findJobsButton": "Trouver des emplois"
     },
     "jobItem": {
+      "company": "Entreprise",
       "featured": "En vedette",
       "urgent": "Urgent",
       "referable": "Parrainage possible"

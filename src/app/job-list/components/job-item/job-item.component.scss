@@ -114,8 +114,41 @@
         .company-name {
           font-size: 15px;
           font-weight: 600;
-          color: #6B7280;
           margin-bottom: 12px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          
+          .company-label {
+            color: #9CA3AF;
+            font-weight: 500;
+          }
+          
+          .company-link {
+            color: $secondary;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background: $secondary;
+              transition: width 0.3s ease;
+            }
+            
+            &:hover {
+              color: darken($secondary, 10%);
+              
+              &::after {
+                width: 100%;
+              }
+            }
+          }
         }
         
         ul.job-chips {

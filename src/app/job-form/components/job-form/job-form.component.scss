@@ -44,23 +44,11 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
       z-index: 0;
     }
     
-    // Decorative animated line
-    &::after {
-      content: '';
-      position: absolute;
-      top: 40%;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(244, 159, 10, 0.3) 50%, transparent 100%);
-      animation: moveLine 8s linear infinite;
-      z-index: 0;
-    }
-    
     .job-box {
       flex-direction: column;
       display: flex;
-      padding: 60px 20px;
+      padding: 100px 20px;
+      min-height: 50vh;
       align-items: center;
       justify-content: space-between;
       width: 100%;
@@ -96,6 +84,60 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
         
         .job-detail {
           position: relative;
+          
+          .company-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 4px;
+              height: 16px;
+              background: rgba(244, 159, 10, 0.95);
+              border-radius: 2px;
+            }
+            
+            .company-label {
+              color: rgba(255, 255, 255, 0.8);
+              font-weight: 500;
+            }
+            
+            .company-link {
+              color: rgba(244, 159, 10, 0.95);
+              text-decoration: none;
+              transition: all 0.3s ease;
+              position: relative;
+              
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: rgba(244, 159, 10, 0.95);
+                transition: width 0.3s ease;
+              }
+              
+              &:hover {
+                color: rgba(244, 159, 10, 1);
+                
+                &::after {
+                  width: 100%;
+                }
+              }
+            }
+            
+            .company-link-disabled {
+              color: rgba(244, 159, 10, 0.95);
+              cursor: default;
+            }
+          }
           
           .job-title {
             position: relative;
@@ -248,19 +290,23 @@ $shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
       box-shadow: $shadow-sm;
       border: 1px solid rgba(0, 0, 0, 0.06);
       
-      .featured-image-section {
+      .featured-image-container {
         width: 100%;
         margin: 0 0 32px 0;
-        border-radius: $border-radius-md;
-        overflow: hidden;
-        box-shadow: $shadow-md;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         
         .featured-image {
-          width: 100%;
+          max-width: 60%;
           height: auto;
-          max-height: 500px;
-          object-fit: cover;
+          border-radius: $border-radius-md;
+          box-shadow: $shadow-md;
           display: block;
+          
+          @media (max-width: 768px) {
+            max-width: 100%;
+          }
         }
       }
       
