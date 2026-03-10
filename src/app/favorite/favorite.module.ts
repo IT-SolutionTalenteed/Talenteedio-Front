@@ -29,6 +29,6 @@ const routes: Routes = [
     SharedModule,
   ],
   exports: [FavoriteButtonComponent, FavoriteMenuComponent],
-  providers: [FavoriteService],
+  // Removed providers - FavoriteService is already provided in 'root'
 })
 export class FavoriteModule {}

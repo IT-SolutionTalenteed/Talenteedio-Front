@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, map, Subject, BehaviorSubject } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { Observable, map, Subject, BehaviorSubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Favorite, FavoriteResponse, FavoritesResource, FavoriteType } from '../types/favorite.interface';
 
@@ -12,26 +11,53 @@ export class FavoriteService {
   private favoriteApiUrl = `${environment.apiBaseUrl}/favorite`;
   private favoriteChangedSubject = new Subject<{ itemId: string; type: FavoriteType; isFavorite: boolean }>();
   
-  // BehaviorSubject pour le compteur - commence à -1 pour indiquer "pas encore chargé"
-  private favoritesCountSubject = new BehaviorSubject<number>(-1);
+  // BehaviorSubject pour le compteur - PUBLIC pour debug
+  public favoritesCountSubject = new BehaviorSubject<number>(0);
   
   // Observable pour que les composants puissent s'abonner aux changements
-  public favoriteChanged$ = this.favoriteChangedSubject.asObservable().pipe(share());
+  public favoriteChanged$ = this.favoriteChangedSubject.asObservable();
   public favoritesCount$ = this.favoritesCountSubject.asObservable();
 
   constructor(private apollo: Apollo) {
     console.log('[FavoriteService] Service initialized');
+    console.log('[FavoriteService] Initial count:', this.favoritesCountSubject.value);
   }
 
   // Méthode pour mettre à jour le compteur
   public updateFavoritesCount(count: number): void {
-    console.log('[FavoriteService] Updating count to:', count);
+    console.log('[FavoriteService] updateFavoritesCount called with:', count);
+    console.log('[FavoriteService] Current count before update:', this.favoritesCountSubject.value);
+    console.log('[FavoriteService] BehaviorSubject observers:', (this.favoritesCountSubject as any).observers?.length || 0);
     this.favoritesCountSubject.next(count);
+    console.log('[FavoriteService] Count updated, new value:', this.favoritesCountSubject.value);
+    console.log('[FavoriteService] BehaviorSubject hasError:', (this.favoritesCountSubject as any).hasError);
+    console.log('[FavoriteService] BehaviorSubject isStopped:', (this.favoritesCountSubject as any).isStopped);
   }
 
-  // Méthode pour obtenir le compteur actuel
-  public getCurrentCount(): number {
-    return this.favoritesCountSubject.value;
+  // Méthode pour recharger le compteur depuis l'API
+  public refreshFavoritesCount(): Observable<number> {
+    console.log('[FavoriteService] Refreshing favorites count from API...');
+    return this.apollo
+      .query<any>({
+        query: gql`
+          query GetFavoritesCount {
+            getFavorites(input: { page: 1, limit: 1 }) {
+              total
+            }
+          }
+        `,
+        fetchPolicy: 'network-only',
+        context: {
+          uri: this.favoriteApiUrl,
+        },
+      })
+      .pipe(
+        map((result) => result.data.getFavorites.total || 0),
+        tap((count) => {
+          console.log('[FavoriteService] Count refreshed from API:', count);
+          this.updateFavoritesCount(count);
+        })
+      );
   }
 
   getFavorites(page: number = 1, limit: number = 10, type?: FavoriteType): Observable<FavoritesResource> {
@@ -146,6 +172,8 @@ export class FavoriteService {
   }
 
   toggleFavorite(itemId: string, type: FavoriteType): Observable<FavoriteResponse> {
+    console.log('[FavoriteService] toggleFavorite called for itemId:', itemId, 'type:', type);
+    
     return this.apollo
       .mutate<any>({
         mutation: gql`
@@ -169,30 +197,31 @@ export class FavoriteService {
         },
       })
       .pipe(
-        map((result) => {
+        tap((result) => {
           const response = result.data.toggleFavorite;
           console.log('[FavoriteService] toggleFavorite response:', response);
           
-          // Notifier les composants du changement
-          console.log('[FavoriteService] About to emit favoriteChanged event');
-          console.log('[FavoriteService] favoriteChangedSubject observers:', (this.favoriteChangedSubject as any).observers?.length || 0);
+          const isFavorite = response.favorite !== null;
           
+          // Recharger le compteur depuis l'API immédiatement
+          this.refreshFavoritesCount().subscribe({
+            next: (count) => {
+              console.log('[FavoriteService] Count refreshed after toggle:', count);
+            },
+            error: (error) => {
+              console.error('[FavoriteService] Error refreshing count:', error);
+            }
+          });
+          
+          // Notifier les composants du changement
+          console.log('[FavoriteService] Emitting favoriteChanged event');
           this.favoriteChangedSubject.next({
             itemId,
             type,
-            isFavorite: response.favorite !== null
+            isFavorite
           });
-          
-          console.log('[FavoriteService] favoriteChanged event emitted');
-          
-          // Mettre à jour le compteur immédiatement
-          const currentCount = this.getCurrentCount();
-          const newCount = response.favorite !== null ? currentCount + 1 : currentCount - 1;
-          console.log('[FavoriteService] Updating count from', currentCount, 'to', newCount);
-          this.updateFavoritesCount(Math.max(0, newCount));
-          
-          return response;
-        })
+        }),
+        map((result) => result.data.toggleFavorite)
       );
   }
 
@@ -220,18 +249,21 @@ export class FavoriteService {
         },
       })
       .pipe(
-        map((result) => {
+        tap((result) => {
           const response = result.data.addFavorite;
-          // Notifier les composants du changement
           if (response.success) {
+            // Recharger le compteur
+            this.refreshFavoritesCount().subscribe();
+            
+            // Notifier les composants du changement
             this.favoriteChangedSubject.next({
               itemId,
               type,
               isFavorite: true
             });
           }
-          return response;
-        })
+        }),
+        map((result) => result.data.addFavorite)
       );
   }
 
@@ -254,18 +286,21 @@ export class FavoriteService {
         },
       })
       .pipe(
-        map((result) => {
+        tap((result) => {
           const response = result.data.removeFavorite;
-          // Notifier les composants du changement
           if (response.success) {
+            // Recharger le compteur
+            this.refreshFavoritesCount().subscribe();
+            
+            // Notifier les composants du changement
             this.favoriteChangedSubject.next({
               itemId,
               type,
               isFavorite: false
             });
           }
-          return response;
-        })
+        }),
+        map((result) => result.data.removeFavorite)
       );
   }
 }

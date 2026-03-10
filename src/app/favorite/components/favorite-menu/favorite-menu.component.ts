@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { faHeart, faClock, faMapMarker, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -26,44 +26,45 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   constructor(
     private favoriteService: FavoriteService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
-  ) {}
+    private cdr: ChangeDetectorRef
+  ) {
+    console.log('[FavoriteMenu] Constructor called');
+  }
 
   ngOnInit(): void {
     console.log('[FavoriteMenu] Component initialized');
     
-    // Charger les favoris récents
-    this.loadRecentFavorites();
-    
-    // Charger le compteur initial
-    this.loadFavoritesCount();
-    
-    // S'abonner au compteur via BehaviorSubject
+    // S'abonner au compteur pour mise à jour en temps réel
     this.favoriteChangedSubscription = this.favoriteService.favoritesCount$.subscribe(
       (count) => {
-        if (count >= 0) { // Ignorer la valeur initiale -1
-          console.log('[FavoriteMenu] Count changed via BehaviorSubject:', count);
-          this.ngZone.run(() => {
-            this.favoritesCount = count;
-            console.log('[FavoriteMenu] favoritesCount updated to:', this.favoritesCount);
-          });
-        }
+        console.log('[FavoriteMenu] Count received:', count);
+        this.favoritesCount = count;
+        this.cdr.detectChanges();
       }
     );
+    
+    // Charger le compteur initial depuis l'API
+    this.favoriteService.refreshFavoritesCount().subscribe({
+      next: (count) => {
+        console.log('[FavoriteMenu] Initial count loaded:', count);
+      },
+      error: (error) => {
+        console.error('[FavoriteMenu] Error loading initial count:', error);
+      }
+    });
+    
+    // Charger les favoris récents
+    this.loadRecentFavorites();
     
     // S'abonner aux changements de favoris pour rafraîchir la liste
     const changeSubscription = this.favoriteService.favoriteChanged$.subscribe(
       (change) => {
         console.log('[FavoriteMenu] Favorite changed event received!', change);
-        // Rafraîchir la liste
+        // Rafraîchir la liste des favoris récents
         this.loadRecentFavorites();
-        // Recharger le compteur
-        this.loadFavoritesCount();
       }
     );
     
-    // Ajouter à la subscription pour cleanup
     this.favoriteChangedSubscription.add(changeSubscription);
   }
 
@@ -88,17 +89,13 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   }
 
   loadFavoritesCount(): void {
-    console.log('[FavoriteMenu] Loading favorites count...');
-    this.favoriteService.getFavorites(1, 1).subscribe({
-      next: (response) => {
-        const newCount = response.total || 0;
-        console.log('[FavoriteMenu] Received count from API:', newCount);
-        // Mettre à jour le BehaviorSubject dans le service
-        this.favoriteService.updateFavoritesCount(newCount);
+    // Cette méthode n'est plus nécessaire, on utilise refreshFavoritesCount() du service
+    this.favoriteService.refreshFavoritesCount().subscribe({
+      next: (count) => {
+        console.log('[FavoriteMenu] Count loaded:', count);
       },
       error: (error) => {
         console.error('[FavoriteMenu] Error loading favorites count:', error);
-        this.favoriteService.updateFavoritesCount(0);
       },
     });
   }
