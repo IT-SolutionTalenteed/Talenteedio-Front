@@ -18,15 +18,21 @@ export class FavoriteService {
   public favoriteChanged$ = this.favoriteChangedSubject.asObservable();
   public favoritesCount$ = this.favoritesCountSubject.asObservable();
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo) {
+    console.log('[FavoriteService] Constructor called - Service initialized');
+  }
 
   // Méthode pour mettre à jour le compteur
   public updateFavoritesCount(count: number): void {
+    console.log('[FavoriteService] updateFavoritesCount called with:', count);
     this.favoritesCountSubject.next(count);
   }
 
   // Méthode pour recharger le compteur depuis l'API
   public refreshFavoritesCount(): Observable<number> {
+    console.log('[FavoriteService] refreshFavoritesCount called');
+    const startTime = Date.now();
+    
     return this.apollo
       .query<any>({
         query: gql`
@@ -44,12 +50,17 @@ export class FavoriteService {
       .pipe(
         map((result) => result.data.getFavorites.total || 0),
         tap((count) => {
+          const duration = Date.now() - startTime;
+          console.log('[FavoriteService] refreshFavoritesCount response in', duration, 'ms - count:', count);
           this.updateFavoritesCount(count);
         })
       );
   }
 
   getFavorites(page: number = 1, limit: number = 10, type?: FavoriteType): Observable<FavoritesResource> {
+    console.log('[FavoriteService] getFavorites called with:', { page, limit, type });
+    const startTime = Date.now();
+    
     return this.apollo
       .query<any>({
         query: gql`
@@ -102,10 +113,19 @@ export class FavoriteService {
           uri: this.favoriteApiUrl,
         },
       })
-      .pipe(map((result) => result.data.getFavorites));
+      .pipe(
+        tap((result) => {
+          const duration = Date.now() - startTime;
+          console.log('[FavoriteService] getFavorites response received in', duration, 'ms:', result.data.getFavorites);
+        }),
+        map((result) => result.data.getFavorites)
+      );
   }
 
   getRecentFavorites(limit: number = 3): Observable<Favorite[]> {
+    console.log('[FavoriteService] getRecentFavorites called with limit:', limit);
+    const startTime = Date.now();
+    
     return this.apollo
       .query<any>({
         query: gql`
@@ -140,7 +160,13 @@ export class FavoriteService {
           uri: this.favoriteApiUrl,
         },
       })
-      .pipe(map((result) => result.data.getRecentFavorites));
+      .pipe(
+        tap((result) => {
+          const duration = Date.now() - startTime;
+          console.log('[FavoriteService] getRecentFavorites response in', duration, 'ms - count:', result.data.getRecentFavorites.length);
+        }),
+        map((result) => result.data.getRecentFavorites)
+      );
   }
 
   isFavorite(itemId: string, type: FavoriteType): Observable<boolean> {
@@ -161,6 +187,8 @@ export class FavoriteService {
   }
 
   toggleFavorite(itemId: string, type: FavoriteType): Observable<FavoriteResponse> {
+    console.log('[FavoriteService] toggleFavorite called with:', { itemId, type });
+    
     return this.apollo
       .mutate<any>({
         mutation: gql`
@@ -187,11 +215,14 @@ export class FavoriteService {
         tap((result) => {
           const response = result.data.toggleFavorite;
           const isFavorite = response.favorite !== null;
+          console.log('[FavoriteService] toggleFavorite response:', { success: response.success, isFavorite });
           
           // Recharger le compteur depuis l'API immédiatement
+          console.log('[FavoriteService] Refreshing favorites count...');
           this.refreshFavoritesCount().subscribe();
           
           // Notifier les composants du changement
+          console.log('[FavoriteService] Notifying favoriteChanged$ subscribers');
           this.favoriteChangedSubject.next({
             itemId,
             type,

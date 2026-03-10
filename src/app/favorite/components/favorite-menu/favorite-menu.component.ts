@@ -13,7 +13,7 @@ import { Favorite } from '../../types/favorite.interface';
 export class FavoriteMenuComponent implements OnInit, OnDestroy {
   recentFavorites: Favorite[] = [];
   favoritesCount: number = 0;
-  isLoading = true;
+  isLoading = false; // Initialisé à false pour permettre le premier chargement
   isOpen = false;
 
   faHeart = faHeart;
@@ -27,48 +27,75 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
     private favoriteService: FavoriteService,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    console.log('[FavoriteMenu] Constructor called');
+  }
 
   ngOnInit(): void {
+    console.log('[FavoriteMenu] ngOnInit - START');
+    
     // S'abonner au compteur pour mise à jour en temps réel
     this.favoriteChangedSubscription = this.favoriteService.favoritesCount$.subscribe(
       (count) => {
+        console.log('[FavoriteMenu] favoritesCount$ received:', count);
         this.favoritesCount = count;
         this.cdr.detectChanges();
       }
     );
     
     // Charger le compteur initial depuis l'API
+    console.log('[FavoriteMenu] Calling refreshFavoritesCount');
     this.favoriteService.refreshFavoritesCount().subscribe();
-    
-    // Charger les favoris récents
-    this.loadRecentFavorites();
     
     // S'abonner aux changements de favoris pour rafraîchir la liste
     const changeSubscription = this.favoriteService.favoriteChanged$.subscribe(
-      () => {
-        this.loadRecentFavorites();
+      (change) => {
+        console.log('[FavoriteMenu] favoriteChanged$ received:', change, 'isOpen:', this.isOpen, 'isLoading:', this.isLoading);
+        // Recharger uniquement si le menu est ouvert
+        if (this.isOpen && !this.isLoading) {
+          console.log('[FavoriteMenu] Reloading recent favorites');
+          this.loadRecentFavorites();
+        }
       }
     );
     
     this.favoriteChangedSubscription.add(changeSubscription);
+    console.log('[FavoriteMenu] ngOnInit - END');
   }
 
   ngOnDestroy(): void {
+    console.log('[FavoriteMenu] ngOnDestroy called');
     if (this.favoriteChangedSubscription) {
       this.favoriteChangedSubscription.unsubscribe();
     }
   }
 
   loadRecentFavorites(): void {
+    console.log('[FavoriteMenu] loadRecentFavorites called - isLoading:', this.isLoading);
+    
+    // Éviter les appels multiples simultanés
+    if (this.isLoading) {
+      console.log('[FavoriteMenu] loadRecentFavorites BLOCKED - already loading');
+      return;
+    }
+    
     this.isLoading = true;
+    console.log('[FavoriteMenu] Starting API call to getRecentFavorites');
+    
+    const startTime = Date.now();
     this.favoriteService.getRecentFavorites(3).subscribe({
       next: (favorites) => {
+        const duration = Date.now() - startTime;
+        console.log('[FavoriteMenu] API response received in', duration, 'ms - count:', favorites.length);
         this.recentFavorites = favorites;
         this.isLoading = false;
+        console.log('[FavoriteMenu] isLoading set to false');
       },
       error: (error) => {
+        const duration = Date.now() - startTime;
+        console.error('[FavoriteMenu] Error after', duration, 'ms:', error);
         this.isLoading = false;
+        console.log('[FavoriteMenu] isLoading set to false (error)');
       },
     });
   }
@@ -78,8 +105,12 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   }
 
   toggleMenu(): void {
+    console.log('[FavoriteMenu] toggleMenu called - current isOpen:', this.isOpen);
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
+    console.log('[FavoriteMenu] toggleMenu - new isOpen:', this.isOpen);
+    
+    if (this.isOpen && !this.isLoading) {
+      console.log('[FavoriteMenu] Menu opened - loading recent favorites');
       this.loadRecentFavorites();
     }
   }

@@ -18,7 +18,9 @@ export class LoadingService {
    */
   show(): void {
     this.loadingCount++;
+    console.log('[LoadingService] show() called - count:', this.loadingCount);
     if (this.loadingCount === 1) {
+      console.log('[LoadingService] Activating global loader');
       this.loadingSubject.next(true);
     }
   }
@@ -28,8 +30,10 @@ export class LoadingService {
    */
   hide(): void {
     this.loadingCount--;
+    console.log('[LoadingService] hide() called - count:', this.loadingCount);
     if (this.loadingCount <= 0) {
       this.loadingCount = 0;
+      console.log('[LoadingService] Deactivating global loader');
       this.loadingSubject.next(false);
     }
   }
@@ -38,8 +42,10 @@ export class LoadingService {
    * Force le loader à se cacher
    */
   forceHide(): void {
+    console.log('[LoadingService] forceHide() called - previous count:', this.loadingCount);
     this.loadingCount = 0;
     this.loadingSubject.next(false);
+    console.log('[LoadingService] Global loader force hidden');
   }
 
   /**

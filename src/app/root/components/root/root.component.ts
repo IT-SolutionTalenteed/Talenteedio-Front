@@ -125,12 +125,20 @@ export class RootComponent implements OnInit, OnDestroy {
   initRouterEvents() {
     this.subs.sink = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
+        console.log('[RootComponent] NavigationStart to:', event.url);
         this.loadingService.show();
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
+        if (event instanceof NavigationEnd) {
+          console.log('[RootComponent] NavigationEnd:', event.url);
+        } else if (event instanceof NavigationCancel) {
+          console.log('[RootComponent] NavigationCancel:', event.url);
+        } else {
+          console.log('[RootComponent] NavigationError:', event.url);
+        }
         this.loadingService.hide();
       }
     });

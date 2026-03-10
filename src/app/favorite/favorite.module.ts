@@ -13,6 +13,7 @@ const routes: Routes = [
   {
     path: 'favorites',
     component: FavoriteListComponent,
+    data: { title: 'Mes Favoris' }
   },
 ];
 
