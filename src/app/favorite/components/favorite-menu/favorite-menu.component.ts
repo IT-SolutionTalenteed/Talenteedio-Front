@@ -27,40 +27,26 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
     private favoriteService: FavoriteService,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {
-    console.log('[FavoriteMenu] Constructor called');
-  }
+  ) {}
 
   ngOnInit(): void {
-    console.log('[FavoriteMenu] Component initialized');
-    
     // S'abonner au compteur pour mise à jour en temps réel
     this.favoriteChangedSubscription = this.favoriteService.favoritesCount$.subscribe(
       (count) => {
-        console.log('[FavoriteMenu] Count received:', count);
         this.favoritesCount = count;
         this.cdr.detectChanges();
       }
     );
     
     // Charger le compteur initial depuis l'API
-    this.favoriteService.refreshFavoritesCount().subscribe({
-      next: (count) => {
-        console.log('[FavoriteMenu] Initial count loaded:', count);
-      },
-      error: (error) => {
-        console.error('[FavoriteMenu] Error loading initial count:', error);
-      }
-    });
+    this.favoriteService.refreshFavoritesCount().subscribe();
     
     // Charger les favoris récents
     this.loadRecentFavorites();
     
     // S'abonner aux changements de favoris pour rafraîchir la liste
     const changeSubscription = this.favoriteService.favoriteChanged$.subscribe(
-      (change) => {
-        console.log('[FavoriteMenu] Favorite changed event received!', change);
-        // Rafraîchir la liste des favoris récents
+      () => {
         this.loadRecentFavorites();
       }
     );
@@ -82,22 +68,13 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error loading recent favorites:', error);
         this.isLoading = false;
       },
     });
   }
 
   loadFavoritesCount(): void {
-    // Cette méthode n'est plus nécessaire, on utilise refreshFavoritesCount() du service
-    this.favoriteService.refreshFavoritesCount().subscribe({
-      next: (count) => {
-        console.log('[FavoriteMenu] Count loaded:', count);
-      },
-      error: (error) => {
-        console.error('[FavoriteMenu] Error loading favorites count:', error);
-      },
-    });
+    this.favoriteService.refreshFavoritesCount().subscribe();
   }
 
   toggleMenu(): void {
