@@ -130,7 +130,7 @@ export class HomeService {
   loadCompanies(): Observable<Company[]> {
     const props = {
       input: {
-        limit: 3,
+        limit: 50, // Load more companies to ensure we get Solution Talenteed
         page: 1,
       },
       filter: { status: 'public' },
@@ -189,14 +189,33 @@ export class HomeService {
         .pipe(
           map((response) => {
             const companies = response.data.getCompanies.rows;
-            // Create a copy of the array before sorting to avoid read-only error
-            const companiesCopy = [...companies];
-            // Sort to ensure "Solution Talenteed" is always first
-            return companiesCopy.sort((a: Company, b: Company) => {
-              if (a.company_name.toLowerCase().includes('solution talenteed')) return -1;
-              if (b.company_name.toLowerCase().includes('solution talenteed')) return 1;
-              return 0;
-            });
+            console.log('All companies loaded:', companies.map(c => c.company_name));
+            
+            // Find Solution Talenteed SARL
+            const solutionTalenteed = companies.find((c: Company) => 
+              c.company_name.toLowerCase().includes('solution talenteed')
+            );
+            
+            // Get other companies (excluding Solution Talenteed)
+            const otherCompanies = companies.filter((c: Company) => 
+              !c.company_name.toLowerCase().includes('solution talenteed')
+            );
+            
+            // Build final array: Solution Talenteed first, then 2 other companies
+            const result: Company[] = [];
+            
+            if (solutionTalenteed) {
+              result.push(solutionTalenteed);
+              console.log('Solution Talenteed found and added first:', solutionTalenteed.company_name);
+            }
+            
+            // Add up to 2 more companies to reach a total of 3
+            const remainingSlots = 3 - result.length;
+            result.push(...otherCompanies.slice(0, remainingSlots));
+            
+            console.log('Final 3 companies to display:', result.map(c => c.company_name));
+            
+            return result;
           })
         )
     );

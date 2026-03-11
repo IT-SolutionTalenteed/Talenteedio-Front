@@ -11,8 +11,9 @@ import { FavoriteService } from './services/favorite.service';
 
 const routes: Routes = [
   {
-    path: 'favorites',
+    path: '',
     component: FavoriteListComponent,
+    data: { title: 'Mes Favoris' }
   },
 ];
 
@@ -29,6 +30,6 @@ const routes: Routes = [
     SharedModule,
   ],
   exports: [FavoriteButtonComponent, FavoriteMenuComponent],
-  providers: [FavoriteService],
+  // Removed providers - FavoriteService is already provided in 'root'
 })
 export class FavoriteModule {}

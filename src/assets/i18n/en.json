@@ -553,15 +553,15 @@
         "passwordLabel": "Password",
         "confirmPasswordLabel": "Confirm Password",
         "sections": {
-          "professionalInfo": "Professional Information (Optional)",
-          "salaryCompensation": "Salary & Compensation (Optional)",
-          "location": "Location (Optional)",
-          "jobPreferences": "Job Preferences (Optional)"
+          "professionalInfo": "Professional Information",
+          "salaryCompensation": "Salary & Compensation",
+          "location": "Location",
+          "jobPreferences": "Job Preferences"
         },
         "fields": {
-          "valuesLabel": "Values (Optional)",
+          "valuesLabel": "Values",
           "valuesPlaceholder": "Select values",
-          "cvLabel": "CV (PDF) - Optional",
+          "cvLabel": "CV (PDF)",
           "cvButton": "Choose File",
           "cvNoFile": "No file chosen",
           "yearsOfExperienceLabel": "Years of Experience",
@@ -694,15 +694,15 @@
       "confirmPasswordLabel": "Confirm Password",
       "confirmPasswordPlaceholder": "Confirm your password",
       "sections": {
-        "professionalInfo": "Professional Information (Optional)",
-        "salaryCompensation": "Salary & Compensation (Optional)",
-        "location": "Location (Optional)",
-        "jobPreferences": "Job Preferences (Optional)"
+        "professionalInfo": "Professional Information",
+        "salaryCompensation": "Salary & Compensation",
+        "location": "Location",
+        "jobPreferences": "Job Preferences"
       },
       "fields": {
-        "valuesLabel": "Values (Optional)",
+        "valuesLabel": "Values",
         "valuesPlaceholder": "Select values",
-        "cvLabel": "CV (PDF) - Optional",
+        "cvLabel": "CV (PDF)",
         "cvButton": "Choose File",
         "cvNoFile": "No file chosen",
         "cvError": "Must be a PDF file",
@@ -879,6 +879,28 @@
       "loading": "Loading information...",
       "errorTitle": "Company not found",
       "errorButton": "Back to list"
+    }
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "subtitle": "Find all your saved job offers",
+    "filters": {
+      "all": "All",
+      "jobs": "Jobs"
+    },
+    "loading": "Loading your favorites...",
+    "empty": {
+      "title": "No favorites",
+      "description": "You haven't added any job offers to your favorites yet.",
+      "button": "Discover offers"
+    },
+    "card": {
+      "jobBadge": "Job",
+      "addedOn": "Added"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { faHeart, faClock, faMapMarker, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -13,8 +13,9 @@ import { Favorite } from '../../types/favorite.interface';
 export class FavoriteMenuComponent implements OnInit, OnDestroy {
   recentFavorites: Favorite[] = [];
   favoritesCount: number = 0;
-  isLoading = true;
+  isLoading = false; // Initialisé à false pour permettre le premier chargement
   isOpen = false;
+  isOnFavoritesPage = false; // Pour détecter si on est sur la page favorites
 
   faHeart = faHeart;
   faClock = faClock;
@@ -22,90 +23,107 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   faBriefcase = faBriefcase;
 
   private favoriteChangedSubscription?: Subscription;
+  private routerSubscription?: Subscription;
 
   constructor(
     private favoriteService: FavoriteService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
-  ) {}
+    private cdr: ChangeDetectorRef
+  ) {
+    console.log('[FavoriteMenu] Constructor called');
+  }
 
   ngOnInit(): void {
-    console.log('[FavoriteMenu] Component initialized');
+    console.log('[FavoriteMenu] ngOnInit - START');
     
-    // Charger les favoris récents
-    this.loadRecentFavorites();
+    // Détecter si on est sur la page favorites
+    this.isOnFavoritesPage = this.router.url.includes('/favorites');
     
-    // Charger le compteur initial
-    this.loadFavoritesCount();
+    // S'abonner aux changements de route
+    this.routerSubscription = this.router.events.subscribe(() => {
+      this.isOnFavoritesPage = this.router.url.includes('/favorites');
+    });
     
-    // S'abonner au compteur via BehaviorSubject
+    // S'abonner au compteur pour mise à jour en temps réel
     this.favoriteChangedSubscription = this.favoriteService.favoritesCount$.subscribe(
       (count) => {
-        if (count >= 0) { // Ignorer la valeur initiale -1
-          console.log('[FavoriteMenu] Count changed via BehaviorSubject:', count);
-          this.ngZone.run(() => {
-            this.favoritesCount = count;
-            console.log('[FavoriteMenu] favoritesCount updated to:', this.favoritesCount);
-          });
-        }
+        console.log('[FavoriteMenu] favoritesCount$ received:', count);
+        this.favoritesCount = count;
+        this.cdr.detectChanges();
       }
     );
+    
+    // Charger le compteur initial depuis l'API
+    console.log('[FavoriteMenu] Calling refreshFavoritesCount');
+    this.favoriteService.refreshFavoritesCount().subscribe();
     
     // S'abonner aux changements de favoris pour rafraîchir la liste
     const changeSubscription = this.favoriteService.favoriteChanged$.subscribe(
       (change) => {
-        console.log('[FavoriteMenu] Favorite changed event received!', change);
-        // Rafraîchir la liste
-        this.loadRecentFavorites();
-        // Recharger le compteur
-        this.loadFavoritesCount();
+        console.log('[FavoriteMenu] favoriteChanged$ received:', change, 'isOpen:', this.isOpen, 'isLoading:', this.isLoading);
+        // Recharger uniquement si le menu est ouvert
+        if (this.isOpen && !this.isLoading) {
+          console.log('[FavoriteMenu] Reloading recent favorites');
+          this.loadRecentFavorites();
+        }
       }
     );
     
-    // Ajouter à la subscription pour cleanup
     this.favoriteChangedSubscription.add(changeSubscription);
+    console.log('[FavoriteMenu] ngOnInit - END');
   }
 
   ngOnDestroy(): void {
+    console.log('[FavoriteMenu] ngOnDestroy called');
     if (this.favoriteChangedSubscription) {
       this.favoriteChangedSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 
   loadRecentFavorites(): void {
+    console.log('[FavoriteMenu] loadRecentFavorites called - isLoading:', this.isLoading);
+    
+    // Éviter les appels multiples simultanés
+    if (this.isLoading) {
+      console.log('[FavoriteMenu] loadRecentFavorites BLOCKED - already loading');
+      return;
+    }
+    
     this.isLoading = true;
+    console.log('[FavoriteMenu] Starting API call to getRecentFavorites');
+    
+    const startTime = Date.now();
     this.favoriteService.getRecentFavorites(3).subscribe({
       next: (favorites) => {
+        const duration = Date.now() - startTime;
+        console.log('[FavoriteMenu] API response received in', duration, 'ms - count:', favorites.length);
         this.recentFavorites = favorites;
         this.isLoading = false;
+        console.log('[FavoriteMenu] isLoading set to false');
       },
       error: (error) => {
-        console.error('Error loading recent favorites:', error);
+        const duration = Date.now() - startTime;
+        console.error('[FavoriteMenu] Error after', duration, 'ms:', error);
         this.isLoading = false;
+        console.log('[FavoriteMenu] isLoading set to false (error)');
       },
     });
   }
 
   loadFavoritesCount(): void {
-    console.log('[FavoriteMenu] Loading favorites count...');
-    this.favoriteService.getFavorites(1, 1).subscribe({
-      next: (response) => {
-        const newCount = response.total || 0;
-        console.log('[FavoriteMenu] Received count from API:', newCount);
-        // Mettre à jour le BehaviorSubject dans le service
-        this.favoriteService.updateFavoritesCount(newCount);
-      },
-      error: (error) => {
-        console.error('[FavoriteMenu] Error loading favorites count:', error);
-        this.favoriteService.updateFavoritesCount(0);
-      },
-    });
+    this.favoriteService.refreshFavoritesCount().subscribe();
   }
 
   toggleMenu(): void {
+    console.log('[FavoriteMenu] toggleMenu called - current isOpen:', this.isOpen);
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
+    console.log('[FavoriteMenu] toggleMenu - new isOpen:', this.isOpen);
+    
+    if (this.isOpen && !this.isLoading) {
+      console.log('[FavoriteMenu] Menu opened - loading recent favorites');
       this.loadRecentFavorites();
     }
   }

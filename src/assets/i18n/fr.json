@@ -553,15 +553,15 @@
         "passwordLabel": "Mot de passe",
         "confirmPasswordLabel": "Confirmer le mot de passe",
         "sections": {
-          "professionalInfo": "Informations Professionnelles (Optionnel)",
-          "salaryCompensation": "Salaire & Rémunération (Optionnel)",
-          "location": "Localisation (Optionnel)",
-          "jobPreferences": "Préférences d'emploi (Optionnel)"
+          "professionalInfo": "Informations Professionnelles",
+          "salaryCompensation": "Salaire & Rémunération",
+          "location": "Localisation",
+          "jobPreferences": "Préférences d'emploi"
         },
         "fields": {
-          "valuesLabel": "Valeurs (Optionnel)",
+          "valuesLabel": "Valeurs",
           "valuesPlaceholder": "Sélectionnez des valeurs",
-          "cvLabel": "CV (PDF) - Optionnel",
+          "cvLabel": "CV (PDF)",
           "cvButton": "Choisir un fichier",
           "cvNoFile": "Aucun fichier choisi",
           "yearsOfExperienceLabel": "Années d'expérience",
@@ -694,15 +694,15 @@
       "confirmPasswordLabel": "Confirmer le mot de passe",
       "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
       "sections": {
-        "professionalInfo": "Informations Professionnelles (Optionnel)",
-        "salaryCompensation": "Salaire & Rémunération (Optionnel)",
-        "location": "Localisation (Optionnel)",
-        "jobPreferences": "Préférences d'emploi (Optionnel)"
+        "professionalInfo": "Informations Professionnelles",
+        "salaryCompensation": "Salaire & Rémunération",
+        "location": "Localisation",
+        "jobPreferences": "Préférences d'emploi"
       },
       "fields": {
-        "valuesLabel": "Valeurs (Optionnel)",
+        "valuesLabel": "Valeurs",
         "valuesPlaceholder": "Sélectionnez des valeurs",
-        "cvLabel": "CV (PDF) - Optionnel",
+        "cvLabel": "CV (PDF)",
         "cvButton": "Choisir un fichier",
         "cvNoFile": "Aucun fichier choisi",
         "cvError": "Doit être un fichier PDF",
@@ -879,6 +879,28 @@
       "loading": "Chargement des informations...",
       "errorTitle": "Entreprise introuvable",
       "errorButton": "Retour à la liste"
+    }
+  },
+  "favorites": {
+    "title": "Mes Favoris",
+    "subtitle": "Retrouvez toutes vos offres sauvegardées",
+    "filters": {
+      "all": "Tous",
+      "jobs": "Emplois"
+    },
+    "loading": "Chargement de vos favoris...",
+    "empty": {
+      "title": "Aucun favori",
+      "description": "Vous n'avez pas encore ajouté d'offres en favoris.",
+      "button": "Découvrir les offres"
+    },
+    "card": {
+      "jobBadge": "Emploi",
+      "addedOn": "Ajouté"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
     }
   }
 }

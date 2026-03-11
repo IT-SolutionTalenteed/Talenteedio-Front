@@ -111,6 +111,14 @@ const routes: Routes = [
           ),
         data: { title: 'Matching Profile' },
       },
+      {
+        path: 'favorites',
+        loadChildren: () =>
+          import('../favorite/favorite.module').then(
+            (m) => m.FavoriteModule
+          ),
+        data: { title: 'Mes Favoris' },
+      },
     ],
   },
 ];

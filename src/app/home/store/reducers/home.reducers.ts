@@ -235,12 +235,14 @@ const loadCompaniesFailReducer = (state: HomeState): HomeState => ({
 const loadCompaniesSuccessReducer = (
   state: HomeState,
   props: { payload: Company[] }
-): HomeState => ({
-  ...state,
-  companiesLoading: false,
-  companiesLoaded: true,
-  companies: props.payload,
-});
+): HomeState => {
+  return {
+    ...state,
+    companiesLoading: false,
+    companiesLoaded: true,
+    companies: props.payload,
+  };
+};
 
 const loadUpcomingEventsReducer = (state: HomeState): HomeState => ({
   ...state,

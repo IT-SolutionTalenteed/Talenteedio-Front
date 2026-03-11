@@ -1,7 +1,7 @@
 <div class="favorite-list-container">
   <div class="page-header">
-    <h1>Mes Favoris</h1>
-    <p class="subtitle">Retrouvez toutes vos offres sauvegardées</p>
+    <h1>{{ 'favorites.title' | translate }}</h1>
+    <p class="subtitle">{{ 'favorites.subtitle' | translate }}</p>
   </div>
 
   <div class="filter-tabs">
@@ -11,7 +11,7 @@
       (click)="filterByType(null)"
       type="button"
     >
-      Tous ({{ total }})
+      {{ 'favorites.filters.all' | translate }} ({{ total }})
     </button>
     <button
       class="tab"
@@ -20,23 +20,23 @@
       type="button"
     >
       <fa-icon [icon]="faBriefcase"></fa-icon>
-      Emplois
+      {{ 'favorites.filters.jobs' | translate }}
     </button>
   </div>
 
   <div class="favorites-content">
     <div *ngIf="isLoading" class="loading-state">
       <div class="spinner"></div>
-      <p>Chargement de vos favoris...</p>
+      <p>{{ 'favorites.loading' | translate }}</p>
     </div>
 
     <div *ngIf="!isLoading && favorites.length === 0" class="empty-state">
       <div class="empty-icon">
         <fa-icon [icon]="faBriefcase" size="3x"></fa-icon>
       </div>
-      <h2>Aucun favori</h2>
-      <p>Vous n'avez pas encore ajouté d'offres en favoris.</p>
-      <a localizedRouterLink="/job" class="btn-primary">Découvrir les offres</a>
+      <h2>{{ 'favorites.empty.title' | translate }}</h2>
+      <p>{{ 'favorites.empty.description' | translate }}</p>
+      <a [routerLink]="['/job']" class="btn-primary">{{ 'favorites.empty.button' | translate }}</a>
     </div>
 
     <div *ngIf="!isLoading && favorites.length > 0" class="favorites-grid">
@@ -48,7 +48,7 @@
             size="small"
           ></app-favorite-button>
           <span class="type-badge" [class.job]="favorite.type === FavoriteType.JOB">
-            Emploi
+            {{ 'favorites.card.jobBadge' | translate }}
           </span>
         </div>
 
@@ -74,7 +74,7 @@
                 {{ favorite.job?.category?.name || '-' }}
               </span>
               <span class="meta-item">
-                <fa-icon icon="map-marker-alt"></fa-icon>
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
                 {{ favorite.job?.location?.name || '-' }}
               </span>
             </div>
@@ -85,7 +85,7 @@
                 {{ favorite.job?.salaryMax }} €
               </span>
               <span class="date">
-                Ajouté {{ favorite.createdAt | timeAgo }}
+                {{ 'favorites.card.addedOn' | translate }} {{ favorite.createdAt | timeAgo }}
               </span>
             </div>
           </div>
@@ -100,11 +100,11 @@
         (click)="onPageChange(currentPage - 1)"
         type="button"
       >
-        Précédent
+        {{ 'favorites.pagination.previous' | translate }}
       </button>
 
       <span class="page-info">
-        Page {{ currentPage }} sur {{ totalPages }}
+        Page {{ currentPage }} / {{ totalPages }}
       </span>
 
       <button
@@ -113,7 +113,7 @@
         (click)="onPageChange(currentPage + 1)"
         type="button"
       >
-        Suivant
+        {{ 'favorites.pagination.next' | translate }}
       </button>
     </div>
   </div>

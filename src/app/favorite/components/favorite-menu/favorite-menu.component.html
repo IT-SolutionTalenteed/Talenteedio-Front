@@ -1,4 +1,4 @@
-<div class="favorite-menu-container">
+<div class="favorite-menu-container" *ngIf="!isOnFavoritesPage">
   <button class="favorite-menu-trigger" (click)="toggleMenu()" type="button" [class.has-favorites]="favoritesCount > 0">
     <fa-icon [icon]="faHeart"></fa-icon>
     <span class="badge" *ngIf="favoritesCount > 0">{{
@@ -56,4 +56,4 @@
 </div>
 
 <!-- Backdrop to close menu when clicking outside -->
-<div class="backdrop" *ngIf="isOpen" (click)="toggleMenu()"></div>
+<div class="backdrop" *ngIf="isOpen && !isOnFavoritesPage" (click)="toggleMenu()"></div>

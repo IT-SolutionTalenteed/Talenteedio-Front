@@ -430,6 +430,12 @@ $border-color: #E8EAED;
       order: 1;
     }
 
+    &.hero-visual-desktop {
+      @media screen and (max-width: 968px) {
+        display: none;
+      }
+    }
+
     .visual-container {
       position: relative;
       width: 100%;
@@ -818,6 +824,7 @@ $border-color: #E8EAED;
     gap: 24px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     &:hover {
       transform: translateY(-8px);

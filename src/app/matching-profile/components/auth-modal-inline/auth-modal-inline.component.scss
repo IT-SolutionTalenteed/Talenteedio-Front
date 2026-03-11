@@ -1098,6 +1098,30 @@
   }
 }
 
+// Hide TJM and Salary Range fields
+#modal-tjm,
+#modal-salaryRange,
+label[for="modal-tjm"],
+label[for="modal-salaryRange"] {
+  display: none !important;
+}
+
+// Hide the form-group containing TJM and salaryRange
+.form-group:has(#modal-tjm),
+.form-group:has(#modal-salaryRange) {
+  display: none !important;
+}
+
+// Hide the form-row containing TJM if it only has hidden fields
+.form-row:has(#modal-tjm):not(:has(.form-group:not(:has(#modal-tjm)):not(:has(#modal-annualSalary)))) {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  
+  .form-group:has(#modal-tjm) {
+    display: none !important;
+  }
+}
+
 // ng-select Custom Styles
 ::ng-deep {
   .custom-select {
