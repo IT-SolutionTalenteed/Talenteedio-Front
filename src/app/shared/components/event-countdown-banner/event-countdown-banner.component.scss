@@ -1,0 +1,215 @@
+.countdown-banner {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 24px;
+  position: relative;
+  overflow: hidden;
+
+  .countdown-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .event-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 200px;
+
+    .event-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .event-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .countdown-timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 2;
+    justify-content: center;
+
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 50px;
+
+      .time-value {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .time-label {
+        font-size: 11px;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .time-separator {
+      font-size: 24px;
+      font-weight: 700;
+      opacity: 0.6;
+      margin: 0 4px;
+    }
+  }
+
+  .event-cta {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 150px;
+
+    .cta-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+        svg {
+          transform: translateX(4px);
+        }
+      }
+
+      .cta-text {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      svg {
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 992px) {
+  .countdown-banner {
+    padding: 16px 20px;
+
+    .countdown-content {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .event-info {
+      flex-direction: column;
+      width: 100%;
+      
+      .event-title {
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
+    .countdown-timer {
+      width: 100%;
+      flex-wrap: wrap;
+      
+      .time-unit {
+        min-width: 40px;
+        
+        .time-value {
+          font-size: 20px;
+        }
+        
+        .time-label {
+          font-size: 10px;
+        }
+      }
+      
+      .time-separator {
+        font-size: 20px;
+      }
+    }
+
+    .event-cta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .countdown-banner {
+    padding: 12px 16px;
+
+    .event-info {
+      .event-title {
+        font-size: 16px;
+      }
+    }
+
+    .countdown-timer {
+      gap: 4px;
+      
+      .time-unit {
+        min-width: 35px;
+        
+        .time-value {
+          font-size: 18px;
+        }
+        
+        .time-label {
+          font-size: 9px;
+        }
+      }
+      
+      .time-separator {
+        font-size: 18px;
+        margin: 0 2px;
+      }
+    }
+
+    .event-cta {
+      .cta-button {
+        padding: 8px 16px;
+        
+        .cta-text {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
