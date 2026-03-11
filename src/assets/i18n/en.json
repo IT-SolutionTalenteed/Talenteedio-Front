@@ -880,5 +880,27 @@
       "errorTitle": "Company not found",
       "errorButton": "Back to list"
     }
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "subtitle": "Find all your saved job offers",
+    "filters": {
+      "all": "All",
+      "jobs": "Jobs"
+    },
+    "loading": "Loading your favorites...",
+    "empty": {
+      "title": "No favorites",
+      "description": "You haven't added any job offers to your favorites yet.",
+      "button": "Discover offers"
+    },
+    "card": {
+      "jobBadge": "Job",
+      "addedOn": "Added"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
   }
 }

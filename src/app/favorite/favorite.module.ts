@@ -11,7 +11,7 @@ import { FavoriteService } from './services/favorite.service';
 
 const routes: Routes = [
   {
-    path: 'favorites',
+    path: '',
     component: FavoriteListComponent,
     data: { title: 'Mes Favoris' }
   },

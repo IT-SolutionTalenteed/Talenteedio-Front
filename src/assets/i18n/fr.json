@@ -880,5 +880,27 @@
       "errorTitle": "Entreprise introuvable",
       "errorButton": "Retour à la liste"
     }
+  },
+  "favorites": {
+    "title": "Mes Favoris",
+    "subtitle": "Retrouvez toutes vos offres sauvegardées",
+    "filters": {
+      "all": "Tous",
+      "jobs": "Emplois"
+    },
+    "loading": "Chargement de vos favoris...",
+    "empty": {
+      "title": "Aucun favori",
+      "description": "Vous n'avez pas encore ajouté d'offres en favoris.",
+      "button": "Découvrir les offres"
+    },
+    "card": {
+      "jobBadge": "Emploi",
+      "addedOn": "Ajouté"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

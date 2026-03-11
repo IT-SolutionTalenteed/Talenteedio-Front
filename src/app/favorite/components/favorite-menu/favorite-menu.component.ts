@@ -15,6 +15,7 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   favoritesCount: number = 0;
   isLoading = false; // Initialisé à false pour permettre le premier chargement
   isOpen = false;
+  isOnFavoritesPage = false; // Pour détecter si on est sur la page favorites
 
   faHeart = faHeart;
   faClock = faClock;
@@ -22,6 +23,7 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
   faBriefcase = faBriefcase;
 
   private favoriteChangedSubscription?: Subscription;
+  private routerSubscription?: Subscription;
 
   constructor(
     private favoriteService: FavoriteService,
@@ -33,6 +35,14 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('[FavoriteMenu] ngOnInit - START');
+    
+    // Détecter si on est sur la page favorites
+    this.isOnFavoritesPage = this.router.url.includes('/favorites');
+    
+    // S'abonner aux changements de route
+    this.routerSubscription = this.router.events.subscribe(() => {
+      this.isOnFavoritesPage = this.router.url.includes('/favorites');
+    });
     
     // S'abonner au compteur pour mise à jour en temps réel
     this.favoriteChangedSubscription = this.favoriteService.favoritesCount$.subscribe(
@@ -67,6 +77,9 @@ export class FavoriteMenuComponent implements OnInit, OnDestroy {
     console.log('[FavoriteMenu] ngOnDestroy called');
     if (this.favoriteChangedSubscription) {
       this.favoriteChangedSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 
