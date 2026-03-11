@@ -30,6 +30,19 @@
     },
     "tagline": "Le média alternatif pour les RH"
   },
+  "countdown": {
+    "featured": "À la une",
+    "year": "an",
+    "years": "ans",
+    "month": "mois",
+    "months": "mois",
+    "day": "jour",
+    "days": "jours",
+    "hours": "h",
+    "minutes": "min",
+    "seconds": "sec",
+    "learnMore": "En savoir plus"
+  },
   "sideNav": {
     "dashboard": "Tableau de bord",
     "logout": "Déconnexion"

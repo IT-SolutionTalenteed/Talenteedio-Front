@@ -30,6 +30,19 @@
     },
     "tagline": "The alternative media for HR"
   },
+  "countdown": {
+    "featured": "Featured",
+    "year": "year",
+    "years": "years",
+    "month": "month",
+    "months": "months",
+    "day": "day",
+    "days": "days",
+    "hours": "h",
+    "minutes": "min",
+    "seconds": "sec",
+    "learnMore": "Learn more"
+  },
   "sideNav": {
     "dashboard": "Dashboard",
     "logout": "Logout"
