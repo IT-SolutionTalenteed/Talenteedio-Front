@@ -4,7 +4,6 @@ import { EventDetailRootComponent } from './containers/event-detail-root/event-d
 import { EventListRootComponent } from './containers/event-list-root/event-list-root.component';
 import { EventCategoryDetailComponent } from './containers/event-category-detail/event-category-detail.component';
 import { EventRootComponent } from './containers/event-root/event-root.component';
-import { FeaturedEventDetailComponent } from './containers/featured-event-detail/featured-event-detail.component';
 import { EventDetailGuard } from './guards/event-detail.guard';
 
 const routes: Routes = [
@@ -18,11 +17,6 @@ const routes: Routes = [
         path: 'list',
         component: EventListRootComponent,
         data: { title: 'Event' },
-      },
-      {
-        path: 'featured',
-        component: FeaturedEventDetailComponent,
-        data: { title: 'Featured Event' },
       },
       {
         path: 'category/:slug',

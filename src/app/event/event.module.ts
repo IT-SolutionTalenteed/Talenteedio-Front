@@ -14,7 +14,6 @@ import { EventCategoryDetailComponent } from './containers/event-category-detail
 import { EventDetailRootComponent } from './containers/event-detail-root/event-detail-root.component';
 import { EventListRootComponent } from './containers/event-list-root/event-list-root.component';
 import { EventRootComponent } from './containers/event-root/event-root.component';
-import { FeaturedEventDetailComponent } from './containers/featured-event-detail/featured-event-detail.component';
 import { EventRoutingModule } from './event-routing.module';
 import { MatchingProfileModule } from '../matching-profile/matching-profile.module';
 import { EventDetailService } from './guards/event-detail.guard';
@@ -30,7 +29,6 @@ import { FeaturedEventMatchingService } from './services/featured-event-matching
     EventListRootComponent,
     EventCategoryDetailComponent,
     EventDetailRootComponent,
-    FeaturedEventDetailComponent,
     EventListBoxFilterComponent,
     EventListComponent,
     EventItemComponent,
