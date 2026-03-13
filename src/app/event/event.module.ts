@@ -14,12 +14,15 @@ import { EventCategoryDetailComponent } from './containers/event-category-detail
 import { EventDetailRootComponent } from './containers/event-detail-root/event-detail-root.component';
 import { EventListRootComponent } from './containers/event-list-root/event-list-root.component';
 import { EventRootComponent } from './containers/event-root/event-root.component';
+import { FeaturedEventDetailComponent } from './containers/featured-event-detail/featured-event-detail.component';
 import { EventRoutingModule } from './event-routing.module';
+import { MatchingProfileModule } from '../matching-profile/matching-profile.module';
 import { EventDetailService } from './guards/event-detail.guard';
 import { EventService } from './services/event.service';
 import { EventRouterEffects } from './store/effects/event-router.effects';
 import { EventEffects } from './store/effects/event.effects';
 import { eventReducer } from './store/reducers/event.reducers';
+import { FeaturedEventMatchingService } from './services/featured-event-matching.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { eventReducer } from './store/reducers/event.reducers';
     EventListRootComponent,
     EventCategoryDetailComponent,
     EventDetailRootComponent,
+    FeaturedEventDetailComponent,
     EventListBoxFilterComponent,
     EventListComponent,
     EventItemComponent,
@@ -39,9 +43,10 @@ import { eventReducer } from './store/reducers/event.reducers';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    MatchingProfileModule,
     StoreModule.forFeature('event', eventReducer),
     EffectsModule.forFeature([EventEffects, EventRouterEffects]),
   ],
-  providers: [EventService, EventDetailService],
+  providers: [EventService, EventDetailService, FeaturedEventMatchingService],
 })
 export class EventModule {}

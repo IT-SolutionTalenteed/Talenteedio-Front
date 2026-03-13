@@ -117,6 +117,7 @@ export class EventService {
                 maxParticipants
                 status
                 image
+                featured
                 metaDescription
                 admin {
                   user {

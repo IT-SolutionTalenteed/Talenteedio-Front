@@ -130,8 +130,8 @@ export class AuthenticationEffects {
         const currentUrl = routerState.state.url;
         const redirect = routerState.state.queryParams['redirect'];
         
-        // Si on est sur la page matching-profile, ne pas rediriger
-        if (currentUrl && currentUrl.includes('/matching-profile')) {
+        // Si on est sur la page matching-profile ou event/detail, ne pas rediriger
+        if (currentUrl && (currentUrl.includes('/matching-profile') || currentUrl.includes('/event/detail'))) {
           return { type: 'NO_ACTION' }; // Action vide pour ne rien faire
         }
         

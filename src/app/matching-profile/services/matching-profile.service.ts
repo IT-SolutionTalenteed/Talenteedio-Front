@@ -69,7 +69,12 @@ export class MatchingProfileService {
       }
     `;
     return this.graphqlRequest(query).pipe(
-      map((response: any) => response.data.getMyMatchingProfiles)
+      map((response: any) => {
+        if (!response || !response.data) {
+          return [];
+        }
+        return response.data.getMyMatchingProfiles || [];
+      })
     );
   }
 
@@ -102,17 +107,17 @@ export class MatchingProfileService {
     );
   }
 
-  matchProfileWithCompanies(matchingProfileId: string): Observable<any> {
+  matchProfileWithCompanies(matchingProfileId: string, eventId?: string): Observable<any> {
     const query = `
-      mutation MatchProfileWithCompanies($matchingProfileId: ID!) {
-        matchProfileWithCompanies(matchingProfileId: $matchingProfileId) {
+      mutation MatchProfileWithCompanies($matchingProfileId: ID!, $eventId: ID) {
+        matchProfileWithCompanies(matchingProfileId: $matchingProfileId, eventId: $eventId) {
           success
           matchCount
           message
         }
       }
     `;
-    return this.graphqlRequest(query, { matchingProfileId }).pipe(
+    return this.graphqlRequest(query, { matchingProfileId, eventId }).pipe(
       map((response: any) => response.data.matchProfileWithCompanies)
     );
   }

@@ -8,6 +8,7 @@ import { MatchingProfileService } from '../../services/matching-profile.service'
 })
 export class CompanyMatchesComponent implements OnInit, OnChanges {
   @Input() profileId: string;
+  @Input() eventCompanyIds: string[] = []; // Pour filtrer par événement
   @Output() back = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
 
@@ -50,7 +51,14 @@ export class CompanyMatchesComponent implements OnInit, OnChanges {
     
     this.matchingProfileService.getMatchedCompanies(this.profileId).subscribe({
       next: (matches) => {
-        this.matches = matches.sort((a, b) => b.matchScore - a.matchScore);
+        // Filtrer par eventCompanyIds si fourni
+        if (this.eventCompanyIds && this.eventCompanyIds.length > 0) {
+          this.matches = matches
+            .filter((match: any) => this.eventCompanyIds.includes(match.company.id))
+            .sort((a, b) => b.matchScore - a.matchScore);
+        } else {
+          this.matches = matches.sort((a, b) => b.matchScore - a.matchScore);
+        }
         this.loading = false;
       },
       error: (err) => {

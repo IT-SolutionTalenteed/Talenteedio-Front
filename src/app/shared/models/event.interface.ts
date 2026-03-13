@@ -12,6 +12,7 @@ export interface Event {
   metaDescription: string;
   status: Status;
   image?: string;
+  featured?: boolean;
   admin?: { id: string; user: User };
   company?: Company;
   category: Category;
