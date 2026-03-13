@@ -400,6 +400,20 @@
       "cancelButton": "Cancel",
       "submitButton": "Send request",
       "loading": "Processing..."
+    },
+    "featuredFlow": {
+      "profileForm": {
+        "title": "Create your matching profile",
+        "subtitle": "Complete your profile to match with event companies"
+      },
+      "matching": {
+        "title": "Analyzing your profile...",
+        "subtitle": "We are searching for companies that best match your profile among event participants."
+      },
+      "appointments": {
+        "title": "Book an appointment",
+        "myAppointments": "My appointments"
+      }
     }
   },
   "blog": {

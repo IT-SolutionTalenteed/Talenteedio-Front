@@ -400,6 +400,20 @@
       "cancelButton": "Annuler",
       "submitButton": "Envoyer la demande",
       "loading": "En cours..."
+    },
+    "featuredFlow": {
+      "profileForm": {
+        "title": "Créez votre profil de matching",
+        "subtitle": "Complétez votre profil pour matcher avec les entreprises de l'événement"
+      },
+      "matching": {
+        "title": "Analyse de votre profil en cours...",
+        "subtitle": "Nous recherchons les entreprises qui correspondent le mieux à votre profil parmi les participants à l'événement."
+      },
+      "appointments": {
+        "title": "Prendre rendez-vous",
+        "myAppointments": "Mes rendez-vous"
+      }
     }
   },
   "blog": {
