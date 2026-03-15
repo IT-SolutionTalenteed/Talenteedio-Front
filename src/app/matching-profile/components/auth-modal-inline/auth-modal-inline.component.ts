@@ -20,6 +20,7 @@ import { JobType } from 'src/app/shared/models/job.interface';
 })
 export class AuthModalInlineComponent implements OnInit, OnDestroy {
   @Output() authenticated = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
   @ViewChild('password') passwordEl: ElementRef;
   @ViewChild('confirmPassword') confirmPasswordEl: ElementRef;
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
@@ -331,5 +332,9 @@ export class AuthModalInlineComponent implements OnInit, OnDestroy {
 
   clearError(): void {
     this.store.dispatch(clearError());
+  }
+
+  closeModal(): void {
+    this.closed.emit();
   }
 }

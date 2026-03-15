@@ -608,15 +608,8 @@
 </div>
 
 <!-- Featured Event Auth Modal -->
-<div class="featured-auth-overlay" *ngIf="showAuthModal && event?.featured && currentStep === 'auth'">
-  <div class="featured-auth-container">
-    <button class="close-button" (click)="closeAuthModal()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-    <app-auth-modal-inline (authenticated)="onAuthenticated()"></app-auth-modal-inline>
-  </div>
+<div *ngIf="showAuthModal && event?.featured && currentStep === 'auth'">
+  <app-auth-modal-inline (authenticated)="onAuthenticated()" (closed)="closeAuthModal()"></app-auth-modal-inline>
 </div>
 
 <!-- Appointments Step -->
