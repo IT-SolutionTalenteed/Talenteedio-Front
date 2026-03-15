@@ -483,13 +483,6 @@ export class EventDetailComponent implements OnChanges, OnInit {
     this.currentStep = step;
   }
 
-  getEventCompanyIds(): string[] {
-    if (!this.event || !this.event.companies) {
-      return [];
-    }
-    return this.event.companies.map((c: any) => c.id);
-  }
-
   getEventDateString(): string | null {
     if (!this.event || !this.event.date) {
       return null;
@@ -521,15 +514,15 @@ export class EventDetailComponent implements OnChanges, OnInit {
   }
 
   isCompanySelectedForAppointment(match: any): boolean {
-    return this.selectedCompanies.some(c => c.id === match.company.id);
+    return this.selectedCompanies.some(c => c.company.id === match.company.id);
   }
 
   toggleCompanySelectionForAppointment(match: any): void {
-    const index = this.selectedCompanies.findIndex(c => c.id === match.company.id);
+    const index = this.selectedCompanies.findIndex(c => c.company.id === match.company.id);
     if (index > -1) {
       this.selectedCompanies.splice(index, 1);
     } else {
-      this.selectedCompanies.push(match.company);
+      this.selectedCompanies.push(match); // Store the full match object
     }
   }
 

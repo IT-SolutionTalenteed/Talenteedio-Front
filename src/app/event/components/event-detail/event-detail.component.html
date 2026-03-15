@@ -623,7 +623,7 @@
     
     <app-appointment-scheduler 
       [profileId]="currentProfile?.id"
-      [eventCompanyIds]="getEventCompanyIds()"
+      [preSelectedMatches]="selectedCompanies"
       [eventDate]="getEventDateString()"
       (back)="currentStep = 'results'">
     </app-appointment-scheduler>
