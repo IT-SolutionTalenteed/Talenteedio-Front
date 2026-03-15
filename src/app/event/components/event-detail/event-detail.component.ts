@@ -420,19 +420,28 @@ export class EventDetailComponent implements OnChanges, OnInit {
   }
 
   loadMatchedCompanies(): void {
+    console.log('loadMatchedCompanies called');
+    console.log('Event:', this.event);
+    console.log('Event companies:', this.event?.companies);
+    
     if (!this.event || !this.event.companies) {
       this.matchingError = 'Aucune entreprise ne participe à cet événement';
       this.loadingMatching = false;
+      console.error('No event or companies');
       return;
     }
 
     const eventCompanyIds = this.event.companies.map((c: any) => c.id);
+    console.log('Event company IDs:', eventCompanyIds);
+    console.log('Current profile ID:', this.currentProfile.id);
     
     this.featuredEventMatchingService.matchWithEventCompanies(
       this.currentProfile.id,
       eventCompanyIds
     ).subscribe({
       next: (matches) => {
+        console.log('Matched companies received:', matches);
+        console.log('Number of matches:', matches.length);
         this.matchedCompanies = matches;
         
         // Également matcher avec les jobs
@@ -440,6 +449,7 @@ export class EventDetailComponent implements OnChanges, OnInit {
         
         this.loadingMatching = false;
         this.currentStep = 'results';
+        console.log('Current step set to results');
       },
       error: (error) => {
         console.error('Error loading matched companies:', error);
@@ -508,5 +518,34 @@ export class EventDetailComponent implements OnChanges, OnInit {
   closeCompanyMatches(): void {
     this.currentStep = 'auth';
     this.selectedCompanies = [];
+  }
+
+  isCompanySelectedForAppointment(match: any): boolean {
+    return this.selectedCompanies.some(c => c.id === match.company.id);
+  }
+
+  toggleCompanySelectionForAppointment(match: any): void {
+    const index = this.selectedCompanies.findIndex(c => c.id === match.company.id);
+    if (index > -1) {
+      this.selectedCompanies.splice(index, 1);
+    } else {
+      this.selectedCompanies.push(match.company);
+    }
+  }
+
+  getSelectedCompaniesCount(): number {
+    return this.selectedCompanies.length;
+  }
+
+  goToAppointments(): void {
+    if (this.selectedCompanies.length === 0) {
+      alert('Veuillez sélectionner au moins une entreprise');
+      return;
+    }
+    this.currentStep = 'appointments';
+  }
+
+  closeAppointments(): void {
+    this.currentStep = 'results';
   }
 }
