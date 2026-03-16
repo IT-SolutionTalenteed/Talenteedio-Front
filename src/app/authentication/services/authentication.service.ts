@@ -213,4 +213,15 @@ export class AuthenticationService implements AuthenticationServiceInterface {
     formData.append('0', file);
     return this.http.post(`${environment.apiBaseUrl}/media`, formData);
   }
+
+  // Méthode pour extraire les données d'un CV
+  extractCVData(formData: FormData): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/public/extract-cv-data`, formData).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error extracting CV data:', error);
+        // Retourner un observable vide plutôt que de faire échouer l'inscription
+        return throwError(error);
+      })
+    );
+  }
 }

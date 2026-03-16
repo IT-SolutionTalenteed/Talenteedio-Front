@@ -19,7 +19,14 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20Z" fill="currentColor"/>
             </svg>
-            <span>{{ event.date | date : "EEEE d MMMM yyyy" }}</span>
+            <span>
+              <ng-container *ngIf="!event.endDate || (event.date | date : 'yyyy-MM-dd') === (event.endDate | date : 'yyyy-MM-dd')">
+                {{ event.date | date : "EEEE d MMMM yyyy" }}
+              </ng-container>
+              <ng-container *ngIf="event.endDate && (event.date | date : 'yyyy-MM-dd') !== (event.endDate | date : 'yyyy-MM-dd')">
+                Du {{ event.date | date : "EEEE d MMMM yyyy" }} au {{ event.endDate | date : "EEEE d MMMM yyyy" }}
+              </ng-container>
+            </span>
           </div>
           
           <!-- Afficher l'organisateur : Talenteed si admin, sinon la company -->
@@ -104,7 +111,14 @@
               </div>
               <div class="info-content">
                 <div class="info-label">{{ 'eventDetail.infoLabels.eventDate' | translate }}</div>
-                <div class="info-value">{{ event.date | date : "EEEE d MMMM yyyy" }}</div>
+                <div class="info-value">
+                  <ng-container *ngIf="!event.endDate || (event.date | date : 'yyyy-MM-dd') === (event.endDate | date : 'yyyy-MM-dd')">
+                    {{ event.date | date : "EEEE d MMMM yyyy" }}
+                  </ng-container>
+                  <ng-container *ngIf="event.endDate && (event.date | date : 'yyyy-MM-dd') !== (event.endDate | date : 'yyyy-MM-dd')">
+                    Du {{ event.date | date : "EEEE d MMMM yyyy" }} au {{ event.endDate | date : "EEEE d MMMM yyyy" }}
+                  </ng-container>
+                </div>
               </div>
             </div>
 
@@ -284,7 +298,14 @@
                 </svg>
                 {{ 'eventDetail.infoLabels.date' | translate }}
               </div>
-              <div class="sidebar-info-value">{{ event.date | date : "d MMM yyyy" }}</div>
+              <div class="sidebar-info-value">
+                <ng-container *ngIf="!event.endDate || (event.date | date : 'yyyy-MM-dd') === (event.endDate | date : 'yyyy-MM-dd')">
+                  {{ event.date | date : "d MMM yyyy" }}
+                </ng-container>
+                <ng-container *ngIf="event.endDate && (event.date | date : 'yyyy-MM-dd') !== (event.endDate | date : 'yyyy-MM-dd')">
+                  {{ event.date | date : "d MMM" }} - {{ event.endDate | date : "d MMM yyyy" }}
+                </ng-container>
+              </div>
             </div>
             <div class="sidebar-info-item" *ngIf="event.category">
               <div class="sidebar-info-label">

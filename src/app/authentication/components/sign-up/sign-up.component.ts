@@ -130,7 +130,63 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
   onCvChange(event) {
     this.cv = event.target.files[0];
-    // this.form.patchValue({ cv: this.cv as File });
+    
+    // Auto-remplissage du formulaire à partir du CV
+    if (this.cv) {
+      this.extractDataFromCV(this.cv);
+    }
+  }
+
+  private extractDataFromCV(file: File): void {
+    // Créer un FormData pour envoyer le fichier au backend
+    const formData = new FormData();
+    formData.append('cv', file);
+
+    // Appeler le service d'extraction de données du CV
+    this.authenticationService.extractCVData(formData).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          const extractedData = response.data;
+          
+          // Auto-remplir les champs du formulaire
+          const updates: any = {};
+          
+          if (extractedData.skills && extractedData.skills.length > 0) {
+            updates.competences = extractedData.skills.join(', ');
+          }
+          
+          if (extractedData.languages && extractedData.languages.length > 0) {
+            updates.languages = extractedData.languages.join(', ');
+          }
+          
+          if (extractedData.interests && extractedData.interests.length > 0) {
+            updates.interests = extractedData.interests.join(', ');
+          }
+          
+          if (extractedData.education && extractedData.education.length > 0) {
+            updates.formations = extractedData.education.join(', ');
+          }
+          
+          if (extractedData.experience) {
+            updates.yearsOfExperience = extractedData.experience;
+          }
+          
+          if (extractedData.position) {
+            updates.desiredPosition = extractedData.position;
+          }
+
+          // Appliquer les mises à jour au formulaire
+          this.form.patchValue(updates);
+          
+          // Afficher un message de succès
+          console.log('CV data extracted and form auto-filled successfully');
+        }
+      },
+      error: (error) => {
+        console.error('Error extracting CV data:', error);
+        // Continuer même si l'extraction échoue
+      }
+    });
   }
 
   onProfilePictureChanged(pictureId: string) {
@@ -240,7 +296,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         desiredContractType: [null],
         desiredPosition: [null],
         desiredCompanyType: [null],
-        desiredSector: [null],
+        desiredSector: [[]],
       },
       {
         validator: this.confirmationPasswordValidator(

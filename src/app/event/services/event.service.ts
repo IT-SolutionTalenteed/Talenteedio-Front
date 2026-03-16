@@ -40,6 +40,7 @@ export class EventService {
                   createdAt
                   slug
                   date
+                  endDate
                   image
                   admin {
                     id
@@ -111,6 +112,7 @@ export class EventService {
                 content
                 createdAt
                 date
+                endDate
                 startTime
                 endTime
                 location

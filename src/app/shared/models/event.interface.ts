@@ -9,6 +9,7 @@ export interface Event {
   slug: string;
   content: string;
   date: Date;
+  endDate?: Date;
   metaDescription: string;
   status: Status;
   image?: string;
