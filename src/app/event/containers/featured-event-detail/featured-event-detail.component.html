@@ -48,7 +48,7 @@
   <!-- Auth Modal (Step 2) -->
   <div class="auth-step" *ngIf="currentStep === 'auth' && showAuthModal">
     <div class="auth-modal-wrapper">
-      <app-auth-modal-inline (authenticated)="onAuthenticated()"></app-auth-modal-inline>
+      <app-auth-modal-inline (authenticated)="onAuthenticated()" (closed)="closeAuthModal()"></app-auth-modal-inline>
     </div>
   </div>
 

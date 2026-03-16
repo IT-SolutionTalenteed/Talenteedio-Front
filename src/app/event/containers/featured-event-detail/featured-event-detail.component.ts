@@ -321,4 +321,9 @@ export class FeaturedEventDetailComponent implements OnInit {
   getTodayDate(): string {
     return new Date().toISOString().split('T')[0];
   }
+
+  closeAuthModal(): void {
+    this.showAuthModal = false;
+    this.currentStep = 'event';
+  }
 }
