@@ -252,7 +252,8 @@
       "noEvents": "Aucun événement à venir pour le moment. Revenez bientôt !",
       "maxParticipants": "Max",
       "participants": "participants",
-      "companiesLabel": "Entreprises participantes :"
+      "companiesLabel": "Entreprises participantes :",
+      "featuredEvent": "Événement mis en avant"
     },
     "companies": {
       "title": "La confiance des",

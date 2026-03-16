@@ -252,7 +252,8 @@
       "noEvents": "No upcoming events at the moment. Check back soon!",
       "maxParticipants": "Max",
       "participants": "participants",
-      "companiesLabel": "Participating companies:"
+      "companiesLabel": "Participating companies:",
+      "featuredEvent": "Featured Event"
     },
     "companies": {
       "title": "Trusted by",
