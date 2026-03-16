@@ -20,11 +20,12 @@
       <!-- Navigation Menu -->
       <nav class="main-navigation">
         <ul class="nav-list">
-          <li
-            *ngFor="let menu of navbarMenus"
-            class="nav-item"
-            [class.has-mega-menu]="menu.megaMenu"
-          >
+          <ng-container *ngFor="let menu of navbarMenus">
+            <li
+              *ngIf="!menu.hidden"
+              class="nav-item"
+              [class.has-mega-menu]="menu.megaMenu"
+            >
             <a
               [routerLink]="menu.megaMenu ? null : menu.routerLink"
               class="nav-link"
@@ -77,6 +78,7 @@
               </div>
             </div>
           </li>
+          </ng-container>
         </ul>
       </nav>
 
@@ -273,7 +275,8 @@
     <nav class="mobile-nav" [class.active]="isShowingMobileNav">
       <div class="mobile-nav-content">
         <ul class="mobile-nav-list">
-          <li *ngFor="let menu of navbarMenus" class="mobile-nav-item">
+          <ng-container *ngFor="let menu of navbarMenus">
+            <li *ngIf="!menu.hidden" class="mobile-nav-item">
             <!-- Menu without submenu -->
             <a
               *ngIf="!menu.megaMenu"
@@ -319,6 +322,7 @@
               </ul>
             </div>
           </li>
+          </ng-container>
         </ul>
 
         <!-- Mobile Auth Buttons -->
