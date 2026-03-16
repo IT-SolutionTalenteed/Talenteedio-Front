@@ -226,7 +226,7 @@ export class HomeService {
     const eventApiUrl = `${environment.apiBaseUrl}/event`;
     const props = {
       input: {
-        limit: 3,
+        limit: 10,
         page: 1,
       },
       filter: { status: 'public' },
@@ -252,9 +252,12 @@ export class HomeService {
                   location
                   maxParticipants
                   image
+                  featured
                   companies {
+                    id
                     company_name
                     logo {
+                      id
                       fileUrl
                     }
                   }
@@ -270,13 +273,47 @@ export class HomeService {
         })
         .pipe(
           map((response) => {
+            if (!response?.data?.getEvents?.rows) {
+              return [];
+            }
+            
             const events = response.data.getEvents.rows;
-            // Filter and sort to get upcoming events
+            
+            if (events.length === 0) {
+              return [];
+            }
+            
             const now = new Date();
-            return events
-              .filter((event: any) => new Date(event.date) >= now)
-              .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
-              .slice(0, 3);
+            
+            // Filtrer les événements à venir
+            const upcomingEvents = events.filter((event: any) => {
+              const eventDate = new Date(event.date);
+              return eventDate >= now;
+            });
+            
+            if (upcomingEvents.length === 0) {
+              return [];
+            }
+            
+            // Trier par date
+            upcomingEvents.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            
+            // Séparer l'événement mis en avant des autres
+            const featuredEvent = upcomingEvents.find((event: any) => event.featured === true);
+            const regularEvents = upcomingEvents.filter((event: any) => event.featured !== true);
+            
+            // Construire le tableau final
+            const result: any[] = [];
+            
+            if (featuredEvent) {
+              result.push({ ...featuredEvent, isFeatured: true });
+            }
+            
+            // Ajouter les événements réguliers pour compléter jusqu'à 3 événements
+            const remainingSlots = 3 - result.length;
+            result.push(...regularEvents.slice(0, remainingSlots).map(event => ({ ...event, isFeatured: false })));
+            
+            return result;
           })
         )
     );
