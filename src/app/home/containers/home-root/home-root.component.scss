@@ -1210,6 +1210,72 @@ $border-color: #E8EAED;
       }
     }
 
+    // Styles pour l'événement mis en avant
+    &.featured-event {
+      border: 3px solid #f49f0a;
+      box-shadow: 0 8px 32px rgba(244, 159, 10, 0.3);
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(244, 159, 10, 0.05) 0%, rgba(255, 181, 46, 0.02) 100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      &:hover {
+        border-color: #ffb52e;
+        box-shadow: 0 12px 48px rgba(244, 159, 10, 0.4);
+        transform: translateY(-12px);
+      }
+
+      .event-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .event-image {
+        position: relative;
+        z-index: 2;
+      }
+
+      .event-arrow {
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(135deg, #f49f0a 0%, #ffb52e 100%);
+      color: #0a1128;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(244, 159, 10, 0.4);
+      z-index: 3;
+      animation: pulse-featured 2s ease-in-out infinite;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+    }
+
     .event-image {
       position: relative;
       width: 100%;
@@ -1480,3 +1546,12 @@ $border-color: #E8EAED;
   }
 }
 
+
+@keyframes pulse-featured {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(244, 159, 10, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(244, 159, 10, 0.6);
+  }
+}
