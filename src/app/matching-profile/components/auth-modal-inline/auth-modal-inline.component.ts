@@ -119,6 +119,19 @@ export class AuthModalInlineComponent implements OnInit, OnDestroy {
       recaptcha: [undefined, Validators.required]
     });
 
+    // Effacer les erreurs lors de la saisie dans les champs de connexion
+    this.loginForm.get('email')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.store.dispatch(clearError());
+    });
+
+    this.loginForm.get('password')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.store.dispatch(clearError());
+    });
+
     this.registerForm = this.fb.group({
       // Champs de base
       firstname: ['', [Validators.required]],
