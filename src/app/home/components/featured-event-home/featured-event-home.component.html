@@ -1,0 +1,151 @@
+<section class="featured-event-section" *ngIf="!loading && featuredEvent">
+  <div class="featured-event-container">
+    <!-- Header Section -->
+    <div class="section-header">
+      <div class="header-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+        </svg>
+        <span>{{ 'home.featuredEvent.badge' | translate }}</span>
+      </div>
+      <h2 class="section-title">
+        {{ 'home.featuredEvent.title' | translate }}
+      </h2>
+      <p class="section-description">
+        {{ 'home.featuredEvent.description' | translate }}
+      </p>
+    </div>
+
+    <!-- Event Card -->
+    <div class="featured-event-card">
+      <!-- Event Image -->
+      <div class="event-image-section" *ngIf="featuredEvent.image">
+        <div class="event-image">
+          <img [src]="featuredEvent.image" [alt]="featuredEvent.title" />
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+
+      <!-- Event Content -->
+      <div class="event-content">
+        <!-- Event Info -->
+        <div class="event-info">
+          <div class="event-category" *ngIf="featuredEvent.category">
+            <span class="category-badge">{{ featuredEvent.category.name }}</span>
+          </div>
+          
+          <h3 class="event-title">{{ featuredEvent.title }}</h3>
+          
+          <div class="event-details">
+            <div class="detail-item" *ngIf="featuredEvent.date">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z" fill="currentColor"/>
+              </svg>
+              <span>{{ featuredEvent.date | date: 'fullDate' }}</span>
+            </div>
+            
+            <div class="detail-item" *ngIf="featuredEvent.startTime">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+              </svg>
+              <span>{{ featuredEvent.startTime }}</span>
+              <span *ngIf="featuredEvent.endTime"> - {{ featuredEvent.endTime }}</span>
+            </div>
+            
+            <div class="detail-item" *ngIf="featuredEvent.location">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+              </svg>
+              <span>{{ featuredEvent.location }}</span>
+            </div>
+          </div>
+
+          <!-- Event Description -->
+          <p class="event-description" *ngIf="featuredEvent.description">
+            {{ featuredEvent.description }}
+          </p>
+
+          <!-- Participating Companies -->
+          <div class="event-companies" *ngIf="featuredEvent.companies && featuredEvent.companies.length > 0">
+            <div class="companies-header">
+              <h4 class="companies-title">{{ 'home.featuredEvent.companiesTitle' | translate }}</h4>
+              <span class="companies-count">{{ featuredEvent.companies.length }} {{ 'home.featuredEvent.companies' | translate }}</span>
+            </div>
+            <div class="companies-grid">
+              <div class="company-item" *ngFor="let company of featuredEvent.companies.slice(0, 6)" [title]="company.company_name">
+                <div class="company-logo">
+                  <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name" />
+                  <div *ngIf="!company.logo?.fileUrl" class="company-logo-placeholder">
+                    {{ company.company_name.charAt(0).toUpperCase() }}
+                  </div>
+                </div>
+                <span class="company-name">{{ company.company_name }}</span>
+              </div>
+              <div class="more-companies" *ngIf="featuredEvent.companies.length > 6">
+                <div class="more-count">
+                  <span>+{{ featuredEvent.companies.length - 6 }}</span>
+                </div>
+                <span class="more-text">{{ 'home.featuredEvent.moreCompanies' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Countdown Section -->
+        <div class="countdown-section">
+          <div class="countdown-header">
+            <h4 class="countdown-title">{{ 'home.featuredEvent.countdownTitle' | translate }}</h4>
+          </div>
+          
+          <div class="countdown-timer">
+            <div class="time-unit" *ngIf="countdown.years > 0">
+              <span class="time-value">{{ countdown.years }}</span>
+              <span class="time-label">{{ countdown.years === 1 ? ('countdown.year' | translate) : ('countdown.years' | translate) }}</span>
+            </div>
+            
+            <div class="time-unit" *ngIf="countdown.years > 0 || countdown.months > 0">
+              <span class="time-value">{{ countdown.months }}</span>
+              <span class="time-label">{{ countdown.months === 1 ? ('countdown.month' | translate) : ('countdown.months' | translate) }}</span>
+            </div>
+            
+            <div class="time-unit">
+              <span class="time-value">{{ countdown.days }}</span>
+              <span class="time-label">{{ countdown.days === 1 ? ('countdown.day' | translate) : ('countdown.days' | translate) }}</span>
+            </div>
+            
+            <div class="time-separator">:</div>
+            
+            <div class="time-unit">
+              <span class="time-value">{{ countdown.hours.toString().padStart(2, '0') }}</span>
+              <span class="time-label">{{ 'countdown.hours' | translate }}</span>
+            </div>
+            
+            <div class="time-separator">:</div>
+            
+            <div class="time-unit">
+              <span class="time-value">{{ countdown.minutes.toString().padStart(2, '0') }}</span>
+              <span class="time-label">{{ 'countdown.minutes' | translate }}</span>
+            </div>
+            
+            <div class="time-separator">:</div>
+            
+            <div class="time-unit">
+              <span class="time-value">{{ countdown.seconds.toString().padStart(2, '0') }}</span>
+              <span class="time-label">{{ 'countdown.seconds' | translate }}</span>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="event-cta">
+            <a [routerLink]="['/event/detail', featuredEvent.slug]" class="cta-button">
+              <span class="cta-text">{{ 'home.featuredEvent.learnMore' | translate }}</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

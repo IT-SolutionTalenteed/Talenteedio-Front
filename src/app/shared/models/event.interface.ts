@@ -10,6 +10,10 @@ export interface Event {
   content: string;
   date: Date;
   endDate?: Date;
+  startTime?: string;
+  endTime?: string;
+  location?: string;
+  maxParticipants?: number;
   metaDescription: string;
   status: Status;
   image?: string;

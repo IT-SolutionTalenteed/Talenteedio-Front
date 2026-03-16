@@ -66,6 +66,8 @@
             *ngIf="blockedDatesLoaded"
             [selectedDate]="selectedDate"
             [blockedDates]="blockedDates"
+            [eventStartDate]="eventStartDate"
+            [eventEndDate]="eventEndDate"
             (dateSelected)="onDateSelected($event)"
           ></app-calendar>
           

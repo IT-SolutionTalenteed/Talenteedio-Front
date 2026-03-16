@@ -259,25 +259,27 @@ export class EventDetailComponent implements OnChanges, OnInit {
       return;
     }
 
-    this.isLoading = true;
-    const companyStandIds = this.selectedCompanyStands.map(c => c.id);
+    // Stocker les données d'événement pour le booking
+    const eventBookingData = {
+      eventId: this.event.id,
+      eventTitle: this.event.title,
+      startDate: this.event.date,
+      endDate: this.event.endDate,
+      startTime: this.event.startTime,
+      endTime: this.event.endTime,
+      selectedCompanies: this.selectedCompanyStands
+    };
     
-    this.eventService.createMultipleEventReservations(
-      this.event.id,
-      companyStandIds,
-      this.reservationNotes
-    ).subscribe({
-      next: (reservations) => {
-        const count = reservations.length;
-        alert(`${count} réservation${count > 1 ? 's' : ''} confirmée${count > 1 ? 's' : ''} avec succès!`);
-        this.closeReservationModal();
-        this.loadParticipationStatus();
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error creating reservations:', error);
-        alert(error.message || 'Une erreur est survenue lors de la réservation.');
-        this.isLoading = false;
+    sessionStorage.setItem('eventBookingData', JSON.stringify(eventBookingData));
+    
+    // Rediriger vers la page de booking avec les paramètres d'événement
+    this.router.navigate(['/coaching-emploi/booking/event'], {
+      queryParams: {
+        eventId: this.event.id,
+        eventStartDate: this.event.date,
+        eventEndDate: this.event.endDate,
+        eventStartTime: this.event.startTime,
+        eventEndTime: this.event.endTime
       }
     });
   }
