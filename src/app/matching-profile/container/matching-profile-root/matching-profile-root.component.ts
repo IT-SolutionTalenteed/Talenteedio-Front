@@ -125,4 +125,8 @@ export class MatchingProfileRootComponent implements OnInit {
   switchAuthView(view: 'login' | 'register'): void {
     this.authModalView = view;
   }
+
+  closeAuthModal(): void {
+    this.showAuthModal = false;
+  }
 }

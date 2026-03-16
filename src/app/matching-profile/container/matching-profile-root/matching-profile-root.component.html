@@ -1,6 +1,6 @@
 <div class="matching-profile-wrapper">
   <!-- Auth Modal Overlay -->
-  <app-auth-modal-inline *ngIf="showAuthModal"></app-auth-modal-inline>
+  <app-auth-modal-inline *ngIf="showAuthModal" (closed)="closeAuthModal()"></app-auth-modal-inline>
 
   <!-- Main Content (blurred when modal is shown) -->
   <div class="matching-profile-content" [class.blurred]="showAuthModal">
