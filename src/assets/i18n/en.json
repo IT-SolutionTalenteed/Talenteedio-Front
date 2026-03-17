@@ -245,6 +245,7 @@
       "viewAll": "View all jobs"
     },
     "upcomingEvents": {
+      "badge": "Upcoming Events",
       "title": "Featured",
       "titleAccent": "Event",
       "description": "Don't miss our flagship event and its networking opportunities",
@@ -256,7 +257,11 @@
       "maxParticipants": "Max",
       "participants": "participants",
       "companiesLabel": "Participating companies:",
-      "featuredEvent": "Featured Event"
+      "featuredEvent": "Featured Event",
+      "featured": "Featured",
+      "otherEvents": "Other upcoming events",
+      "otherEventsDescription": "Discover other networking and professional development opportunities",
+      "companies": "companies"
     },
     "featuredEvent": {
       "badge": "Featured Event",
