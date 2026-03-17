@@ -65,5 +65,6 @@ export const NAVAR_MENUS: Menu[] = [
     accessRight: [RoleName.TALENT],
     color: '#696969',
     colorActive: '#6bbee3',
+    hidden: true,
   },
 ];

@@ -255,7 +255,8 @@
       "notifyMe": "Me notifier",
       "maxParticipants": "Max",
       "participants": "participants",
-      "companiesLabel": "Entreprises participantes :"
+      "companiesLabel": "Entreprises participantes :",
+      "featuredEvent": "Événement mis en avant"
     },
     "featuredEvent": {
       "badge": "Événement mis en avant",
@@ -829,11 +830,21 @@
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe",
       "emailLabel": "Email",
       "emailPlaceholder": "Entrez votre adresse email",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
       "submitButton": "Réinitialiser le mot de passe",
+      "submit": "Confirmer",
+      "processing": "Traitement en cours...",
       "alreadyAccount": "Vous avez déjà un compte ?",
-      "signInLink": "Se connecter"
+      "signInLink": "Se connecter",
+      "backToLogin": "Retour à la connexion",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordMinLength": "Le mot de passe doit contenir au moins 6 caractères",
+      "confirmPasswordRequired": "La confirmation du mot de passe est requise",
+      "passwordMismatch": "Les mots de passe ne correspondent pas"
     }
   },
   "company": {

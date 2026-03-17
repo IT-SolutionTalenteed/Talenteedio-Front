@@ -20,4 +20,5 @@ export interface Menu {
   colorActive: string;
   megaMenu?: boolean;
   subMenus?: SubMenu[];
+  hidden?: boolean;
 }

@@ -201,7 +201,17 @@
     </div>
     <app-loader [isLoading]="upcomingEventsLoading$ | async">
       <div class="events-grid" *ngIf="upcomingEvents$ | async as events">
-        <div class="event-card" *ngFor="let event of events" [routerLink]="['/event/detail', event.slug]">
+        <div class="event-card" 
+             *ngFor="let event of events" 
+             [routerLink]="['/event/detail', event.slug]"
+             [class.featured-event]="event.isFeatured">
+          <!-- Badge pour événement mis en avant -->
+          <div class="featured-badge" *ngIf="event.isFeatured">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+            {{ 'home.upcomingEvents.featuredEvent' | translate }}
+          </div>
           <div class="event-image" *ngIf="event.image">
             <img [src]="event.image" [alt]="event.title" />
             <div class="event-date-badge">
