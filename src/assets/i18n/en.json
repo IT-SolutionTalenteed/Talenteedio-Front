@@ -817,11 +817,21 @@
     },
     "resetPassword": {
       "title": "Reset password",
+      "subtitle": "Enter your new password",
       "emailLabel": "Email",
       "emailPlaceholder": "Enter your email address",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
       "submitButton": "Reset password",
+      "submit": "Confirm",
+      "processing": "Processing...",
       "alreadyAccount": "Already have an account ?",
-      "signInLink": "Sign in"
+      "signInLink": "Sign in",
+      "backToLogin": "Back to login",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "confirmPasswordRequired": "Password confirmation is required",
+      "passwordMismatch": "Passwords do not match"
     }
   },
   "company": {
