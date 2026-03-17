@@ -110,12 +110,25 @@ export class BookingComponent implements OnInit {
         },
         // Nouvelles méthodes pour les contraintes d'événement
         setEventConstraints: (startDate: string, endDate: string, startTime?: string, endTime?: string) => {
-          this.eventStartDate = new Date(startDate);
-          this.eventEndDate = new Date(endDate);
+          // Créer les dates en utilisant les composants pour éviter les problèmes de timezone
+          const startDateParts = startDate.split('-');
+          const endDateParts = endDate.split('-');
+          
+          this.eventStartDate = new Date(
+            parseInt(startDateParts[0]), 
+            parseInt(startDateParts[1]) - 1, 
+            parseInt(startDateParts[2])
+          );
+          this.eventEndDate = new Date(
+            parseInt(endDateParts[0]), 
+            parseInt(endDateParts[1]) - 1, 
+            parseInt(endDateParts[2])
+          );
+          
           if (startTime) this.eventStartTime = startTime;
           if (endTime) this.eventEndTime = endTime;
           
-          console.log('📅 Contraintes d\'événement définies:', {
+          console.log('� Contraintes d\'événement définies:', {
             startDate: this.eventStartDate,
             endDate: this.eventEndDate,
             startTime: this.eventStartTime,
@@ -379,11 +392,23 @@ export class BookingComponent implements OnInit {
       console.log('📅 Query params reçus:', params);
       
       if (params['eventStartDate']) {
-        this.eventStartDate = new Date(params['eventStartDate']);
+        // Créer la date en utilisant les composants pour éviter les problèmes de timezone
+        const startDateParts = params['eventStartDate'].split('-');
+        this.eventStartDate = new Date(
+          parseInt(startDateParts[0]), 
+          parseInt(startDateParts[1]) - 1, 
+          parseInt(startDateParts[2])
+        );
         console.log('📅 Event start date:', this.eventStartDate);
       }
       if (params['eventEndDate']) {
-        this.eventEndDate = new Date(params['eventEndDate']);
+        // Créer la date en utilisant les composants pour éviter les problèmes de timezone
+        const endDateParts = params['eventEndDate'].split('-');
+        this.eventEndDate = new Date(
+          parseInt(endDateParts[0]), 
+          parseInt(endDateParts[1]) - 1, 
+          parseInt(endDateParts[2])
+        );
         console.log('📅 Event end date:', this.eventEndDate);
       }
       if (params['eventStartTime']) {
@@ -407,11 +432,23 @@ export class BookingComponent implements OnInit {
         console.log('📅 Event data from sessionStorage:', data);
         
         if (data.startDate) {
-          this.eventStartDate = new Date(data.startDate);
+          // Créer la date en utilisant les composants pour éviter les problèmes de timezone
+          const startDateParts = data.startDate.split('-');
+          this.eventStartDate = new Date(
+            parseInt(startDateParts[0]), 
+            parseInt(startDateParts[1]) - 1, 
+            parseInt(startDateParts[2])
+          );
           console.log('📅 Event start date from storage:', this.eventStartDate);
         }
         if (data.endDate) {
-          this.eventEndDate = new Date(data.endDate);
+          // Créer la date en utilisant les composants pour éviter les problèmes de timezone
+          const endDateParts = data.endDate.split('-');
+          this.eventEndDate = new Date(
+            parseInt(endDateParts[0]), 
+            parseInt(endDateParts[1]) - 1, 
+            parseInt(endDateParts[2])
+          );
           console.log('📅 Event end date from storage:', this.eventEndDate);
         }
         if (data.startTime) {

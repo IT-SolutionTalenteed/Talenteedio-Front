@@ -434,8 +434,13 @@ export class AppointmentSchedulerComponent implements OnInit {
       const today = new Date().toISOString().split('T')[0];
       this.minDate = this.eventStartDate > today ? this.eventStartDate : today;
       
-      // Naviguer vers le mois de l'événement
-      const eventDate = new Date(this.eventStartDate);
+      // Naviguer vers le mois de l'événement en utilisant les composants de date
+      const eventDateParts = this.eventStartDate.split('-');
+      const eventDate = new Date(
+        parseInt(eventDateParts[0]), 
+        parseInt(eventDateParts[1]) - 1, 
+        parseInt(eventDateParts[2])
+      );
       this.currentDate = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
     }
     
@@ -448,9 +453,30 @@ export class AppointmentSchedulerComponent implements OnInit {
       return true; // Pas de contrainte si ce n'est pas un événement featured
     }
     
-    const checkDate = new Date(date);
-    const startDate = new Date(this.eventStartDate);
-    const endDate = this.eventEndDate ? new Date(this.eventEndDate) : startDate;
+    // Créer les dates en utilisant les composants pour éviter les problèmes de timezone
+    const dateParts = date.split('-');
+    const checkDate = new Date(
+      parseInt(dateParts[0]), 
+      parseInt(dateParts[1]) - 1, 
+      parseInt(dateParts[2])
+    );
+    
+    const startDateParts = this.eventStartDate.split('-');
+    const startDate = new Date(
+      parseInt(startDateParts[0]), 
+      parseInt(startDateParts[1]) - 1, 
+      parseInt(startDateParts[2])
+    );
+    
+    const endDate = this.eventEndDate ? (() => {
+      const endDateParts = this.eventEndDate.split('-');
+      return new Date(
+        parseInt(endDateParts[0]), 
+        parseInt(endDateParts[1]) - 1, 
+        parseInt(endDateParts[2])
+      );
+    })() : startDate;
+    
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     

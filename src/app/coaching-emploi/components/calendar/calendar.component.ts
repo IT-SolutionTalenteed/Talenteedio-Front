@@ -109,10 +109,19 @@ export class CalendarComponent implements OnInit, OnChanges {
         const eventStart = this.eventStartDate ? new Date(this.eventStartDate) : null;
         const eventEnd = this.eventEndDate ? new Date(this.eventEndDate) : null;
         
+        // Créer des dates locales pour éviter les problèmes de timezone
         if (eventStart) {
+          const startYear = eventStart.getFullYear();
+          const startMonth = eventStart.getMonth();
+          const startDay = eventStart.getDate();
+          eventStart.setFullYear(startYear, startMonth, startDay);
           eventStart.setHours(0, 0, 0, 0);
         }
         if (eventEnd) {
+          const endYear = eventEnd.getFullYear();
+          const endMonth = eventEnd.getMonth();
+          const endDay = eventEnd.getDate();
+          eventEnd.setFullYear(endYear, endMonth, endDay);
           eventEnd.setHours(23, 59, 59, 999);
         }
         
