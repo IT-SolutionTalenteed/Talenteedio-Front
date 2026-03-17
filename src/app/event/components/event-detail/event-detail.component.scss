@@ -523,6 +523,7 @@ $max-width: 1200px;
 
     @media screen and (max-width: 968px) {
       grid-template-columns: 1fr;
+      gap: 32px;
     }
   }
 }
@@ -1550,7 +1551,16 @@ $max-width: 1200px;
 // Sidebar
 .event-sidebar {
   @media screen and (max-width: 968px) {
-    display: none;
+    display: block;
+    margin-top: 0;
+    order: 1;
+  }
+}
+
+// Event Details Column
+.event-details-column {
+  @media screen and (max-width: 968px) {
+    order: 2;
   }
 }
 
@@ -1562,11 +1572,21 @@ $max-width: 1200px;
   padding: 32px;
   margin-bottom: 24px;
 
+  @media screen and (max-width: 768px) {
+    padding: 24px 20px;
+    margin-bottom: 20px;
+  }
+
   .sidebar-title {
     font-size: 18px;
     font-weight: 700;
     color: $black;
     margin: 0 0 20px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+      margin: 0 0 16px;
+    }
   }
 }
 
