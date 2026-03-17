@@ -1,0 +1,383 @@
+<div class="featured-event-container">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loadingEvent">
+    <div class="loading-spinner"></div>
+    <p>Chargement de l'événement...</p>
+  </div>
+
+  <!-- No Featured Event -->
+  <div class="no-event-container" *ngIf="!loadingEvent && !featuredEvent">
+    <div class="no-event-content">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+      </svg>
+      <h2>Aucun événement mis en avant</h2>
+      <p>Il n'y a pas d'événement mis en avant pour le moment.</p>
+      <a routerLink="/event/list" class="btn-primary">Voir tous les événements</a>
+    </div>
+  </div>
+
+  <!-- Event Display (Step 1) -->
+  <div class="event-display" *ngIf="!loadingEvent && featuredEvent && currentStep === 'event'">
+    <!-- Reuse the event-detail component design -->
+    <app-event-detail [event]="featuredEvent"></app-event-detail>
+    
+    <!-- Custom CTA for Featured Event -->
+    <div class="featured-cta-section">
+      <div class="featured-cta-card">
+        <div class="cta-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 class="cta-title">Événement Exclusif</h3>
+        <p class="cta-text">
+          Participez à cet événement et découvrez les entreprises qui correspondent à votre profil.
+          Notre système de matching intelligent vous mettra en relation avec les meilleures opportunités.
+        </p>
+        <button class="cta-button" (click)="handleCTAClick()">
+          {{ ctaButtonText }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Step 2) -->
+  <div class="auth-step" *ngIf="currentStep === 'auth' && showAuthModal">
+    <div class="auth-modal-wrapper">
+      <app-auth-modal-inline (authenticated)="onAuthenticated()" (closed)="closeAuthModal()"></app-auth-modal-inline>
+    </div>
+  </div>
+
+  <!-- Profile Form (Step 3) -->
+  <div class="profile-step" *ngIf="currentStep === 'profile'">
+    <div class="step-header">
+      <button class="back-button" (click)="backToEvent()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Retour à l'événement
+      </button>
+      <h2 class="step-title">Créez votre profil de matching</h2>
+      <p class="step-description">
+        Complétez votre profil pour que nous puissions vous matcher avec les entreprises participantes à l'événement.
+      </p>
+    </div>
+    
+    <app-profile-form 
+      [profile]="currentProfile"
+      (save)="handleSaveProfile($event)">
+    </app-profile-form>
+  </div>
+
+  <!-- Matching Progress (Step 4) -->
+  <div class="matching-step" *ngIf="currentStep === 'matching'">
+    <div class="matching-progress">
+      <div class="progress-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="spinning">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <h2>Analyse de votre profil en cours...</h2>
+      <p>Nous recherchons les entreprises qui correspondent le mieux à votre profil parmi les participants à l'événement.</p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matched Companies (Step 5) -->
+  <div class="companies-step" *ngIf="currentStep === 'companies'">
+    <div class="step-header">
+      <button class="back-button" (click)="backToEvent()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Retour à l'événement
+      </button>
+      <h2 class="step-title">Entreprises correspondantes</h2>
+      <p class="step-description">
+        Nous avons trouvé {{ matchedCompanies.length }} entreprise(s) qui correspondent à votre profil parmi les participants à l'événement.
+        Sélectionnez celles qui vous intéressent pour prendre rendez-vous.
+      </p>
+    </div>
+
+    <div class="matched-companies-grid" *ngIf="matchedCompanies.length > 0">
+      <div class="company-match-card" *ngFor="let match of matchedCompanies" 
+           [class.selected]="isCompanySelected(match)"
+           (click)="handleCompanySelection(match)">
+        <div class="company-match-header">
+          <div class="company-logo">
+            <img *ngIf="match.company.logo?.fileUrl" [src]="match.company.logo.fileUrl" [alt]="match.company.company_name">
+            <div *ngIf="!match.company.logo?.fileUrl" class="company-logo-placeholder">
+              {{ match.company.company_name.charAt(0).toUpperCase() }}
+            </div>
+          </div>
+          <div class="match-score">
+            <div class="score-circle" [style.background]="'conic-gradient(#6366f1 ' + (match.matchDetails?.overall_match_percentage || 0) + '%, #e2e8f0 0%)'">
+              <span>{{ match.matchDetails?.overall_match_percentage || 0 }}%</span>
+            </div>
+          </div>
+        </div>
+        <div class="company-match-body">
+          <h3 class="company-name">{{ match.company.company_name }}</h3>
+          <p class="company-category" *ngIf="match.company.category">{{ match.company.category.name }}</p>
+          <p class="company-location" *ngIf="match.company.contact?.address">
+            {{ match.company.contact.address.city }}, {{ match.company.contact.address.country }}
+          </p>
+          <div class="match-strengths" *ngIf="match.matchDetails?.strengths && match.matchDetails.strengths.length > 0">
+            <span class="strength-tag" *ngFor="let strength of match.matchDetails.strengths.slice(0, 3)">
+              {{ strength }}
+            </span>
+          </div>
+        </div>
+        <div class="company-match-footer">
+          <div class="selection-indicator" *ngIf="isCompanySelected(match)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Sélectionnée
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-matches" *ngIf="matchedCompanies.length === 0">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+      </svg>
+      <h3>Aucune correspondance trouvée</h3>
+      <p>Malheureusement, aucune entreprise participante ne correspond à votre profil pour le moment.</p>
+      <button class="btn-secondary" (click)="backToEvent()">Retour à l'événement</button>
+    </div>
+
+    <div class="companies-actions" *ngIf="matchedCompanies.length > 0">
+      <p class="selection-count">
+        {{ selectedCompanies.length }} entreprise(s) sélectionnée(s)
+      </p>
+      <div class="action-buttons">
+        <button 
+          class="btn-secondary" 
+          (click)="showJobsSection = !showJobsSection"
+          *ngIf="matchedJobs.length > 0">
+          {{ showJobsSection ? 'Masquer' : 'Voir' }} les jobs ({{ matchedJobs.length }})
+        </button>
+        <button 
+          class="btn-primary" 
+          (click)="proceedToAppointments()"
+          [disabled]="selectedCompanies.length === 0">
+          Prendre rendez-vous
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Matched Jobs Section -->
+    <div class="matched-jobs-section" *ngIf="showJobsSection && matchedJobs.length > 0">
+      <div class="section-header">
+        <h3>Jobs correspondants</h3>
+        <p>{{ matchedJobs.length }} offre(s) d'emploi publiée(s) par les entreprises participantes</p>
+      </div>
+      
+      <div class="jobs-grid">
+        <div class="job-card" *ngFor="let job of matchedJobs">
+          <div class="job-header">
+            <div class="company-logo-small">
+              <img *ngIf="job.company?.logo?.fileUrl" [src]="job.company.logo.fileUrl" [alt]="job.company.company_name">
+              <div *ngIf="!job.company?.logo?.fileUrl" class="logo-placeholder-small">
+                {{ job.company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="job-match-badge">
+              {{ job.matchPercentage }}% match
+            </div>
+          </div>
+          
+          <div class="job-body">
+            <h4 class="job-title">{{ job.title }}</h4>
+            <p class="job-company">{{ job.company.company_name }}</p>
+            <p class="job-location" *ngIf="job.location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+              </svg>
+              {{ job.location }}
+            </p>
+            <div class="job-tags">
+              <span class="job-tag" *ngIf="job.jobType">{{ job.jobType.name }}</span>
+              <span class="job-tag" *ngIf="job.category">{{ job.category.name }}</span>
+              <span class="job-tag urgent" *ngIf="job.isUrgent">Urgent</span>
+              <span class="job-tag featured" *ngIf="job.isFeatured">Featured</span>
+            </div>
+          </div>
+          
+          <div class="job-footer">
+            <a [routerLink]="['/job', job.id]" class="btn-view-job">
+              Voir l'offre
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointments (Step 6) -->
+  <div class="appointments-step" *ngIf="currentStep === 'appointments'">
+    <div class="step-header">
+      <button class="back-button" (click)="currentStep = 'companies'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Retour aux entreprises
+      </button>
+      <h2 class="step-title">Planifier vos rendez-vous</h2>
+      <p class="step-description">
+        Choisissez les créneaux qui vous conviennent pour rencontrer les entreprises sélectionnées.
+      </p>
+    </div>
+
+    <div class="appointments-scheduler-section">
+      <div class="selected-companies-list">
+        <h4>Entreprises sélectionnées</h4>
+        <div class="company-appointment-card" *ngFor="let company of selectedCompanies">
+          <div class="company-info">
+            <div class="company-logo-small">
+              <img *ngIf="company.company?.logo?.fileUrl" [src]="company.company.logo.fileUrl" [alt]="company.company.company_name">
+              <div *ngIf="!company.company?.logo?.fileUrl" class="logo-placeholder-small">
+                {{ company.company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="company-details">
+              <h5>{{ company.company.company_name }}</h5>
+              <p *ngIf="company.company.category">{{ company.company.category.name }}</p>
+            </div>
+          </div>
+          <button class="btn-schedule" (click)="openAppointmentForm(company)">
+            Planifier un rendez-vous
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment Form Modal -->
+    <div class="modal-overlay" *ngIf="showAppointmentForm" (click)="closeAppointmentForm()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Planifier un rendez-vous</h2>
+          <button class="modal-close" (click)="closeAppointmentForm()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="modal-body" *ngIf="selectedCompanyForAppointment">
+          <div class="company-info-modal">
+            <div class="company-logo-small">
+              <img *ngIf="selectedCompanyForAppointment.company?.logo?.fileUrl" 
+                   [src]="selectedCompanyForAppointment.company.logo.fileUrl" 
+                   [alt]="selectedCompanyForAppointment.company.company_name">
+              <div *ngIf="!selectedCompanyForAppointment.company?.logo?.fileUrl" class="logo-placeholder-small">
+                {{ selectedCompanyForAppointment.company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <h3>{{ selectedCompanyForAppointment.company.company_name }}</h3>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Date *</label>
+            <input type="date" [(ngModel)]="appointmentForm.date" class="form-input" 
+                   [min]="getTodayDate()" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Heure *</label>
+            <input type="time" [(ngModel)]="appointmentForm.time" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message (optionnel)</label>
+            <textarea [(ngModel)]="appointmentForm.message" class="form-textarea" 
+                      placeholder="Ajoutez un message pour l'entreprise..." rows="4"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-secondary" (click)="closeAppointmentForm()">
+            Annuler
+          </button>
+          <button class="btn-primary" (click)="submitAppointment()">
+            Confirmer le rendez-vous
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display existing appointments -->
+    <div class="appointments-list-section">
+      <h3>Vos rendez-vous</h3>
+      <div class="appointments-grid" *ngIf="eventAppointments && eventAppointments.length > 0">
+        <div class="appointment-card" *ngFor="let appointment of eventAppointments">
+          <div class="appointment-header">
+            <div class="company-logo-small">
+              <img *ngIf="appointment.company?.logo?.fileUrl" [src]="appointment.company.logo.fileUrl" [alt]="appointment.company.company_name">
+              <div *ngIf="!appointment.company?.logo?.fileUrl" class="logo-placeholder-small">
+                {{ appointment.company.company_name.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="appointment-info">
+              <h4>{{ appointment.company.company_name }}</h4>
+              <p class="appointment-date">
+                {{ appointment.appointmentDate | date:'fullDate' }} à {{ appointment.appointmentTime }}
+              </p>
+              <span class="status-badge" [class]="'status-' + appointment.status.toLowerCase()">
+                {{ appointment.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="!eventAppointments || eventAppointments.length === 0">
+        Aucun rendez-vous planifié pour le moment.
+      </p>
+    </div>
+
+    <!-- Feedback Section -->
+    <div class="feedback-section">
+      <h3>Vos retours d'expérience</h3>
+      <p>Après vos rendez-vous, n'oubliez pas de partager votre feedback.</p>
+      <div class="feedback-list" *ngIf="eventAppointments && eventAppointments.length > 0">
+        <div class="feedback-card" *ngFor="let appointment of eventAppointments">
+          <div *ngIf="appointment.feedbackSubmitted" class="feedback-submitted">
+            <h4>{{ appointment.company.company_name }}</h4>
+            <p><strong>Décision:</strong> {{ appointment.candidateDecision }}</p>
+            <p><strong>Note:</strong> {{ appointment.candidateRating }}/5</p>
+            <p>{{ appointment.candidateFeedback }}</p>
+          </div>
+          <div *ngIf="!appointment.feedbackSubmitted && appointment.status === 'CONFIRMED'" class="feedback-pending">
+            <p>En attente de feedback pour {{ appointment.company.company_name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Display -->
+  <div class="error-container" *ngIf="matchingError">
+    <div class="error-content">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+      </svg>
+      <h3>Une erreur est survenue</h3>
+      <p>{{ matchingError }}</p>
+      <button class="btn-primary" (click)="backToEvent()">Retour à l'événement</button>
+    </div>
+  </div>
+</div>

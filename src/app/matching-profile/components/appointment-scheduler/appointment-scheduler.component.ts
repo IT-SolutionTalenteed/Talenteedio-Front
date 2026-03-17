@@ -18,6 +18,9 @@ interface CalendarDay {
 })
 export class AppointmentSchedulerComponent implements OnInit {
   @Input() profileId: string;
+  @Input() eventCompanyIds: string[] = []; // Pour filtrer par événement
+  @Input() eventDate: string | null = null; // Date de l'événement à utiliser par défaut
+  @Input() preSelectedMatches: any[] = []; // Matches déjà sélectionnés (pour les événements featured)
   @Output() back = new EventEmitter<void>();
 
   appointments: any[] = [];
@@ -183,11 +186,23 @@ export class AppointmentSchedulerComponent implements OnInit {
   }
 
   loadSelectedCompanies(): void {
+    // Si des matches sont déjà fournis (cas des événements featured), les utiliser directement
+    if (this.preSelectedMatches && this.preSelectedMatches.length > 0) {
+      this.selectedCompanies = this.preSelectedMatches;
+      return;
+    }
+
+    // Sinon, charger depuis le backend (comportement normal du matching profile)
     if (!this.profileId) return;
 
     this.matchingProfileService.getMatchedCompanies(this.profileId).subscribe({
       next: (matches) => {
-        this.selectedCompanies = matches.filter(m => m.isSelected);
+        // Filtrer par eventCompanyIds si fourni, puis par isSelected
+        let filteredMatches = matches;
+        if (this.eventCompanyIds && this.eventCompanyIds.length > 0) {
+          filteredMatches = matches.filter((m: any) => this.eventCompanyIds.includes(m.company.id));
+        }
+        this.selectedCompanies = filteredMatches.filter(m => m.isSelected);
       },
       error: (err) => {
         console.error('Error loading companies:', err);
@@ -208,8 +223,19 @@ export class AppointmentSchedulerComponent implements OnInit {
 
     this.selectedCompany = company;
     this.showForm = true;
-    this.selectedDate = null;
-    this.form.reset();
+    
+    // Si une date d'événement est fournie, l'utiliser par défaut
+    if (this.eventDate) {
+      this.selectedDate = this.eventDate;
+      this.form.patchValue({ appointmentDate: this.eventDate });
+      
+      // Naviguer vers le mois de l'événement
+      const eventDateObj = new Date(this.eventDate);
+      this.currentDate = new Date(eventDateObj.getFullYear(), eventDateObj.getMonth(), 1);
+    } else {
+      this.selectedDate = null;
+      this.form.reset();
+    }
     
     // Régénérer le calendrier pour s'assurer qu'il est à jour
     this.generateCalendar();

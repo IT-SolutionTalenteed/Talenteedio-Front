@@ -245,14 +245,27 @@
       "viewAll": "Voir tous les emplois"
     },
     "upcomingEvents": {
-      "title": "Événements",
-      "titleAccent": "à venir",
-      "description": "Ne manquez pas nos prochains événements passionnants et opportunités de réseautage",
+      "title": "Événement",
+      "titleAccent": "mis en avant",
+      "description": "Ne manquez pas notre événement phare et ses opportunités de réseautage",
       "viewAll": "Voir tous les événements",
-      "noEvents": "Aucun événement à venir pour le moment. Revenez bientôt !",
+      "noEvents": "Aucun événement mis en avant pour le moment. Revenez bientôt !",
+      "noEventsTitle": "Aucun événement à venir",
+      "exploreEvents": "Explorer les événements",
+      "notifyMe": "Me notifier",
       "maxParticipants": "Max",
       "participants": "participants",
       "companiesLabel": "Entreprises participantes :"
+    },
+    "featuredEvent": {
+      "badge": "Événement mis en avant",
+      "title": "Ne manquez pas notre événement phare et ses opportunités de réseautage",
+      "description": "Rejoignez-nous pour un événement exceptionnel qui transformera votre carrière",
+      "countdownTitle": "Temps restant avant l'événement",
+      "companiesTitle": "Entreprises participantes",
+      "companies": "entreprises",
+      "moreCompanies": "autres entreprises",
+      "learnMore": "En savoir plus"
     },
     "companies": {
       "title": "La confiance des",
@@ -400,6 +413,20 @@
       "cancelButton": "Annuler",
       "submitButton": "Envoyer la demande",
       "loading": "En cours..."
+    },
+    "featuredFlow": {
+      "profileForm": {
+        "title": "Créez votre profil de matching",
+        "subtitle": "Complétez votre profil pour matcher avec les entreprises de l'événement"
+      },
+      "matching": {
+        "title": "Analyse de votre profil en cours...",
+        "subtitle": "Nous recherchons les entreprises qui correspondent le mieux à votre profil parmi les participants à l'événement."
+      },
+      "appointments": {
+        "title": "Prendre rendez-vous",
+        "myAppointments": "Mes rendez-vous"
+      }
     }
   },
   "blog": {

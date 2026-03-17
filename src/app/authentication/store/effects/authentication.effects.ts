@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { of } from 'rxjs';
+import { of, timer } from 'rxjs';
 import {
   catchError,
   map,
@@ -12,6 +12,8 @@ import {
   tap,
   timeout,
   withLatestFrom,
+  filter,
+  delay,
 } from 'rxjs/operators';
 import {
   back,
@@ -30,6 +32,7 @@ import {
   accountActivationFail,
   accountActivationSuccess,
   activateAccount,
+  clearError,
   loadValues,
   loadValuesFail,
   loadValuesSuccess,
@@ -48,6 +51,7 @@ import {
   verifyFailed,
 } from '../actions/authentication.actions';
 import { logOutSuccess } from './../actions/authentication.actions';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable()
 export class AuthenticationEffects {
@@ -55,8 +59,16 @@ export class AuthenticationEffects {
     private action$: Actions,
     private authenticationService: AuthenticationService,
     private routerStore: Store<AppRouterState>,
-    private gaService: GoogleAnalyticsService
-  ) {}
+    private gaService: GoogleAnalyticsService,
+    private router: Router
+  ) {
+    // Effacer les erreurs lors de la navigation
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.routerStore.dispatch(clearError());
+    });
+  }
 
   logIn$ = createEffect(() =>
     this.action$.pipe(
@@ -71,11 +83,11 @@ export class AuthenticationEffects {
             console.log('Login error caught:', error);
             return of(logInFail(error));
           }),
-          // Timeout de sécurité pour éviter la boucle infinie
-          timeout(10000),
+          // Timeout réduit pour les erreurs d'authentification
+          timeout(3000),
           catchError((timeoutError) => {
             console.log('Login timeout or error:', timeoutError);
-            return of(logInFail(new Error('Timeout ou erreur de connexion')));
+            return of(logInFail(new Error('Email ou mot de passe incorrect')));
           })
         )
       )
@@ -130,8 +142,8 @@ export class AuthenticationEffects {
         const currentUrl = routerState.state.url;
         const redirect = routerState.state.queryParams['redirect'];
         
-        // Si on est sur la page matching-profile, ne pas rediriger
-        if (currentUrl && currentUrl.includes('/matching-profile')) {
+        // Si on est sur la page matching-profile ou event/detail, ne pas rediriger
+        if (currentUrl && (currentUrl.includes('/matching-profile') || currentUrl.includes('/event/detail'))) {
           return { type: 'NO_ACTION' }; // Action vide pour ne rien faire
         }
         
@@ -221,6 +233,18 @@ export class AuthenticationEffects {
             back(),
           ]),
           catchError((error) => of(reinitPasswordFail(error)))
+        )
+      )
+    )
+  );
+
+  // Effet pour effacer automatiquement les erreurs après 3 secondes
+  clearErrorAfterDelay$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(logInFail, signupUserFail, reinitPasswordFail),
+      switchMap(() =>
+        timer(3000).pipe(
+          map(() => clearError())
         )
       )
     )

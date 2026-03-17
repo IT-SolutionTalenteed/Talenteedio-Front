@@ -226,10 +226,10 @@ export class HomeService {
     const eventApiUrl = `${environment.apiBaseUrl}/event`;
     const props = {
       input: {
-        limit: 3,
+        limit: 1,
         page: 1,
       },
-      filter: { status: 'public' },
+      filter: { status: 'public', featured: true },
     };
 
     return (
@@ -252,6 +252,7 @@ export class HomeService {
                   location
                   maxParticipants
                   image
+                  featured
                   companies {
                     company_name
                     logo {
@@ -271,12 +272,9 @@ export class HomeService {
         .pipe(
           map((response) => {
             const events = response.data.getEvents.rows;
-            // Filter and sort to get upcoming events
+            // Return only featured events that are upcoming
             const now = new Date();
-            return events
-              .filter((event: any) => new Date(event.date) >= now)
-              .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
-              .slice(0, 3);
+            return events.filter((event: any) => new Date(event.date) >= now);
           })
         )
     );

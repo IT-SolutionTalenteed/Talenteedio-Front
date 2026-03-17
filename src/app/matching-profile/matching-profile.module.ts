@@ -39,5 +39,13 @@ import { AppointmentFeedbackPageComponent } from './containers/appointment-feedb
     SharedModule,
   ],
   providers: [MatchingProfileService],
+  exports: [
+    AuthModalInlineComponent,
+    ProfileFormComponent,
+    CompanyMatchesComponent,
+    AppointmentSchedulerComponent,
+    AppointmentsListComponent,
+    AppointmentFeedbackDisplayComponent,
+  ],
 })
 export class MatchingProfileModule {}

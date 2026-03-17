@@ -245,14 +245,27 @@
       "viewAll": "View all jobs"
     },
     "upcomingEvents": {
-      "title": "Upcoming",
-      "titleAccent": "Events",
-      "description": "Don't miss our upcoming exciting events and networking opportunities",
+      "title": "Featured",
+      "titleAccent": "Event",
+      "description": "Don't miss our flagship event and its networking opportunities",
       "viewAll": "View all events",
-      "noEvents": "No upcoming events at the moment. Check back soon!",
+      "noEvents": "No featured event at the moment. Check back soon!",
+      "noEventsTitle": "No upcoming events",
+      "exploreEvents": "Explore events",
+      "notifyMe": "Notify me",
       "maxParticipants": "Max",
       "participants": "participants",
       "companiesLabel": "Participating companies:"
+    },
+    "featuredEvent": {
+      "badge": "Featured Event",
+      "title": "Don't miss our flagship event and its networking opportunities",
+      "description": "Join us for an exceptional event that will transform your career",
+      "countdownTitle": "Time remaining until the event",
+      "companiesTitle": "Participating companies",
+      "companies": "companies",
+      "moreCompanies": "more companies",
+      "learnMore": "Learn more"
     },
     "companies": {
       "title": "Trusted by",
@@ -400,6 +413,20 @@
       "cancelButton": "Cancel",
       "submitButton": "Send request",
       "loading": "Processing..."
+    },
+    "featuredFlow": {
+      "profileForm": {
+        "title": "Create your matching profile",
+        "subtitle": "Complete your profile to match with event companies"
+      },
+      "matching": {
+        "title": "Analyzing your profile...",
+        "subtitle": "We are searching for companies that best match your profile among event participants."
+      },
+      "appointments": {
+        "title": "Book an appointment",
+        "myAppointments": "My appointments"
+      }
     }
   },
   "blog": {

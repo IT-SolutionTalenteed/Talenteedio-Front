@@ -384,13 +384,16 @@
 
               <div class="form-group">
                 <label for="desiredSector" class="form-label">Sector</label>
-                <input
-                  id="desiredSector"
+                <ng-select
                   formControlName="desiredSector"
-                  type="text"
-                  placeholder="Tech, FinTech..."
-                  class="form-input"
-                />
+                  [items]="categories$ | async"
+                  bindLabel="name"
+                  bindValue="name"
+                  placeholder="Select sectors"
+                  [multiple]="true"
+                  class="custom-select"
+                >
+                </ng-select>
               </div>
             </div>
 

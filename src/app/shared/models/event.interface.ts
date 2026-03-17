@@ -9,9 +9,15 @@ export interface Event {
   slug: string;
   content: string;
   date: Date;
+  endDate?: Date;
+  startTime?: string;
+  endTime?: string;
+  location?: string;
+  maxParticipants?: number;
   metaDescription: string;
   status: Status;
   image?: string;
+  featured?: boolean;
   admin?: { id: string; user: User };
   company?: Company;
   category: Category;

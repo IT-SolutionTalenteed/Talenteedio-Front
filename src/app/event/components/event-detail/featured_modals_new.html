@@ -1,0 +1,79 @@
+<!-- Featured Event Modals with Step System -->
+<div class="featured-auth-overlay" *ngIf="showAuthModal && event?.featured && currentStep === 'auth'">
+  <div class="featured-auth-container">
+    <button class="close-button" (click)="closeAuthModal()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <app-auth-modal-inline (authenticated)="onAuthenticated()" (closed)="closeAuthModal()"></app-auth-modal-inline>
+  </div>
+</div>
+
+<div class="featured-profile-overlay" *ngIf="event?.featured && currentStep === 'profile'">
+  <div class="featured-profile-container">
+    <button class="close-button" (click)="closeProfileForm()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="profile-form-wrapper">
+      <h2>Créez votre profil de matching</h2>
+      <p>Complétez votre profil pour trouver les entreprises qui correspondent à vos attentes</p>
+      <app-profile-form [profile]="currentProfile" (save)="handleProfileSaved($event)"></app-profile-form>
+    </div>
+  </div>
+</div>
+
+<div class="featured-matching-overlay" *ngIf="event?.featured && currentStep === 'matching'">
+  <div class="featured-matching-container">
+    <div class="matching-animation">
+      <div class="spinner-large"></div>
+      <h2>Analyse de votre profil en cours...</h2>
+      <p>Nous recherchons les entreprises qui correspondent le mieux à vos attentes</p>
+    </div>
+  </div>
+</div>
+
+<div class="featured-results-overlay" *ngIf="event?.featured && currentStep === 'results'">
+  <div class="featured-results-container">
+    <button class="close-button" (click)="closeCompanyMatches()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="results-header">
+      <h2>Entreprises correspondantes</h2>
+      <p>{{ matchedCompanies.length }} entreprise(s) correspondent à votre profil</p>
+    </div>
+    <div class="results-content" *ngIf="matchedCompanies.length > 0">
+      <div class="company-card" *ngFor="let match of matchedCompanies">
+        <div class="company-header">
+          <div class="company-logo">
+            <img *ngIf="match.company.logo?.fileUrl" [src]="match.company.logo.fileUrl" [alt]="match.company.company_name">
+            <div *ngIf="!match.company.logo?.fileUrl" class="company-initials">{{ match.company.company_name.charAt(0) }}</div>
+          </div>
+          <div class="company-info">
+            <h3>{{ match.company.company_name }}</h3>
+            <p *ngIf="match.company.category">{{ match.company.category.name }}</p>
+          </div>
+          <div class="match-score">
+            <div class="score-circle">
+              <span>{{ match.matchDetails?.overall_match_percentage || 0 }}%</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-select" (click)="goToStep('appointments')">Prendre rendez-vous</button>
+      </div>
+    </div>
+    <div class="no-results" *ngIf="matchedCompanies.length === 0 && !matchingError">
+      <h3>Aucune correspondance trouvée</h3>
+      <button class="btn-retry" (click)="retryMatching()">Réessayer</button>
+    </div>
+    <div class="error-message" *ngIf="matchingError">
+      <h3>Erreur lors du matching</h3>
+      <p>{{ matchingError }}</p>
+      <button class="btn-retry" (click)="retryMatching()">Réessayer</button>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, filter } from 'rxjs/operators';
 import { ReCaptcha2Component } from 'ngx-captcha-ssr';
 import { logIn, signupUser, clearError, loadValues } from 'src/app/authentication/store/actions/authentication.actions';
-import { getEmailErrorMessage, getAuthenticationLoading, getValues } from 'src/app/authentication/store/selectors/authentication.selectors';
+import { getEmailErrorMessage, getAuthenticationLoading, getValues, getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { Role, RoleName } from 'src/app/shared/models/role.interface';
 import { Value } from 'src/app/shared/models/value.interface';
 import { PHONE_CONFIG } from 'src/app/authentication/constants/authentication.constant';
@@ -17,11 +18,15 @@ import { JobType } from 'src/app/shared/models/job.interface';
   templateUrl: './auth-modal-inline.component.html',
   styleUrls: ['./auth-modal-inline.component.scss']
 })
-export class AuthModalInlineComponent implements OnInit {
+export class AuthModalInlineComponent implements OnInit, OnDestroy {
   @Output() authenticated = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
   @ViewChild('password') passwordEl: ElementRef;
   @ViewChild('confirmPassword') confirmPasswordEl: ElementRef;
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
+
+  private destroy$ = new Subject<void>();
+  private wasAuthenticated = false;
 
   currentView: 'login' | 'register' | 'choice' = 'login';
   loginForm: FormGroup;
@@ -90,6 +95,20 @@ export class AuthModalInlineComponent implements OnInit {
   ngOnInit(): void {
     this.initForms();
     this.store.dispatch(loadValues());
+    
+    // Écouter les changements d'authentification
+    this.store.select(getLoggedUser).pipe(
+      takeUntil(this.destroy$),
+      filter(user => !!user && !this.wasAuthenticated)
+    ).subscribe(user => {
+      this.wasAuthenticated = true;
+      this.authenticated.emit();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForms(): void {
@@ -98,6 +117,19 @@ export class AuthModalInlineComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [false],
       recaptcha: [undefined, Validators.required]
+    });
+
+    // Effacer les erreurs lors de la saisie dans les champs de connexion
+    this.loginForm.get('email')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.store.dispatch(clearError());
+    });
+
+    this.loginForm.get('password')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.store.dispatch(clearError());
     });
 
     this.registerForm = this.fb.group({
@@ -313,5 +345,9 @@ export class AuthModalInlineComponent implements OnInit {
 
   clearError(): void {
     this.store.dispatch(clearError());
+  }
+
+  closeModal(): void {
+    this.closed.emit();
   }
 }

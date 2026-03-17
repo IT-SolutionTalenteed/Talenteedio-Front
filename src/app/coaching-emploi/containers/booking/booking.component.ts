@@ -24,6 +24,12 @@ export class BookingComponent implements OnInit {
   selectedTimezone: string;
   showConfirmationForm: boolean = false;
   
+  // Propriétés pour les événements
+  eventStartDate: Date | null = null;
+  eventEndDate: Date | null = null;
+  eventStartTime: string | null = null;
+  eventEndTime: string | null = null;
+  
   timezones: Timezone[] = TIMEZONES;
   
   timeSlots: string[] = [];
@@ -102,6 +108,60 @@ export class BookingComponent implements OnInit {
           this.blockedDatesLoaded = false;
           this.loadBlockedDates();
         },
+        // Nouvelles méthodes pour les contraintes d'événement
+        setEventConstraints: (startDate: string, endDate: string, startTime?: string, endTime?: string) => {
+          this.eventStartDate = new Date(startDate);
+          this.eventEndDate = new Date(endDate);
+          if (startTime) this.eventStartTime = startTime;
+          if (endTime) this.eventEndTime = endTime;
+          
+          console.log('📅 Contraintes d\'événement définies:', {
+            startDate: this.eventStartDate,
+            endDate: this.eventEndDate,
+            startTime: this.eventStartTime,
+            endTime: this.eventEndTime
+          });
+          
+          // Régénérer les créneaux et le calendrier
+          this.generateTimeSlots();
+          
+          // Forcer la mise à jour du calendrier en déclenchant une détection de changement
+          setTimeout(() => {
+            console.log('🔄 Forçage de la régénération du calendrier...');
+            // Déclencher manuellement la détection de changement Angular
+            if ((window as any).ng && (window as any).ng.getComponent) {
+              try {
+                const element = document.querySelector('app-calendar');
+                if (element) {
+                  const component = (window as any).ng.getComponent(element);
+                  if (component && component.generateCalendar) {
+                    component.eventStartDate = this.eventStartDate;
+                    component.eventEndDate = this.eventEndDate;
+                    component.generateCalendar();
+                    console.log('✅ Calendrier mis à jour avec les contraintes');
+                  }
+                }
+              } catch (error) {
+                console.log('⚠️ Impossible de mettre à jour le calendrier automatiquement');
+                console.log('🔄 Veuillez recharger la page pour voir les contraintes appliquées');
+              }
+            }
+          }, 100);
+        },
+        getEventConstraints: () => ({
+          startDate: this.eventStartDate,
+          endDate: this.eventEndDate,
+          startTime: this.eventStartTime,
+          endTime: this.eventEndTime
+        }),
+        clearEventConstraints: () => {
+          this.eventStartDate = null;
+          this.eventEndDate = null;
+          this.eventStartTime = null;
+          this.eventEndTime = null;
+          this.generateTimeSlots();
+          console.log('🗑️ Contraintes d\'événement supprimées');
+        },
         help: () => {
           console.log(`
 🔧 Booking Debug Commands:
@@ -116,6 +176,11 @@ export class BookingComponent implements OnInit {
 - bookingDebug.consultantId() - Voir l'ID du consultant
 - bookingDebug.setMockMode(true/false) - Activer/désactiver le mock
 - bookingDebug.reloadCurrentDate() - Recharger les créneaux de la date sélectionnée
+
+📅 Event Constraints Commands:
+- bookingDebug.setEventConstraints('2026-11-05', '2026-11-06', '09:00', '17:00') - Définir les contraintes
+- bookingDebug.getEventConstraints() - Voir les contraintes actuelles
+- bookingDebug.clearEventConstraints() - Supprimer les contraintes
 - bookingDebug.help() - Afficher cette aide
           `);
         }
@@ -157,17 +222,40 @@ export class BookingComponent implements OnInit {
   generateTimeSlots() {
     this.timeSlots = [];
     
-    // Créneaux par défaut (peuvent être personnalisés par consultant plus tard)
-    const startHour = 9;
-    const endHour = 17;
+    // Si on a des heures d'événement définies, les utiliser
+    let startHour = 9;
+    let endHour = 17;
     
-    for (let hour = startHour; hour <= endHour; hour++) {
-      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
-      if (hour < endHour) {
-        this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
+    if (this.eventStartTime && this.eventEndTime) {
+      // Parser les heures de l'événement (format "HH:MM")
+      const startParts = this.eventStartTime.split(':');
+      const endParts = this.eventEndTime.split(':');
+      
+      startHour = parseInt(startParts[0], 10);
+      endHour = parseInt(endParts[0], 10);
+      
+      // Si l'heure de fin a des minutes, on inclut cette heure
+      if (parseInt(endParts[1], 10) > 0) {
+        endHour += 1;
       }
     }
-    this.timeSlots.push('17:30');
+    
+    // Générer les créneaux dans la plage horaire de l'événement
+    for (let hour = startHour; hour < endHour; hour++) {
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:15`);
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:45`);
+    }
+    
+    // Ajouter la dernière heure si elle correspond exactement à l'heure de fin
+    if (this.eventEndTime) {
+      const endParts = this.eventEndTime.split(':');
+      const endMinutes = parseInt(endParts[1], 10);
+      if (endMinutes === 0) {
+        this.timeSlots.push(`${endHour.toString().padStart(2, '0')}:00`);
+      }
+    }
   }
   
   onTimezoneChange() {
@@ -211,6 +299,9 @@ export class BookingComponent implements OnInit {
   ngOnInit(): void {
     // Charger les dates bloquées
     this.loadBlockedDates();
+    
+    // Récupérer les paramètres d'événement depuis les query params ou session storage
+    this.loadEventParameters();
     
     // Récupérer les paramètres de route
     this.route.paramMap.subscribe(params => {
@@ -280,6 +371,78 @@ export class BookingComponent implements OnInit {
         phone: ''
       };
     }
+  }
+
+  private loadEventParameters(): void {
+    // Récupérer les paramètres d'événement depuis les query params
+    this.route.queryParams.subscribe(params => {
+      console.log('📅 Query params reçus:', params);
+      
+      if (params['eventStartDate']) {
+        this.eventStartDate = new Date(params['eventStartDate']);
+        console.log('📅 Event start date:', this.eventStartDate);
+      }
+      if (params['eventEndDate']) {
+        this.eventEndDate = new Date(params['eventEndDate']);
+        console.log('📅 Event end date:', this.eventEndDate);
+      }
+      if (params['eventStartTime']) {
+        this.eventStartTime = params['eventStartTime'];
+        console.log('📅 Event start time:', this.eventStartTime);
+      }
+      if (params['eventEndTime']) {
+        this.eventEndTime = params['eventEndTime'];
+        console.log('📅 Event end time:', this.eventEndTime);
+      }
+      
+      // Régénérer les créneaux horaires avec les nouvelles contraintes
+      this.generateTimeSlots();
+    });
+
+    // Ou récupérer depuis sessionStorage si passé par un autre composant
+    const eventData = sessionStorage.getItem('eventBookingData');
+    if (eventData) {
+      try {
+        const data = JSON.parse(eventData);
+        console.log('📅 Event data from sessionStorage:', data);
+        
+        if (data.startDate) {
+          this.eventStartDate = new Date(data.startDate);
+          console.log('📅 Event start date from storage:', this.eventStartDate);
+        }
+        if (data.endDate) {
+          this.eventEndDate = new Date(data.endDate);
+          console.log('📅 Event end date from storage:', this.eventEndDate);
+        }
+        if (data.startTime) {
+          this.eventStartTime = data.startTime;
+          console.log('📅 Event start time from storage:', this.eventStartTime);
+        }
+        if (data.endTime) {
+          this.eventEndTime = data.endTime;
+          console.log('📅 Event end time from storage:', this.eventEndTime);
+        }
+        
+        // Pour les événements, utiliser les entreprises sélectionnées comme "consultants"
+        if (data.selectedCompanies && data.selectedCompanies.length > 0) {
+          this.serviceName = `Rendez-vous avec ${data.selectedCompanies.length} entreprise${data.selectedCompanies.length > 1 ? 's' : ''}`;
+          this.consultantName = data.eventTitle || 'Événement';
+        }
+        
+        // Régénérer les créneaux horaires
+        this.generateTimeSlots();
+      } catch (error) {
+        console.error('Erreur lors du parsing des données d\'événement:', error);
+      }
+    }
+    
+    // Debug: afficher l'état final
+    console.log('📅 État final des contraintes d\'événement:', {
+      eventStartDate: this.eventStartDate,
+      eventEndDate: this.eventEndDate,
+      eventStartTime: this.eventStartTime,
+      eventEndTime: this.eventEndTime
+    });
   }
 
   onDateSelected(date: Date) {
@@ -399,8 +562,57 @@ export class BookingComponent implements OnInit {
     if (this.availableSlots[time] === undefined) {
       return false;
     }
+    
+    // Vérifier si l'heure est dans la plage de l'événement
+    if (!this.isTimeInEventRange(time)) {
+      return false;
+    }
+    
     const available = this.availableSlots[time] === true;
     return available;
+  }
+
+  private isTimeInEventRange(time: string): boolean {
+    // Si pas de contraintes d'événement, toutes les heures sont autorisées
+    if (!this.eventStartTime && !this.eventEndTime) {
+      return true;
+    }
+    
+    const timeMinutes = this.timeToMinutes(time);
+    
+    if (this.eventStartTime) {
+      const startMinutes = this.timeToMinutes(this.eventStartTime);
+      if (timeMinutes < startMinutes) {
+        return false;
+      }
+    }
+    
+    if (this.eventEndTime) {
+      const endMinutes = this.timeToMinutes(this.eventEndTime);
+      if (timeMinutes > endMinutes) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+
+  private timeToMinutes(time: string): number {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  // Méthode pour forcer la mise à jour du calendrier avec les contraintes d'événement
+  public updateCalendarConstraints(): void {
+    // Cette méthode peut être appelée pour forcer la mise à jour du calendrier
+    // Elle sera utile quand les contraintes sont définies dynamiquement
+    console.log('🔄 Mise à jour des contraintes du calendrier...');
+    console.log('📅 Contraintes actuelles:', {
+      eventStartDate: this.eventStartDate,
+      eventEndDate: this.eventEndDate,
+      eventStartTime: this.eventStartTime,
+      eventEndTime: this.eventEndTime
+    });
   }
 
   isTimeSlotDisabled(time: string): boolean {

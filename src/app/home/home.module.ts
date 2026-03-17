@@ -10,6 +10,7 @@ import { JobListService } from '../job-list/services/job-list.service';
 import { SharedModule } from '../shared/shared.module';
 import { BannerComponent } from './components/banner/banner.component';
 import { FeaturedJobComponent } from './components/featured-job/featured-job.component';
+import { FeaturedEventHomeComponent } from './components/featured-event-home/featured-event-home.component';
 import { JobItemComponent } from './components/featured-job/job-item/job-item.component';
 import { HrMediaComponent } from './components/hr-media/hr-media.component';
 import { InterviewComponent } from './components/hr-media/interview/interview.component';
@@ -32,6 +33,7 @@ import { homeReducer } from './store/reducers/home.reducers';
   declarations: [
     HomeRootComponent,
     FeaturedJobComponent,
+    FeaturedEventHomeComponent,
     RecentArticleComponent,
     BannerComponent,
     JobItemComponent,

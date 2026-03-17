@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { environment } from 'src/environments/environment';
 
 const GET_MY_APPOINTMENTS = gql`
   query GetMyAppointments {
@@ -56,6 +57,9 @@ export class AppointmentsListComponent implements OnInit {
       .query({
         query: GET_MY_APPOINTMENTS,
         fetchPolicy: 'network-only',
+        context: {
+          uri: `${environment.apiBaseUrl}/matching-profile`,
+        },
       })
       .subscribe({
         next: (result: any) => {
