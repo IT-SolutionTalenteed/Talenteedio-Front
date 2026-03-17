@@ -131,15 +131,19 @@ export class AppointmentSchedulerComponent implements OnInit {
         const date = new Date(currentWeekStart);
         date.setDate(currentWeekStart.getDate() + i);
         
-        const dateStr = date.toISOString().split('T')[0];
+        // Utiliser un formatage manuel pour éviter les problèmes de timezone
+        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         const dayAppointments = this.appointments.filter(a => a.appointmentDate === dateStr);
-        const today = new Date().toISOString().split('T')[0];
+        
+        // Utiliser le même formatage pour today
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         
         week.push({
           date: dateStr,
           day: date.getDate(),
           isCurrentMonth: date.getMonth() === month,
-          isToday: dateStr === today,
+          isToday: dateStr === todayStr,
           appointments: dayAppointments,
           isSelected: dateStr === this.selectedDate
         });
@@ -449,13 +453,14 @@ export class AppointmentSchedulerComponent implements OnInit {
     }
     
     // Utiliser une comparaison de chaînes pour éviter les problèmes de timezone
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     const endDate = this.eventEndDate || this.eventStartDate;
     
     // La date doit être dans la période de l'événement et pas dans le passé
     return date >= this.eventStartDate && 
            date <= endDate && 
-           date >= today;
+           date >= todayStr;
   }
 
   isDaySelectableInCalendar(day: CalendarDay): boolean {
