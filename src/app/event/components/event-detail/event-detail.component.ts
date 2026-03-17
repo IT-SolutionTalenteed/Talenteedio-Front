@@ -494,6 +494,20 @@ export class EventDetailComponent implements OnChanges, OnInit {
     return date.toISOString().split('T')[0];
   }
 
+  getEventEndDateString(): string | null {
+    if (!this.event) {
+      return null;
+    }
+    // Si pas de date de fin, utiliser la date de début
+    const endDate = this.event.endDate || this.event.date;
+    if (!endDate) {
+      return null;
+    }
+    // Convertir la date en format ISO string (YYYY-MM-DD)
+    const date = new Date(endDate);
+    return date.toISOString().split('T')[0];
+  }
+
   closeAuthModal(): void {
     this.showAuthModal = false;
     this.currentStep = 'auth';

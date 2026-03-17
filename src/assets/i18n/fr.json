@@ -245,6 +245,7 @@
       "viewAll": "Voir tous les emplois"
     },
     "upcomingEvents": {
+      "badge": "Événements à venir",
       "title": "Événement",
       "titleAccent": "mis en avant",
       "description": "Ne manquez pas notre événement phare et ses opportunités de réseautage",
@@ -256,7 +257,11 @@
       "maxParticipants": "Max",
       "participants": "participants",
       "companiesLabel": "Entreprises participantes :",
-      "featuredEvent": "Événement mis en avant"
+      "featuredEvent": "Événement mis en avant",
+      "featured": "Mis en avant",
+      "otherEvents": "Autres événements à venir",
+      "otherEventsDescription": "Découvrez d'autres opportunités de réseautage et de développement professionnel",
+      "companies": "entreprises"
     },
     "featuredEvent": {
       "badge": "Événement mis en avant",

@@ -21,6 +21,14 @@ export class AppointmentSchedulerComponent implements OnInit {
   @Input() eventCompanyIds: string[] = []; // Pour filtrer par événement
   @Input() eventDate: string | null = null; // Date de l'événement à utiliser par défaut
   @Input() preSelectedMatches: any[] = []; // Matches déjà sélectionnés (pour les événements featured)
+  
+  // Nouvelles propriétés pour les événements mis en avant
+  @Input() eventStartDate: string | null = null; // Date de début de l'événement
+  @Input() eventEndDate: string | null = null; // Date de fin de l'événement
+  @Input() eventStartTime: string | null = null; // Heure de début (ex: "09:00")
+  @Input() eventEndTime: string | null = null; // Heure de fin (ex: "18:00")
+  @Input() isFeaturedEvent: boolean = false; // Indique si c'est un événement featured
+  
   @Output() back = new EventEmitter<void>();
 
   appointments: any[] = [];
@@ -59,19 +67,50 @@ export class AppointmentSchedulerComponent implements OnInit {
     this.loadAppointments();
     this.loadSelectedCompanies();
     this.generateCalendar();
+    
+    // Pour les événements featured, adapter les dates min/max et les créneaux horaires
+    if (this.isFeaturedEvent) {
+      this.setupFeaturedEventConstraints();
+    }
   }
 
   generateTimeSlots(): void {
     const slots = [];
-    // Créneaux de 15 minutes de 9h à 18h
-    for (let hour = 9; hour <= 17; hour++) {
-      slots.push(`${hour.toString().padStart(2, '0')}:00`);
-      slots.push(`${hour.toString().padStart(2, '0')}:15`);
-      slots.push(`${hour.toString().padStart(2, '0')}:30`);
-      slots.push(`${hour.toString().padStart(2, '0')}:45`);
+    
+    if (this.isFeaturedEvent && this.eventStartTime && this.eventEndTime) {
+      // Pour les événements featured, utiliser les heures de l'événement
+      const [startHour, startMinute] = this.eventStartTime.split(':').map(Number);
+      const [endHour, endMinute] = this.eventEndTime.split(':').map(Number);
+      
+      let currentHour = startHour;
+      let currentMinute = startMinute;
+      
+      while (currentHour < endHour || (currentHour === endHour && currentMinute <= endMinute)) {
+        const timeSlot = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+        slots.push(timeSlot);
+        
+        // Incrémenter de 15 minutes
+        currentMinute += 15;
+        if (currentMinute >= 60) {
+          currentMinute = 0;
+          currentHour++;
+        }
+        
+        // Éviter une boucle infinie
+        if (currentHour > 23) break;
+      }
+    } else {
+      // Comportement par défaut : créneaux de 15 minutes de 9h à 18h
+      for (let hour = 9; hour <= 17; hour++) {
+        slots.push(`${hour.toString().padStart(2, '0')}:00`);
+        slots.push(`${hour.toString().padStart(2, '0')}:15`);
+        slots.push(`${hour.toString().padStart(2, '0')}:30`);
+        slots.push(`${hour.toString().padStart(2, '0')}:45`);
+      }
+      // Ajouter les derniers créneaux de 18h
+      slots.push('18:00');
     }
-    // Ajouter les derniers créneaux de 18h
-    slots.push('18:00');
+    
     this.availableTimeSlots = slots;
   }
 
@@ -140,8 +179,16 @@ export class AppointmentSchedulerComponent implements OnInit {
   selectDay(day: CalendarDay): void {
     if (!day.isCurrentMonth) return;
     
-    const today = new Date().toISOString().split('T')[0];
-    if (day.date < today) return; // Can't select past dates
+    // Pour les événements featured, vérifier que la date est dans la période de l'événement
+    if (this.isFeaturedEvent) {
+      if (!this.isDateInEventPeriod(day.date)) {
+        return; // Ne pas permettre la sélection de dates hors période d'événement
+      }
+    } else {
+      // Comportement par défaut : ne pas permettre les dates passées
+      const today = new Date().toISOString().split('T')[0];
+      if (day.date < today) return;
+    }
     
     this.selectedDate = day.date;
     this.form.patchValue({ appointmentDate: day.date });
@@ -378,5 +425,75 @@ export class AppointmentSchedulerComponent implements OnInit {
   onFeedbackSubmitted(feedback: any): void {
     this.closeFeedbackModal();
     this.loadAppointments(); // Recharger pour afficher le feedback
+  }
+
+  // Méthodes pour gérer les contraintes des événements featured
+  setupFeaturedEventConstraints(): void {
+    if (this.eventStartDate) {
+      // Définir la date minimum comme la date de début de l'événement ou aujourd'hui
+      const today = new Date().toISOString().split('T')[0];
+      this.minDate = this.eventStartDate > today ? this.eventStartDate : today;
+      
+      // Naviguer vers le mois de l'événement en utilisant les composants de date
+      const eventDateParts = this.eventStartDate.split('-');
+      const eventDate = new Date(
+        parseInt(eventDateParts[0]), 
+        parseInt(eventDateParts[1]) - 1, 
+        parseInt(eventDateParts[2])
+      );
+      this.currentDate = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
+    }
+    
+    // Régénérer les créneaux horaires avec les contraintes de l'événement
+    this.generateTimeSlots();
+  }
+
+  isDateInEventPeriod(date: string): boolean {
+    if (!this.isFeaturedEvent || !this.eventStartDate) {
+      return true; // Pas de contrainte si ce n'est pas un événement featured
+    }
+    
+    // Créer les dates en utilisant les composants pour éviter les problèmes de timezone
+    const dateParts = date.split('-');
+    const checkDate = new Date(
+      parseInt(dateParts[0]), 
+      parseInt(dateParts[1]) - 1, 
+      parseInt(dateParts[2])
+    );
+    
+    const startDateParts = this.eventStartDate.split('-');
+    const startDate = new Date(
+      parseInt(startDateParts[0]), 
+      parseInt(startDateParts[1]) - 1, 
+      parseInt(startDateParts[2])
+    );
+    
+    const endDate = this.eventEndDate ? (() => {
+      const endDateParts = this.eventEndDate.split('-');
+      return new Date(
+        parseInt(endDateParts[0]), 
+        parseInt(endDateParts[1]) - 1, 
+        parseInt(endDateParts[2])
+      );
+    })() : startDate;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // La date doit être dans la période de l'événement et pas dans le passé
+    return checkDate >= startDate && 
+           checkDate <= endDate && 
+           checkDate >= today;
+  }
+
+  isDaySelectableInCalendar(day: CalendarDay): boolean {
+    if (!day.isCurrentMonth) return false;
+    
+    if (this.isFeaturedEvent) {
+      return this.isDateInEventPeriod(day.date);
+    } else {
+      const today = new Date().toISOString().split('T')[0];
+      return day.date >= today;
+    }
   }
 }
