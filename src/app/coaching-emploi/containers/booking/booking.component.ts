@@ -4,6 +4,7 @@ import { StripeService } from 'src/app/services/stripe.service';
 import { TIMEZONES, Timezone } from '../../constants/timezones';
 import { ConsultantService, Consultant } from '../../services/consultant.service';
 import { AvailabilityService, AvailabilityResponse } from '../../services/availability.service';
+import { DateUtils } from '../../../shared/utils/date.utils';
 
 @Component({
   selector: 'app-booking',
@@ -486,7 +487,7 @@ export class BookingComponent implements OnInit {
     this.selectedDate = date;
     this.selectedTime = ''; // Réinitialiser l'heure sélectionnée
     
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = DateUtils.formatDateToString(date);
     
     // Vérifier si la date entière est bloquée
     if (this.blockedDates.includes(dateStr)) {
@@ -515,7 +516,7 @@ export class BookingComponent implements OnInit {
       return;
     }
 
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = DateUtils.formatDateToString(date);
     this.loadingAvailability = true;
     
     // Réinitialiser les créneaux disponibles
@@ -658,7 +659,7 @@ export class BookingComponent implements OnInit {
   }
 
   isDateBlocked(date: Date): boolean {
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = DateUtils.formatDateToString(date);
     return this.blockedDates.includes(dateStr);
   }
 
@@ -827,7 +828,7 @@ export class BookingComponent implements OnInit {
       contact: this.contactData,
       consultant: consultantId,
       service: serviceTitle,
-      date: this.selectedDate.toISOString().split('T')[0],
+      date: DateUtils.formatDateToString(this.selectedDate),
       time: this.selectedTime,
       frequency: this.serviceType === 'accompagnement' ? this.frequency : undefined,
       timezone: this.selectedTimezone,

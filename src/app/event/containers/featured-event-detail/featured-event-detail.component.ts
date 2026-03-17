@@ -8,6 +8,7 @@ import { getLoggedUser, getUserLoggedIn } from 'src/app/authentication/store/sel
 import { EventService as SharedEventService } from 'src/app/shared/services/event.service';
 import { MatchingProfileService } from 'src/app/matching-profile/services/matching-profile.service';
 import { FeaturedEventMatchingService } from '../../services/featured-event-matching.service';
+import { DateUtils } from '../../../shared/utils/date.utils';
 
 @Component({
   selector: 'app-featured-event-detail',
@@ -319,7 +320,7 @@ export class FeaturedEventDetailComponent implements OnInit {
   }
 
   getTodayDate(): string {
-    return new Date().toISOString().split('T')[0];
+    return DateUtils.getTodayString();
   }
 
   closeAuthModal(): void {

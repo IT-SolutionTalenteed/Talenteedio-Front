@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatchingProfileService } from '../../services/matching-profile.service';
+import { DateUtils } from '../../../shared/utils/date.utils';
 
 interface CalendarDay {
   date: string;
@@ -57,7 +58,7 @@ export class AppointmentSchedulerComponent implements OnInit {
     });
     
     // Set minimum date to today
-    this.minDate = new Date().toISOString().split('T')[0];
+    this.minDate = DateUtils.getTodayString();
     
     // Generate time slots (9h to 18h)
     this.generateTimeSlots();
@@ -131,13 +132,12 @@ export class AppointmentSchedulerComponent implements OnInit {
         const date = new Date(currentWeekStart);
         date.setDate(currentWeekStart.getDate() + i);
         
-        // Utiliser un formatage manuel pour éviter les problèmes de timezone
-        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        // Utiliser la méthode utilitaire pour un formatage cohérent
+        const dateStr = DateUtils.formatDateToString(date);
         const dayAppointments = this.appointments.filter(a => a.appointmentDate === dateStr);
         
-        // Utiliser le même formatage pour today
-        const today = new Date();
-        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        // Utiliser la même méthode pour today
+        const todayStr = DateUtils.getTodayString();
         
         week.push({
           date: dateStr,
@@ -190,8 +190,8 @@ export class AppointmentSchedulerComponent implements OnInit {
       }
     } else {
       // Comportement par défaut : ne pas permettre les dates passées
-      const today = new Date().toISOString().split('T')[0];
-      if (day.date < today) return;
+      const todayStr = DateUtils.getTodayString();
+      if (day.date < todayStr) return;
     }
     
     this.selectedDate = day.date;
@@ -435,7 +435,7 @@ export class AppointmentSchedulerComponent implements OnInit {
   setupFeaturedEventConstraints(): void {
     if (this.eventStartDate) {
       // Définir la date minimum comme la date de début de l'événement ou aujourd'hui
-      const today = new Date().toISOString().split('T')[0];
+      const today = DateUtils.getTodayString();
       this.minDate = this.eventStartDate > today ? this.eventStartDate : today;
       
       // Naviguer vers le mois de l'événement en utilisant une approche plus simple
@@ -452,9 +452,8 @@ export class AppointmentSchedulerComponent implements OnInit {
       return true; // Pas de contrainte si ce n'est pas un événement featured
     }
     
-    // Utiliser une comparaison de chaînes pour éviter les problèmes de timezone
-    const today = new Date();
-    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    // Utiliser UTC pour éviter les problèmes de timezone
+    const todayStr = DateUtils.getTodayString();
     const endDate = this.eventEndDate || this.eventStartDate;
     
     // La date doit être dans la période de l'événement et pas dans le passé
@@ -469,8 +468,8 @@ export class AppointmentSchedulerComponent implements OnInit {
     if (this.isFeaturedEvent) {
       return this.isDateInEventPeriod(day.date);
     } else {
-      const today = new Date().toISOString().split('T')[0];
-      return day.date >= today;
+      const todayStr = DateUtils.getTodayString();
+      return day.date >= todayStr;
     }
   }
 }
