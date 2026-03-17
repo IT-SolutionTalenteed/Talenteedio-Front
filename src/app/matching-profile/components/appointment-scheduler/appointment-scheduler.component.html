@@ -305,7 +305,8 @@
                     [class.today]="day.isToday"
                     [class.selected]="day.isSelected"
                     [class.has-appointments]="day.appointments.length > 0"
-                    [class.disabled]="day.date < minDate"
+                    [class.disabled]="!isDaySelectableInCalendar(day)"
+                    [class.event-period]="isFeaturedEvent && isDateInEventPeriod(day.date)"
                     (click)="selectDay(day)">
                     <span class="day-number">{{ day.day }}</span>
                     <span *ngIf="day.appointments.length > 0" class="appointment-dot"></span>
@@ -321,7 +322,8 @@
                   <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Choisissez une heure (créneaux de 15 min)
+                <span *ngIf="!isFeaturedEvent">Choisissez une heure (créneaux de 15 min)</span>
+                <span *ngIf="isFeaturedEvent">Créneaux disponibles pendant l'événement ({{ eventStartTime }} - {{ eventEndTime }})</span>
               </label>
               <div class="time-slots">
                 <button

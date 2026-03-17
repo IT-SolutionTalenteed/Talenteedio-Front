@@ -966,6 +966,25 @@
       background: #f9fafb;
     }
 
+    &.event-period {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      border-color: #0284c7;
+      
+      .day-number {
+        color: #0c4a6e;
+        font-weight: 700;
+      }
+      
+      &:hover:not(.disabled) {
+        border-color: $secondary;
+        background: linear-gradient(135deg, #fff5f3 0%, #ffe8e3 100%);
+        
+        .day-number {
+          color: $secondary;
+        }
+      }
+    }
+
     &.today {
       background: #fef3c7;
       border-color: #fbbf24;

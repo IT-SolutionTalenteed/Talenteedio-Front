@@ -646,6 +646,11 @@
       [profileId]="currentProfile?.id"
       [preSelectedMatches]="selectedCompanies"
       [eventDate]="getEventDateString()"
+      [eventStartDate]="getEventDateString()"
+      [eventEndDate]="getEventEndDateString()"
+      [eventStartTime]="event?.startTime"
+      [eventEndTime]="event?.endTime"
+      [isFeaturedEvent]="event?.featured"
       (back)="currentStep = 'results'">
     </app-appointment-scheduler>
   </div>
