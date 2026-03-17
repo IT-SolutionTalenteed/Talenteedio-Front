@@ -133,7 +133,9 @@ export class AppointmentsListComponent implements OnInit {
   }
 
   formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', {
+    // Créer la date en utilisant le format ISO pour éviter les problèmes de timezone
+    const dateObj = new Date(date + 'T00:00:00');
+    return dateObj.toLocaleDateString('fr-FR', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',

@@ -434,8 +434,8 @@ export class AppointmentSchedulerComponent implements OnInit {
       const today = new Date().toISOString().split('T')[0];
       this.minDate = this.eventStartDate > today ? this.eventStartDate : today;
       
-      // Naviguer vers le mois de l'événement
-      const eventDate = new Date(this.eventStartDate);
+      // Naviguer vers le mois de l'événement en utilisant une approche plus simple
+      const eventDate = new Date(this.eventStartDate + 'T12:00:00'); // Ajouter une heure pour éviter les problèmes de timezone
       this.currentDate = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
     }
     
@@ -448,16 +448,14 @@ export class AppointmentSchedulerComponent implements OnInit {
       return true; // Pas de contrainte si ce n'est pas un événement featured
     }
     
-    const checkDate = new Date(date);
-    const startDate = new Date(this.eventStartDate);
-    const endDate = this.eventEndDate ? new Date(this.eventEndDate) : startDate;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Utiliser une comparaison de chaînes pour éviter les problèmes de timezone
+    const today = new Date().toISOString().split('T')[0];
+    const endDate = this.eventEndDate || this.eventStartDate;
     
     // La date doit être dans la période de l'événement et pas dans le passé
-    return checkDate >= startDate && 
-           checkDate <= endDate && 
-           checkDate >= today;
+    return date >= this.eventStartDate && 
+           date <= endDate && 
+           date >= today;
   }
 
   isDaySelectableInCalendar(day: CalendarDay): boolean {

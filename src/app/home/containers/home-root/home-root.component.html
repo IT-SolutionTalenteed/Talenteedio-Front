@@ -166,9 +166,6 @@
     </div>
   </section>
 
-  <!-- Featured Event Section -->
-  <app-featured-event-home [upcomingEvents]="upcomingEvents$ | async" [loading]="upcomingEventsLoading$ | async"></app-featured-event-home>
-
   <!-- Featured Jobs Section -->
   <section class="featured-jobs-section">
     <div class="section-header">
@@ -196,77 +193,117 @@
   <!-- Upcoming Events Section -->
   <section class="upcoming-events-section">
     <div class="section-header">
+      <div class="header-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+        </svg>
+        <span>{{ 'home.upcomingEvents.badge' | translate }}</span>
+      </div>
       <h2 class="section-title">{{ 'home.upcomingEvents.title' | translate }} <span class="accent">{{ 'home.upcomingEvents.titleAccent' | translate }}</span></h2>
       <p class="section-description">{{ 'home.upcomingEvents.description' | translate }}</p>
     </div>
+
     <app-loader [isLoading]="upcomingEventsLoading$ | async">
-      <div class="events-grid" *ngIf="upcomingEvents$ | async as events">
-        <div class="event-card" 
-             *ngFor="let event of events" 
-             [routerLink]="['/event/detail', event.slug]"
-             [class.featured-event]="event.isFeatured">
-          <!-- Badge pour événement mis en avant -->
-          <div class="featured-badge" *ngIf="event.isFeatured">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
-            </svg>
-            {{ 'home.upcomingEvents.featuredEvent' | translate }}
+      <div class="events-container" *ngIf="upcomingEvents$ | async as events">
+        <!-- Featured Event with Countdown -->
+        <div class="featured-event-wrapper" *ngIf="events.length > 0">
+          <app-featured-event-home 
+            [upcomingEvents]="events" 
+            [loading]="upcomingEventsLoading$ | async">
+          </app-featured-event-home>
+        </div>
+
+        <!-- Other Events Grid -->
+        <div class="other-events-section" *ngIf="events.length > 1">
+          <div class="other-events-header">
+            <h3 class="other-events-title">{{ 'home.upcomingEvents.otherEvents' | translate }}</h3>
+            <p class="other-events-description">{{ 'home.upcomingEvents.otherEventsDescription' | translate }}</p>
           </div>
-          <div class="event-image" *ngIf="event.image">
-            <img [src]="event.image" [alt]="event.title" />
-            <div class="event-date-badge">
-              <div class="event-day">{{ event.date | date: 'dd' }}</div>
-              <div class="event-month">{{ event.date | date: 'MMM' }}</div>
-            </div>
-          </div>
-          <div class="event-date-badge" *ngIf="!event.image">
-            <div class="event-day">{{ event.date | date: 'dd' }}</div>
-            <div class="event-month">{{ event.date | date: 'MMM' }}</div>
-          </div>
-          <div class="event-content">
-            <h3 class="event-title">{{ event.title }}</h3>
-            <div class="event-details">
-              <div class="event-detail" *ngIf="event.startTime">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
-                </svg>
-                <span>{{ event.startTime }}</span>
-                <span *ngIf="event.endTime"> - {{ event.endTime }}</span>
+          
+          <div class="events-grid">
+            <div class="event-card" 
+                 *ngFor="let event of events.slice(1, 4)" 
+                 [routerLink]="['/event/detail', event.slug]"
+                 [class.featured-event]="event.isFeatured">
+              
+              <!-- Event Image or Date Badge -->
+              <div class="event-visual">
+                <div class="event-image" *ngIf="event.image">
+                  <img [src]="event.image" [alt]="event.title" />
+                  <div class="image-overlay"></div>
+                </div>
+                <div class="event-date-badge" [class.standalone]="!event.image">
+                  <div class="event-day">{{ event.date | date: 'dd' }}</div>
+                  <div class="event-month">{{ event.date | date: 'MMM' }}</div>
+                </div>
               </div>
-              <div class="event-detail" *ngIf="event.location">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
-                </svg>
-                <span>{{ event.location }}</span>
-              </div>
-              <div class="event-detail" *ngIf="event.maxParticipants">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
-                </svg>
-                <span>{{ 'home.upcomingEvents.maxParticipants' | translate }} {{ event.maxParticipants }} {{ 'home.upcomingEvents.participants' | translate }}</span>
-              </div>
-            </div>
-            <div class="event-companies" *ngIf="event.companies && event.companies.length > 0">
-              <div class="companies-label">{{ 'home.upcomingEvents.companiesLabel' | translate }}</div>
-              <div class="companies-logos">
-                <div class="company-logo-small" *ngFor="let company of event.companies.slice(0, 3)" [title]="company.company_name">
-                  <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name" />
-                  <div *ngIf="!company.logo?.fileUrl" class="company-logo-placeholder">
-                    {{ company.company_name.charAt(0).toUpperCase() }}
+
+              <!-- Event Content -->
+              <div class="event-content">
+                <div class="event-header">
+                  <div class="featured-badge" *ngIf="event.isFeatured">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                    </svg>
+                    <span>{{ 'home.upcomingEvents.featured' | translate }}</span>
+                  </div>
+                  <h3 class="event-title">{{ event.title }}</h3>
+                </div>
+
+                <div class="event-details">
+                  <div class="event-detail" *ngIf="event.startTime">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                    </svg>
+                    <span>{{ event.startTime }}</span>
+                    <span *ngIf="event.endTime"> - {{ event.endTime }}</span>
+                  </div>
+                  
+                  <div class="event-detail" *ngIf="event.location">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                    <span>{{ event.location }}</span>
+                  </div>
+                  
+                  <div class="event-detail" *ngIf="event.maxParticipants">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                    </svg>
+                    <span>{{ event.maxParticipants }} {{ 'home.upcomingEvents.participants' | translate }}</span>
                   </div>
                 </div>
-                <div class="more-companies" *ngIf="event.companies.length > 3">
-                  +{{ event.companies.length - 3 }}
+
+                <!-- Companies Preview -->
+                <div class="event-companies" *ngIf="event.companies && event.companies.length > 0">
+                  <div class="companies-preview">
+                    <div class="company-avatars">
+                      <div class="company-avatar" *ngFor="let company of event.companies.slice(0, 3)" [title]="company.company_name">
+                        <img *ngIf="company.logo?.fileUrl" [src]="company.logo.fileUrl" [alt]="company.company_name" />
+                        <div *ngIf="!company.logo?.fileUrl" class="company-placeholder">
+                          {{ company.company_name.charAt(0).toUpperCase() }}
+                        </div>
+                      </div>
+                      <div class="more-companies" *ngIf="event.companies.length > 3">
+                        +{{ event.companies.length - 3 }}
+                      </div>
+                    </div>
+                    <span class="companies-text">{{ event.companies.length }} {{ 'home.upcomingEvents.companies' | translate }}</span>
+                  </div>
                 </div>
+              </div>
+
+              <!-- Hover Arrow -->
+              <div class="event-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
             </div>
           </div>
-          <div class="event-arrow">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
         </div>
+
+        <!-- No Events State -->
         <div class="no-events" *ngIf="events.length === 0">
           <div class="no-events-container">
             <div class="no-events-illustration">
@@ -324,10 +361,12 @@
         </div>
       </div>
     </app-loader>
+
+    <!-- Section Footer -->
     <div class="section-footer" *ngIf="(upcomingEvents$ | async)?.length > 0">
       <a [routerLink]="['/event']">
         <button class="view-more-button">
-          {{ 'home.upcomingEvents.viewAll' | translate }}
+          <span>{{ 'home.upcomingEvents.viewAll' | translate }}</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
