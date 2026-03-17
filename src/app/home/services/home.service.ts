@@ -229,7 +229,7 @@ export class HomeService {
         limit: 10,
         page: 1,
       },
-      filter: { status: 'public' },
+      filter: { status: 'public', featured: true },
     };
 
     return (
@@ -252,6 +252,7 @@ export class HomeService {
                   location
                   maxParticipants
                   image
+                  featured
                   featured
                   companies {
                     id

@@ -14,7 +14,7 @@ import { Testimonial } from 'src/app/shared/models/testimonial.interface';
 import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
 import { getLocations } from 'src/app/shared/store/selectors/shared.selectors';
 import { HomeState } from '../../store/reducers/home.reducers';
-import { loadCompanies } from '../../store/actions/home.actions';
+import { loadCompanies, loadUpcomingEvents } from '../../store/actions/home.actions';
 import {
   getArticles,
   getArticlesLoading,
@@ -64,6 +64,8 @@ export class HomeRootComponent implements OnInit {
   ngOnInit(): void {
     // Force reload companies when component initializes
     this.homeStore.dispatch(loadCompanies());
+    // Load upcoming events
+    this.homeStore.dispatch(loadUpcomingEvents());
     
     this.locations$ = this.sharedStore.pipe(select(getLocations));
     this.jobs$ = this.homeStore.pipe(select(getJobs));
@@ -93,6 +95,12 @@ export class HomeRootComponent implements OnInit {
   
   onFindJob(jobCriteria) {
     this.go([`${JOB_LIST_BASE_ROUTE}`], { ...jobCriteria });
+  }
+
+  subscribeToNotifications() {
+    // TODO: Implement notification subscription logic
+    // For now, just show a simple alert
+    alert('Fonctionnalité de notification à venir ! Vous serez notifié des prochains événements.');
   }
   
   private go(path: string[], queryParams) {
