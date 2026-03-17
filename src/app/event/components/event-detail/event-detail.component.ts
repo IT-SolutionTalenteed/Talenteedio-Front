@@ -489,9 +489,12 @@ export class EventDetailComponent implements OnChanges, OnInit {
     if (!this.event || !this.event.date) {
       return null;
     }
-    // Convertir la date en format ISO string (YYYY-MM-DD)
+    // Utiliser directement la date sans conversion pour éviter les problèmes de timezone
     const date = new Date(this.event.date);
-    return date.toISOString().split('T')[0];
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   getEventEndDateString(): string | null {
@@ -503,9 +506,12 @@ export class EventDetailComponent implements OnChanges, OnInit {
     if (!endDate) {
       return null;
     }
-    // Convertir la date en format ISO string (YYYY-MM-DD)
+    // Utiliser directement la date sans conversion pour éviter les problèmes de timezone
     const date = new Date(endDate);
-    return date.toISOString().split('T')[0];
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   closeAuthModal(): void {
