@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateUtils } from '../../../shared/utils/date.utils';
 
 @Component({
   selector: 'app-booking-modal',
@@ -45,7 +46,7 @@ export class BookingModalComponent implements OnInit {
 
   onDateSelected(date: Date) {
     this.selectedDate = date;
-    const formattedDate = date.toISOString().split('T')[0];
+    const formattedDate = DateUtils.formatDateToString(date);
     this.bookingForm.patchValue({ date: formattedDate });
   }
 

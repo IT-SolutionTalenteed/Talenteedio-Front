@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output } from '@angular/core';
+import { DateUtils } from '../../../shared/utils/date.utils';
 
 interface CalendarDay {
   date: Date;
@@ -96,7 +97,7 @@ export class CalendarComponent implements OnInit, OnChanges {
       const date = new Date(year, month, day);
       date.setHours(0, 0, 0, 0);
       
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = DateUtils.formatDateToString(date);
       const isToday = date.getTime() === today.getTime();
       const isSelected = this.selectedDate ? 
         date.getTime() === new Date(this.selectedDate).setHours(0, 0, 0, 0) : 
@@ -127,11 +128,11 @@ export class CalendarComponent implements OnInit, OnChanges {
         
         if (eventStart && date < eventStart) {
           isOutsideEventRange = true;
-          console.log(`📅 Date ${dateStr} est avant le début de l'événement (${eventStart.toISOString().split('T')[0]})`);
+          console.log(`📅 Date ${dateStr} est avant le début de l'événement (${DateUtils.formatDateToString(eventStart)})`);
         }
         if (eventEnd && date > eventEnd) {
           isOutsideEventRange = true;
-          console.log(`📅 Date ${dateStr} est après la fin de l'événement (${eventEnd.toISOString().split('T')[0]})`);
+          console.log(`📅 Date ${dateStr} est après la fin de l'événement (${DateUtils.formatDateToString(eventEnd)})`);
         }
         
         if (!isOutsideEventRange) {
