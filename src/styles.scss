@@ -73,3 +73,12 @@ a {
   font-size: 14px;
   font-family: "Light";
 }
+// Global fix for angular-intl-phone dropdown z-index
+.iti__country-list {
+  z-index: 10000 !important;
+}
+
+// Ensure the container also has high z-index when dropdown is open
+.iti--container {
+  z-index: 10001 !important;
+}
