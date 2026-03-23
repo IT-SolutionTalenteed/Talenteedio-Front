@@ -166,6 +166,7 @@ $border-color: #E8EAED;
   position: relative;
   overflow-y: auto;
   max-height: 100vh;
+  overflow-x: visible; // Allow horizontal overflow for dropdowns
 
   @media (max-width: 968px) {
     padding: 40px 24px;
@@ -176,6 +177,7 @@ $border-color: #E8EAED;
   width: 100%;
   max-width: 540px;
   padding: 20px 0;
+  position: relative; // Ensure dropdowns can position relative to this
 }
 
 .form-header {
@@ -464,7 +466,7 @@ form {
 
     // When dropdown is open
     &.iti--container {
-      z-index: 1001 !important;
+      z-index: 10001 !important;
     }
   }
 
@@ -488,7 +490,7 @@ form {
 
   .iti__country-list {
     position: absolute !important;
-    z-index: 1002 !important;
+    z-index: 10000 !important;
     max-height: 250px !important;
     overflow-y: auto !important;
     border: 2px solid $border-color !important;
@@ -964,4 +966,18 @@ textarea.form-input {
   min-height: 60px;
   font-family: inherit;
   line-height: 1.5;
+}
+
+// Ensure phone dropdown is always visible
+.form-group {
+  position: relative;
+  
+  // For phone input specifically
+  angular-intl-phone {
+    .iti__country-list {
+      // Force dropdown to be visible above all content
+      position: fixed !important;
+      z-index: 10000 !important;
+    }
+  }
 }
