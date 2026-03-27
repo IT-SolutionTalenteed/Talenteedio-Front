@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Recruteurs — Talenteed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar" id="topbar" style="display:none">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-dot"></span>
+        <span class="topbar-label" id="topbar-title"></span>
+      </div>
+      <div class="countdown-blocks">
+        <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">J</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">H</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-minutes">00</span><span class="cd-unit">M</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-seconds">00</span><span class="cd-unit">S</span></div>
+      </div>
+      <div>
+        <a href="#" class="topbar-link">En savoir plus</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <img src="assets/logo.png" alt="Talenteed" width="148" height="52">
+          <span class="site-tagline">Africa Talent Summit</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="site-nav" id="site-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+
+            <!-- Annonces -->
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Annonces <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="/annonces" class="mega-item">
+                  <i class="fa-solid fa-briefcase mega-icon"></i>
+                  <div><strong>Offres d'emploi</strong><small>Parcourez toutes nos offres</small></div>
+                </a>
+                <a href="/entreprises" class="mega-item">
+                  <i class="fa-solid fa-building mega-icon"></i>
+                  <div><strong>Entreprises</strong><small>Découvrez nos recruteurs</small></div>
+                </a>
+              </div>
+            </li>
+
+            <!-- Événements -->
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Événements <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="#" class="mega-item">
+                  <i class="fa-solid fa-calendar-days mega-icon"></i>
+                  <div><strong>Africa Talent Summit</strong></div>
+                </a>
+              </div>
+            </li>
+
+            <li><a href="/blog">Articles</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions droite -->
+        <div class="header-btns">
+          <div class="has-lang">
+            <button class="lang-trigger">
+              🇫🇷 Français <i class="fa-solid fa-chevron-down nav-chevron"></i>
+            </button>
+            <div class="lang-menu">
+              <button class="lang-item active">🇫🇷 Français <i class="fa-solid fa-check lang-check"></i></button>
+              <button class="lang-item">🇬🇧 English</button>
+            </div>
+          </div>
+          <a href="/register" class="btn btn--orange btn--sm">Inscription</a>
+          <a href="/login" class="btn btn--blue btn--sm">Connexion</a>
+        </div>
+
+        <!-- Burger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Recruteurs</span>
+        <h1 class="hero-title">Trouvez les talents qui feront grandir votre entreprise</h1>
+        <p class="hero-subtitle">
+          Accédez à un vivier de candidats qualifiés et motivés. Participez à nos événements de recrutement et développez votre marque employeur en Afrique.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTENU PRINCIPAL ══ -->
+  <section class="main-content">
+    <div class="container">
+      <div class="content-layout">
+
+        <!-- Formulaire d'inscription -->
+        <div class="form-section">
+          <div class="form-card">
+            <div class="form-header">
+              <h2 class="form-title">
+                <i class="fa-solid fa-building"></i>
+                Créer mon compte entreprise
+              </h2>
+              <p class="form-subtitle">Rejoignez notre réseau de recruteurs et accédez aux meilleurs talents</p>
+            </div>
+
+            <form id="register-form" onsubmit="handleRegister(event)" novalidate>
+
+              <!-- Informations entreprise -->
+              <div class="form-section-title">
+                <i class="fa-solid fa-building-circle-check"></i>
+                Informations entreprise
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nom de l'entreprise <span class="required">*</span></label>
+                <input name="nom" type="text" class="form-input" placeholder="Ex: TechCorp France" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Secteur d'activité <span class="required">*</span></label>
+                  <select name="activity_sector" class="form-input" required>
+                    <option value="">Sélectionner...</option>
+                    <option>Banque / Finance</option>
+                    <option>Assurance</option>
+                    <option>Technologie / IT</option>
+                    <option>Santé</option>
+                    <option>Industrie</option>
+                    <option>Commerce / Distribution</option>
+                    <option>BTP / Immobilier</option>
+                    <option>Énergie / Mines</option>
+                    <option>Agriculture / Agroalimentaire</option>
+                    <option>Télécommunications</option>
+                    <option>Consulting / Conseil</option>
+                    <option>Éducation / Formation</option>
+                    <option>Transport / Logistique</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Taille de l'entreprise</label>
+                  <select name="taille" class="form-input">
+                    <option value="">Sélectionner...</option>
+                    <option>1-10 employés</option>
+                    <option>11-50 employés</option>
+                    <option>51-200 employés</option>
+                    <option>201-500 employés</option>
+                    <option>500+ employés</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Ville</label>
+                  <input name="ville" type="text" class="form-input" placeholder="Ex: Paris">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Pays</label>
+                  <input name="pays" type="text" class="form-input" placeholder="Ex: France">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Site web</label>
+                <input name="site_web" type="url" class="form-input" placeholder="https://www.exemple.com">
+              </div>
+
+              <!-- Contact principal -->
+              <div class="form-section-title">
+                <i class="fa-solid fa-user-tie"></i>
+                Contact principal
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nom complet <span class="required">*</span></label>
+                <input name="name" type="text" class="form-input" placeholder="Ex: Jean Dupont" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email professionnel <span class="required">*</span></label>
+                <input name="email" type="email" class="form-input" placeholder="contact@entreprise.com" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Téléphone</label>
+                <input name="telephone" type="tel" class="form-input" placeholder="+33 6 12 34 56 78">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Mot de passe <span class="required">*</span></label>
+                <input id="password" name="password" type="password" class="form-input" placeholder="Minimum 8 caractères" required minlength="8">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Confirmer le mot de passe <span class="required">*</span></label>
+                <input id="password_confirmation" name="password_confirmation" type="password" class="form-input" placeholder="Retapez votre mot de passe" required>
+              </div>
+
+              <!-- Messages -->
+              <div class="form-error" id="reg-error">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="reg-error-msg"></span>
+              </div>
+              <div class="form-success" id="reg-success">
+                <i class="fa-solid fa-check-circle"></i>
+                Compte créé avec succès ! Notre équipe vous contactera sous 24h.
+              </div>
+
+              <button type="submit" class="btn btn--blue btn--lg btn--block" id="reg-btn">
+                <i class="fa-solid fa-rocket"></i>
+                Créer mon compte gratuitement
+              </button>
+
+              <p class="form-note">
+                En créant un compte, vous acceptez nos
+                <a href="/legal/terms-and-conditions">conditions d'utilisation</a> et notre
+                <a href="/legal/privacy-policy">politique de confidentialité</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <!-- CTA Rappel + Avantages -->
+        <div class="cta-section">
+          <div class="cta-card">
+            <div class="cta-icon">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <h3 class="cta-title">Besoin d'aide pour démarrer ?</h3>
+            <p class="cta-text">
+              Notre équipe est là pour vous accompagner dans votre recrutement. Laissez-nous vos coordonnées et nous vous rappelons sous 24h.
+            </p>
+
+            <form class="callback-form" id="callback-form" onsubmit="handleCallback(event)" novalidate>
+              <div class="form-group">
+                <input name="cb_name" type="text" class="form-input" placeholder="Votre nom" required>
+              </div>
+              <div class="form-group">
+                <input name="cb_email" type="email" class="form-input" placeholder="Votre email" required>
+              </div>
+              <div class="form-group">
+                <input name="cb_phone" type="tel" class="form-input" placeholder="Votre téléphone" required>
+              </div>
+              <div class="form-group">
+                <textarea name="cb_message" class="form-input form-textarea" placeholder="Votre message (optionnel)" rows="3"></textarea>
+              </div>
+
+              <div class="form-error" id="cb-error">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="cb-error-msg"></span>
+              </div>
+              <div class="form-success" id="cb-success">
+                <i class="fa-solid fa-check-circle"></i>
+                Demande envoyée ! Nous vous recontacterons sous 24h.
+              </div>
+
+              <button type="submit" class="btn btn--orange btn--lg btn--block" id="cb-btn">
+                <i class="fa-solid fa-phone"></i>
+                Demander à être rappelé
+              </button>
+            </form>
+          </div>
+
+          <!-- Avantages -->
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Inscription 100% gratuite</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Accès immédiat aux talents</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Support dédié</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Aucune carte bancaire requise</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-bg"></div>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="assets/logo.png" alt="Talenteed" width="180">
+            </div>
+            <p>L'Africa Talent Summit Luxembourg est la première plateforme stratégique européenne dédiée à la mobilisation de l'intelligence collective et des compétences rares de la diaspora, afin d'accélérer la performance des entreprises en Afrique.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Contactez-nous</h4>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><a href="tel:+3522060162">+3522060162</a></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>57 avenue de la Gare, L-1611 Luxembourg</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><a href="mailto:contact@africatalentsummit.com">contact@africatalentsummit.com</a></div>
+          </div>
+          <div class="footer-col">
+            <h4>Rejoignez-nous</h4>
+            <ul>
+              <li><a href="/register"><i class="fa-solid fa-chevron-right"></i> Devenir Talent</a></li>
+              <li><a href="/login"><i class="fa-solid fa-chevron-right"></i> Se connecter</a></li>
+              <li><a href="mailto:contact@africatalentsummit.com"><i class="fa-solid fa-chevron-right"></i> Presse et Média</a></li>
+              <li><a href="mailto:contact@africatalentsummit.com"><i class="fa-solid fa-chevron-right"></i> Partenariats</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations légales</h4>
+            <ul>
+              <li><a href="/legal/terms-and-conditions"><i class="fa-solid fa-chevron-right"></i> Conditions générales</a></li>
+              <li><a href="/legal/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <script>document.write(new Date().getFullYear())</script> Solution Talenteed SARL R.C.S. Luxembourg B 255 801. Tous droits réservés. Africa Talent Summit Luxembourg est une marque déposée.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ══ BURGER ══ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav    = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+
+    /* ══ SCROLL HEADER ══ */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ══ FORMULAIRE INSCRIPTION ══ */
+    function showEl(id)   { document.getElementById(id).classList.add('visible'); }
+    function hideEl(id)   { document.getElementById(id).classList.remove('visible'); }
+    function setBtn(id, html, disabled) {
+      const btn = document.getElementById(id);
+      btn.innerHTML = html;
+      btn.disabled = disabled;
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      hideEl('reg-error'); hideEl('reg-success');
+
+      const pw  = document.getElementById('password').value;
+      const pw2 = document.getElementById('password_confirmation').value;
+      if (pw !== pw2) {
+        document.getElementById('reg-error-msg').textContent = 'Les mots de passe ne correspondent pas';
+        showEl('reg-error');
+        return;
+      }
+
+      setBtn('reg-btn', '<span class="spinner"></span> Création en cours...', true);
+
+      // Simulation envoi (à brancher sur POST /api/register)
+      setTimeout(() => {
+        setBtn('reg-btn', '<i class="fa-solid fa-rocket"></i> Créer mon compte gratuitement', false);
+        showEl('reg-success');
+        document.getElementById('register-form').reset();
+      }, 1800);
+    }
+
+    /* ══ FORMULAIRE RAPPEL ══ */
+    function handleCallback(e) {
+      e.preventDefault();
+      hideEl('cb-error'); hideEl('cb-success');
+
+      setBtn('cb-btn', '<span class="spinner"></span> Envoi en cours...', true);
+
+      // Simulation envoi
+      setTimeout(() => {
+        setBtn('cb-btn', '<i class="fa-solid fa-phone"></i> Demander à être rappelé', false);
+        showEl('cb-success');
+        document.getElementById('callback-form').reset();
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entreprises — Talenteed.io</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-dot"></span>
+        <span class="topbar-label">Africa Talent Summit Luxembourg — 5-6 novembre 2026</span>
+      </div>
+      <div class="countdown-blocks">
+        <div class="cd-block"><span class="cd-num" id="cd-days">222</span><span class="cd-unit">J</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">15</span><span class="cd-unit">H</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-minutes">40</span><span class="cd-unit">M</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-seconds">07</span><span class="cd-unit">S</span></div>
+      </div>
+      <div>
+        <a href="#event" class="topbar-link">Réserver ma place</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <img src="assets/logo.png" alt="Talenteed" width="148" height="52">
+          <span class="site-tagline">Africa Talent Summit</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="site-nav" id="site-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/annonces">Annonces</a></li>
+            <li><a href="/entreprises" class="active">Entreprises</a></li>
+            <li><a href="/blog">Articles</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions droite -->
+        <div class="header-btns">
+          <a href="company.html" class="btn btn--orange btn--sm">Créer un compte</a>
+          <a href="/login" class="btn btn--blue btn--sm">Connexion</a>
+        </div>
+
+        <!-- Burger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-section" id="event">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Pour les entreprises</span>
+        <h1 class="hero-title">Recrutez les meilleurs talents</h1>
+        <p class="hero-subtitle">
+          Talenteed.io connecte les entreprises européennes avec les talents qualifiés. 
+          Participez à l'Africa Talent Summit Luxembourg et rencontrez vos futurs collaborateurs.
+        </p>
+
+        <!-- Event Card -->
+        <div class="event-card">
+          <div class="event-header">
+            <div class="event-date">5 novembre 2026 – 6 novembre 2026</div>
+            <h2 class="event-title">Africa Talent Summit Luxembourg</h2>
+            <div class="event-location">
+              <i class="fa-solid fa-location-dot"></i>
+              Luxembourg, Luxembourg
+            </div>
+            <div class="event-status">LES SOUSCRIPTIONS SONT OUVERTES – RÉSERVEZ VOTRE PLACE</div>
+          </div>
+
+          <div class="event-countdown">
+            <div class="event-cd-block">
+              <span class="event-cd-num" id="event-days">222</span>
+              <span class="event-cd-unit">Jours</span>
+            </div>
+            <div class="event-cd-block">
+              <span class="event-cd-num" id="event-hours">15</span>
+              <span class="event-cd-unit">Heures</span>
+            </div>
+            <div class="event-cd-block">
+              <span class="event-cd-num" id="event-minutes">40</span>
+              <span class="event-cd-unit">Minutes</span>
+            </div>
+            <div class="event-cd-block">
+              <span class="event-cd-num" id="event-seconds">07</span>
+              <span class="event-cd-unit">Secondes</span>
+            </div>
+          </div>
+
+          <a href="company.html" class="btn btn--orange btn--lg" style="width: 100%; justify-content: center;">
+            <i class="fa-solid fa-ticket"></i>
+            Souscrire maintenant
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMMENT ÇA MARCHE ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Simple et efficace</span>
+        <h2 class="section-title">Comment fonctionne Talenteed.io ?</h2>
+        <p class="section-subtitle">
+          Notre plateforme vous accompagne à chaque étape de votre recrutement, de la publication d'offres à l'embauche de vos talents.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Créez votre compte</h3>
+          <p class="step-text">Inscrivez-vous gratuitement et créez le profil de votre entreprise en quelques minutes.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Publiez vos offres</h3>
+          <p class="step-text">Diffusez vos offres d'emploi et touchez des milliers de candidats qualifiés en Afrique et en Europe.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Recevez des candidatures</h3>
+          <p class="step-text">Consultez les profils, filtrez par compétences et contactez directement les talents qui vous intéressent.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Participez aux événements</h3>
+          <p class="step-text">Rencontrez vos candidats lors de nos événements de recrutement comme l'Africa Talent Summit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FONCTIONNALITÉS ══ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Nos services</span>
+        <h2 class="section-title">Tout ce dont vous avez besoin pour recruter</h2>
+        <p class="section-subtitle">
+          Une plateforme complète pour gérer vos recrutements et développer votre marque employeur.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-bullhorn"></i>
+          </div>
+          <h3 class="feature-title">Publication d'offres illimitée</h3>
+          <p class="feature-text">
+            Publiez autant d'offres d'emploi que vous le souhaitez et touchez un large vivier de talents qualifiés.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3 class="feature-title">Accès à la CVthèque</h3>
+          <p class="feature-text">
+            Consultez des milliers de profils de candidats et contactez directement ceux qui correspondent à vos besoins.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <h3 class="feature-title">Gestion des entretiens</h3>
+          <p class="feature-text">
+            Planifiez et gérez vos entretiens en ligne ou en présentiel directement depuis la plateforme.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <h3 class="feature-title">Page entreprise personnalisée</h3>
+          <p class="feature-text">
+            Créez une vitrine attractive pour présenter votre entreprise, votre culture et vos valeurs.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="feature-title">Statistiques détaillées</h3>
+          <p class="feature-text">
+            Suivez les performances de vos offres et analysez les candidatures reçues en temps réel.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3 class="feature-title">Événements de recrutement</h3>
+          <p class="feature-text">
+            Participez à nos salons et événements pour rencontrer directement les meilleurs talents.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 60px;">
+        <span class="section-badge" style="background: rgba(255,255,255,.1); color: var(--orange);">Nos chiffres</span>
+        <h2 class="section-title" style="color: #fff;">Talenteed.io en quelques chiffres</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">10,000+</div>
+          <div class="stat-label">Talents inscrits</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Entreprises partenaires</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">2,500+</div>
+          <div class="stat-label">Offres d'emploi publiées</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Taux de satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA SECTION ══ -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="cta-title">Restez informé de nos actualités</h2>
+      <p class="cta-text">
+        Inscrivez-vous à notre newsletter et notre équipe vous recontactera pour discuter de vos besoins en recrutement.
+      </p>
+      
+      <form id="newsletter-form" onsubmit="handleNewsletter(event)" style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <input 
+            type="text" 
+            name="nl_name" 
+            placeholder="Votre nom" 
+            required
+            style="flex: 1; min-width: 200px; padding: 14px 20px; border: 2px solid rgba(255,255,255,.3); border-radius: 50px; font-size: 15px; background: rgba(255,255,255,.95); color: var(--navy);"
+          >
+          <input 
+            type="email" 
+            name="nl_email" 
+            placeholder="Votre email professionnel" 
+            required
+            style="flex: 1; min-width: 200px; padding: 14px 20px; border: 2px solid rgba(255,255,255,.3); border-radius: 50px; font-size: 15px; background: rgba(255,255,255,.95); color: var(--navy);"
+          >
+          <button 
+            type="submit" 
+            class="btn btn--orange btn--lg"
+            id="nl-btn"
+            style="flex-shrink: 0;"
+          >
+            <i class="fa-solid fa-paper-plane"></i>
+            M'inscrire
+          </button>
+        </div>
+        
+        <div id="nl-error" style="display: none; margin-top: 16px; padding: 12px 20px; background: rgba(244,67,54,.2); color: #fff; border-radius: 50px; font-size: 14px; text-align: center;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span id="nl-error-msg"></span>
+        </div>
+        
+        <div id="nl-success" style="display: none; margin-top: 16px; padding: 12px 20px; background: rgba(76,175,80,.3); color: #fff; border-radius: 50px; font-size: 14px; text-align: center;">
+          <i class="fa-solid fa-check-circle"></i>
+          Merci ! Notre équipe vous contactera sous 24h.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-bg"></div>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="assets/logo.png" alt="Talenteed" width="180">
+            </div>
+            <p>L'Africa Talent Summit Luxembourg est la première plateforme stratégique européenne dédiée à la mobilisation de l'intelligence collective et des compétences rares de la diaspora, afin d'accélérer la performance des entreprises en Afrique.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Contactez-nous</h4>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><a href="tel:+3522060162">+3522060162</a></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>57 avenue de la Gare, L-1611 Luxembourg</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><a href="mailto:contact@africatalentsummit.com">contact@africatalentsummit.com</a></div>
+          </div>
+          <div class="footer-col">
+            <h4>Rejoignez-nous</h4>
+            <ul>
+              <li><a href="/register"><i class="fa-solid fa-chevron-right"></i> Devenir Talent</a></li>
+              <li><a href="company.html"><i class="fa-solid fa-chevron-right"></i> Espace Recruteurs</a></li>
+              <li><a href="/login"><i class="fa-solid fa-chevron-right"></i> Se connecter</a></li>
+              <li><a href="mailto:contact@africatalentsummit.com"><i class="fa-solid fa-chevron-right"></i> Partenariats</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations légales</h4>
+            <ul>
+              <li><a href="/legal/terms-and-conditions"><i class="fa-solid fa-chevron-right"></i> Conditions générales</a></li>
+              <li><a href="/legal/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <script>document.write(new Date().getFullYear())</script> Solution Talenteed SARL R.C.S. Luxembourg B 255 801. Tous droits réservés. Africa Talent Summit Luxembourg est une marque déposée.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ══ BURGER ══ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav    = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+
+    /* ══ SCROLL HEADER ══ */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ══ COUNTDOWN ══ */
+    const eventDate = new Date('November 5, 2026 09:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Topbar countdown
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+
+      // Event card countdown
+      document.getElementById('event-days').textContent = days;
+      document.getElementById('event-hours').textContent = hours;
+      document.getElementById('event-minutes').textContent = minutes;
+      document.getElementById('event-seconds').textContent = seconds;
+
+      if (distance < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-minutes').textContent = '00';
+        document.getElementById('cd-seconds').textContent = '00';
+        document.getElementById('event-days').textContent = '0';
+        document.getElementById('event-hours').textContent = '0';
+        document.getElementById('event-minutes').textContent = '0';
+        document.getElementById('event-seconds').textContent = '0';
+      }
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    /* ══ NEWSLETTER FORM ══ */
+    function handleNewsletter(e) {
+      e.preventDefault();
+      
+      const errorEl = document.getElementById('nl-error');
+      const successEl = document.getElementById('nl-success');
+      const btn = document.getElementById('nl-btn');
+      
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      btn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
+      btn.disabled = true;
+
+      // Simulation envoi (à brancher sur POST /api/newsletter)
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> M\'inscrire';
+        btn.disabled = false;
+        successEl.style.display = 'block';
+        document.getElementById('newsletter-form').reset();
+        
+        // Masquer le message après 5 secondes
+        setTimeout(() => {
+          successEl.style.display = 'none';
+        }, 5000);
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

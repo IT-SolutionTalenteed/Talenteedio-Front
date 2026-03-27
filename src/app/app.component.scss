@@ -4,6 +4,15 @@
   overflow: hidden;
 }
 
+.static-page-container {
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 .global-loading-overlay {
   position: fixed;
   top: 0;

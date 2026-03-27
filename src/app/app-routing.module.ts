@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./root/root.module').then((m) => m.RootModule),
   },
+  {
+    path: 'static',
+    loadChildren: () => import('./static-pages/static-pages.module').then((m) => m.StaticPagesModule),
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
