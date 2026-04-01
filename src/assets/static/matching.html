@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matching IA — Talenteed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-dot"></span>
+        <span class="topbar-label">Africa Talent Summit Luxembourg — 5-6 novembre 2026</span>
+      </div>
+      <div class="countdown-blocks">
+        <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">J</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">H</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-minutes">00</span><span class="cd-unit">M</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-seconds">00</span><span class="cd-unit">S</span></div>
+      </div>
+      <div>
+        <a href="/register" class="topbar-link">Tester le Matching</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <img src="assets/logo.png" alt="Talenteed" width="148" height="52">
+          <span class="site-tagline">Africa Talent Summit</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="site-nav" id="site-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Annonces <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="/annonces" class="mega-item">
+                  <i class="fa-solid fa-briefcase mega-icon"></i>
+                  <div><strong>Offres d'emploi</strong><small>Parcourez toutes nos offres</small></div>
+                </a>
+                <a href="/entreprises" class="mega-item">
+                  <i class="fa-solid fa-building mega-icon"></i>
+                  <div><strong>Entreprises</strong><small>Découvrez nos recruteurs</small></div>
+                </a>
+              </div>
+            </li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Événements <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="#" class="mega-item">
+                  <i class="fa-solid fa-calendar-days mega-icon"></i>
+                  <div><strong>Africa Talent Summit</strong></div>
+                </a>
+              </div>
+            </li>
+            <li><a href="talent.html">Espace Talents</a></li>
+            <li><a href="matching.html" class="active">Matching IA</a></li>
+            <li><a href="/blog">Articles</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions droite -->
+        <div class="header-btns">
+          <a href="/register" class="btn btn--orange btn--sm">S'inscrire</a>
+          <a href="/login" class="btn btn--blue btn--sm">Connexion</a>
+        </div>
+
+        <!-- Burger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Technologie IA</span>
+        <h1 class="hero-title">Le Matching IA — Vos opportunités, révélées par l'intelligence artificielle</h1>
+        <p class="hero-subtitle">
+          Notre moteur de matching alimenté par OpenAI analyse votre profil en profondeur et identifie les entreprises et offres
+          qui correspondent réellement à vos compétences et ambitions. Fini le triage manuel, place aux recommandations précises.
+        </p>
+        <div class="hero-buttons">
+          <a href="/register" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-brain"></i>
+            Activer le Matching IA
+          </a>
+          <a href="#comment-ca-marche" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-circle-info"></i>
+            Comment ça fonctionne ?
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CHIFFRES CLÉS ══ -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Précision du matching</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3x</div>
+          <div class="stat-label">Plus d'entretiens décrochés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Entreprises analysées</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">< 30s</div>
+          <div class="stat-label">Temps d'analyse</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMMENT ÇA MARCHE ══ -->
+  <section class="section" style="background: #fff;" id="comment-ca-marche">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Fonctionnement</span>
+        <h2 class="section-title">Comment l'IA trouve vos meilleurs matchs</h2>
+        <p class="section-subtitle">
+          Un processus intelligent en 4 étapes pour vous connecter aux entreprises qui vous correspondent vraiment.
+        </p>
+      </div>
+
+      <div class="process-timeline">
+
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <div class="process-content">
+            <h3 class="process-title">Vous fournissez vos données</h3>
+            <p class="process-text">
+              Depuis la page de l'événement, vous renseignez le poste que vous recherchez, vos compétences clés
+              et vous téléchargez votre CV. Ces données forment votre "empreinte professionnelle" que l'IA va analyser.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <div class="process-content">
+            <h3 class="process-title">L'IA analyse votre profil complet</h3>
+            <p class="process-text">
+              Notre moteur OpenAI croise vos informations avec votre profil Talenteed : expériences, formations,
+              langues, secteurs d'activité, mobilité géographique et disponibilité.
+              L'analyse prend moins de 30 secondes et produit une signature de compétences détaillée.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <div class="process-content">
+            <h3 class="process-title">Comparaison avec toutes les entreprises</h3>
+            <p class="process-text">
+              L'IA compare votre profil avec chaque entreprise et offre d'emploi présentes à l'événement.
+              Elle évalue la compatibilité sur plusieurs critères : adéquation des compétences, niveau d'expérience,
+              secteur, localisation et culture d'entreprise.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <div class="process-content">
+            <h3 class="process-title">Résultats triés et expliqués</h3>
+            <p class="process-text">
+              Vous recevez une liste des entreprises triée par score de compatibilité (de 0 à 100).
+              Pour chaque résultat, l'IA vous explique en détail pourquoi c'est un bon match et quels points
+              méritent attention. Vous pouvez alors réserver un entretien directement depuis les résultats.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ APERÇU RÉSULTATS ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Résultats</span>
+        <h2 class="section-title">À quoi ressemblent les résultats du matching ?</h2>
+        <p class="section-subtitle">
+          Une liste claire, triée par pertinence, avec toutes les informations pour prendre votre décision.
+        </p>
+      </div>
+
+      <div class="solutions-grid">
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon" style="background: rgba(16,185,129,.1); color: #10B981;">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div>
+              <h3 class="solution-title">Match Excellent</h3>
+              <p style="color: #10B981; font-size: 13px; margin: 0;">Score 85 – 100 / 100</p>
+            </div>
+          </div>
+          <p class="solution-text">
+            Votre profil correspond parfaitement aux critères de cette entreprise. Compétences, expérience et secteur sont alignés.
+            C'est une priorité absolue : réservez ce créneau en premier.
+          </p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check-circle" style="color: #10B981;"></i> Compétences techniques alignées</li>
+            <li><i class="fa-solid fa-check-circle" style="color: #10B981;"></i> Niveau d'expérience correspondant</li>
+            <li><i class="fa-solid fa-check-circle" style="color: #10B981;"></i> Secteur identique ou proche</li>
+            <li><i class="fa-solid fa-check-circle" style="color: #10B981;"></i> Localisation compatible</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon" style="background: rgba(249,115,22,.1); color: var(--orange);">
+              <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <div>
+              <h3 class="solution-title">Bon Match</h3>
+              <p style="color: var(--orange); font-size: 13px; margin: 0;">Score 60 – 84 / 100</p>
+            </div>
+          </div>
+          <p class="solution-text">
+            Votre profil présente de nombreux points de convergence avec cette entreprise. Quelques critères mineurs diffèrent mais le potentiel est réel.
+          </p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check-circle" style="color: var(--orange);"></i> La plupart des compétences présentes</li>
+            <li><i class="fa-solid fa-check-circle" style="color: var(--orange);"></i> Expérience proche du profil recherché</li>
+            <li><i class="fa-solid fa-minus-circle" style="color: #888;"></i> 1-2 critères secondaires à compenser</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon" style="background: rgba(99,102,241,.1); color: #6366F1;">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+            <div>
+              <h3 class="solution-title">Match Potentiel</h3>
+              <p style="color: #6366F1; font-size: 13px; margin: 0;">Score 40 – 59 / 100</p>
+            </div>
+          </div>
+          <p class="solution-text">
+            Des compétences transférables existent entre votre profil et cette entreprise. C'est une opportunité à explorer si vous êtes ouvert à évoluer dans un nouveau contexte.
+          </p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check-circle" style="color: #6366F1;"></i> Compétences transférables identifiées</li>
+            <li><i class="fa-solid fa-minus-circle" style="color: #888;"></i> Écart d'expérience à justifier</li>
+            <li><i class="fa-solid fa-lightbulb" style="color: #6366F1;"></i> Forte opportunité de développement</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-header">
+            <div class="solution-icon">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <h3 class="solution-title">Explication IA détaillée</h3>
+          </div>
+          <p class="solution-text">
+            Pour chaque résultat, l'IA rédige une explication personnalisée qui détaille les points forts de votre candidature et les éventuels points de vigilance.
+          </p>
+          <ul class="solution-features">
+            <li><i class="fa-solid fa-check-circle"></i> Analyse texte rédigée par l'IA</li>
+            <li><i class="fa-solid fa-check-circle"></i> Points forts mis en valeur</li>
+            <li><i class="fa-solid fa-check-circle"></i> Conseils de préparation à l'entretien</li>
+            <li><i class="fa-solid fa-check-circle"></i> Bouton "Prendre RDV" direct</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ AVANTAGES IA ══ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Pourquoi l'IA ?</span>
+        <h2 class="section-title">Les avantages du matching par intelligence artificielle</h2>
+        <p class="section-subtitle">
+          Notre approche IA élimine les biais et vous offre des opportunités que vous n'auriez pas trouvées seul.
+        </p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3 class="benefit-title">Rapidité</h3>
+          <p class="benefit-text">
+            Analyse de votre profil et comparaison avec toutes les entreprises en moins de 30 secondes. Ce que vous feriez en heures, l'IA le fait instantanément.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h3 class="benefit-title">Objectivité</h3>
+          <p class="benefit-text">
+            L'IA évalue votre profil sans préjugés. Peu importe votre nom, votre nationalité ou votre parcours atypique : seules vos compétences comptent.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+          <h3 class="benefit-title">Découverte d'opportunités cachées</h3>
+          <p class="benefit-text">
+            L'IA identifie des correspondances non-évidentes entre votre profil et des entreprises que vous n'auriez peut-être pas considérées spontanément.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-chart-bar"></i>
+          </div>
+          <h3 class="benefit-title">Transparence totale</h3>
+          <p class="benefit-text">
+            Chaque score est accompagné d'une explication détaillée. Vous comprenez exactement pourquoi vous êtes recommandé pour chaque poste.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+          <h3 class="benefit-title">Matching illimité</h3>
+          <p class="benefit-text">
+            Relancez le matching autant de fois que vous le souhaitez avec des paramètres différents. Testez différents postes et compétences pour explorer vos possibilités.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-shield-check"></i>
+          </div>
+          <h3 class="benefit-title">Données sécurisées</h3>
+          <p class="benefit-text">
+            Votre CV et vos données personnelles sont traités de manière sécurisée et confidentielle. Vos informations ne sont jamais partagées sans votre accord.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TÉMOIGNAGES ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Retours d'expérience</span>
+        <h2 class="section-title">Ce qu'ils disent du Matching IA</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "Le matching m'a recommandé une entreprise que je n'avais même pas remarquée dans la liste.
+            Score de 92/100. J'ai passé l'entretien et j'ai décroché le poste. Incroyable !"
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AK</div>
+            <div class="testimonial-info">
+              <h4>Aïssatou Kouyaté</h4>
+              <p>Ingénieure Data · Dakar</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "J'avais peur que l'IA ne comprenne pas mon parcours atypique. Au contraire, elle a mis en valeur
+            mes compétences transversales que les recruteurs auraient ignorées. Le résultat était pertinent."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">TM</div>
+            <div class="testimonial-info">
+              <h4>Théodore Mumbere</h4>
+              <p>Consultant en transformation digitale · Paris</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "En moins d'une minute, j'avais une liste de 8 entreprises triées par compatibilité avec mon profil.
+            Sans le matching, j'aurais passé des heures à comparer. Un vrai gain de temps."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">ND</div>
+            <div class="testimonial-info">
+              <h4>Nadia Diallo</h4>
+              <p>Responsable Qualité · Abidjan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA FINAL ══ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Prêt à découvrir vos meilleures opportunités ?</h2>
+        <p class="cta-text">
+          Inscrivez-vous gratuitement sur Talenteed, complétez votre profil et activez le Matching IA lors du prochain événement.
+          En quelques secondes, l'intelligence artificielle révèle vos meilleures opportunités de carrière.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="/register" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-brain"></i>
+            Activer le Matching IA
+          </a>
+          <a href="comment-ca-marche.html" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-map"></i>
+            Voir le guide complet
+          </a>
+        </div>
+        <p style="color: rgba(255,255,255,.6); margin-top: 16px; font-size: 13px;">
+          <i class="fa-solid fa-lock"></i>
+          Inscription gratuite · Aucune carte bancaire · Données sécurisées
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-bg"></div>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="assets/logo.png" alt="Talenteed" width="180">
+            </div>
+            <p>L'Africa Talent Summit Luxembourg est la première plateforme stratégique européenne dédiée à la mobilisation de l'intelligence collective et des compétences rares de la diaspora, afin d'accélérer la performance des entreprises en Afrique.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Contactez-nous</h4>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><a href="tel:+3522060162">+3522060162</a></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>57 avenue de la Gare, L-1611 Luxembourg</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><a href="mailto:contact@africatalentsummit.com">contact@africatalentsummit.com</a></div>
+          </div>
+          <div class="footer-col">
+            <h4>Espace Talents</h4>
+            <ul>
+              <li><a href="/register"><i class="fa-solid fa-chevron-right"></i> Créer mon profil</a></li>
+              <li><a href="/annonces"><i class="fa-solid fa-chevron-right"></i> Offres d'emploi</a></li>
+              <li><a href="talent.html"><i class="fa-solid fa-chevron-right"></i> Espace Talents</a></li>
+              <li><a href="comment-ca-marche.html"><i class="fa-solid fa-chevron-right"></i> Comment ça marche</a></li>
+              <li><a href="/login"><i class="fa-solid fa-chevron-right"></i> Se connecter</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations légales</h4>
+            <ul>
+              <li><a href="/legal/terms-and-conditions"><i class="fa-solid fa-chevron-right"></i> Conditions générales</a></li>
+              <li><a href="/legal/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <script>document.write(new Date().getFullYear())</script> Solution Talenteed SARL R.C.S. Luxembourg B 255 801. Tous droits réservés. Africa Talent Summit Luxembourg est une marque déposée.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ══ BURGER ══ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav    = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+
+    /* ══ SCROLL HEADER ══ */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ══ COUNTDOWN ══ */
+    const eventDate = new Date('November 5, 2026 09:00:00').getTime();
+
+    function updateCountdown() {
+      const now      = new Date().getTime();
+      const distance = eventDate - now;
+      const days     = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+      const hours    = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      const minutes  = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      const seconds  = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('cd-days').textContent    = pad(days);
+      document.getElementById('cd-hours').textContent   = pad(hours);
+      document.getElementById('cd-minutes').textContent = pad(minutes);
+      document.getElementById('cd-seconds').textContent = pad(seconds);
+      if (distance > 0) requestAnimationFrame(() => setTimeout(updateCountdown, 1000));
+    }
+    updateCountdown();
+
+    /* ══ MEGA MENU ══ */
+    document.querySelectorAll('.mega-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        trigger.closest('li').classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
