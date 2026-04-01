@@ -1,12 +1,15 @@
 # Pages Statiques
 
-Ce module sert les pages HTML statiques (corporate, company, entreprise) avec leurs assets.
+Ce module sert les pages HTML statiques (corporate, company, entreprise, comment, matching, talent) avec leurs assets.
 
 ## Routes disponibles
 
 - `/static/corporate` → corporate.html
 - `/static/company` → company.html
 - `/static/entreprise` → entreprises.html
+- `/static/comment` → comment.html
+- `/static/matching` → matching.html
+- `/static/talent` → talent.html
 
 ## Structure
 
@@ -18,7 +21,10 @@ src/assets/static/
 │   └── logo.png
 ├── company.html
 ├── corporate.html
-└── entreprises.html
+├── entreprises.html
+├── comment.html
+├── matching.html
+└── talent.html
 ```
 
 ## Fonctionnement

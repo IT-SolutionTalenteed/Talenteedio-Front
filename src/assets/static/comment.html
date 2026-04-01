@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment ça marche — Talenteed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-dot"></span>
+        <span class="topbar-label">Africa Talent Summit Luxembourg — 5-6 novembre 2026</span>
+      </div>
+      <div class="countdown-blocks">
+        <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">J</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">H</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-minutes">00</span><span class="cd-unit">M</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-seconds">00</span><span class="cd-unit">S</span></div>
+      </div>
+      <div>
+        <a href="/register" class="topbar-link">Rejoindre gratuitement</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <img src="assets/logo.png" alt="Talenteed" width="148" height="52">
+          <span class="site-tagline">Africa Talent Summit</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="site-nav" id="site-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Annonces <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="/annonces" class="mega-item">
+                  <i class="fa-solid fa-briefcase mega-icon"></i>
+                  <div><strong>Offres d'emploi</strong><small>Parcourez toutes nos offres</small></div>
+                </a>
+                <a href="/entreprises" class="mega-item">
+                  <i class="fa-solid fa-building mega-icon"></i>
+                  <div><strong>Entreprises</strong><small>Découvrez nos recruteurs</small></div>
+                </a>
+              </div>
+            </li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Événements <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="#" class="mega-item">
+                  <i class="fa-solid fa-calendar-days mega-icon"></i>
+                  <div><strong>Africa Talent Summit</strong></div>
+                </a>
+              </div>
+            </li>
+            <li><a href="talent.html">Espace Talents</a></li>
+            <li><a href="comment-ca-marche.html" class="active">Comment ça marche</a></li>
+            <li><a href="/blog">Articles</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions droite -->
+        <div class="header-btns">
+          <a href="/register" class="btn btn--orange btn--sm">S'inscrire</a>
+          <a href="/login" class="btn btn--blue btn--sm">Connexion</a>
+        </div>
+
+        <!-- Burger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Guide Talents</span>
+        <h1 class="hero-title">Comment trouver votre emploi avec Talenteed ?</h1>
+        <p class="hero-subtitle">
+          De l'inscription à la signature de votre contrat, découvrez chaque étape du parcours talent sur notre plateforme.
+          Simple, rapide et efficace.
+        </p>
+        <div class="hero-buttons">
+          <a href="/register" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-rocket"></i>
+            Commencer maintenant
+          </a>
+          <a href="#etapes" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-arrow-down"></i>
+            Voir les étapes
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROCESSUS COMPLET ══ -->
+  <section class="section" id="etapes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Étape par étape</span>
+        <h2 class="section-title">Votre parcours vers l'emploi</h2>
+        <p class="section-subtitle">
+          Suivez ces étapes pour maximiser vos chances de décrocher le poste de vos rêves.
+        </p>
+      </div>
+
+      <div class="process-timeline">
+
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <div class="process-content">
+            <h3 class="process-title">
+              <i class="fa-solid fa-user-plus" style="color: var(--orange); margin-right: 8px;"></i>
+              Inscription et création de profil
+            </h3>
+            <p class="process-text">
+              Inscrivez-vous gratuitement sur Talenteed avec votre email ou votre compte Google.
+              Complétez votre profil avec vos informations personnelles, votre expérience professionnelle,
+              vos compétences, votre niveau d'études et vos langues. Plus votre profil est complet, plus le matching sera précis.
+            </p>
+            <div class="benefits-list" style="margin-top: 14px;">
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Inscription en moins de 2 minutes</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Connexion Google disponible</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>100% gratuit, sans carte bancaire</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <div class="process-content">
+            <h3 class="process-title">
+              <i class="fa-solid fa-magnifying-glass" style="color: var(--orange); margin-right: 8px;"></i>
+              Explorez les offres d'emploi
+            </h3>
+            <p class="process-text">
+              Parcourez notre catalogue d'offres d'emploi auprès d'entreprises partenaires en Afrique et en Europe.
+              Filtrez par secteur d'activité, type de contrat, localisation ou niveau d'expérience.
+              Sauvegardez les offres qui vous intéressent dans vos favoris et postulez en un clic.
+            </p>
+            <div class="benefits-list" style="margin-top: 14px;">
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>2 500+ offres disponibles</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Filtres avancés par secteur, lieu, contrat</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Candidature en un clic avec votre CV</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <div class="process-content">
+            <h3 class="process-title">
+              <i class="fa-solid fa-brain" style="color: var(--orange); margin-right: 8px;"></i>
+              Activez le Matching IA
+            </h3>
+            <p class="process-text">
+              Lorsqu'un événement de recrutement est disponible, activez notre moteur de matching basé sur OpenAI.
+              Téléchargez votre CV, indiquez le poste recherché et vos compétences clés.
+              L'IA analyse votre profil et le compare avec toutes les entreprises et offres de l'événement,
+              puis vous présente une liste triée par score de compatibilité avec la raison détaillée de chaque match.
+            </p>
+            <div class="benefits-list" style="margin-top: 14px;">
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Analyse IA de votre CV et profil</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Score de compatibilité /100 par entreprise</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Raison détaillée pour chaque recommandation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <div class="process-content">
+            <h3 class="process-title">
+              <i class="fa-solid fa-calendar-check" style="color: var(--orange); margin-right: 8px;"></i>
+              Réservez vos créneaux d'entretien
+            </h3>
+            <p class="process-text">
+              Choisissez les entreprises qui vous intéressent et réservez un créneau d'entretien de 15 minutes
+              directement depuis la plateforme. Les créneaux sont disponibles sur toutes les dates de l'événement.
+              Vous recevez une confirmation par email avec les détails de votre rendez-vous.
+            </p>
+            <div class="benefits-list" style="margin-top: 14px;">
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Créneaux de 15 minutes par entreprise</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Confirmation par email immédiate</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Rappel automatique 1h avant l'entretien</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">5</div>
+          <div class="process-content">
+            <h3 class="process-title">
+              <i class="fa-solid fa-handshake" style="color: var(--orange); margin-right: 8px;"></i>
+              Rencontrez les recruteurs en direct
+            </h3>
+            <p class="process-text">
+              Le jour de l'événement, présentez-vous au stand de chaque entreprise à l'heure de votre créneau.
+              Après chaque entretien, recevez une réponse (confirmation ou refus) directement sur la plateforme et par email.
+              Laissez également votre feedback pour aider les entreprises à améliorer leurs pratiques de recrutement.
+            </p>
+            <div class="benefits-list" style="margin-top: 14px;">
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Réponse de l'entreprise par email</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Suivi de vos entretiens depuis le tableau de bord</span>
+              </div>
+              <div class="benefit-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Système de feedback post-entretien</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONSEILS PROFIL ══ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Conseils</span>
+        <h2 class="section-title">Optimisez votre profil pour le matching IA</h2>
+        <p class="section-subtitle">
+          Un profil complet augmente significativement vos chances d'être mis en relation avec les bonnes entreprises.
+        </p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <h3 class="benefit-title">CV à jour</h3>
+          <p class="benefit-text">
+            Uploadez un CV récent et complet. L'IA analyse votre expérience, vos compétences et votre formation pour identifier les meilleurs matchs.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-tags"></i>
+          </div>
+          <h3 class="benefit-title">Compétences détaillées</h3>
+          <p class="benefit-text">
+            Listez toutes vos compétences techniques et comportementales. Plus vous en indiquez, plus le matching est précis.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-language"></i>
+          </div>
+          <h3 class="benefit-title">Langues maîtrisées</h3>
+          <p class="benefit-text">
+            Indiquez toutes les langues que vous parlez. Beaucoup d'entreprises cherchent des talents bilingues ou multilingues.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-location-crosshairs"></i>
+          </div>
+          <h3 class="benefit-title">Mobilité géographique</h3>
+          <p class="benefit-text">
+            Précisez si vous êtes ouvert à une relocalisation. Certaines opportunités nécessitent une disponibilité dans d'autres villes ou pays.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <h3 class="benefit-title">Poste recherché clair</h3>
+          <p class="benefit-text">
+            Lors du matching, soyez précis sur le poste que vous recherchez. Une description claire améliore la qualité des recommandations IA.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <h3 class="benefit-title">Disponibilité à jour</h3>
+          <p class="benefit-text">
+            Indiquez votre disponibilité réelle. Les recruteurs apprécient les candidats dont le profil reflète leur situation actuelle.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">FAQ</span>
+        <h2 class="section-title">Questions fréquentes</h2>
+        <p class="section-subtitle">Tout ce que vous devez savoir avant de commencer.</p>
+      </div>
+
+      <div class="process-timeline" style="max-width: 800px; margin: 0 auto;">
+
+        <div class="process-step">
+          <div class="process-number" style="background: var(--navy); color: var(--orange); border: 2px solid var(--orange);">
+            <i class="fa-solid fa-question"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-title">L'inscription est-elle vraiment gratuite ?</h3>
+            <p class="process-text">
+              Oui, l'inscription et l'utilisation de la plateforme sont entièrement gratuites pour les talents.
+              Postulez à des offres, activez le matching IA et réservez des entretiens sans aucun frais.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number" style="background: var(--navy); color: var(--orange); border: 2px solid var(--orange);">
+            <i class="fa-solid fa-question"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-title">Quels types d'entreprises participent aux événements ?</h3>
+            <p class="process-text">
+              Nos événements réunissent des entreprises de premier plan opérant en Afrique et en Europe : multinationales, PME en croissance, startups innovantes et institutions publiques dans tous les secteurs d'activité.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number" style="background: var(--navy); color: var(--orange); border: 2px solid var(--orange);">
+            <i class="fa-solid fa-question"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-title">Comment fonctionne le matching IA exactement ?</h3>
+            <p class="process-text">
+              Notre moteur utilise l'API OpenAI pour analyser votre CV, vos compétences et le poste que vous recherchez,
+              puis les compare avec les profils de recherche de chaque entreprise participant à l'événement.
+              Vous obtenez une liste triée par score de compatibilité (/100) avec une explication détaillée pour chaque match.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number" style="background: var(--navy); color: var(--orange); border: 2px solid var(--orange);">
+            <i class="fa-solid fa-question"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-title">Puis-je participer sans être présent physiquement ?</h3>
+            <p class="process-text">
+              Certains événements proposent des formats hybrides (présentiel + visioconférence). Vérifiez les informations de chaque événement sur la plateforme. Dans tous les cas, votre profil et vos candidatures restent actifs en ligne.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number" style="background: var(--navy); color: var(--orange); border: 2px solid var(--orange);">
+            <i class="fa-solid fa-question"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-title">Que se passe-t-il après l'entretien ?</h3>
+            <p class="process-text">
+              L'entreprise dispose de quelques jours pour confirmer ou refuser l'entretien via la plateforme.
+              Vous recevez un email de notification dans les deux cas. Si l'entretien est confirmé, une négociation directe peut s'engager.
+              Vous pouvez également laisser un feedback sur votre expérience.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA FINAL ══ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Prêt à lancer votre carrière ?</h2>
+        <p class="cta-text">
+          Rejoignez des milliers de talents africains et de la diaspora qui ont trouvé leur voie grâce à Talenteed.
+          Inscription gratuite en 2 minutes.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="/register" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-rocket"></i>
+            Créer mon profil gratuitement
+          </a>
+          <a href="/annonces" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-briefcase"></i>
+            Voir les offres d'emploi
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-bg"></div>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="assets/logo.png" alt="Talenteed" width="180">
+            </div>
+            <p>L'Africa Talent Summit Luxembourg est la première plateforme stratégique européenne dédiée à la mobilisation de l'intelligence collective et des compétences rares de la diaspora, afin d'accélérer la performance des entreprises en Afrique.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Contactez-nous</h4>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><a href="tel:+3522060162">+3522060162</a></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>57 avenue de la Gare, L-1611 Luxembourg</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><a href="mailto:contact@africatalentsummit.com">contact@africatalentsummit.com</a></div>
+          </div>
+          <div class="footer-col">
+            <h4>Espace Talents</h4>
+            <ul>
+              <li><a href="/register"><i class="fa-solid fa-chevron-right"></i> Créer mon profil</a></li>
+              <li><a href="/annonces"><i class="fa-solid fa-chevron-right"></i> Offres d'emploi</a></li>
+              <li><a href="talent.html"><i class="fa-solid fa-chevron-right"></i> Espace Talents</a></li>
+              <li><a href="matching.html"><i class="fa-solid fa-chevron-right"></i> Matching IA</a></li>
+              <li><a href="/login"><i class="fa-solid fa-chevron-right"></i> Se connecter</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations légales</h4>
+            <ul>
+              <li><a href="/legal/terms-and-conditions"><i class="fa-solid fa-chevron-right"></i> Conditions générales</a></li>
+              <li><a href="/legal/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <script>document.write(new Date().getFullYear())</script> Solution Talenteed SARL R.C.S. Luxembourg B 255 801. Tous droits réservés. Africa Talent Summit Luxembourg est une marque déposée.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ══ BURGER ══ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav    = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+
+    /* ══ SCROLL HEADER ══ */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ══ COUNTDOWN ══ */
+    const eventDate = new Date('November 5, 2026 09:00:00').getTime();
+
+    function updateCountdown() {
+      const now      = new Date().getTime();
+      const distance = eventDate - now;
+      const days     = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+      const hours    = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      const minutes  = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      const seconds  = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('cd-days').textContent    = pad(days);
+      document.getElementById('cd-hours').textContent   = pad(hours);
+      document.getElementById('cd-minutes').textContent = pad(minutes);
+      document.getElementById('cd-seconds').textContent = pad(seconds);
+      if (distance > 0) requestAnimationFrame(() => setTimeout(updateCountdown, 1000));
+    }
+    updateCountdown();
+
+    /* ══ MEGA MENU ══ */
+    document.querySelectorAll('.mega-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        trigger.closest('li').classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>

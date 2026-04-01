@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Talents — Talenteed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-dot"></span>
+        <span class="topbar-label">Africa Talent Summit Luxembourg — 5-6 novembre 2026</span>
+      </div>
+      <div class="countdown-blocks">
+        <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">J</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">H</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-minutes">00</span><span class="cd-unit">M</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><span class="cd-num" id="cd-seconds">00</span><span class="cd-unit">S</span></div>
+      </div>
+      <div>
+        <a href="#inscription" class="topbar-link">Rejoindre gratuitement</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo">
+          <img src="assets/logo.png" alt="Talenteed" width="148" height="52">
+          <span class="site-tagline">Africa Talent Summit</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="site-nav" id="site-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Annonces <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="/annonces" class="mega-item">
+                  <i class="fa-solid fa-briefcase mega-icon"></i>
+                  <div><strong>Offres d'emploi</strong><small>Parcourez toutes nos offres</small></div>
+                </a>
+                <a href="/entreprises" class="mega-item">
+                  <i class="fa-solid fa-building mega-icon"></i>
+                  <div><strong>Entreprises</strong><small>Découvrez nos recruteurs</small></div>
+                </a>
+              </div>
+            </li>
+            <li class="has-mega">
+              <a href="#" class="mega-trigger">
+                Événements <i class="fa-solid fa-chevron-down nav-chevron"></i>
+              </a>
+              <div class="mega-menu">
+                <a href="#" class="mega-item">
+                  <i class="fa-solid fa-calendar-days mega-icon"></i>
+                  <div><strong>Africa Talent Summit</strong></div>
+                </a>
+              </div>
+            </li>
+            <li><a href="talent.html" class="active">Espace Talents</a></li>
+            <li><a href="/blog">Articles</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions droite -->
+        <div class="header-btns">
+          <a href="#inscription" class="btn btn--orange btn--sm">S'inscrire</a>
+          <a href="/login" class="btn btn--blue btn--sm">Connexion</a>
+        </div>
+
+        <!-- Burger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Espace Talents</span>
+        <h1 class="hero-title">Propulsez votre carrière avec les meilleures entreprises d'Afrique et d'Europe</h1>
+        <p class="hero-subtitle">
+          Rejoignez la plateforme de référence pour les talents africains et de la diaspora.
+          Accédez à des offres exclusives, participez aux événements de recrutement et laissez notre IA trouver les opportunités qui vous correspondent.
+        </p>
+        <div class="hero-buttons">
+          <a href="#inscription" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-rocket"></i>
+            Créer mon profil gratuitement
+          </a>
+          <a href="comment-ca-marche.html" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-circle-play"></i>
+            Comment ça marche ?
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">10 000+</div>
+          <div class="stat-label">Talents inscrits</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Entreprises partenaires</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2 500+</div>
+          <div class="stat-label">Offres disponibles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Pays représentés</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMMENT ÇA MARCHE ══ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Simple et rapide</span>
+        <h2 class="section-title">Trouvez votre emploi en 4 étapes</h2>
+        <p class="section-subtitle">
+          De l'inscription à l'entretien, notre plateforme vous guide à chaque étape de votre recherche d'emploi.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Créez votre profil</h3>
+          <p class="step-text">Inscrivez-vous gratuitement et complétez votre profil avec vos compétences, expériences et aspirations professionnelles.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Explorez les offres</h3>
+          <p class="step-text">Parcourez des centaines d'offres d'emploi auprès d'entreprises de premier plan en Afrique et en Europe.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Activez le Matching IA</h3>
+          <p class="step-text">Notre intelligence artificielle analyse votre profil et votre CV pour identifier les entreprises et offres qui vous correspondent le mieux.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Participez aux événements</h3>
+          <p class="step-text">Réservez vos créneaux d'entretien lors de nos événements de recrutement et rencontrez les recruteurs en direct.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 36px;">
+        <a href="comment-ca-marche.html" class="btn btn--orange btn--lg">
+          <i class="fa-solid fa-arrow-right"></i>
+          Voir le guide complet
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FONCTIONNALITÉS ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Vos avantages</span>
+        <h2 class="section-title">Tout ce dont vous avez besoin pour décrocher le job idéal</h2>
+        <p class="section-subtitle">
+          Une plateforme complète pensée pour les talents africains et de la diaspora.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h3 class="feature-title">Offres ciblées</h3>
+          <p class="feature-text">
+            Accédez à des offres d'emploi exclusives sélectionnées pour les talents africains et de la diaspora, dans tous les secteurs et tous les pays.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3 class="feature-title">Matching par IA</h3>
+          <p class="feature-text">
+            Notre moteur OpenAI analyse votre profil et votre CV pour vous proposer les opportunités les plus pertinentes avec un score de compatibilité.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <h3 class="feature-title">Entretiens en direct</h3>
+          <p class="feature-text">
+            Réservez des créneaux de 15 minutes avec les entreprises de votre choix lors de nos événements de recrutement.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-file-arrow-up"></i>
+          </div>
+          <h3 class="feature-title">Candidature simplifiée</h3>
+          <p class="feature-text">
+            Postulez en un clic à toutes les offres qui vous intéressent. Votre CV et votre profil sont envoyés automatiquement aux recruteurs.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-heart"></i>
+          </div>
+          <h3 class="feature-title">Favoris et suivi</h3>
+          <p class="feature-text">
+            Sauvegardez les offres qui vous intéressent et suivez l'état de vos candidatures en temps réel depuis votre tableau de bord.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <h3 class="feature-title">Alertes et rappels</h3>
+          <p class="feature-text">
+            Recevez des notifications par email pour les nouvelles offres correspondant à votre profil et des rappels avant vos entretiens.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTENU PRINCIPAL (FORMULAIRE) ══ -->
+  <section class="main-content" id="inscription">
+    <div class="container">
+      <div class="content-layout">
+
+        <!-- Formulaire d'inscription talent -->
+        <div class="form-section">
+          <div class="form-card">
+            <div class="form-header">
+              <h2 class="form-title">
+                <i class="fa-solid fa-user-plus"></i>
+                Créer mon profil talent
+              </h2>
+              <p class="form-subtitle">Inscription gratuite · Accès immédiat à toutes les offres</p>
+            </div>
+
+            <form id="register-form" onsubmit="handleRegister(event)" novalidate>
+
+              <div class="form-section-title">
+                <i class="fa-solid fa-user-circle"></i>
+                Informations personnelles
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nom complet <span class="required">*</span></label>
+                <input id="name" name="name" type="text" class="form-input" placeholder="Ex: Aminata Diallo" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email <span class="required">*</span></label>
+                <input id="email" name="email" type="email" class="form-input" placeholder="votre@email.com" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Mot de passe <span class="required">*</span></label>
+                  <input id="password" name="password" type="password" class="form-input" placeholder="Minimum 8 caractères" required minlength="8">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Confirmer <span class="required">*</span></label>
+                  <input id="password_confirmation" name="password_confirmation" type="password" class="form-input" placeholder="Retapez votre mot de passe" required>
+                </div>
+              </div>
+
+              <div class="form-section-title">
+                <i class="fa-solid fa-briefcase"></i>
+                Profil professionnel
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Secteur d'activité</label>
+                  <select name="activity_sector" class="form-input">
+                    <option value="">Sélectionner...</option>
+                    <option>Banque / Finance</option>
+                    <option>Assurance</option>
+                    <option>Technologie / IT</option>
+                    <option>Santé</option>
+                    <option>Industrie</option>
+                    <option>Commerce / Distribution</option>
+                    <option>BTP / Immobilier</option>
+                    <option>Énergie / Mines</option>
+                    <option>Agriculture / Agroalimentaire</option>
+                    <option>Télécommunications</option>
+                    <option>Consulting / Conseil</option>
+                    <option>Éducation / Formation</option>
+                    <option>Transport / Logistique</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Disponibilité</label>
+                  <select name="disponibilite" class="form-input">
+                    <option value="">Sélectionner...</option>
+                    <option>Immédiatement</option>
+                    <option>Dans 1 mois</option>
+                    <option>Dans 3 mois</option>
+                    <option>En veille</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Poste recherché</label>
+                <input name="titre_poste" type="text" class="form-input" placeholder="Ex: Développeur Full Stack, Chef de projet...">
+              </div>
+
+              <!-- Messages -->
+              <div class="form-error" id="reg-error">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="reg-error-msg"></span>
+              </div>
+              <div class="form-success" id="reg-success">
+                <i class="fa-solid fa-check-circle"></i>
+                Compte créé avec succès ! Bienvenue sur Talenteed.
+              </div>
+
+              <button type="submit" class="btn btn--orange btn--lg btn--block" id="reg-btn">
+                <i class="fa-solid fa-rocket"></i>
+                Créer mon profil gratuitement
+              </button>
+
+              <p class="form-note">
+                Déjà inscrit ? <a href="/login">Se connecter</a><br>
+                En créant un compte, vous acceptez nos
+                <a href="/legal/terms-and-conditions">conditions d'utilisation</a> et notre
+                <a href="/legal/privacy-policy">politique de confidentialité</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Avantages + Event -->
+        <div class="cta-section">
+          <!-- Event Card -->
+          <div class="cta-card" style="margin-bottom: 24px;">
+            <div class="cta-icon">
+              <i class="fa-solid fa-calendar-star"></i>
+            </div>
+            <h3 class="cta-title">Africa Talent Summit</h3>
+            <p class="cta-text">
+              Le prochain événement de recrutement se tient les <strong>5-6 novembre 2026</strong> à Luxembourg. Inscrivez-vous maintenant pour réserver votre place !
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center; margin: 16px 0;">
+              <div class="cd-block"><span class="cd-num" id="ev-days">00</span><span class="cd-unit">J</span></div>
+              <span class="cd-sep" style="color: var(--orange); font-weight: 700;">:</span>
+              <div class="cd-block"><span class="cd-num" id="ev-hours">00</span><span class="cd-unit">H</span></div>
+              <span class="cd-sep" style="color: var(--orange); font-weight: 700;">:</span>
+              <div class="cd-block"><span class="cd-num" id="ev-minutes">00</span><span class="cd-unit">M</span></div>
+              <span class="cd-sep" style="color: var(--orange); font-weight: 700;">:</span>
+              <div class="cd-block"><span class="cd-num" id="ev-seconds">00</span><span class="cd-unit">S</span></div>
+            </div>
+            <a href="#inscription" class="btn btn--orange btn--lg btn--block" style="justify-content: center;">
+              <i class="fa-solid fa-ticket"></i>
+              Réserver ma place
+            </a>
+          </div>
+
+          <!-- Avantages -->
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Inscription 100% gratuite</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Matching IA inclus</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Accès à toutes les offres d'emploi</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Entretiens en direct lors des événements</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Aucune carte bancaire requise</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-check-circle"></i>
+              <span>Connexion Google disponible</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TÉMOIGNAGES ══ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Témoignages</span>
+        <h2 class="section-title">Ils ont trouvé leur emploi avec Talenteed</h2>
+        <p class="section-subtitle">
+          Découvrez les parcours de talents qui ont accéléré leur carrière grâce à notre plateforme.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "Grâce au matching IA, j'ai trouvé une opportunité que je n'aurais jamais découverte seul.
+            En deux semaines d'événement, j'avais trois offres sur la table. Incroyable."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">KB</div>
+            <div class="testimonial-info">
+              <h4>Kofi Boateng</h4>
+              <p>Développeur Full Stack · Luxembourg</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "La plateforme est intuitive et le processus de candidature est vraiment simplifié.
+            Les entretiens de 15 minutes lors du Summit m'ont permis de rencontrer 6 entreprises en une journée."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">FD</div>
+            <div class="testimonial-info">
+              <h4>Fatou Diop</h4>
+              <p>Analyste Financière · Paris</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "Talenteed m'a permis de mettre en valeur mon profil auprès d'entreprises qui cherchaient exactement
+            mon expertise. J'ai décroché un poste de consultant à Abidjan en moins d'un mois."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SE</div>
+            <div class="testimonial-info">
+              <h4>Samuel Eto'o Nkomo</h4>
+              <p>Consultant RH · Abidjan</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left testimonial-quote"></i>
+          <p class="testimonial-text">
+            "En tant que talent de la diaspora, je cherchais des opportunités au Sénégal.
+            Talenteed m'a mis en relation avec des entreprises locales qui valorisent mon expérience européenne."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MC</div>
+            <div class="testimonial-info">
+              <h4>Marie-Claire Ndiaye</h4>
+              <p>Responsable Marketing · Dakar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA MATCHING ══ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Découvrez votre potentiel avec le Matching IA</h2>
+        <p class="cta-text">
+          Notre intelligence artificielle analyse votre profil et votre CV pour identifier les entreprises et offres qui correspondent à vos ambitions.
+          Inscrivez-vous et activez le matching dès votre premier événement.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="#inscription" class="btn btn--orange btn--lg">
+            <i class="fa-solid fa-rocket"></i>
+            Créer mon profil
+          </a>
+          <a href="matching.html" class="btn btn--white btn--lg">
+            <i class="fa-solid fa-brain"></i>
+            En savoir plus sur le Matching
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-bg"></div>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="assets/logo.png" alt="Talenteed" width="180">
+            </div>
+            <p>L'Africa Talent Summit Luxembourg est la première plateforme stratégique européenne dédiée à la mobilisation de l'intelligence collective et des compétences rares de la diaspora, afin d'accélérer la performance des entreprises en Afrique.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Contactez-nous</h4>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><a href="tel:+3522060162">+3522060162</a></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>57 avenue de la Gare, L-1611 Luxembourg</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><a href="mailto:contact@africatalentsummit.com">contact@africatalentsummit.com</a></div>
+          </div>
+          <div class="footer-col">
+            <h4>Espace Talents</h4>
+            <ul>
+              <li><a href="#inscription"><i class="fa-solid fa-chevron-right"></i> Créer mon profil</a></li>
+              <li><a href="/annonces"><i class="fa-solid fa-chevron-right"></i> Offres d'emploi</a></li>
+              <li><a href="comment-ca-marche.html"><i class="fa-solid fa-chevron-right"></i> Comment ça marche</a></li>
+              <li><a href="matching.html"><i class="fa-solid fa-chevron-right"></i> Matching IA</a></li>
+              <li><a href="/login"><i class="fa-solid fa-chevron-right"></i> Se connecter</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations légales</h4>
+            <ul>
+              <li><a href="/legal/terms-and-conditions"><i class="fa-solid fa-chevron-right"></i> Conditions générales</a></li>
+              <li><a href="/legal/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <script>document.write(new Date().getFullYear())</script> Solution Talenteed SARL R.C.S. Luxembourg B 255 801. Tous droits réservés. Africa Talent Summit Luxembourg est une marque déposée.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ══ BURGER ══ */
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav    = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+
+    /* ══ SCROLL HEADER ══ */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ══ COUNTDOWN ══ */
+    const eventDate = new Date('November 5, 2026 09:00:00').getTime();
+
+    function updateCountdown() {
+      const now      = new Date().getTime();
+      const distance = eventDate - now;
+      const days     = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+      const hours    = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      const minutes  = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      const seconds  = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
+
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('cd-days').textContent    = pad(days);
+      document.getElementById('cd-hours').textContent   = pad(hours);
+      document.getElementById('cd-minutes').textContent = pad(minutes);
+      document.getElementById('cd-seconds').textContent = pad(seconds);
+      document.getElementById('ev-days').textContent    = pad(days);
+      document.getElementById('ev-hours').textContent   = pad(hours);
+      document.getElementById('ev-minutes').textContent = pad(minutes);
+      document.getElementById('ev-seconds').textContent = pad(seconds);
+
+      if (distance > 0) requestAnimationFrame(() => setTimeout(updateCountdown, 1000));
+    }
+    updateCountdown();
+
+    /* ══ MEGA MENU ══ */
+    document.querySelectorAll('.mega-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const li = trigger.closest('li');
+        li.classList.toggle('open');
+      });
+    });
+
+    /* ══ HELPERS FORMULAIRE ══ */
+    function showEl(id)  { document.getElementById(id).classList.add('visible'); }
+    function hideEl(id)  { document.getElementById(id).classList.remove('visible'); }
+    function setBtn(id, html, disabled) {
+      const btn = document.getElementById(id);
+      btn.innerHTML = html;
+      btn.disabled = disabled;
+    }
+
+    /* ══ FORMULAIRE INSCRIPTION ══ */
+    function handleRegister(e) {
+      e.preventDefault();
+      hideEl('reg-error');
+      hideEl('reg-success');
+
+      const pw  = document.getElementById('password').value;
+      const pw2 = document.getElementById('password_confirmation').value;
+      if (pw !== pw2) {
+        document.getElementById('reg-error-msg').textContent = 'Les mots de passe ne correspondent pas.';
+        showEl('reg-error');
+        return;
+      }
+
+      setBtn('reg-btn', '<span class="spinner"></span> Création en cours...', true);
+
+      const form = document.getElementById('register-form');
+      const data = {
+        name:                  document.getElementById('name').value,
+        email:                 document.getElementById('email').value,
+        password:              pw,
+        password_confirmation: pw2,
+        role:                  'talent',
+      };
+
+      fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+      })
+        .then(r => r.json().then(body => ({ status: r.status, body })))
+        .then(({ status, body }) => {
+          setBtn('reg-btn', '<i class="fa-solid fa-rocket"></i> Créer mon profil gratuitement', false);
+          if (status === 201) {
+            showEl('reg-success');
+            form.reset();
+            setTimeout(() => { window.location.href = '/talent'; }, 1500);
+          } else {
+            const errors = body.errors || {};
+            const msg = Object.values(errors).flat()[0] || body.message || 'Une erreur est survenue.';
+            document.getElementById('reg-error-msg').textContent = msg;
+            showEl('reg-error');
+          }
+        })
+        .catch(() => {
+          setBtn('reg-btn', '<i class="fa-solid fa-rocket"></i> Créer mon profil gratuitement', false);
+          document.getElementById('reg-error-msg').textContent = 'Impossible de joindre le serveur. Vérifiez votre connexion.';
+          showEl('reg-error');
+        });
+    }
+  </script>
+</body>
+</html>

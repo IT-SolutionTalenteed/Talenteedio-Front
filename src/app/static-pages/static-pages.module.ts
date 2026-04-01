@@ -20,6 +20,21 @@ const routes: Routes = [
     path: 'entreprise',
     component: StaticPagesComponent,
     data: { page: 'entreprises' }
+  },
+  {
+    path: 'comment',
+    component: StaticPagesComponent,
+    data: { page: 'comment' }
+  },
+  {
+    path: 'matching',
+    component: StaticPagesComponent,
+    data: { page: 'matching' }
+  },
+  {
+    path: 'talent',
+    component: StaticPagesComponent,
+    data: { page: 'talent' }
   }
 ];
 
